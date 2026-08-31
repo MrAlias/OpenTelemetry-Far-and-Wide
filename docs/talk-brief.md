@@ -23,9 +23,7 @@ A single deployment workflow should be able to:
 3. upgrade injected OpenTelemetry SDK versions; and
 4. change telemetry detail and cost without application code or manifest edits.
 
-## Working narrative spine
-
-This is a content map, not a committed slide sequence.
+## Narrative spine
 
 1. Broad eBPF coverage makes the unknown environment visible immediately.
 2. Debugging some failures requires details available only inside a language runtime.

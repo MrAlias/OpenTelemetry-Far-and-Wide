@@ -1,7 +1,6 @@
 # Attendee resources
 
-Use this directory for the curated follow-up material shared with attendees.
-It may later include:
+Use this directory for the curated follow-up material shared with attendees:
 
 - links to relevant OpenTelemetry specifications and projects;
 - architecture diagrams and downloadable handouts;

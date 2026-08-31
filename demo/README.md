@@ -1,7 +1,7 @@
 # Live demo
 
-This directory will contain the reproducible live-demo environment and the
-operator workflow shown on stage.
+Use this directory for the reproducible live-demo environment and the operator
+workflow shown on stage.
 
 Keep the demo organized around explicit lifecycle commands:
 

@@ -9,15 +9,11 @@ auto-injection can work together: broad, zero-touch coverage first, then
 language-level detail where it is valuable, all through a shared deployment
 mechanism with dynamic cost controls.
 
-This repository is intentionally a scaffold. It establishes where the deck,
-demo, examples, and supporting material belong without attempting to build the
-entire talk up front.
-
 ## Repository map
 
 ```text
 .
-├── slides.md          # Slidev entry point; currently only the title slide
+├── slides.md          # Slidev presentation entry point
 ├── style.css          # Shared presentation styles
 ├── components/        # Reusable Slidev Vue components
 ├── layouts/           # Talk-specific Slidev layouts
@@ -59,7 +55,7 @@ complementary layers—not competing choices—and that teams can dynamically
 trade telemetry depth for cost without asking every application team to change
 its code or Kubernetes manifests.
 
-The supplied proposal copy and an initial, non-slide outline live in
+The talk proposal and narrative outline live in
 [`docs/talk-brief.md`](docs/talk-brief.md).
 
 ## License
