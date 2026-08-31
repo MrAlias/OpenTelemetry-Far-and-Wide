@@ -3,5 +3,5 @@
 Use this directory for durable thinking that shapes the presentation: the talk
 brief, architecture decisions, terminology, research notes, and content plans.
 
-Keep audience-facing references in `resources/`, live-demo instructions in
-`demo/`, and presenter-only delivery notes in `notes/`.
+Keep speaker notes alongside the relevant slide in `slides.md`. Store static
+presentation assets in `public/`.

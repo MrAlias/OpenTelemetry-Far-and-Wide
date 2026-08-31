@@ -17,17 +17,13 @@ mechanism with dynamic cost controls.
 ├── style.css          # Shared presentation styles
 ├── components/        # Reusable Slidev Vue components
 ├── layouts/           # Talk-specific Slidev layouts
-├── public/            # Static images, diagrams, and downloadable assets
-├── demo/              # Live-demo environment and operator workflow
-├── examples/          # Focused, independently runnable code examples
-├── docs/              # Talk brief and architecture/content notes
-├── notes/             # Rehearsal, timing, and delivery notes
-└── resources/         # Curated references and attendee follow-up material
+├── public/            # Static files served unchanged by Slidev
+└── docs/              # Talk brief and architecture/content notes
 ```
 
-Each content directory includes a short README describing its intended scope.
-Add material to the narrowest relevant directory and keep generated files out
-of version control.
+Put images, video, downloadable manifests, and other files that should be
+addressable directly as `/filename` in `public/`. Keep speaker notes alongside
+their slides in `slides.md`, and keep generated files out of version control.
 
 ## Work on the slides
 
