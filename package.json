@@ -1,0 +1,22 @@
+{
+  "name": "opentelemetry-far-and-wide",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "KubeCon NA 2026 Observability Day talk materials for OpenTelemetry Far and Wide",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@slidev/cli": "52.19.1",
+    "@slidev/theme-default": "0.25.0"
+  },
+  "overrides": {
+    "dompurify": "3.4.14"
+  }
+}

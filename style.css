@@ -1,0 +1,44 @@
+:root {
+  --otfaw-ink: #16182b;
+  --otfaw-muted: #5f6475;
+  --otfaw-accent: #5b5bd6;
+  --otfaw-highlight: #20b8a6;
+}
+
+.slidev-layout {
+  color: var(--otfaw-ink);
+  background:
+    radial-gradient(circle at 88% 12%, rgb(91 91 214 / 12%), transparent 30%),
+    #fafaff;
+}
+
+.title-slide {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-slide h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: 4.4rem;
+  font-weight: 750;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.title-kicker {
+  margin: 0 0 1.5rem;
+  color: var(--otfaw-accent);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.title-speakers {
+  margin: 2rem 0 0;
+  color: var(--otfaw-muted);
+  font-size: 1.35rem;
+}
