@@ -1,0 +1,123 @@
+{
+  "label": "rehearsal-20261006t191744z-a47a23",
+  "command": "python3 demo/proof/scripts/rehearse.py",
+  "fresh_cluster": true,
+  "passed": true,
+  "fixture": "JDK 21 HttpServer and synchronous HttpURLConnection",
+  "concurrency": 1,
+  "interval_seconds": 0.4,
+  "totals": {
+    "requests": 1086,
+    "passed_requests": 1086,
+    "sdk_detail_requests": 491,
+    "successful_handoffs": 8,
+    "rejected_admissions": 1
+  },
+  "stages": [
+    {
+      "stage": "breadth",
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-20261006T192039Z-3f0357",
+      "requests": 40,
+      "passed_requests": 40,
+      "sdk_detail_requests": 0,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "depth-1",
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-1-20261006T192118Z-e1c03e",
+      "requests": 147,
+      "passed_requests": 147,
+      "sdk_detail_requests": 51,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "breadth-1",
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-1-20261006T192239Z-970d4c",
+      "requests": 116,
+      "passed_requests": 116,
+      "sdk_detail_requests": 73,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "depth-2",
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-2-20261006T192348Z-4030cd",
+      "requests": 131,
+      "passed_requests": 131,
+      "sdk_detail_requests": 51,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "breadth-2",
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-2-20261006T192504Z-6a8bad",
+      "requests": 115,
+      "passed_requests": 115,
+      "sdk_detail_requests": 71,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "depth-3",
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-3-20261006T192613Z-dc8340",
+      "requests": 129,
+      "passed_requests": 129,
+      "sdk_detail_requests": 50,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "breadth-3",
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-3-20261006T192728Z-30aa57",
+      "requests": 113,
+      "passed_requests": 113,
+      "sdk_detail_requests": 70,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "rejected-depth",
+      "capture": "rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91",
+      "requests": 96,
+      "passed_requests": 96,
+      "sdk_detail_requests": 0,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "recovered-depth",
+      "capture": "rehearsal-20261006t191744z-a47a23-recovered-depth-20261006T192940Z-ec91b0",
+      "requests": 83,
+      "passed_requests": 83,
+      "sdk_detail_requests": 51,
+      "metrics_passed": true,
+      "rollout_passed": true
+    },
+    {
+      "stage": "recovered-breadth",
+      "capture": "rehearsal-20261006t191744z-a47a23-recovered-breadth-20261006T193039Z-7209b7",
+      "requests": 116,
+      "passed_requests": 116,
+      "sdk_detail_requests": 74,
+      "metrics_passed": true,
+      "rollout_passed": true
+    }
+  ],
+  "application_image_ids": {
+    "checkout": "sha256:c31b0ef99ef619d35ea47fc41985c1f9b312edb0795c88da0d0b4416c1f8af27",
+    "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+    "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+  },
+  "all_captures_replayed": true,
+  "all_harness_hashes_match_final_sources": true,
+  "scope": "Planned instrumentation handoffs only; concurrent correctness and the original HttpClient fixture remain failed gates.",
+  "all_application_source_hashes_identical": true,
+  "all_request_trace_ids_unique": true,
+  "gateway_and_inventory_pod_uids_constant": {
+    "gateway": "a111bb01-cde3-4620-ad88-e2d2f301e489",
+    "inventory": "87e496e3-324f-43a2-a617-fa1435f1b7a1"
+  },
+  "recovery_promoted_rejected_candidate_uid": "8d0075b2-60d4-4145-8627-7c3dcc6305c1"
+}

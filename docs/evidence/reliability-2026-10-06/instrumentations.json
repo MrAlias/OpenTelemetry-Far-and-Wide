@@ -1,0 +1,211 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "opentelemetry.io/v1alpha1",
+            "kind": "Instrumentation",
+            "metadata": {
+                "annotations": {
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-apache-httpd-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-apache-httpd:1.0.4",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-dotnet-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:1.17.0",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-go-image": "ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go:v0.24.0",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-java-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.31.1",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-nginx-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-apache-httpd:1.0.4",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-nodejs-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.78.0",
+                    "instrumentation.opentelemetry.io/default-auto-instrumentation-python-image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.66b0",
+                    "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"opentelemetry.io/v1alpha1\",\"kind\":\"Instrumentation\",\"metadata\":{\"annotations\":{},\"name\":\"checkout-depth\",\"namespace\":\"far-wide-proof\"},\"spec\":{\"exporter\":{\"endpoint\":\"http://collector.far-wide-proof.svc.cluster.local:4318\"},\"java\":{\"env\":[{\"name\":\"OTEL_SERVICE_NAME\",\"value\":\"checkout\"},{\"name\":\"OTEL_RESOURCE_ATTRIBUTES\",\"value\":\"service.namespace=far-wide-proof\"},{\"name\":\"OTEL_EXPORTER_OTLP_PROTOCOL\",\"value\":\"http/protobuf\"},{\"name\":\"OTEL_METRICS_EXPORTER\",\"value\":\"none\"},{\"name\":\"OTEL_LOGS_EXPORTER\",\"value\":\"none\"},{\"name\":\"OTEL_BSP_SCHEDULE_DELAY\",\"value\":\"1000\"},{\"name\":\"OTEL_INSTRUMENTATION_METHODS_INCLUDE\",\"value\":\"demo.checkout.PricingEngine[calculate]\"}],\"image\":\"ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.30.0\"},\"propagators\":[\"tracecontext\"],\"sampler\":{\"argument\":\"1\",\"type\":\"parentbased_traceidratio\"}}}\n"
+                },
+                "creationTimestamp": "2026-10-06T19:19:55Z",
+                "generation": 1,
+                "name": "checkout-depth",
+                "namespace": "far-wide-proof",
+                "resourceVersion": "760",
+                "uid": "5678700c-a35a-4f12-a62c-0bfa0cd19021"
+            },
+            "spec": {
+                "apacheHttpd": {
+                    "configPath": "/usr/local/apache2/conf",
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-apache-httpd:1.0.4",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "1m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "version": "2.4",
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "defaults": {},
+                "dotnet": {
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:1.17.0",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "50m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "exporter": {
+                    "endpoint": "http://collector.far-wide-proof.svc.cluster.local:4318"
+                },
+                "go": {
+                    "image": "ghcr.io/open-telemetry/opentelemetry-go-instrumentation/autoinstrumentation-go:v0.24.0",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "java": {
+                    "env": [
+                        {
+                            "name": "OTEL_SERVICE_NAME",
+                            "value": "checkout"
+                        },
+                        {
+                            "name": "OTEL_RESOURCE_ATTRIBUTES",
+                            "value": "service.namespace=far-wide-proof"
+                        },
+                        {
+                            "name": "OTEL_EXPORTER_OTLP_PROTOCOL",
+                            "value": "http/protobuf"
+                        },
+                        {
+                            "name": "OTEL_METRICS_EXPORTER",
+                            "value": "none"
+                        },
+                        {
+                            "name": "OTEL_LOGS_EXPORTER",
+                            "value": "none"
+                        },
+                        {
+                            "name": "OTEL_BSP_SCHEDULE_DELAY",
+                            "value": "1000"
+                        },
+                        {
+                            "name": "OTEL_INSTRUMENTATION_METHODS_INCLUDE",
+                            "value": "demo.checkout.PricingEngine[calculate]"
+                        }
+                    ],
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.30.0",
+                    "resources": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "nginx": {
+                    "configFile": "/etc/nginx/nginx.conf",
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-apache-httpd:1.0.4",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "1m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "nodejs": {
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-nodejs:0.78.0",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "50m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "propagators": [
+                    "tracecontext"
+                ],
+                "python": {
+                    "image": "ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-python:0.66b0",
+                    "resourceRequirements": {
+                        "limits": {
+                            "cpu": "500m",
+                            "memory": "256Mi"
+                        },
+                        "requests": {
+                            "cpu": "50m",
+                            "memory": "64Mi"
+                        }
+                    },
+                    "volumeClaimTemplate": {
+                        "metadata": {},
+                        "spec": {
+                            "resources": {}
+                        }
+                    }
+                },
+                "resource": {},
+                "sampler": {
+                    "argument": "1",
+                    "type": "parentbased_traceidratio"
+                }
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

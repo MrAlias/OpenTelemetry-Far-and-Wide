@@ -1,0 +1,1 @@
+{"admissionWebhooks":{"autoGenerateCert":{"enabled":true},"certManager":{"enabled":false},"namespaceSelector":{"matchLabels":{"kubernetes.io/metadata.name":"far-wide-proof"}},"pods":{"failurePolicy":"Fail"}},"manager":{"image":{"tag":"0.160.0"}}}

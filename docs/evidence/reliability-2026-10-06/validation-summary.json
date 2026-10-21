@@ -1,0 +1,21 @@
+{
+  "python_unit_tests": {
+    "command": "python3 -m unittest discover -s demo/proof/tests -v",
+    "passed": true,
+    "tests": 21
+  },
+  "router_race_tests": {
+    "command": "docker run --rm -v \"$PWD/demo/proof/router:/src:ro\" -w /src golang:1.27.1 go test -race main.go main_test.go",
+    "passed": true,
+    "tests": 2
+  },
+  "shell_validation": {
+    "command": "validate_shell.sh demo/proof/scripts/proof.sh",
+    "passed": true
+  },
+  "tracked_diff_whitespace": {
+    "command": "git diff --check",
+    "passed": true
+  },
+  "note": "Live rehearsal and replay outcomes are separately recorded; these local checks do not establish concurrent instrumentation correctness."
+}

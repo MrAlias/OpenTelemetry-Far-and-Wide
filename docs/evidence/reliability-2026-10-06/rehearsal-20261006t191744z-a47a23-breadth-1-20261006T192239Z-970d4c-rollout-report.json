@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "errors": [],
+  "application_image_ids": {
+    "checkout": "sha256:c31b0ef99ef619d35ea47fc41985c1f9b312edb0795c88da0d0b4416c1f8af27",
+    "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+    "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+  },
+  "checkout_before_uid": "f0d652c8-2105-400d-926f-97e73af2d594",
+  "checkout_after_uid": "fccb2b69-e9cb-4c71-94ef-f27278e63d83",
+  "checkout_injected_before": true,
+  "checkout_injected_after": false
+}

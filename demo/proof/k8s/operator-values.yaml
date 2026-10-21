@@ -1,0 +1,14 @@
+manager:
+  image:
+    tag: 0.160.0
+admissionWebhooks:
+  certManager:
+    enabled: false
+  autoGenerateCert:
+    enabled: true
+  pods:
+    failurePolicy: Fail
+  # Fail-closed injection must not block the Operator's own bootstrap.
+  namespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: far-wide-proof

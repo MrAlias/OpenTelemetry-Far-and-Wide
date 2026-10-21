@@ -1,0 +1,68 @@
+{
+  "label": "rehearsal-20261006t191744z-a47a23",
+  "passed": true,
+  "cycles": 3,
+  "concurrency": 1,
+  "captures": [
+    {
+      "stage": "breadth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-breadth-20261006T192039Z-3f0357",
+      "passed": true,
+      "requests": 40
+    },
+    {
+      "stage": "depth-1",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-depth-1-20261006T192118Z-e1c03e",
+      "passed": true,
+      "requests": 147
+    },
+    {
+      "stage": "breadth-1",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-breadth-1-20261006T192239Z-970d4c",
+      "passed": true,
+      "requests": 116
+    },
+    {
+      "stage": "depth-2",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-depth-2-20261006T192348Z-4030cd",
+      "passed": true,
+      "requests": 131
+    },
+    {
+      "stage": "breadth-2",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-breadth-2-20261006T192504Z-6a8bad",
+      "passed": true,
+      "requests": 115
+    },
+    {
+      "stage": "depth-3",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-depth-3-20261006T192613Z-dc8340",
+      "passed": true,
+      "requests": 129
+    },
+    {
+      "stage": "breadth-3",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-breadth-3-20261006T192728Z-30aa57",
+      "passed": true,
+      "requests": 113
+    },
+    {
+      "stage": "rejected-depth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91",
+      "passed": true,
+      "requests": 96
+    },
+    {
+      "stage": "recovered-depth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-recovered-depth-20261006T192940Z-ec91b0",
+      "passed": true,
+      "requests": 83
+    },
+    {
+      "stage": "recovered-breadth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-recovered-breadth-20261006T193039Z-7209b7",
+      "passed": true,
+      "requests": 116
+    }
+  ]
+}

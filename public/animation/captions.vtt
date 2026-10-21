@@ -1,0 +1,1201 @@
+WEBVTT
+
+1
+00:00:00.650 --> 00:00:04.230
+Tyler: I'm Tyler, and this is OpenTelemetry Far and Wide.
+
+2
+00:00:04.470 --> 00:00:05.790
+Nikola: And I'm Nikola.
+
+3
+00:00:05.790 --> 00:00:10.629
+Nikola: Start with broad coverage, then add the detail your investigation needs.
+
+4
+00:00:10.869 --> 00:00:11.745
+Tyler: One request.
+
+5
+00:00:11.745 --> 00:00:13.059
+Tyler: One missing answer.
+
+6
+00:00:13.059 --> 00:00:14.373
+Tyler: Let's follow it.
+
+7
+00:00:15.650 --> 00:00:16.781
+Tyler: Checkout is slow.
+
+8
+00:00:16.781 --> 00:00:20.930
+Tyler: Nikola, I've narrowed the problem down to the service named checkout.
+
+9
+00:00:21.170 --> 00:00:21.557
+Nikola: Excellent.
+
+10
+00:00:21.557 --> 00:00:25.045
+Nikola: The service name has really pulled its weight there.
+
+11
+00:00:25.045 --> 00:00:26.983
+Nikola: What is it actually doing?
+
+12
+00:00:27.223 --> 00:00:28.370
+Tyler: That's the question.
+
+13
+00:00:28.370 --> 00:00:32.574
+Tyler: Imagine you own the platform, but different teams own the applications.
+
+14
+00:00:32.574 --> 00:00:38.307
+Tyler: Our illustrated request enters a Go gateway, passes through Java checkout, and reaches Node inventory.
+
+15
+00:00:38.547 --> 00:00:41.021
+Nikola: So you can follow the request across services.
+
+16
+00:00:41.021 --> 00:00:44.422
+Nikola: But the expensive work inside checkout still has no useful name.
+
+17
+00:00:44.662 --> 00:00:47.956
+Tyler: I could ask every team to change its instrumentation.
+
+18
+00:00:47.956 --> 00:00:50.884
+Tyler: That sounds like a meeting before an investigation.
+
+19
+00:00:51.124 --> 00:00:51.821
+Nikola: Start smaller.
+
+20
+00:00:51.821 --> 00:00:55.655
+Nikola: What can the existing signals answer, and which observation is missing?
+
+21
+00:00:55.895 --> 00:00:57.327
+Tyler: That's our investigation.
+
+22
+00:00:57.327 --> 00:00:59.714
+Tyler: Broad coverage gets us oriented.
+
+23
+00:00:59.714 --> 00:01:03.534
+Tyler: Selected application detail should explain the local work.
+
+24
+00:01:03.774 --> 00:01:06.921
+Nikola: And adding a span will not magically make checkout faster.
+
+25
+00:01:06.921 --> 00:01:09.439
+Nikola: We still have to fix the actual application.
+
+26
+00:01:10.650 --> 00:01:13.958
+Tyler: Think of a trace as one linked request.
+
+27
+00:01:13.958 --> 00:01:16.026
+Tyler: Its spans describe timed operations.
+
+28
+00:01:16.026 --> 00:01:19.747
+Tyler: First, follow that request across gateway, checkout, and inventory.
+
+29
+00:01:19.987 --> 00:01:21.051
+Nikola: That gives us context.
+
+30
+00:01:21.051 --> 00:01:25.037
+Nikola: Which service deserves attention, and how does it connect to the rest of the request?
+
+31
+00:01:25.277 --> 00:01:26.964
+Tyler: Now look inside checkout.
+
+32
+00:01:26.964 --> 00:01:31.601
+Tyler: A selected application operation can become another span within that request.
+
+33
+00:01:31.841 --> 00:01:34.142
+Nikola: Same investigation, a more specific observation.
+
+34
+00:01:34.142 --> 00:01:38.362
+Nikola: We haven't replaced the service view; we've explained something inside it.
+
+35
+00:01:38.602 --> 00:01:43.097
+Tyler: One qualification: eBPF instrumentation and language agents have overlapping capabilities.
+
+36
+00:01:43.097 --> 00:01:49.391
+Tyler: This example uses broad coverage first and method detail where the question needs it.
+
+37
+00:01:50.650 --> 00:01:55.846
+Tyler: Let's establish that broad view through the shared deployment workflow.
+
+38
+00:01:55.846 --> 00:02:02.600
+Tyler: Our proposed Operator integration should manage eBPF coverage and selected language instrumentation together.
+
+39
+00:02:02.840 --> 00:02:04.534
+Nikola: Shared workflow sounds convenient.
+
+40
+00:02:04.534 --> 00:02:07.923
+Nikola: What does the platform actually have to bring?
+
+41
+00:02:08.163 --> 00:02:14.901
+Tyler: A working cluster, the applications, admission components where needed, and somewhere to export telemetry.
+
+42
+00:02:14.901 --> 00:02:17.788
+Tyler: One command can coordinate the work.
+
+43
+00:02:17.788 --> 00:02:20.676
+Tyler: It cannot make those dependencies disappear.
+
+44
+00:02:20.916 --> 00:02:24.922
+Nikola: So the command finishing is the beginning of the check, not the end.
+
+45
+00:02:25.162 --> 00:02:25.622
+Tyler: Right.
+
+46
+00:02:25.622 --> 00:02:28.837
+Tyler: The person investigating needs useful request evidence.
+
+47
+00:02:28.837 --> 00:02:36.648
+Tyler: A successful installation message doesn't tell them whether gateway, checkout, and inventory belong to the same trace.
+
+48
+00:02:36.888 --> 00:02:39.141
+Nikola: Now follow the illustrated request.
+
+49
+00:02:39.141 --> 00:02:44.100
+Nikola: Gateway reaches checkout, checkout reaches inventory, and their operations are linked.
+
+50
+00:02:44.100 --> 00:02:47.256
+Nikola: That's the baseline we're trying to establish.
+
+51
+00:02:47.496 --> 00:02:53.508
+Tyler: I want to check service identities and parent relationships before interpreting any timing.
+
+52
+00:02:53.508 --> 00:02:58.596
+Tyler: Otherwise a convincing diagram can send us toward the wrong explanation.
+
+53
+00:02:58.836 --> 00:03:00.764
+Nikola: And these bar lengths are schematic.
+
+54
+00:03:00.764 --> 00:03:04.621
+Nikola: They aren't measured latency values or a recording of a completed deployment.
+
+55
+00:03:04.861 --> 00:03:12.018
+Tyler: Once the real request path is trustworthy, we can ask a much better question than, is something somewhere slow?
+
+56
+00:03:12.258 --> 00:03:14.884
+Nikola: Which local work inside checkout explains its time?
+
+57
+00:03:14.884 --> 00:03:17.509
+Nikola: Coverage has brought us to the right door.
+
+58
+00:03:17.509 --> 00:03:19.479
+Nikola: Now we need to look inside.
+
+59
+00:03:20.650 --> 00:03:22.760
+Tyler: Stay with checkout's baseline span.
+
+60
+00:03:22.760 --> 00:03:29.091
+Tyler: Inventory is nested inside it, but the downstream call doesn't explain all the local work.
+
+61
+00:03:29.331 --> 00:03:33.136
+Nikola: Can I add the bars together and report a really impressive total?
+
+62
+00:03:33.376 --> 00:03:36.733
+Tyler: Only if you want to count some time twice.
+
+63
+00:03:36.733 --> 00:03:40.837
+Tyler: A parent span can already include the time in its children.
+
+64
+00:03:41.077 --> 00:03:41.433
+Nikola: Fair.
+
+65
+00:03:41.433 --> 00:03:46.780
+Nikola: What would everyone want to observe next: another service map, or an operation inside checkout?
+
+66
+00:03:46.780 --> 00:03:48.206
+Nikola: Give that five seconds.
+
+67
+00:03:53.446 --> 00:03:55.206
+Tyler: A local application operation.
+
+68
+00:03:55.206 --> 00:03:59.167
+Tyler: For this workload, the target is a pricing calculation.
+
+69
+00:03:59.407 --> 00:04:01.950
+Nikola: And selecting that method takes application knowledge.
+
+70
+00:04:01.950 --> 00:04:06.673
+Nikola: Someone has to know which class and operation mean something to this investigation.
+
+71
+00:04:06.913 --> 00:04:09.543
+Tyler: We aren't discovering business meaning automatically.
+
+72
+00:04:09.543 --> 00:04:13.488
+Tyler: We're choosing the observation that could close this gap.
+
+73
+00:04:13.728 --> 00:04:14.108
+Nikola: Good.
+
+74
+00:04:14.108 --> 00:04:16.007
+Nikola: A reason for more detail.
+
+75
+00:04:16.007 --> 00:04:19.426
+Nikola: Tyler, let's get that calculation into the request view.
+
+76
+00:04:20.650 --> 00:04:24.330
+Nikola: Before changing anything, say what success would look like.
+
+77
+00:04:24.330 --> 00:04:30.464
+Nikola: We want a span around the existing pricing calculation, linked inside a fresh checkout request.
+
+78
+00:04:30.704 --> 00:04:36.008
+Tyler: Same application image, more information about the work it already does?
+
+79
+00:04:36.248 --> 00:04:36.709
+Nikola: Yes.
+
+80
+00:04:36.709 --> 00:04:39.472
+Nikola: The running process can still change.
+
+81
+00:04:39.472 --> 00:04:45.458
+Nikola: With startup agent injection, adding or changing the agent can require replacement pods.
+
+82
+00:04:45.458 --> 00:04:48.682
+Nikola: No application rebuild doesn't mean no rollout.
+
+83
+00:04:48.922 --> 00:04:50.768
+Tyler: That's an important distinction.
+
+84
+00:04:50.768 --> 00:04:53.997
+Tyler: Where does the method selection come from?
+
+85
+00:04:54.237 --> 00:04:58.313
+Nikola: For this Java example, configuration identifies a class and method.
+
+86
+00:04:58.313 --> 00:05:02.796
+Nikola: The agent must load in the process and apply that setting.
+
+87
+00:05:02.796 --> 00:05:06.057
+Nikola: A configuration field alone doesn't prove either happened.
+
+88
+00:05:06.297 --> 00:05:11.765
+Tyler: So while the profile converges, we keep the original diagnostic question visible.
+
+89
+00:05:11.765 --> 00:05:19.056
+Tyler: We're waiting for a named operation in a new request, not just a green workload indicator.
+
+90
+00:05:19.296 --> 00:05:21.921
+Nikola: And keep the baseline request available.
+
+91
+00:05:21.921 --> 00:05:28.045
+Nikola: Old and new processes can coexist during a transition, and their instrumentation can differ.
+
+92
+00:05:28.045 --> 00:05:31.544
+Nikola: We need to know which request we're inspecting.
+
+93
+00:05:31.784 --> 00:05:37.991
+Tyler: There it is in the illustrated depth view: Pricing Engine calculate, inside checkout.
+
+94
+00:05:37.991 --> 00:05:41.333
+Tyler: Gateway and inventory are still around it.
+
+95
+00:05:41.573 --> 00:05:42.972
+Nikola: That's the useful change.
+
+96
+00:05:42.972 --> 00:05:47.170
+Nikola: The local operation has a name and a place in the request.
+
+97
+00:05:47.170 --> 00:05:52.417
+Nikola: An isolated method span in another trace would leave us doing the detective work ourselves.
+
+98
+00:05:52.657 --> 00:05:54.536
+Tyler: What would make you trust it?
+
+99
+00:05:54.776 --> 00:06:02.243
+Nikola: The correct parent chain, the intended producer of checkout request spans, and the baseline signals that should remain.
+
+100
+00:06:02.243 --> 00:06:07.220
+Nikola: Also, verify that the fresh request really came from the new configuration.
+
+101
+00:06:07.460 --> 00:06:10.937
+Tyler: So the prize is an explanation we can use.
+
+102
+00:06:10.937 --> 00:06:14.799
+Tyler: The extra colored bar is just how we're seeing it.
+
+103
+00:06:15.039 --> 00:06:15.437
+Nikola: Exactly.
+
+104
+00:06:15.437 --> 00:06:19.411
+Nikola: Hold onto that distinction when we compare the two views.
+
+105
+00:06:20.650 --> 00:06:24.690
+Nikola: Here's the comparison, with both requests visible together.
+
+106
+00:06:24.690 --> 00:06:30.750
+Nikola: They're separate executions, so use matching framing and a common time scale.
+
+107
+00:06:30.990 --> 00:06:35.715
+Tyler: Baseline on the left: checkout does some unnamed local work.
+
+108
+00:06:35.715 --> 00:06:40.913
+Tyler: Depth on the right: a pricing calculation is linked inside checkout.
+
+109
+00:06:41.153 --> 00:06:47.282
+Nikola: Now we can form a specific hypothesis and decide what to inspect in the application.
+
+110
+00:06:47.282 --> 00:06:49.326
+Nikola: That is the diagnostic improvement.
+
+111
+00:06:49.566 --> 00:06:51.661
+Tyler: The tracing got better.
+
+112
+00:06:51.661 --> 00:06:53.757
+Tyler: Checkout didn't get faster.
+
+113
+00:06:53.757 --> 00:06:58.472
+Tyler: We have upgraded our explanation, not our pricing algorithm.
+
+114
+00:06:58.712 --> 00:07:00.951
+Nikola: And that is still a useful result.
+
+115
+00:07:00.951 --> 00:07:06.390
+Nikola: We can act on a named operation instead of treating the whole service as one mystery interval.
+
+116
+00:07:06.630 --> 00:07:07.729
+Tyler: All right.
+
+117
+00:07:07.729 --> 00:07:09.928
+Tyler: The investigation makes sense.
+
+118
+00:07:09.928 --> 00:07:19.272
+Tyler: How do we operate these two instrumentation paths without creating another hand-maintained project for every application team?
+
+119
+00:07:20.650 --> 00:07:24.073
+Nikola: Separate the control of instrumentation from the path its telemetry takes.
+
+120
+00:07:24.073 --> 00:07:28.118
+Nikola: At the top is the proposed Operator integration and its shared deployment workflow.
+
+121
+00:07:28.358 --> 00:07:31.828
+Tyler: What is that box responsible for, in concrete terms?
+
+122
+00:07:32.068 --> 00:07:39.053
+Nikola: Selecting an enrolled workload, expressing its intended instrumentation configuration, and coordinating the changes needed to reach it.
+
+123
+00:07:39.053 --> 00:07:46.037
+Nikola: That coordination is part of the proposed integration, not a finished upstream feature we can assume exists.
+
+124
+00:07:46.277 --> 00:07:48.771
+Tyler: Underneath it, there are two paths.
+
+125
+00:07:48.771 --> 00:07:50.019
+Tyler: One configures OBI.
+
+126
+00:07:50.019 --> 00:07:53.344
+Tyler: The other selects and injects a language agent.
+
+127
+00:07:53.344 --> 00:07:57.917
+Tyler: eBPF isn't secretly installing the Java agent on its way past.
+
+128
+00:07:58.157 --> 00:07:58.611
+Nikola: Correct.
+
+129
+00:07:58.611 --> 00:07:59.971
+Nikola: They're parallel responsibilities.
+
+130
+00:07:59.971 --> 00:08:07.681
+Nikola: An Operator Instrumentation resource can describe agent settings, and injection annotations select it in the current proof.
+
+131
+00:08:07.681 --> 00:08:10.402
+Nikola: Custom orchestration handles that proof's transitions.
+
+132
+00:08:10.642 --> 00:08:18.054
+Tyler: One entry point still needs configuration ownership, explicit workload selection, and checks on the actual running result.
+
+133
+00:08:18.054 --> 00:08:22.414
+Tyler: We haven't made those responsibilities disappear behind a friendlier button.
+
+134
+00:08:22.654 --> 00:08:24.889
+Nikola: Now follow the telemetry toward the Collector.
+
+135
+00:08:24.889 --> 00:08:31.275
+Nikola: Both paths can export there, but they should not both produce the same checkout request spans without an ownership plan.
+
+136
+00:08:31.515 --> 00:08:34.499
+Tyler: So who owns checkout tracing in this example?
+
+137
+00:08:34.739 --> 00:08:36.679
+Nikola: In the intended breadth view, OBI.
+
+138
+00:08:36.679 --> 00:08:42.499
+Nikola: In the depth view, the Java agent supplies checkout request spans while the configured OBI baseline metrics remain.
+
+139
+00:08:42.499 --> 00:08:46.056
+Nikola: That ownership rule has to be verified during the transition too.
+
+140
+00:08:46.296 --> 00:08:51.859
+Tyler: Otherwise we could add detail and also add a confusing duplicate request view.
+
+141
+00:08:51.859 --> 00:08:53.571
+Tyler: More data, less understanding.
+
+142
+00:08:53.811 --> 00:08:59.067
+Nikola: The operating goal is to choose the workload and profile, then verify what's running and what's exported.
+
+143
+00:08:59.067 --> 00:09:02.159
+Nikola: A shared workflow should make that easier to do consistently.
+
+144
+00:09:02.399 --> 00:09:04.361
+Tyler: Let's test the lifecycle, then.
+
+145
+00:09:04.361 --> 00:09:09.463
+Tyler: If we own the configuration centrally, can we also manage an instrumentation upgrade?
+
+146
+00:09:10.650 --> 00:09:13.733
+Nikola: An upgrade has a requested state and an observed state.
+
+147
+00:09:13.733 --> 00:09:16.199
+Nikola: Keep both in view before and after convergence.
+
+148
+00:09:16.439 --> 00:09:18.122
+Tyler: I've changed the version field.
+
+149
+00:09:18.122 --> 00:09:20.477
+Tyler: Can I put upgraded on the slide?
+
+150
+00:09:20.717 --> 00:09:22.351
+Nikola: Your configuration has upgraded.
+
+151
+00:09:22.351 --> 00:09:24.802
+Nikola: The running process hasn't agreed yet.
+
+152
+00:09:25.042 --> 00:09:25.751
+Tyler: Fair point.
+
+153
+00:09:25.751 --> 00:09:28.235
+Tyler: What evidence gets the process a vote?
+
+154
+00:09:28.475 --> 00:09:30.693
+Nikola: Observe the running agent version.
+
+155
+00:09:30.693 --> 00:09:35.129
+Nikola: Where relevant, identify the SDK bundled inside that agent too.
+
+156
+00:09:35.129 --> 00:09:38.678
+Nikola: Those are related version numbers, not interchangeable labels.
+
+157
+00:09:38.918 --> 00:09:41.745
+Tyler: And compare the application image identity.
+
+158
+00:09:41.745 --> 00:09:50.225
+Tyler: The intended result is new instrumentation with the same application image, while acknowledging any replacement pods or restart.
+
+159
+00:09:50.465 --> 00:09:56.582
+Nikola: Then send a fresh request and check the expected method span, parent relationships, and baseline signals.
+
+160
+00:09:56.582 --> 00:10:00.404
+Nikola: Starting successfully isn't the same as exporting the right telemetry.
+
+161
+00:10:00.644 --> 00:10:08.809
+Tyler: So this complete comparison answers three questions: what did we request, what is actually running, and did we rebuild the application?
+
+162
+00:10:09.049 --> 00:10:09.359
+Nikola: Yes.
+
+163
+00:10:09.359 --> 00:10:13.080
+Nikola: A single version field would leave at least two of those open.
+
+164
+00:10:13.080 --> 00:10:18.660
+Nikola: And record the rollback path as part of the upgrade, rather than discovering it when a candidate fails.
+
+165
+00:10:18.900 --> 00:10:19.299
+Tyler: Good.
+
+166
+00:10:19.299 --> 00:10:24.480
+Tyler: Let's see whether that same lifecycle can take the extra detail away again.
+
+167
+00:10:25.650 --> 00:10:31.131
+Nikola: The investigation ends, so selected detail needs a way out as well as a way in.
+
+168
+00:10:31.131 --> 00:10:34.214
+Nikola: Retain it deliberately, or return to the breadth configuration.
+
+169
+00:10:34.454 --> 00:10:36.458
+Tyler: We're removing the method span.
+
+170
+00:10:36.458 --> 00:10:40.066
+Tyler: Unfortunately, the pricing calculation doesn't go away with it.
+
+171
+00:10:40.306 --> 00:10:42.777
+Nikola: If only performance fixes were that easy.
+
+172
+00:10:42.777 --> 00:10:47.014
+Nikola: The application still does the work; we're changing the observations it emits.
+
+173
+00:10:47.254 --> 00:10:51.848
+Tyler: With startup agent injection, removal can require replacement processes too.
+
+174
+00:10:51.848 --> 00:10:58.279
+Tyler: We request breadth, follow convergence, and keep the earlier depth request available for comparison.
+
+175
+00:10:58.519 --> 00:11:01.075
+Nikola: Now inspect the illustrated fresh baseline request.
+
+176
+00:11:01.075 --> 00:11:05.456
+Nikola: The selected method span is absent, while the service path remains connected.
+
+177
+00:11:05.696 --> 00:11:09.322
+Tyler: But one missing span doesn't prove the baseline survived.
+
+178
+00:11:09.322 --> 00:11:13.755
+Tyler: We also need the expected request relationships and the baseline metrics.
+
+179
+00:11:13.995 --> 00:11:17.090
+Nikola: And an old trace can't establish a new configuration.
+
+180
+00:11:17.090 --> 00:11:21.560
+Nikola: Use a fresh request from the converged workload and verify what actually arrived.
+
+181
+00:11:21.800 --> 00:11:24.929
+Tyler: That's the reversible part of the operating model.
+
+182
+00:11:24.929 --> 00:11:31.579
+Tyler: Depth can follow an investigation instead of becoming a permanent collection of every setting we've ever enabled.
+
+183
+00:11:31.819 --> 00:11:37.240
+Nikola: Which raises the next question: what does that detail cost, and what information makes it worth keeping?
+
+184
+00:11:37.240 --> 00:11:39.472
+Nikola: Tyler, this is where the units matter.
+
+185
+00:11:40.650 --> 00:11:43.768
+Tyler: Instrumentation cost hides more than one question.
+
+186
+00:11:43.768 --> 00:11:46.441
+Tyler: How much telemetry leaves the system?
+
+187
+00:11:46.441 --> 00:11:51.341
+Tyler: And how much application resource use is associated with producing it?
+
+188
+00:11:51.581 --> 00:11:55.318
+Nikola: I was hoping to count the spans, announce a saving, and finish early.
+
+189
+00:11:55.558 --> 00:11:56.022
+Tyler: Tempting.
+
+190
+00:11:56.022 --> 00:11:58.344
+Tyler: But which saving, measured where?
+
+191
+00:11:58.344 --> 00:12:02.523
+Tyler: Span count alone doesn't answer either of those questions.
+
+192
+00:12:02.763 --> 00:12:04.773
+Nikola: Let's start with export volume.
+
+193
+00:12:04.773 --> 00:12:06.784
+Nikola: What comparison would be useful?
+
+194
+00:12:07.024 --> 00:12:11.635
+Tyler: OTLP bytes per completed request, at a stated measurement boundary.
+
+195
+00:12:11.635 --> 00:12:15.323
+Tyler: Keep breadth, selected depth, and restored breadth together.
+
+196
+00:12:15.323 --> 00:12:21.316
+Tyler: Otherwise a smaller total might just mean that one run completed less work.
+
+197
+00:12:21.556 --> 00:12:24.158
+Nikola: The denominator gets a speaking part.
+
+198
+00:12:24.158 --> 00:12:24.592
+Nikola: Good.
+
+199
+00:12:24.592 --> 00:12:26.760
+Nikola: And the application CPU view?
+
+200
+00:12:27.000 --> 00:12:30.563
+Tyler: Compare CPU use at matched completed-request throughput.
+
+201
+00:12:30.563 --> 00:12:36.672
+Tyler: State the unit and measurement location, and say which components are included.
+
+202
+00:12:36.672 --> 00:12:42.781
+Tyler: Application CPU doesn't automatically include the node agent, Collector, network, or backend.
+
+203
+00:12:43.021 --> 00:12:50.969
+Nikola: So we can't turn a change at one layer into a claim about the entire system, or translate a span count directly into a bill.
+
+204
+00:12:51.209 --> 00:12:58.790
+Tyler: We also need comparable conditions: workload, request mix, sampling, warm-up treatment, and repeated trials.
+
+205
+00:12:58.790 --> 00:12:59.873
+Tyler: Report variation.
+
+206
+00:12:59.873 --> 00:13:07.996
+Tyler: If a configuration fails requests or slows completion, discuss that before interpreting a normalized number.
+
+207
+00:13:08.236 --> 00:13:12.806
+Nikola: Otherwise the cheapest profile might be the one that stopped doing the job.
+
+208
+00:13:12.806 --> 00:13:14.563
+Nikola: That's a fairly important footnote.
+
+209
+00:13:14.803 --> 00:13:15.273
+Tyler: Exactly.
+
+210
+00:13:15.273 --> 00:13:19.505
+Tyler: Correctness and completed work belong in the measurement context.
+
+211
+00:13:19.505 --> 00:13:23.267
+Tyler: Cost without those can be a misleading comparison.
+
+212
+00:13:23.507 --> 00:13:26.724
+Nikola: What do the empty plotting areas mean here?
+
+213
+00:13:26.964 --> 00:13:29.086
+Tyler: The measurements are still pending.
+
+214
+00:13:29.086 --> 00:13:33.330
+Tyler: There is no percentage saving to report from this illustration.
+
+215
+00:13:33.330 --> 00:13:40.968
+Tyler: A small or inconclusive difference would still help us decide, or show where the experiment needs more precision.
+
+216
+00:13:41.208 --> 00:13:47.708
+Nikola: Then the decision is specific to the service and investigation: did the information we gained justify the effect we measured?
+
+217
+00:13:47.948 --> 00:13:50.563
+Tyler: Keep detail when it earns its place.
+
+218
+00:13:50.563 --> 00:13:53.179
+Tyler: Remove it when it no longer helps.
+
+219
+00:13:53.179 --> 00:13:59.531
+Tyler: And don't promise a faster application or a smaller bill just because a graph has fewer bars.
+
+220
+00:14:00.650 --> 00:14:04.702
+Tyler: There's one more gate before relying on a profile change.
+
+221
+00:14:04.702 --> 00:14:09.159
+Tyler: A workload can accept requests while its telemetry is still wrong.
+
+222
+00:14:09.399 --> 00:14:10.888
+Nikola: The pod is green.
+
+223
+00:14:10.888 --> 00:14:13.865
+Nikola: You're saying the trace needs its own interview?
+
+224
+00:14:14.105 --> 00:14:15.561
+Tyler: A short one.
+
+225
+00:14:15.561 --> 00:14:23.813
+Tyler: A successful HTTP response doesn't establish the parent chain, the intended span producer, or the baseline signals.
+
+226
+00:14:23.813 --> 00:14:26.725
+Tyler: Application readiness answers a different question.
+
+227
+00:14:26.965 --> 00:14:29.023
+Nikola: Then put verification before promotion.
+
+228
+00:14:29.023 --> 00:14:37.251
+Nikola: Inspect a fresh request for the expected relationships, selected method detail where required, and the baseline signals that should remain.
+
+229
+00:14:37.491 --> 00:14:43.841
+Tyler: Check observed configuration and version when they're part of the change too.
+
+230
+00:14:43.841 --> 00:14:45.958
+Tyler: Desired settings describe intent.
+
+231
+00:14:45.958 --> 00:14:48.604
+Tyler: Exported telemetry helps establish behavior.
+
+232
+00:14:48.844 --> 00:14:52.521
+Nikola: How does that affect a rollout while old requests are still in flight?
+
+233
+00:14:52.761 --> 00:14:59.099
+Tyler: A candidate can stay away from normal traffic until it passes the relevant checks.
+
+234
+00:14:59.099 --> 00:15:05.890
+Tyler: The previous process may need time to finish its requests and export before it retires.
+
+235
+00:15:05.890 --> 00:15:09.965
+Tyler: Candidate checks, routing, and export drain are separate responsibilities.
+
+236
+00:15:10.205 --> 00:15:13.093
+Nikola: And those boundaries depend on the actual mechanism.
+
+237
+00:15:13.093 --> 00:15:17.787
+Nikola: They aren't all guaranteed by a ready indicator or a released Operator feature.
+
+238
+00:15:18.027 --> 00:15:22.587
+Tyler: If the checks pass, promote and retire according to that mechanism.
+
+239
+00:15:22.587 --> 00:15:27.562
+Tyler: If they fail, preserve a usable state and follow the recovery path.
+
+240
+00:15:27.562 --> 00:15:33.366
+Tyler: A rejected candidate should be something we can explain, not an unexpected plot twist.
+
+241
+00:15:33.606 --> 00:15:39.332
+Nikola: We should exercise the path between steady states, including rejection and return to breadth.
+
+242
+00:15:39.332 --> 00:15:42.195
+Nikola: Two attractive screenshots don't establish the transition.
+
+243
+00:15:42.435 --> 00:15:46.975
+Tyler: And define the load and request patterns under which those checks apply.
+
+244
+00:15:46.975 --> 00:15:50.380
+Tyler: That gives the claim a scope people can assess.
+
+245
+00:15:50.620 --> 00:15:52.311
+Nikola: Candidate, verify, promote, retire.
+
+246
+00:15:52.311 --> 00:15:59.498
+Nikola: We can use that order to reason about a change even when our platforms use different controllers.
+
+247
+00:16:00.650 --> 00:16:02.848
+Nikola: Let's make this something people can try.
+
+248
+00:16:02.848 --> 00:16:06.616
+Nikola: Pick one supported service and a question that matters to its owner.
+
+249
+00:16:06.856 --> 00:16:11.225
+Tyler: Not instrument the entire fleet and hope a question turns up?
+
+250
+00:16:11.465 --> 00:16:14.456
+Nikola: Let's give the fleet a quiet afternoon.
+
+251
+00:16:14.456 --> 00:16:16.166
+Nikola: First establish baseline telemetry.
+
+252
+00:16:16.166 --> 00:16:20.439
+Nikola: Ask whether that existing view can already answer the question.
+
+253
+00:16:20.679 --> 00:16:24.924
+Tyler: If it can, we have useful evidence without changing another profile.
+
+254
+00:16:24.924 --> 00:16:29.554
+Tyler: If it can't, what would the next observation need to tell us?
+
+255
+00:16:29.794 --> 00:16:32.573
+Nikola: Choose detail that could change the diagnosis.
+
+256
+00:16:32.573 --> 00:16:35.351
+Nikola: Work with someone who understands the application.
+
+257
+00:16:35.351 --> 00:16:42.894
+Nikola: For a named method, knowing which operation to select is part of the investigation, not an automatic discovery feature.
+
+258
+00:16:43.134 --> 00:16:53.106
+Tyler: Then apply the profile through the chosen mechanism, compare a fresh request, and check the relationships, ownership, and application identity.
+
+259
+00:16:53.346 --> 00:16:55.945
+Nikola: Measure the relevant cost under comparable load.
+
+260
+00:16:55.945 --> 00:17:01.144
+Nikola: Keep the original question beside the result: did this observation actually help answer it?
+
+261
+00:17:01.384 --> 00:17:06.900
+Tyler: That makes it harder to confuse having more telemetry with having a better answer.
+
+262
+00:17:07.140 --> 00:17:12.427
+Nikola: Decide what to retain, or remove the selected detail and verify the baseline.
+
+263
+00:17:12.427 --> 00:17:15.680
+Nikola: Keep a rollback path for the transition itself.
+
+264
+00:17:15.680 --> 00:17:20.154
+Nikola: That makes this a bounded experiment an application team can understand.
+
+265
+00:17:20.394 --> 00:17:24.820
+Tyler: What should we leave for the next person who wants to repeat it?
+
+266
+00:17:25.060 --> 00:17:33.561
+Nikola: Prerequisites, supported conditions, pinned versions, each change operation, the observations that establish success, and the recovery procedure.
+
+267
+00:17:33.561 --> 00:17:38.062
+Nikola: Enough to understand what enrolling a service will do.
+
+268
+00:17:38.302 --> 00:17:42.040
+Tyler: One service, one question, and a clear way back.
+
+269
+00:17:42.040 --> 00:17:49.517
+Tyler: That sounds like an experiment we can discuss, rather than a platform migration hidden in a debugging session.
+
+270
+00:17:50.650 --> 00:17:52.434
+Nikola: Let's test that rule.
+
+271
+00:17:52.434 --> 00:17:54.663
+Nikola: Which service is returning errors?
+
+272
+00:17:54.663 --> 00:18:00.014
+Nikola: Do you inspect existing request signals first, or add method instrumentation first?
+
+273
+00:18:00.014 --> 00:18:02.243
+Nikola: Take five seconds to choose.
+
+274
+00:18:07.483 --> 00:18:10.307
+Tyler: Start with the existing request signals.
+
+275
+00:18:10.307 --> 00:18:15.483
+Tyler: They may already identify the service and the affected request path.
+
+276
+00:18:15.723 --> 00:18:16.173
+Nikola: Correct.
+
+277
+00:18:16.173 --> 00:18:21.566
+Nikola: Now change the question: which local calculation inside checkout consumes the time?
+
+278
+00:18:21.806 --> 00:18:25.250
+Tyler: The baseline may leave that work unnamed.
+
+279
+00:18:25.250 --> 00:18:32.139
+Tyler: Now selected runtime detail is worth considering, because the question needs a different observation.
+
+280
+00:18:32.379 --> 00:18:35.381
+Nikola: Same system, different question, different next step.
+
+281
+00:18:35.381 --> 00:18:44.385
+Nikola: These are hypothetical cases, but the decision rule travels: examine the evidence you have, then add what the unanswered question needs.
+
+282
+00:18:45.650 --> 00:18:46.969
+Tyler: Back to checkout.
+
+283
+00:18:46.969 --> 00:18:51.805
+Tyler: We started with a slow service and an unexplained local interval.
+
+284
+00:18:51.805 --> 00:18:59.279
+Tyler: In the illustrated depth view, the pricing operation has a name and a place inside the request.
+
+285
+00:18:59.519 --> 00:19:01.802
+Nikola: And checkout is still slow.
+
+286
+00:19:01.802 --> 00:19:06.826
+Nikola: We should probably stop congratulating the tracing and investigate the calculation.
+
+287
+00:19:07.066 --> 00:19:08.666
+Tyler: That's the point.
+
+288
+00:19:08.666 --> 00:19:14.532
+Tyler: The explanation improved, so we have a specific operation to investigate.
+
+289
+00:19:14.532 --> 00:19:19.865
+Tyler: Broad coverage got us oriented; selected detail closed a gap.
+
+290
+00:19:20.105 --> 00:19:24.602
+Nikola: A shared deployment workflow should make those views manageable.
+
+291
+00:19:24.602 --> 00:19:32.097
+Nikola: Upgrades, removal, measured cost, and verified transitions determine whether the workflow is useful to operate.
+
+292
+00:19:32.337 --> 00:19:34.569
+Tyler: Your next step is small.
+
+293
+00:19:34.569 --> 00:19:35.908
+Tyler: Choose one service.
+
+294
+00:19:35.908 --> 00:19:39.925
+Tyler: Write down a question its current telemetry cannot answer.
+
+295
+00:19:39.925 --> 00:19:47.514
+Tyler: Identify the observation that could close that gap, and what would convince you the change is correct.
+
+296
+00:19:47.754 --> 00:19:52.575
+Nikola: Keep the detail that helps, and remove it when it no longer earns its place.
+
+297
+00:19:52.815 --> 00:19:53.806
+Tyler: Start broad.
+
+298
+00:19:53.806 --> 00:19:55.789
+Tyler: Add depth with purpose.
+
+299
+00:19:55.789 --> 00:19:58.267
+Tyler: Manage and verify the profile.
+
+300
+00:19:58.267 --> 00:19:59.258
+Tyler: Thank you.

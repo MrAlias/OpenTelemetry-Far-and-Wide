@@ -1,0 +1,442 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: far-wide-proof
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: proof-config
+  namespace: far-wide-proof
+data:
+  obi.yaml: |
+    ebpf:
+      high_request_volume: true
+    attributes:
+      kubernetes:
+        enable: true
+    discovery:
+      exclude_otel_instrumented_services: false
+    metrics:
+      features:
+      - application
+    otel_metrics_export:
+      endpoint: http://collector:4318
+      protocol: http/protobuf
+    otel_traces_export:
+      batch_timeout: 1s
+      endpoint: http://collector:4318
+      protocol: http/protobuf
+    routes:
+      patterns:
+      - /checkout
+      - /inventory
+      unmatched: path
+  collector.yaml: |
+    exporters:
+      file:
+        flush_interval: 1s
+        path: /evidence/telemetry.jsonl
+    receivers:
+      otlp:
+        protocols:
+          http:
+            endpoint: 0.0.0.0:4318
+    service:
+      pipelines:
+        metrics:
+          exporters:
+          - file
+          receivers:
+          - otlp
+        traces:
+          exporters:
+          - file
+          receivers:
+          - otlp
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: proof-agent
+  namespace: far-wide-proof
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: far-wide-proof-metadata
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - pods
+  - nodes
+  - namespaces
+  - services
+  - replicationcontrollers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - replicasets
+  - statefulsets
+  - daemonsets
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: far-wide-proof-metadata
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: far-wide-proof-metadata
+subjects:
+- kind: ServiceAccount
+  name: proof-agent
+  namespace: far-wide-proof
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collector
+  namespace: far-wide-proof
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: collector
+  template:
+    metadata:
+      labels:
+        app: collector
+    spec:
+      containers:
+      - name: collector
+        image: otel/opentelemetry-collector-contrib:0.160.0
+        args:
+        - --config=/config/collector.yaml
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: evidence
+          mountPath: /evidence
+      - name: evidence
+        image: python:3.13-alpine
+        command:
+        - python3
+        - /scripts/evidence_server.py
+        volumeMounts:
+        - name: evidence
+          mountPath: /evidence
+        - name: server
+          mountPath: /scripts
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: proof-config
+      - name: evidence
+        emptyDir: {}
+      - name: server
+        configMap:
+          name: proof-evidence-server
+      securityContext:
+        fsGroup: 10001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: collector
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: collector
+  ports:
+  - name: otlp
+    port: 4318
+  - name: evidence
+    port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: far-wide-proof
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: far-wide-proof-gateway:local
+        imagePullPolicy: Never
+        env:
+        - name: PROOF_NAMESPACE
+          value: far-wide-proof
+        - name: PROOF_SERVICE
+          value: gateway
+        - name: PROOF_POD
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        terminationMessagePolicy: FallbackToLogsOnError
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: gateway
+  ports:
+  - name: http
+    port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: far-wide-proof
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: checkout
+  template:
+    metadata:
+      labels:
+        app: checkout
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: 'false'
+    spec:
+      containers:
+      - name: checkout
+        image: far-wide-proof-checkout:local
+        imagePullPolicy: Never
+        env:
+        - name: PROOF_NAMESPACE
+          value: far-wide-proof
+        - name: PROOF_SERVICE
+          value: checkout
+        - name: PROOF_POD
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        terminationMessagePolicy: FallbackToLogsOnError
+      readinessGates:
+      - conditionType: proof.opentelemetry.io/telemetry-ready
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: checkout-router
+  ports:
+  - name: http
+    port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory
+  namespace: far-wide-proof
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: inventory
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      containers:
+      - name: inventory
+        image: far-wide-proof-inventory:local
+        imagePullPolicy: Never
+        env:
+        - name: PROOF_NAMESPACE
+          value: far-wide-proof
+        - name: PROOF_SERVICE
+          value: inventory
+        - name: PROOF_POD
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        terminationMessagePolicy: FallbackToLogsOnError
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: inventory
+  ports:
+  - name: http
+    port: 8080
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: proof-agent
+  namespace: far-wide-proof
+spec:
+  selector:
+    matchLabels:
+      app: proof-agent
+  template:
+    metadata:
+      labels:
+        app: proof-agent
+    spec:
+      serviceAccountName: proof-agent
+      hostPID: true
+      tolerations:
+      - operator: Exists
+      containers:
+      - name: agent
+        image: far-wide-proof-agent:local
+        imagePullPolicy: Never
+        securityContext:
+          privileged: true
+        env:
+        - name: OTEL_EBPF_BPF_CONTEXT_PROPAGATION
+          value: headers
+        - name: OTEL_METRIC_EXPORT_INTERVAL
+          value: '1000'
+        volumeMounts:
+        - name: config
+          mountPath: /config
+        - name: btf
+          mountPath: /sys/kernel/btf
+          readOnly: true
+        ports:
+        - containerPort: 7777
+        readinessProbe:
+          httpGet:
+            path: /state
+            port: 7777
+          periodSeconds: 1
+      volumes:
+      - name: config
+        configMap:
+          name: proof-config
+      - name: btf
+        hostPath:
+          path: /sys/kernel/btf
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proof-agent
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: proof-agent
+  ports:
+  - name: state
+    port: 7777
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout-router
+  namespace: far-wide-proof
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: checkout-router
+  template:
+    metadata:
+      labels:
+        app: checkout-router
+    spec:
+      containers:
+      - name: router
+        image: far-wide-proof-router:local
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        - containerPort: 7778
+        readinessProbe:
+          httpGet:
+            path: /state
+            port: 7778
+          periodSeconds: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout-router
+  namespace: far-wide-proof
+spec:
+  selector:
+    app: checkout-router
+  ports:
+  - name: admin
+    port: 7778

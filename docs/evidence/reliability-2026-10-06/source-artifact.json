@@ -1,0 +1,6 @@
+{
+  "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/releases/download/v0.14.0/obi-v0.14.0-source-generated.tar.gz",
+  "sha256": "c6ff8d052da23695b46b94678b611d19a3f50b9b3800d1b5d54f5f586ce08eaf",
+  "release": "v0.14.0",
+  "source_commit": "13d9b0c3f600a060bd78820a63ebec882b10757e"
+}

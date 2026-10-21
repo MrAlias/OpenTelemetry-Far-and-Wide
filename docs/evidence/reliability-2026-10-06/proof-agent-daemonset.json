@@ -1,0 +1,130 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "DaemonSet",
+    "metadata": {
+        "annotations": {
+            "deprecated.daemonset.template.generation": "1",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"DaemonSet\",\"metadata\":{\"annotations\":{},\"name\":\"proof-agent\",\"namespace\":\"far-wide-proof\"},\"spec\":{\"selector\":{\"matchLabels\":{\"app\":\"proof-agent\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"proof-agent\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"OTEL_EBPF_BPF_CONTEXT_PROPAGATION\",\"value\":\"headers\"},{\"name\":\"OTEL_METRIC_EXPORT_INTERVAL\",\"value\":\"1000\"}],\"image\":\"far-wide-proof-agent:local\",\"imagePullPolicy\":\"Never\",\"name\":\"agent\",\"ports\":[{\"containerPort\":7777}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/state\",\"port\":7777},\"periodSeconds\":1},\"securityContext\":{\"privileged\":true},\"volumeMounts\":[{\"mountPath\":\"/config\",\"name\":\"config\"},{\"mountPath\":\"/sys/kernel/btf\",\"name\":\"btf\",\"readOnly\":true}]}],\"hostPID\":true,\"serviceAccountName\":\"proof-agent\",\"tolerations\":[{\"operator\":\"Exists\"}],\"volumes\":[{\"configMap\":{\"name\":\"proof-config\"},\"name\":\"config\"},{\"hostPath\":{\"path\":\"/sys/kernel/btf\",\"type\":\"Directory\"},\"name\":\"btf\"}]}}}}\n"
+        },
+        "creationTimestamp": "2026-10-06T19:19:54Z",
+        "generation": 1,
+        "name": "proof-agent",
+        "namespace": "far-wide-proof",
+        "resourceVersion": "787",
+        "uid": "1fea65e5-03e2-4759-b91e-13cd93c13e83"
+    },
+    "spec": {
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "app": "proof-agent"
+            }
+        },
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "proof-agent"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "OTEL_EBPF_BPF_CONTEXT_PROPAGATION",
+                                "value": "headers"
+                            },
+                            {
+                                "name": "OTEL_METRIC_EXPORT_INTERVAL",
+                                "value": "1000"
+                            }
+                        ],
+                        "image": "far-wide-proof-agent:local",
+                        "imagePullPolicy": "Never",
+                        "name": "agent",
+                        "ports": [
+                            {
+                                "containerPort": 7777,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/state",
+                                "port": 7777,
+                                "scheme": "HTTP"
+                            },
+                            "periodSeconds": 1,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {},
+                        "securityContext": {
+                            "privileged": true
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/config",
+                                "name": "config"
+                            },
+                            {
+                                "mountPath": "/sys/kernel/btf",
+                                "name": "btf",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "hostPID": true,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "proof-agent",
+                "serviceAccountName": "proof-agent",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "operator": "Exists"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "configMap": {
+                            "defaultMode": 420,
+                            "name": "proof-config"
+                        },
+                        "name": "config"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/sys/kernel/btf",
+                            "type": "Directory"
+                        },
+                        "name": "btf"
+                    }
+                ]
+            }
+        },
+        "updateStrategy": {
+            "rollingUpdate": {
+                "maxSurge": 0,
+                "maxUnavailable": 1
+            },
+            "type": "RollingUpdate"
+        }
+    },
+    "status": {
+        "currentNumberScheduled": 1,
+        "desiredNumberScheduled": 1,
+        "numberAvailable": 1,
+        "numberMisscheduled": 0,
+        "numberReady": 1,
+        "observedGeneration": 1,
+        "updatedNumberScheduled": 1
+    }
+}

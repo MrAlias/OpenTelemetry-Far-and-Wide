@@ -1,0 +1,42 @@
+{
+  "label": "rehearsal-20261006t191744z-a47a23-depth-2",
+  "mode": "transition",
+  "count": 131,
+  "requested_count": 80,
+  "concurrency": 1,
+  "interval": 0.4,
+  "transition": "depth",
+  "reject_candidate": false,
+  "drain_seconds": 20,
+  "capture_errors": [],
+  "telemetry_snapshot_attempts": 1,
+  "captured_at": "2026-10-06T19:25:03.849872+00:00",
+  "harness_source_sha256": {
+    "scripts/analyze.py": "5df50e63c71744f2c4ef92874ea0cbd604abff7f2a04cccbdc71c4766bf6dff4",
+    "scripts/capture.py": "03d77324816403e3d3532e3312282174acd02bb6c002f542293cb8a00e986e36",
+    "scripts/evidence_server.py": "dd532f6dbc082939f4b7a5f73b4b249c6d9390e31cde62e73fd654f8b5b31cd4",
+    "scripts/handoff.py": "e2e2a5777fb64b63316afb6c840e6307fc766d5ed25b77897c514b22e1c3ef64",
+    "scripts/prepare.py": "5a231d8fa1ec392a467a54f7fac32493551d75530baf07c0449fce21d193f0fd",
+    "scripts/proof.sh": "357a1493b4c01087cc548b75e15f24487e2872e40e00b7083ca07d780e7ac134",
+    "scripts/rehearse.py": "5c6ff03de389bc4937b1e0a545daa593d865b20fa21d3c0920edaee3716e3264",
+    "scripts/replay.py": "dafd3698a26b6c645dee23a6245c29c8c15f32fce1edcd0e9b2810aabab1b880",
+    "scripts/verify_rollout.py": "b2960e5c6d41c02ebc10cce8a06e6b6c82a3e5737bd67334faf55d18461897e0",
+    "agent/Dockerfile": "7e146caa2d4e383101ac6af9a7d370355c9176f6759f7db6a55e6ac075d2644f",
+    "agent/main.go": "24f5222bd7b40d5ac8962990dd76eae404f5ff92b21099702421209379d2f787",
+    "router/Dockerfile": "a5eb39d783f922d7f6b34b4bd47a7ebffc73472223963767168dd7800de51728",
+    "router/main.go": "a4a17b214269bc999e941974a25bad384c32e90ec53d4359f76883df0a124174",
+    "router/main_test.go": "209be99cefabee07f9e2c4409bef36f2757d919f5e77053faa3dfda53673c5b6",
+    "k8s/breadth.yaml": "e8cd65027c63f599529821c14d0f8bd4b2a0aa1e048d9c861adc8b37c150af7e",
+    "k8s/depth.yaml": "5d821c72575351beb42cfe90874da5b3161221fc690fb6c489d5286b6dfa2071",
+    "k8s/operator-values.yaml": "de24df8613bc2439dfecab7a3536eedc7d07aa1177a0aaf8a1ff20be2a9876fd"
+  },
+  "application_source_sha256": {
+    "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+    "apps/checkout/Checkout.java": "a2002f0015f484aa486aec3f846bd1742a89bc08abe1e772389c9486d4c92a3c",
+    "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+    "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+    "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+  },
+  "telemetry_sha256": "d51035df1776b063796c139ae8745e2bf5e887bed8ddd714bbd6282e6b67327f",
+  "verifier_sha256": "5df50e63c71744f2c4ef92874ea0cbd604abff7f2a04cccbdc71c4766bf6dff4"
+}

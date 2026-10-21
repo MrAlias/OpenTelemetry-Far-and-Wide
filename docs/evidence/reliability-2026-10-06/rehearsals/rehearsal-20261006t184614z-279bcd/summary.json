@@ -1,0 +1,14 @@
+{
+  "label": "rehearsal-20261006t184614z-279bcd",
+  "passed": false,
+  "cycles": 3,
+  "captures": [
+    {
+      "stage": "breadth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t184614z-279bcd-breadth-20261006T185010Z-c0b8c0",
+      "passed": true,
+      "requests": 40
+    }
+  ],
+  "error": "Command '['/usr/bin/python3', '/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/scripts/capture.py', 'rehearsal-20261006t184614z-279bcd-depth-1', '--mode', 'transition', '--count', '240', '--concurrency', '4', '--transition', 'depth']' returned non-zero exit status 1."
+}

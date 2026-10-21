@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "errors": [],
+  "expected_requests_by_pod": {
+    "checkout-6c5c486bdb-xk5t8": 284,
+    "gateway-7c9b8579f8-bnrf2": 404,
+    "inventory-56bcbbdcc8-sfhw7": 404,
+    "checkout-5544db7569-p57mb": 120
+  },
+  "observed_count_increments_by_pod": {
+    "checkout-6c5c486bdb-xk5t8": 284,
+    "gateway-7c9b8579f8-bnrf2": 404,
+    "inventory-56bcbbdcc8-sfhw7": 406,
+    "checkout-5544db7569-p57mb": 120
+  },
+  "baseline": {
+    "inventory-56bcbbdcc8-sfhw7": 500,
+    "checkout-5544db7569-t6wq8": 353,
+    "gateway-7c9b8579f8-bnrf2": 496,
+    "checkout-6c5c486bdb-xk5t8": 145,
+    "checkout-5544db7569-p57mb": 1
+  }
+}

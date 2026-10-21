@@ -1,0 +1,8 @@
+**
+!agent/
+!agent/main.go
+!agent/Dockerfile
+!.artifacts/
+!.artifacts/obi/
+!.artifacts/obi/obi-v0.14.0-source-generated/
+!.artifacts/obi/obi-v0.14.0-source-generated/**

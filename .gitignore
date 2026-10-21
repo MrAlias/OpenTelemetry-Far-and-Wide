@@ -3,9 +3,19 @@ dist/
 .slidev/
 
 # Slide and demo output
+.artifacts/
+# Rebuildable animation media; source and player remain versioned.
+public/animation/*.mp4
+public/animation/*.m4a
+public/animation/clips/*.mp4
+public/animation/explainers/*.mp4
+public/animation/narration/*.m4a
+public/animation/narration/*.mp3
 *.pdf
 *.pptx
 coverage/
+demo/proof/.artifacts/
+__pycache__/
 
 # Local configuration and editor files
 .env

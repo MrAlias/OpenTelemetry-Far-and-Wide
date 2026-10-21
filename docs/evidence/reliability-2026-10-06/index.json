@@ -1,0 +1,256 @@
+{
+  "captures": [
+    {
+      "capture": "rehearsal-20261006t183930z-f769ab-breadth-20261006T183946Z-7573d6",
+      "archive": "rehearsal-20261006t183930z-f769ab-breadth-20261006T183946Z-7573d6.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t183930z-f769ab-depth-1-20261006T184013Z-6e9f40",
+      "archive": "rehearsal-20261006t183930z-f769ab-depth-1-20261006T184013Z-6e9f40.tar.gz",
+      "status": "observed",
+      "passed": false,
+      "requests": 1000,
+      "passed_requests": 996,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t184614z-279bcd-breadth-20261006T185010Z-c0b8c0",
+      "archive": "rehearsal-20261006t184614z-279bcd-breadth-20261006T185010Z-c0b8c0.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t184614z-279bcd-depth-1-20261006T185037Z-468e71",
+      "archive": "rehearsal-20261006t184614z-279bcd-depth-1-20261006T185037Z-468e71.tar.gz",
+      "status": "observed",
+      "passed": false,
+      "requests": 1000,
+      "passed_requests": 995,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t185603z-c332c2-breadth-1-20261006T190049Z-f12b92",
+      "archive": "rehearsal-20261006t185603z-c332c2-breadth-1-20261006T190049Z-f12b92.tar.gz",
+      "status": "observed",
+      "passed": false,
+      "requests": 146,
+      "passed_requests": 132,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t185603z-c332c2-breadth-20261006T185904Z-81561b",
+      "archive": "rehearsal-20261006t185603z-c332c2-breadth-20261006T185904Z-81561b.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t185603z-c332c2-depth-1-20261006T185943Z-b6f2ea",
+      "archive": "rehearsal-20261006t185603z-c332c2-depth-1-20261006T185943Z-b6f2ea.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 109,
+      "passed_requests": 109,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-breadth-1-20261006T190953Z-901ae5",
+      "archive": "rehearsal-20261006t190737z-c8614b-breadth-1-20261006T190953Z-901ae5.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 404,
+      "passed_requests": 404,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-breadth-2-20261006T191205Z-bd1446",
+      "archive": "rehearsal-20261006t190737z-c8614b-breadth-2-20261006T191205Z-bd1446.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 396,
+      "passed_requests": 396,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-breadth-20261006T190818Z-0fdf0e",
+      "archive": "rehearsal-20261006t190737z-c8614b-breadth-20261006T190818Z-0fdf0e.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-breadth-3-20261006T191413Z-63d12e",
+      "archive": "rehearsal-20261006t190737z-c8614b-breadth-3-20261006T191413Z-63d12e.tar.gz",
+      "status": "observed",
+      "passed": false,
+      "requests": 380,
+      "passed_requests": 378,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-depth-1-20261006T190844Z-718070",
+      "archive": "rehearsal-20261006t190737z-c8614b-depth-1-20261006T190844Z-718070.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 456,
+      "passed_requests": 456,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-depth-2-20261006T191056Z-eecd7d",
+      "archive": "rehearsal-20261006t190737z-c8614b-depth-2-20261006T191056Z-eecd7d.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 456,
+      "passed_requests": 456,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t190737z-c8614b-depth-3-20261006T191308Z-950419",
+      "archive": "rehearsal-20261006t190737z-c8614b-depth-3-20261006T191308Z-950419.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 404,
+      "passed_requests": 404,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "rehearsal-20261006t191551z-0d89e8-breadth-20261006T191620Z-6171b3",
+      "archive": "rehearsal-20261006t191551z-0d89e8-breadth-20261006T191620Z-6171b3.tar.gz",
+      "status": "interrupted",
+      "passed": false,
+      "requests": null,
+      "passed_requests": null,
+      "fixture": "synchronous"
+    },
+    {
+      "capture": "reliable-breadth-20261006T183517Z-7f29ed",
+      "archive": "reliable-breadth-20261006T183517Z-7f29ed.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "reliable-to-breadth-1-20261006T183752Z-a016c9",
+      "archive": "reliable-to-breadth-1-20261006T183752Z-a016c9.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 408,
+      "passed_requests": 408,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "reliable-to-depth-1-20261006T183613Z-5f899e",
+      "archive": "reliable-to-depth-1-20261006T183613Z-5f899e.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 520,
+      "passed_requests": 520,
+      "fixture": "original-httpclient"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-20261006T192039Z-3f0357",
+      "archive": "rehearsal-20261006t191744z-a47a23-breadth-20261006T192039Z-3f0357.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 40,
+      "passed_requests": 40,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-1-20261006T192118Z-e1c03e",
+      "archive": "rehearsal-20261006t191744z-a47a23-depth-1-20261006T192118Z-e1c03e.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 147,
+      "passed_requests": 147,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-1-20261006T192239Z-970d4c",
+      "archive": "rehearsal-20261006t191744z-a47a23-breadth-1-20261006T192239Z-970d4c.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 116,
+      "passed_requests": 116,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-2-20261006T192348Z-4030cd",
+      "archive": "rehearsal-20261006t191744z-a47a23-depth-2-20261006T192348Z-4030cd.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 131,
+      "passed_requests": 131,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-2-20261006T192504Z-6a8bad",
+      "archive": "rehearsal-20261006t191744z-a47a23-breadth-2-20261006T192504Z-6a8bad.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 115,
+      "passed_requests": 115,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-depth-3-20261006T192613Z-dc8340",
+      "archive": "rehearsal-20261006t191744z-a47a23-depth-3-20261006T192613Z-dc8340.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 129,
+      "passed_requests": 129,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-breadth-3-20261006T192728Z-30aa57",
+      "archive": "rehearsal-20261006t191744z-a47a23-breadth-3-20261006T192728Z-30aa57.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 113,
+      "passed_requests": 113,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91",
+      "archive": "rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 96,
+      "passed_requests": 96,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-recovered-depth-20261006T192940Z-ec91b0",
+      "archive": "rehearsal-20261006t191744z-a47a23-recovered-depth-20261006T192940Z-ec91b0.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 83,
+      "passed_requests": 83,
+      "fixture": "synchronous-serial"
+    },
+    {
+      "capture": "rehearsal-20261006t191744z-a47a23-recovered-breadth-20261006T193039Z-7209b7",
+      "archive": "rehearsal-20261006t191744z-a47a23-recovered-breadth-20261006T193039Z-7209b7.tar.gz",
+      "status": "observed",
+      "passed": true,
+      "requests": 116,
+      "passed_requests": 116,
+      "fixture": "synchronous-serial"
+    }
+  ]
+}

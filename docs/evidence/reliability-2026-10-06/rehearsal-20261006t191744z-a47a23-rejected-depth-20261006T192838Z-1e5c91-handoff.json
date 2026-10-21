@@ -1,0 +1,73 @@
+{
+  "profile": "depth",
+  "events": [
+    {
+      "event": "profile_requested",
+      "time_ns": 1791314922143787365
+    },
+    {
+      "event": "candidate_started",
+      "time_ns": 1791314927590959374,
+      "target": {
+        "pod": "checkout-6c5c486bdb-ff7vb",
+        "ip": "10.244.0.18"
+      }
+    },
+    {
+      "event": "admission_probe",
+      "time_ns": 1791314928105144250,
+      "trace_id": "75080c7a7cd7b2e02d0bc9e47b6adb5a",
+      "status": 200
+    },
+    {
+      "event": "admission_probe",
+      "time_ns": 1791314941095555336,
+      "trace_id": "93778c35f07191f883c4c556b090784f",
+      "status": 200
+    },
+    {
+      "event": "candidate_telemetry_verified",
+      "time_ns": 1791314949852334684,
+      "trace_id": "93778c35f07191f883c4c556b090784f",
+      "metric_verified": true
+    },
+    {
+      "event": "handoff_failed",
+      "time_ns": 1791314949853335641
+    }
+  ],
+  "passed": false,
+  "reject_candidate": true,
+  "old_target": {
+    "pod": "checkout-5544db7569-v9h4c",
+    "ip": "10.244.0.17"
+  },
+  "new_target": {
+    "pod": "checkout-6c5c486bdb-ff7vb",
+    "ip": "10.244.0.18"
+  },
+  "admission_probes": [
+    {
+      "trace_id": "75080c7a7cd7b2e02d0bc9e47b6adb5a",
+      "parent_span_id": "766af884801653fc",
+      "start_ns": 1791314927792811562,
+      "status": 200,
+      "body": "{\"price\":42,\"inventory\":{\"available\":true}}\n",
+      "end_ns": 1791314928105131327,
+      "admission_errors": []
+    },
+    {
+      "trace_id": "93778c35f07191f883c4c556b090784f",
+      "parent_span_id": "215db090918b56c9",
+      "start_ns": 1791314940920343483,
+      "status": 200,
+      "body": "{\"price\":42,\"inventory\":{\"available\":true}}\n",
+      "end_ns": 1791314941095523346,
+      "admission_errors": []
+    }
+  ],
+  "candidate_metric_baseline": {
+    "checkout-6c5c486bdb-ff7vb": 1
+  },
+  "error": "Deliberate candidate rejection before routing"
+}

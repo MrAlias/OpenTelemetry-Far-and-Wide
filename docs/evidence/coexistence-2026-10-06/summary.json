@@ -1,0 +1,457 @@
+{
+  "date": "2026-10-06",
+  "timezone": "America/Los_Angeles",
+  "verdict": "steady states demonstrated; rollout continuity gate failed",
+  "raw_telemetry_sha256": "fd21e8b0f383c41acef12fdf1f55751099317925080e2e1979149676db82a4fc",
+  "raw_telemetry_collection_ns": 1791308040652931336,
+  "verifier_sha256": "9f0ba6dc1a25848f7a339c4a50baa00068dd4fc1b5a601a58a88b26d741bcfb5",
+  "runs": [
+    {
+      "directory": "initial-breadth-20261006T172748Z-4df851",
+      "label": "initial-breadth",
+      "mode": "breadth",
+      "requests": 20,
+      "passed_requests": 20,
+      "trace_gate_passed": true,
+      "rollout_passed": true,
+      "http_200": 20,
+      "method_spans": 0,
+      "source_hashes": {
+        "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+        "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+        "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+        "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+        "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+      },
+      "application_image_ids": {
+        "checkout": "sha256:6af74d15ddf7da3d47ec8ca94b0600eb4f8c2c79d1375a3caabf454d543efc05",
+        "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+        "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+      },
+      "drain_seconds_observed": 363.062,
+      "failing_requests": [],
+      "archive": "initial-breadth-20261006T172748Z-4df851.tar.gz",
+      "archive_sha256": "6048dcb65696d15c082d67fad17626e7ba20895684752044c8670ef120eb1c17"
+    },
+    {
+      "directory": "restored-breadth-20261006T173247Z-5437c4",
+      "label": "restored-breadth",
+      "mode": "breadth",
+      "requests": 20,
+      "passed_requests": 20,
+      "trace_gate_passed": true,
+      "rollout_passed": true,
+      "http_200": 20,
+      "method_spans": 0,
+      "source_hashes": {
+        "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+        "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+        "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+        "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+        "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+      },
+      "application_image_ids": {
+        "checkout": "sha256:6af74d15ddf7da3d47ec8ca94b0600eb4f8c2c79d1375a3caabf454d543efc05",
+        "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+        "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+      },
+      "drain_seconds_observed": 63.726,
+      "failing_requests": [],
+      "archive": "restored-breadth-20261006T173247Z-5437c4.tar.gz",
+      "archive_sha256": "7628875e39440db2d5a26bb94d18f6aa084e0af0a3404437f2015f88fea1303a"
+    },
+    {
+      "directory": "sdk-depth-20261006T173029Z-30eb0b",
+      "label": "sdk-depth",
+      "mode": "depth",
+      "requests": 40,
+      "passed_requests": 40,
+      "trace_gate_passed": true,
+      "rollout_passed": true,
+      "http_200": 40,
+      "method_spans": 40,
+      "source_hashes": {
+        "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+        "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+        "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+        "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+        "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+      },
+      "application_image_ids": {
+        "checkout": "sha256:6af74d15ddf7da3d47ec8ca94b0600eb4f8c2c79d1375a3caabf454d543efc05",
+        "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+        "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+      },
+      "drain_seconds_observed": 193.879,
+      "failing_requests": [],
+      "archive": "sdk-depth-20261006T173029Z-30eb0b.tar.gz",
+      "archive_sha256": "a000d4ee1dab4102ea5b1d6b2334509f114ae93366f6799f7e5c6cd6bfcd7570"
+    },
+    {
+      "directory": "to-breadth-20261006T173130Z-907aa4",
+      "label": "to-breadth",
+      "mode": "transition",
+      "requests": 80,
+      "passed_requests": 65,
+      "trace_gate_passed": false,
+      "rollout_passed": true,
+      "http_200": 78,
+      "method_spans": 9,
+      "source_hashes": {
+        "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+        "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+        "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+        "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+        "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+      },
+      "application_image_ids": {
+        "checkout": "sha256:6af74d15ddf7da3d47ec8ca94b0600eb4f8c2c79d1375a3caabf454d543efc05",
+        "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+        "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+      },
+      "drain_seconds_observed": 116.379,
+      "failing_requests": [
+        {
+          "index": 9,
+          "trace_id": "031d690de0078eebbe08ab10d86d73c8",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0",
+            "request status 502"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 10,
+          "trace_id": "fbeba0ad46563a88675451fc48ab6413",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0",
+            "request status 502"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 11,
+          "trace_id": "1abeabf081c0c694e328ceb418903c53",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 12,
+          "trace_id": "efb924629f5546d60d2cd40cc228ffb9",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 13,
+          "trace_id": "e69947a89b4b4197b8e42ca54cc31566",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 14,
+          "trace_id": "63292f1302ee2d6fbb81b8519aa9ccc7",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 15,
+          "trace_id": "78bf589473fc611c237b120b2975347e",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 16,
+          "trace_id": "f09889e544e4e6152010008f05f21b2c",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 17,
+          "trace_id": "544b5ef162f79839dd90a3b973239e21",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 18,
+          "trace_id": "03e977e7df79277d0acf5bdd7bdfaf92",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 19,
+          "trace_id": "66af9f23282df445d9235f06ea9a8632",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 20,
+          "trace_id": "bc5908788b5400948b802774114b8509",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 21,
+          "trace_id": "ab519146f300f5a0b0bc6da6e1d20f55",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 22,
+          "trace_id": "7811962555b16373be288272fece5429",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        },
+        {
+          "index": 23,
+          "trace_id": "2bc5e0e9342f409f1c222cc688384c24",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0",
+            "('inventory', 2): expected one span, observed 0"
+          ],
+          "spans": 4,
+          "method_spans": 0
+        }
+      ],
+      "archive": "to-breadth-20261006T173130Z-907aa4.tar.gz",
+      "archive_sha256": "19c7f7db077e008c74cb5f80da17a4c78ba49defc1c29a2e1dd0662f7d6e8711"
+    },
+    {
+      "directory": "to-depth-20261006T172917Z-e3370f",
+      "label": "to-depth",
+      "mode": "transition",
+      "requests": 80,
+      "passed_requests": 71,
+      "trace_gate_passed": false,
+      "rollout_passed": true,
+      "http_200": 80,
+      "method_spans": 44,
+      "source_hashes": {
+        "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+        "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+        "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+        "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+        "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+      },
+      "application_image_ids": {
+        "checkout": "sha256:6af74d15ddf7da3d47ec8ca94b0600eb4f8c2c79d1375a3caabf454d543efc05",
+        "gateway": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+        "inventory": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c"
+      },
+      "drain_seconds_observed": 249.932,
+      "failing_requests": [
+        {
+          "index": 27,
+          "trace_id": "e13066fc62c69ce8137b7a81028aedf3",
+          "passed": false,
+          "errors": [
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 6,
+          "method_spans": 0
+        },
+        {
+          "index": 28,
+          "trace_id": "2fe2d18a16b9cb65e3c7a2c7d188a2fa",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 29,
+          "trace_id": "5982b05bc50c2f3470c92349eed28fd0",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 30,
+          "trace_id": "c3c56b5591356718aa2ab1ec7355fb68",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 31,
+          "trace_id": "c2d314816bba8f4c8bf626c06d593f6f",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 32,
+          "trace_id": "6e1dd2f6523839cccf36f90af0ca4636",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 33,
+          "trace_id": "37a2412cece8e3cb9463c3660205c50e",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 34,
+          "trace_id": "cea1a7bd79099f2dc42487df8e2c7bd7",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        },
+        {
+          "index": 35,
+          "trace_id": "491abd59486f65e1253a6a6f36bce287",
+          "passed": false,
+          "errors": [
+            "('checkout', 2): expected one span, observed 0",
+            "('checkout', 3): expected one span, observed 0"
+          ],
+          "spans": 5,
+          "method_spans": 0
+        }
+      ],
+      "archive": "to-depth-20261006T172917Z-e3370f.tar.gz",
+      "archive_sha256": "37327938969441d6aa87fdec5fffde9553999d5aed06b593a9895ec6cc35e6ac"
+    }
+  ],
+  "application_images_unchanged_across_all_states": true,
+  "application_sources_unchanged_across_all_states": true,
+  "duplicate_request_roles_observed": false,
+  "corrected_capture_validation": {
+    "directory": "bounded-drain-breadth-retry-20261006T174000Z-dea626",
+    "requests": 20,
+    "passed_requests": 20,
+    "passed": true,
+    "drain_seconds": 20,
+    "snapshot_attempts": 20,
+    "archive": "bounded-drain-breadth-retry-20261006T174000Z-dea626.tar.gz",
+    "archive_sha256": "c8102ceca2e9232f10c6cd396aafe8bc479ca98a9e9ae199d33bb89476235196",
+    "incomplete_snapshots_represented_as_verified_prefixes": 19
+  },
+  "collection_error_preserved": {
+    "directory": "bounded-drain-breadth-20261006T173751Z-fbb105",
+    "cause": "Concurrent Collector file append produced an incomplete final JSON record; no runtime verdict assigned",
+    "archive": "bounded-drain-breadth-20261006T173751Z-fbb105.tar.gz",
+    "archive_sha256": "028b7e2984c978c279bd1daedf16d04360ed8bd856b030d9eec386270c47742d"
+  },
+  "final_capture_tool_sha256": "b3cbea0fd81de49bfc1bdbe936a8c52ea8d514c6bd8a0bf4592fb212382c03c5",
+  "method_duration_ms": {
+    "min": 150.122527,
+    "max": 150.435147,
+    "requests": 40
+  },
+  "java_sdk_version_observed": "1.64.0",
+  "compiled_source_inputs": {
+    "obi_archive_sha256": "c6ff8d052da23695b46b94678b611d19a3f50b9b3800d1b5d54f5f586ce08eaf"
+  }
+}

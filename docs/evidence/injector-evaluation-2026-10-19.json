@@ -1,0 +1,194 @@
+{
+  "research_date": "2026-10-19",
+  "scope": "Pinned source review, offline policy/schema and YAML checks, Linux environment-visibility probe. No prototype deployment, upstream test execution, combined OBI run, or performance benchmark.",
+  "operator": {
+    "repository": "grafana/opentelemetry-operator",
+    "branch": "hackathon-16-composite-sdk-injection",
+    "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+    "personal_fork": {
+      "repository": "jack-berg/opentelemetry-operator",
+      "branch": "hackathon-16-composite-sdk-injection",
+      "commit": "ae9490328d41347add17f7e8642df8826e52c5ce",
+      "relationship": "Histories diverge; Grafana comparison reports 47 ahead and 3 behind."
+    }
+  },
+  "injector": {
+    "repository": "grafana/opentelemetry-injector",
+    "branch": "hackathon-16-mode-support",
+    "commit": "773ffafa8c95a874c9c7ea561bb93e29cc38f018"
+  },
+  "inspected_files": [
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "hackathon/README.md",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/hackathon/README.md",
+      "sha256": "54586aba06e08e0f037626fc31f505773a733e788f39ea79b5ff3d3902b32815"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "hackathon/injection-flow.md",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/hackathon/injection-flow.md",
+      "sha256": "32b78b958aee011e7f08710961801b08b5cb52357933707d8da4175afdda16cd"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "local-testing-v2alpha1.md",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/local-testing-v2alpha1.md",
+      "sha256": "201c9646f30cbe8de8494ea2de66efcd50a263df617570612f584d4eca5e4b70"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "internal/injector/inject.go",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/internal/injector/inject.go",
+      "sha256": "dfba57d0c13e6c59e720cd27e92548bfb3792ce6d101bb6d61a951011f6a1527"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "internal/injector/podmutator.go",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/internal/injector/podmutator.go",
+      "sha256": "fd4e0fe3eb8cc02091970e1d6f93171cd2416be26feeec613fdb9e7e399245f0"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "internal/injector/rollback_controller.go",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/internal/injector/rollback_controller.go",
+      "sha256": "7d3214986009b4bf877ea65b7df356af738486df00bc42a046fde909aa031a57"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "images/injector-java/Dockerfile",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/images/injector-java/Dockerfile",
+      "sha256": "e7c6cbf13b43cc681b53c3ae8620ff64a599d5e7bb4fb6d9f4d82c7b30295a06"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "images/injector/Dockerfile",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/images/injector/Dockerfile",
+      "sha256": "02faf0fc5cce78d74bd1878f66f910a7c617ae6f1a1aafd8c5ad6c09b61e1472"
+    },
+    {
+      "repository": "grafana/opentelemetry-injector",
+      "commit": "773ffafa8c95a874c9c7ea561bb93e29cc38f018",
+      "path": "src/jvm.zig",
+      "url": "https://github.com/grafana/opentelemetry-injector/blob/773ffafa8c95a874c9c7ea561bb93e29cc38f018/src/jvm.zig",
+      "sha256": "9c536319864d4c3dba561c66e716c5b2632e910774953ded24da28894f6a3a85"
+    },
+    {
+      "repository": "grafana/opentelemetry-injector",
+      "commit": "773ffafa8c95a874c9c7ea561bb93e29cc38f018",
+      "path": "Dockerfile.operator-e2e",
+      "url": "https://github.com/grafana/opentelemetry-injector/blob/773ffafa8c95a874c9c7ea561bb93e29cc38f018/Dockerfile.operator-e2e",
+      "sha256": "52fb01bf9c840058a76d68b244a5db240221dce6482b83b67abd4d3f6f672a0b"
+    },
+    {
+      "repository": "grafana/opentelemetry-operator",
+      "commit": "552f4c550fb58be21721191d5704ba501933b1ef",
+      "path": "config/crd/bases/instrumentation.opentelemetry.io_instrumentations.yaml",
+      "url": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/config/crd/bases/instrumentation.opentelemetry.io_instrumentations.yaml",
+      "sha256": "36bdd4616deeac81f8128098058e770ecc81a6df0c5b3a0b85aea824990882ca"
+    },
+    {
+      "repository": "grafana/opentelemetry-injector",
+      "commit": "773ffafa8c95a874c9c7ea561bb93e29cc38f018",
+      "path": "src/root.zig",
+      "url": "https://github.com/grafana/opentelemetry-injector/blob/773ffafa8c95a874c9c7ea561bb93e29cc38f018/src/root.zig",
+      "sha256": "0b4fe03dbd2667db4c149538757b1f0323922737291fa38493ab397d8abfde84"
+    }
+  ],
+  "local_inputs": [
+    {
+      "path": "demo/injector/checkout-policy.yaml",
+      "sha256": "e67a0aaa2ee0234999fa908cbe07bfef9d2670085597c5f4d432f112dcc690a5"
+    },
+    {
+      "path": "demo/injector/kind.yaml",
+      "sha256": "12db6b1a23bf59d3bf779c20b31feca681687b856157ace05cc7e80a30c2b3b0"
+    },
+    {
+      "path": "demo/proof/agent/main.go",
+      "sha256": "24f5222bd7b40d5ac8962990dd76eae404f5ff92b21099702421209379d2f787"
+    },
+    {
+      "path": "demo/proof/scripts/proof.sh",
+      "sha256": "357a1493b4c01087cc548b75e15f24487e2872e40e00b7083ca07d780e7ac134"
+    },
+    {
+      "path": "demo/proof/scripts/handoff.py",
+      "sha256": "e2e2a5777fb64b63316afb6c840e6307fc766d5ed25b77897c514b22e1c3ef64"
+    },
+    {
+      "path": "demo/proof/scripts/verify_rollout.py",
+      "sha256": "b2960e5c6d41c02ebc10cce8a06e6b6c82a3e5737bd67334faf55d18461897e0"
+    },
+    {
+      "path": "demo/proof/scripts/capture.py",
+      "sha256": "03d77324816403e3d3532e3312282174acd02bb6c002f542293cb8a00e986e36"
+    }
+  ],
+  "validation": {
+    "policy_schema": {
+      "passed": true,
+      "schema_source": "https://github.com/grafana/opentelemetry-operator/blob/552f4c550fb58be21721191d5704ba501933b1ef/config/crd/bases/instrumentation.opentelemetry.io_instrumentations.yaml",
+      "checked_modes": [
+        "skip",
+        "install_unless_conflict"
+      ],
+      "method": "Offline JSON Schema validation of spec, with unknown properties rejected at declared property objects; checked API group and cluster scope separately. This does not execute Kubernetes admission or the prototype webhook."
+    },
+    "policy_scope": {
+      "passed": true,
+      "namespace": "far-wide-proof",
+      "pod_labels": {
+        "app": "checkout"
+      },
+      "container_names": [
+        "checkout"
+      ],
+      "rule_count": 1,
+      "initial_mode": "skip",
+      "automatic_rollback_enabled": false
+    },
+    "kind_config": {
+      "passed": true,
+      "method": "Parsed YAML and checked expected kind configuration fields; no cluster created.",
+      "node_image": "kindest/node:v1.33.2",
+      "image_volume_feature_gate": true,
+      "actual_runtime_compatibility_verified": false
+    },
+    "environment_visibility": {
+      "passed": true,
+      "method": "Local libc setenv/getenv versus /proc/self/environ, without an Injector binary.",
+      "result": {
+        "getenv_value": "injected-after-exec",
+        "visible_in_proc_environ": false
+      },
+      "reproduce_python": "import ctypes, json\nkey=b'FAR_WIDE_INJECTOR_ENV_PROBE_20261019'\nassert not any(x.startswith(key+b'=') for x in open('/proc/self/environ','rb').read().split(b'\\0'))\nlibc=ctypes.CDLL(None)\nassert libc.setenv(key,b'injected-after-exec',1)==0\nlibc.getenv.restype=ctypes.c_char_p\nvalue=libc.getenv(key)\nvisible=any(x.startswith(key+b'=') for x in open('/proc/self/environ','rb').read().split(b'\\0'))\nassert value==b'injected-after-exec' and not visible\nprint(json.dumps({'getenv_value':value.decode(),'visible_in_proc_environ':visible}))\n"
+    },
+    "prototype_deployed": false,
+    "upstream_tests_run": false,
+    "obi_integration_tested": false,
+    "performance_measured": false
+  },
+  "external_references": [
+    {
+      "url": "https://man7.org/linux/man-pages/man5/proc_pid_environ.5.html",
+      "supports": "Initial environment excludes subsequent putenv/setenv additions."
+    },
+    {
+      "url": "https://v1-33.docs.kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/",
+      "supports": "ImageVolume defaults to false for Kubernetes 1.33."
+    },
+    {
+      "url": "https://opentelemetry.io/docs/zero-code/go/compile-time/",
+      "supports": "otelc adds instrumentation at Go build time."
+    }
+  ]
+}

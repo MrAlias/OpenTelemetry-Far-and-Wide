@@ -1,0 +1,100 @@
+{
+  "reconstruction": "Each incomplete attempt is the exact prefix telemetry.jsonl[:bytes]. All prefix hashes were verified against the full snapshot. Original files remain in the local capture directory.",
+  "attempts": [
+    {
+      "filename": "telemetry-incomplete-attempt-1.jsonl",
+      "bytes": 35832290,
+      "sha256": "868356de5d62bda19fdb0974d5114fe1d88e6b90d8e08be93e558b99636dbd21"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-10.jsonl",
+      "bytes": 35947529,
+      "sha256": "4554667aea8e3a0cbdbfbdc8f6aa56ae0c6f802bc87659eece2e66244bbea5d4"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-11.jsonl",
+      "bytes": 35947529,
+      "sha256": "4554667aea8e3a0cbdbfbdc8f6aa56ae0c6f802bc87659eece2e66244bbea5d4"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-12.jsonl",
+      "bytes": 35973938,
+      "sha256": "fbb0a4b954c9c5aac1fa4a85ef64a22e5672940a53446759d09d38c2ac313566"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-13.jsonl",
+      "bytes": 35973938,
+      "sha256": "fbb0a4b954c9c5aac1fa4a85ef64a22e5672940a53446759d09d38c2ac313566"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-14.jsonl",
+      "bytes": 36000347,
+      "sha256": "5cd0def8bb0ac202a6447ae0beff3ea2ef9126b96cba27645459e6f2998fd483"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-15.jsonl",
+      "bytes": 36017180,
+      "sha256": "aa9b397f080543255a7fb77643f9ac80a76d7a41c77bdce62e4bcd448db4c2ca"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-16.jsonl",
+      "bytes": 36026756,
+      "sha256": "f0e76ac05f02790a5c3c23a4dbea35cf7d21317f32bb2de06603b9438c55f7c6"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-17.jsonl",
+      "bytes": 36043589,
+      "sha256": "8396489699c07781e0503a3c1c0e05ddcb860839c450911b9e1dc9ec27bd42b9"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-18.jsonl",
+      "bytes": 36053165,
+      "sha256": "4361da3e7ebb2e04213904024bf5508e5b27b510a956aa617206b03b788e91a9"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-19.jsonl",
+      "bytes": 36069998,
+      "sha256": "69af5c30477e35d20135acd4257e8eb3dce0fa09532f0e0e891964c3f886df4e"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-2.jsonl",
+      "bytes": 35841893,
+      "sha256": "32481e3504f8551748327cef8f26f476ccb2f2919b1d78a6ff4e4a6ea3288ec3"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-3.jsonl",
+      "bytes": 35858726,
+      "sha256": "61325111b4b882cbeefaf4acf937b3f1d4dcf8b42a59c6fc64f76d659b674264"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-4.jsonl",
+      "bytes": 35868302,
+      "sha256": "cc43c59e494b8b4f11c4ded18bc4466a48508a0fc84afe0e11c8887820909945"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-5.jsonl",
+      "bytes": 35885135,
+      "sha256": "b93ef52b8ef4f5a72019032112930e342d809d3f144f85d0ba66b945f7cae700"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-6.jsonl",
+      "bytes": 35894711,
+      "sha256": "43a8ddc84a7f7eedb405ae949e98c8f6a4dc32375b1188b8786809b435dcdff7"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-7.jsonl",
+      "bytes": 35911544,
+      "sha256": "4fd536e81c6a68702679a8a724b842e3e4f267fcea16118722fc79889e59a0ca"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-8.jsonl",
+      "bytes": 35921120,
+      "sha256": "7432bb60bc7211bfb4cb33be94f61bfcc4307b16028913b096b31e882432a488"
+    },
+    {
+      "filename": "telemetry-incomplete-attempt-9.jsonl",
+      "bytes": 35937953,
+      "sha256": "35ad01d267466d9567cee3d33a7d0047e7869e86d418f5dbc5c42e38ef0c55d4"
+    }
+  ]
+}

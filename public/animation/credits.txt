@@ -1,0 +1,34 @@
+OpenTelemetry Far and Wide — concept animation
+
+Talk: Tyler Yahn and Nikola Grcevski.
+Dialogue: two distinct male synthetic stand-ins perform the Tyler and Nikola
+roles. This is an authored draft conversation, not an actual recording or an
+imitation of either presenter's voice.
+Visuals: original explanatory diagrams derived from the repository storyboard.
+Traces, versions, and transitions are schematic. No measured cost results appear.
+The shared Operator integration remains proposed; the animation does not certify
+that the demo is complete or that an upstream unified policy API exists.
+
+Content sources, with pinned upstream references retained in those documents:
+  docs/talk-brief.md
+  public/storyboard.html
+  docs/technical-findings.md
+  docs/demo-spec.md
+  docs/presentation-research.md
+
+Speech engine:
+  Piper, Open Home Foundation, piper-tts 1.8.0 (GPL-3.0)
+  https://github.com/OHF-Voice/piper1-gpl
+Voice models:
+  Tyler role: en_US-bryce-medium (male), rhasspy/piper-voices
+  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/bryce/medium/MODEL_CARD
+  Nikola role: en_US-john-medium (male), rhasspy/piper-voices
+  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/john/medium/MODEL_CARD
+  Model repository: https://huggingface.co/rhasspy/piper-voices (MIT)
+  Both model cards identify public-domain training recordings.
+  Training and voice preparation: https://brycebeattie.com/files/tts/
+  John recordings: https://librivox.org
+
+The speech engine and voice models are build dependencies, kept under the
+repository's ignored .artifacts/animation/ directory. They are not included in
+the rendered video or silent clips.

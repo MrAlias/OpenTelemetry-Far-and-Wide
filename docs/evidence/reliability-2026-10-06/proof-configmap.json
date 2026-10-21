@@ -1,0 +1,18 @@
+{
+    "apiVersion": "v1",
+    "data": {
+        "collector.yaml": "exporters:\n  file:\n    flush_interval: 1s\n    path: /evidence/telemetry.jsonl\nreceivers:\n  otlp:\n    protocols:\n      http:\n        endpoint: 0.0.0.0:4318\nservice:\n  pipelines:\n    metrics:\n      exporters:\n      - file\n      receivers:\n      - otlp\n    traces:\n      exporters:\n      - file\n      receivers:\n      - otlp\n",
+        "obi.yaml": "attributes:\n  kubernetes:\n    enable: true\ndiscovery:\n  exclude_otel_instrumented_services: false\nmetrics:\n  features:\n  - application\notel_metrics_export:\n  endpoint: http://collector:4318\n  protocol: http/protobuf\notel_traces_export:\n  batch_timeout: 1s\n  endpoint: http://collector:4318\n  protocol: http/protobuf\nroutes:\n  patterns:\n  - /checkout\n  - /inventory\n  unmatched: path\n"
+    },
+    "kind": "ConfigMap",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"data\":{\"collector.yaml\":\"exporters:\\n  file:\\n    flush_interval: 1s\\n    path: /evidence/telemetry.jsonl\\nreceivers:\\n  otlp:\\n    protocols:\\n      http:\\n        endpoint: 0.0.0.0:4318\\nservice:\\n  pipelines:\\n    metrics:\\n      exporters:\\n      - file\\n      receivers:\\n      - otlp\\n    traces:\\n      exporters:\\n      - file\\n      receivers:\\n      - otlp\\n\",\"obi.yaml\":\"attributes:\\n  kubernetes:\\n    enable: true\\ndiscovery:\\n  exclude_otel_instrumented_services: false\\nmetrics:\\n  features:\\n  - application\\notel_metrics_export:\\n  endpoint: http://collector:4318\\n  protocol: http/protobuf\\notel_traces_export:\\n  batch_timeout: 1s\\n  endpoint: http://collector:4318\\n  protocol: http/protobuf\\nroutes:\\n  patterns:\\n  - /checkout\\n  - /inventory\\n  unmatched: path\\n\"},\"kind\":\"ConfigMap\",\"metadata\":{\"annotations\":{},\"name\":\"proof-config\",\"namespace\":\"far-wide-proof\"}}\n"
+        },
+        "creationTimestamp": "2026-10-06T19:19:54Z",
+        "name": "proof-config",
+        "namespace": "far-wide-proof",
+        "resourceVersion": "651",
+        "uid": "5605d9d9-0b3d-4393-b7de-2a5f9b5e79fd"
+    }
+}

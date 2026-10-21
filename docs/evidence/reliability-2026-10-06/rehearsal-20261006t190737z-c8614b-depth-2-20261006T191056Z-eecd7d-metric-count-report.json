@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "errors": [],
+  "expected_requests_by_pod": {
+    "inventory-56bcbbdcc8-sfhw7": 456,
+    "checkout-5544db7569-p57mb": 308,
+    "gateway-7c9b8579f8-bnrf2": 456,
+    "checkout-6c5c486bdb-97ss5": 148
+  },
+  "observed_count_increments_by_pod": {
+    "inventory-56bcbbdcc8-sfhw7": 458,
+    "checkout-5544db7569-p57mb": 308,
+    "gateway-7c9b8579f8-bnrf2": 456,
+    "checkout-6c5c486bdb-97ss5": 148
+  },
+  "baseline": {
+    "inventory-56bcbbdcc8-sfhw7": 906,
+    "checkout-5544db7569-t6wq8": 353,
+    "gateway-7c9b8579f8-bnrf2": 900,
+    "checkout-6c5c486bdb-xk5t8": 429,
+    "checkout-5544db7569-p57mb": 121,
+    "checkout-6c5c486bdb-97ss5": 1
+  }
+}

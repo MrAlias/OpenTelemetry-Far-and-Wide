@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenTelemetry Far and Wide — animated talk</title>
+  <link rel="stylesheet" href="animation/player.css">
+</head>
+<body>
+  <main>
+    <header><h1>OpenTelemetry Far and Wide</h1><p>20-minute animated talk · two-presenter draft dialogue</p></header>
+    <div id="stage" role="region" aria-label="Animated presentation"></div>
+    <div id="captions" class="captions" hidden aria-live="off"></div>
+    <nav class="controls" aria-label="Playback">
+      <button id="play" type="button">Play</button>
+      <button id="previous" type="button" aria-label="Previous chapter">Previous</button>
+      <button id="next" type="button" aria-label="Next chapter">Next</button>
+      <output id="time" aria-label="Playback time">0:00 / 20:00</output>
+      <label>Speed <select id="speed"><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+      <label><input id="narration" type="checkbox" checked> Narration</label>
+      <label><input id="caption-toggle" type="checkbox"> Captions</label>
+      <label><input id="loop" type="checkbox"> Loop chapter</label>
+      <button id="fullscreen" type="button">Fullscreen</button>
+    </nav>
+    <label class="seek-label" for="seek">Talk position</label>
+    <input id="seek" type="range" min="0" max="1200" step="0.1" value="0" aria-label="Seek through the talk">
+    <div class="chapter-heading"><h2>Chapters</h2><a href="animation/opentelemetry-far-and-wide-20min-dialogue.mp4">Dialogue MP4</a><a href="animation/opentelemetry-far-and-wide-20min-silent.mp4">Silent MP4</a><a href="animation/transcript.txt">Dialogue script</a></div>
+    <ol id="chapters"></ol>
+    <details><summary>About this version</summary><p>Two distinct male synthetic stand-ins perform the Tyler and Nikola draft roles. These are scripted performances, not recordings of the presenters. Traces, transitions, and version outcomes illustrate the intended explanation; they are not recordings of a completed demo. Cost results remain unmeasured. The integration is proposed. Each chapter has a silent clip for live reuse.</p><p>Draft voices: Bryce for the Tyler role; John for the Nikola role. <a href="animation/credits.txt">Sources and voice credits</a>. <a href="storyboard.html">Storyboard</a>.</p></details>
+  </main>
+  <audio id="audio" preload="metadata"></audio>
+  <script src="animation/timeline.js"></script>
+  <script src="animation/art.js"></script>
+  <script src="animation/player.js"></script>
+</body>
+</html>

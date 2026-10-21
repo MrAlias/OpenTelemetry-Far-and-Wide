@@ -1,0 +1,10 @@
+{
+  "cluster_retained": true,
+  "profile": "breadth",
+  "all_remaining_proof_pods_ready": true,
+  "default_context": "kind-test-kind-cluster-otel-python",
+  "clusters": [
+    "far-wide-proof",
+    "test-kind-cluster-otel-python"
+  ]
+}

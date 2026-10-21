@@ -1,0 +1,82 @@
+[
+  {
+    "image": "golang:1.27.1",
+    "id": "sha256:4914eace4b4c8c68ecd495fb71edbc01f706ba9a7ae0e5d38affbb512c36dee3",
+    "repo_digests": [
+      "golang@sha256:f44f6e88636cfb311f9ebace870ded69d943f227bb3cb27d32ffd84ea18c43ea"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "golang:1.26.8",
+    "id": "sha256:d84812320338b77b7c254aa48bd784f4245f6ef8ea14befb74784a4f28d79a23",
+    "repo_digests": [
+      "golang@sha256:3c3e25a4da13fd0478eed2df1eb35a0e667094a7124d3993a6a1d30f71c17e79"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "gradle:8.14.4-jdk21-noble",
+    "id": "sha256:3bf0eec94883c2c34046b5238595a78aa9c952dbf1e93ff3574c05c1359d1c38",
+    "repo_digests": [
+      "gradle@sha256:cc90b5198f747c454f4a3e17495b626fbdfa7ac77f1ad08502c355e6f81e6772"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "node:24-bookworm",
+    "id": "sha256:2ff56a1e437102232fc4f3923138b9513f0d2e36bc0e57f39c3054a86c884e27",
+    "repo_digests": [
+      "node@sha256:934240a162082fd8b8a2f90cd5114446443f1eba1c5378f6687167ca405e6584"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "kindest/node:v1.33.2",
+    "id": "sha256:096e5ef9ea707d7e01d84e794f200285bc42d3387c46d25129915028d5810ed4",
+    "repo_digests": [
+      "kindest/node@sha256:c55080dc5be4f2cc242e6966fdf97bb62282e1cd818a28223cf536db8b0fddf4"
+    ],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "far-wide-proof-agent:local",
+    "id": "sha256:e90b7bbd56e7e84881ef7684c9cc6d6a6a75470e4b4949099997c1e91f324354",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "far-wide-proof-router:local",
+    "id": "sha256:1575627eee09f37d81398fcee4643f87b40db596b0b4e08983b723530de22d4d",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "far-wide-proof-gateway:local",
+    "id": "sha256:f1d768733da5820f8413f5e2aed863e6eea1bc2571ac7bcd4c27e7009eb6ffc1",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "far-wide-proof-checkout:local",
+    "id": "sha256:c31b0ef99ef619d35ea47fc41985c1f9b312edb0795c88da0d0b4416c1f8af27",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  {
+    "image": "far-wide-proof-inventory:local",
+    "id": "sha256:f15a1c77d4861c203fafedbe116e57c0c17dca028927fd836bc8928fe3c4284c",
+    "repo_digests": [],
+    "architecture": "amd64",
+    "os": "linux"
+  }
+]

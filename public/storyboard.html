@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive storyboard for OpenTelemetry Far and Wide: scene sketches, timing, presenter notes, and demo requirements.">
+  <title>OpenTelemetry Far and Wide — Visual Storyboard</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --background: light-dark(#ffffff, #181818);
+      --foreground: light-dark(#202020, #eeeeee);
+      --muted: light-dark(#eeeeee, #292929);
+      --muted-foreground: light-dark(#555555, #c1c1c1);
+      --border: light-dark(#d2d2d2, #505050);
+      --primary: light-dark(#202020, #eeeeee);
+      --primary-foreground: light-dark(#ffffff, #181818);
+      --viz-series-1: light-dark(#136dc4, #7ab8ff);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--foreground);
+      background: var(--background);
+    }
+    body { margin: 0; }
+    main { max-width: 960px; margin: 0 auto; padding: 24px; }
+    button, select { font: inherit; }
+    button, summary { cursor: pointer; }
+    a { color: light-dark(#065fb6, #9bcaff); }
+    h2 { font-size: 1.5rem; line-height: 1.35; }
+    h3 { font-size: 1.15rem; line-height: 1.4; }
+    strong, b { font-weight: 600; }
+    .text-small { font-size: 12px; }
+    .text-muted { color: var(--muted-foreground); }
+    .viz-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--foreground);
+      background: var(--background);
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--muted); }
+    .btn-primary, .btn-primary:hover {
+      color: var(--primary-foreground);
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .btn-ghost { border-color: transparent; }
+    .btn:disabled { cursor: default; opacity: .5; }
+    .form-select {
+      padding: 8px 12px;
+      min-height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--foreground);
+      background: var(--background);
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+    hr { border: 0; border-top: 1px solid var(--border); margin: 20px 0; }
+    @media (max-width: 600px) { main { padding: 16px; } }
+    @media (pointer: coarse) { .btn, .form-select { min-height: 44px; } }
+  </style>
+</head>
+<body>
+<main>
+
+<div id="otel-storyboard">
+  <header class="sb-heading">
+    <div><div class="text-small text-muted">OPENTELEMETRY FAR AND WIDE</div><h2>Visual storyboard</h2></div>
+    <span class="text-small">15 scenes · 21 min + 1 min flex + 3 min Q&amp;A</span>
+  </header>
+  <div class="sb-toolbar">
+    <div class="viz-row" aria-label="Storyboard view">
+      <button class="btn btn-primary" type="button" data-view="overview" aria-pressed="true">All scenes</button>
+      <button class="btn" type="button" data-view="scene" aria-pressed="false">Scene view</button>
+    </div>
+    <span class="text-small text-muted">Demo evidence still to produce</span>
+  </div>
+  <div class="sb-timeline" role="img" aria-label="25 minute plan: setup 2 minutes, investigation 5.5 minutes, management 4.5 minutes, application 9 minutes, recovery margin 1 minute, questions 3 minutes">
+    <span style="flex:2">Set up · 2m</span><span style="flex:5.5">Investigate · 5½m</span><span style="flex:4.5">Manage · 4½m</span><span style="flex:9">Apply · 9m</span><span style="flex:1">Flex · 1m</span><span style="flex:3">Q&amp;A · 3m</span>
+  </div>
+  <section id="sb-overview" aria-label="Slide sketches"></section>
+  <section id="sb-scene" hidden aria-label="Selected scene">
+    <div class="sb-scene-nav">
+      <button class="btn" id="sb-prev" type="button" aria-label="Previous scene">← Previous</button>
+      <label class="sr-only" for="sb-picker">Scene</label><select class="form-select" id="sb-picker"></select>
+      <button class="btn" id="sb-next" type="button" aria-label="Next scene">Next →</button>
+    </div>
+    <div id="sb-meta" class="text-small text-muted" aria-live="polite"></div>
+    <div id="sb-stage"></div>
+    <div class="sb-reveal-row"><span class="text-small" id="sb-beat-label"></span><button class="btn" id="sb-reveal" type="button">Next reveal →</button></div>
+    <div id="sb-detail"></div>
+  </section>
+  <hr>
+  <details id="sb-demo"><summary>Demo requirements · six outcomes to build</summary><div id="sb-requirements"></div></details>
+</div>
+<style>
+#otel-storyboard{color:var(--foreground);max-width:100%;--sb-tone:var(--viz-series-1)}
+#otel-storyboard *{box-sizing:border-box}
+#otel-storyboard [hidden]{display:none!important}
+#otel-storyboard .sb-heading,#otel-storyboard .sb-toolbar,#otel-storyboard .sb-scene-nav,#otel-storyboard .sb-reveal-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#otel-storyboard .sb-heading{padding:0 94px 12px 0}
+#otel-storyboard h2,#otel-storyboard h3{margin:6px 0 10px;font-weight:500}
+#otel-storyboard .sb-toolbar{margin:8px 0 16px}
+#otel-storyboard .sb-timeline{display:flex;gap:3px;margin:0 0 22px;flex-wrap:wrap}
+#otel-storyboard .sb-timeline span{background:var(--muted);color:var(--foreground);padding:9px 6px;text-align:center;min-width:max-content;white-space:nowrap}
+#otel-storyboard .sb-timeline span.current{background:color-mix(in srgb,var(--sb-tone) 15%,var(--background))}
+#otel-storyboard #sb-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px}
+#otel-storyboard .sb-tile{min-width:0;margin:0;display:flex;flex-direction:column;align-items:stretch;gap:8px}
+#otel-storyboard .sb-tile h3{margin:0;min-height:3em}
+#otel-storyboard .sb-tile-top{display:flex;justify-content:space-between;gap:6px}
+#otel-storyboard .sb-sketch{background:var(--muted);color:var(--foreground);aspect-ratio:16/10;min-width:0;padding:14px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+#otel-storyboard .sb-tile .sb-sketch{min-height:290px}
+#otel-storyboard .sb-shot-label{display:flex;justify-content:space-between;gap:8px}
+#otel-storyboard .sb-art{display:flex;flex-direction:column;justify-content:center;gap:15px;min-width:0;flex:1}
+#otel-storyboard .sb-path{display:flex;align-items:center;justify-content:space-between;gap:5px;min-width:0}
+#otel-storyboard .sb-node{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:10px 6px;background:var(--background);color:var(--foreground);flex:1;min-width:0;text-align:center}
+#otel-storyboard .sb-node.selected{background:color-mix(in srgb,var(--sb-tone) 17%,var(--background))}
+#otel-storyboard .sb-arrow{color:var(--muted-foreground);flex:0 0 auto}
+#otel-storyboard .sb-caption{color:var(--muted-foreground);text-align:center}
+#otel-storyboard .sb-focus{padding:12px;background:color-mix(in srgb,var(--sb-tone) 12%,var(--background));color:var(--foreground);text-align:center}
+#otel-storyboard .sb-focus strong{font-weight:500}
+#otel-storyboard .sb-ghost{background:var(--background);padding:10px;text-align:center;color:var(--muted-foreground)}
+#otel-storyboard .sb-trace{display:grid;gap:8px;min-width:0}
+#otel-storyboard .sb-trace-row{display:grid;grid-template-columns:minmax(64px,24%) 1fr;align-items:center;gap:9px}
+#otel-storyboard .sb-track{height:15px;background:color-mix(in srgb,var(--foreground) 6%,transparent);position:relative}
+#otel-storyboard .sb-bar{height:100%;background:color-mix(in srgb,var(--foreground) 36%,transparent)}
+#otel-storyboard .sb-bar.depth{background:var(--sb-tone)}
+#otel-storyboard .sb-method-label{padding-left:8px;border-left:2px solid var(--sb-tone);overflow-wrap:anywhere}
+#otel-storyboard .sb-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:center}
+#otel-storyboard .sb-two.sb-control-paths{grid-template-columns:repeat(2,minmax(0,1fr))}
+#otel-storyboard .sb-tile .sb-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+#otel-storyboard .sb-stack{display:flex;flex-direction:column;gap:7px}
+#otel-storyboard .sb-rule{height:2px;background:var(--border);margin:4px 0}
+#otel-storyboard .sb-steps{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap}
+#otel-storyboard .sb-step{padding:9px 7px;flex:1;background:var(--background);text-align:center;min-width:62px}
+#otel-storyboard .sb-step.active{background:color-mix(in srgb,var(--sb-tone) 17%,var(--background))}
+#otel-storyboard .sb-version{padding:12px 5px;text-align:center;background:var(--background)}
+#otel-storyboard .sb-question{padding:10px 0;text-align:center}
+#otel-storyboard .sb-terminal{background:var(--background);padding:10px;overflow-wrap:anywhere}
+#otel-storyboard .sb-stage-title{max-width:24ch}
+#otel-storyboard #sb-stage{margin-top:12px}
+#otel-storyboard #sb-stage .sb-sketch{aspect-ratio:auto;padding:28px;min-height:410px;overflow:visible}
+#otel-storyboard #sb-stage .sb-art{max-width:590px;width:100%;align-self:center}
+#otel-storyboard #sb-stage .sb-node{padding:20px 10px}
+#otel-storyboard #sb-stage .sb-track{height:21px}
+#otel-storyboard #sb-stage .sb-trace{gap:15px}
+#otel-storyboard #sb-stage .sb-method-label{padding-top:8px;padding-bottom:8px}
+#otel-storyboard .sb-scene-nav{margin-bottom:12px;flex-wrap:nowrap}
+#otel-storyboard #sb-picker{min-width:0;flex:1}
+#otel-storyboard .sb-reveal-row{margin:14px 0}
+#otel-storyboard details{padding:12px 0;border-bottom:1px solid var(--border)}
+#otel-storyboard summary{font-weight:500}
+#otel-storyboard .sb-note{margin:12px 0 3px;max-width:72ch}
+#otel-storyboard .sb-note p{margin:8px 0}
+#otel-storyboard .sb-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+#otel-storyboard .sb-compare-view{min-width:0;display:flex;flex-direction:column;gap:12px}
+#otel-storyboard .sb-comparison-label{font-weight:500}
+#otel-storyboard .sb-inset{padding:12px;border-left:2px solid var(--sb-tone);background:color-mix(in srgb,var(--sb-tone) 8%,var(--background))}
+#otel-storyboard .sb-nested{display:flex;flex-direction:column;gap:10px;padding:14px;background:var(--background)}
+#otel-storyboard .sb-nested .sb-method-label{background:color-mix(in srgb,var(--sb-tone) 14%,var(--background));padding:10px}
+#otel-storyboard .sb-compare .sb-trace-row{grid-template-columns:64px 1fr;gap:7px}
+#otel-storyboard .sb-result{padding:12px 0;border-top:1px solid var(--border)}
+#otel-storyboard .sb-cost-plots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#otel-storyboard .sb-cost-figure{min-width:0;display:flex;flex-direction:column;gap:10px}
+#otel-storyboard .sb-plot-slot{min-height:85px;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--border);border-bottom:1px solid var(--border)}
+#otel-storyboard .sb-cost-states{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap}
+#otel-storyboard .sb-tile .sb-compare .sb-trace-row{grid-template-columns:1fr;gap:3px}
+#otel-storyboard .sb-tile .sb-compare .sb-trace{gap:4px}
+#otel-storyboard .sb-tile .sb-compare .sb-track{height:9px}
+#otel-storyboard .sb-tile .sb-compare{gap:10px}
+#otel-storyboard .sb-tile .sb-cost-plots{grid-template-columns:repeat(2,minmax(0,1fr))}
+#otel-storyboard .sb-missing .sb-track{background:transparent}
+#otel-storyboard .sb-plan-label{padding:6px 0;color:var(--muted-foreground)}
+#otel-storyboard .sb-requirement{display:grid;grid-template-columns:34px 1fr;gap:8px;padding:12px 0}
+#otel-storyboard .sb-requirement+.sb-requirement{border-top:1px solid var(--border)}
+@media(max-width:600px){#otel-storyboard #sb-overview{grid-template-columns:1fr}#otel-storyboard .sb-heading{padding-right:0}#otel-storyboard #sb-stage .sb-sketch{padding:18px;aspect-ratio:auto;min-height:370px}#otel-storyboard .sb-scene-nav{flex-wrap:wrap}#otel-storyboard #sb-picker{order:3;flex-basis:100%}#otel-storyboard #sb-stage .sb-compare,#otel-storyboard .sb-cost-plots{grid-template-columns:1fr}#otel-storyboard #sb-stage .sb-art{gap:18px}}
+@media(max-width:410px){#otel-storyboard #sb-overview{grid-template-columns:1fr}#otel-storyboard .sb-tile h3{min-height:0}#otel-storyboard .sb-tile .sb-sketch{aspect-ratio:16/9}#otel-storyboard .sb-two{grid-template-columns:1fr}#otel-storyboard #sb-stage .sb-node{padding:14px 6px}}
+@media(prefers-reduced-motion:no-preference){#otel-storyboard .sb-bar{transition:width .25s ease}}
+</style>
+<script>
+(()=>{
+const root=document.getElementById('otel-storyboard');
+const scenes=[
+  {
+    "title": "OpenTelemetry Far and Wide",
+    "short": "The promise",
+    "duration": 15,
+    "phase": "Set up",
+    "owner": "Tyler",
+    "kind": "title",
+    "media": "Opening",
+    "beats": [
+      "Show the title, presenters, and promise together"
+    ],
+    "question": "What will this session help me do?",
+    "message": "Get broad visibility first, then add the detail a specific investigation needs.",
+    "delivery": "Introduce both presenters in one sentence. Say the promise aloud: we will locate the slow service, explain its local work, and manage the instrumentation from one place.",
+    "transition": "Imagine you own the platform, but you do not own every application.",
+    "needs": "Static title, presenter names, and promise visible together. The following investigation is a planned demonstration, not a customer incident.",
+    "start": 0
+  },
+  {
+    "title": "You found the slow service. What happens inside it?",
+    "short": "A question the audience recognizes",
+    "duration": 60,
+    "phase": "Set up",
+    "owner": "Tyler",
+    "kind": "problem",
+    "media": "Staged scenario",
+    "beats": [
+      "Show the platform constraint and investigation question together"
+    ],
+    "question": "How do I investigate when different teams own the services?",
+    "message": "The useful outcome is an explanation of the request without first rebuilding every application.",
+    "delivery": "Use a small staged checkout workload with an intentional delay. Establish the operational constraint: several languages and service owners. Tell the audience early that breadth and selected depth can share a platform workflow. Do not invent customer harm or imply that the defect will be fixed by instrumentation.",
+    "transition": "First get the request path. Then add detail only where that view leaves a question.",
+    "needs": "D1 · Build a repeatable slow request. The opening can use a cropped preview of the planned baseline trace; it does not establish a completed demo.",
+    "start": 15
+  },
+  {
+    "title": "Start with coverage. Add detail where needed.",
+    "short": "The mental model",
+    "duration": 45,
+    "phase": "Set up",
+    "owner": "Tyler",
+    "kind": "model",
+    "media": "Explanatory visual",
+    "beats": [
+      "Follow the request across services",
+      "Open checkout to locate detail within that request"
+    ],
+    "question": "What does each instrumentation layer contribute?",
+    "message": "Broad request visibility and selected runtime detail are complementary views.",
+    "delivery": "Define a trace as one linked request and spans as timed operations. Introduce OpenTelemetry eBPF Instrumentation and SDK auto-injection using the two views on screen. The magnified interior must show where detail fits rather than merely label a box depth. Do not imply that eBPF is limited to network telemetry or that SDKs cannot provide broad coverage.",
+    "transition": "Let’s establish the broad view first.",
+    "needs": "Conceptual model. Replace example geometry with actual traces later; verify support for the final workload.",
+    "start": 75
+  },
+  {
+    "title": "One deployment workflow reveals the request path",
+    "short": "Establish breadth",
+    "duration": 90,
+    "phase": "Investigate",
+    "owner": "Tyler · Nikola controls playback",
+    "kind": "breadth",
+    "media": "Planned short clip + evidence",
+    "beats": [
+      "Show the central deployment action",
+      "Inspect the resulting correlated request"
+    ],
+    "question": "Can a platform establish a useful baseline across this workload?",
+    "message": "Show the coverage that arrived, not just a successful install command.",
+    "delivery": "Use a short, captioned recording of the real deployment action, then freeze on its resulting trace. Explain prepared prerequisites. If waiting is edited out, show the actual elapsed time. Do not make a second live installation a prerequisite for the main reveal.",
+    "transition": "The request is connected. Most of its local time is in checkout; what is that work?",
+    "needs": "D2 · Build the deployment path and resulting telemetry. Planned clip length is an editorial target, not a claim about installation speed.",
+    "start": 120
+  },
+  {
+    "title": "The service is visible. The local work is unnamed.",
+    "short": "Create the need for depth",
+    "duration": 60,
+    "phase": "Investigate",
+    "owner": "Tyler",
+    "kind": "gap",
+    "media": "Trace interpretation + prediction",
+    "beats": [
+      "Inspect the baseline trace and ask which local observation is missing"
+    ],
+    "question": "What is the baseline trace still unable to name?",
+    "message": "A specific gap in the evidence justifies the next instrumentation change.",
+    "delivery": "Read the service timing and downstream call with the audience. Explain inclusive versus nested time only as needed. Pause for five seconds after asking what they would want to see inside checkout, then name the target: a local application operation. Keep the trace and question visible throughout; give the answer aloud without a slide build.",
+    "transition": "Nikola, can we expose that operation without changing the application image?",
+    "needs": "D2 · Build a baseline trace supporting this exact question. Preserve actual parent relationships and time scale in the final asset.",
+    "interaction": "Five seconds of silent prediction, then name the target observation aloud: a local application operation. Keep the same trace on screen.",
+    "start": 210
+  },
+  {
+    "title": "Add a method span to explain the local time",
+    "short": "The main live reveal",
+    "duration": 120,
+    "phase": "Investigate",
+    "owner": "Nikola narrates · Tyler operates",
+    "kind": "depth",
+    "media": "One planned live operation",
+    "beats": [
+      "Keep the baseline visible while changing the profile",
+      "Inspect the new request and its named method span"
+    ],
+    "question": "Can selected runtime detail answer the unresolved question?",
+    "message": "A centrally selected profile exposes the application work inside the request.",
+    "delivery": "Tyler operates the one main live profile change while Nikola keeps the audience oriented. Show a fresh request after convergence, keep the surrounding trace visible, and hold the method span for at least five seconds. Reserve the last part of the two-minute slot for interpretation. If the target is not visible by 60 seconds after starting the operation, switch to a verified recording of the same sequence. Keep the baseline request on screen during the action; move directly to the new request with its method span, without an intermediate status-only slide.",
+    "transition": "Let’s compare what we knew before with what we know now.",
+    "needs": "D3 · Build selective injection, a linked method span, continued baseline signals, and unchanged application identity. Prepare the fallback; no operation is assumed complete.",
+    "start": 270
+  },
+  {
+    "title": "The same slow work now has a name",
+    "short": "Resolve the opening question",
+    "duration": 60,
+    "phase": "Investigate",
+    "owner": "Nikola",
+    "kind": "answer",
+    "media": "Aligned before and after comparison",
+    "beats": [
+      "Show both requests together on a common time scale"
+    ],
+    "question": "What conclusion became possible?",
+    "message": "Selected detail names the work without implying that the request became faster.",
+    "delivery": "Keep two separate requests visible together, with matching framing and a common time scale. Point to the newly named pricing calculation. Explain that the work was already happening: observability improved; application performance was not repaired. Display the complete pair from the start so attendees can compare without waiting for an animation.",
+    "transition": "The diagnostic result is useful. How does a platform own the two instrumentation layers?",
+    "needs": "D3 · Capture measured baseline and depth traces and verify correlation. PricingEngine.calculate remains the proposed illustrative method.",
+    "start": 390
+  },
+  {
+    "title": "A shared workflow manages both instrumentation paths",
+    "short": "The operating model",
+    "duration": 120,
+    "phase": "Manage",
+    "owner": "Nikola",
+    "kind": "control",
+    "media": "One architecture diagram",
+    "beats": [
+      "Follow the OBI configuration and SDK injection paths",
+      "Add telemetry flow and the trace ownership rule"
+    ],
+    "question": "What makes the combined approach manageable?",
+    "message": "The proposed Operator integration should manage OBI configuration and SDK injection through a shared workflow.",
+    "delivery": "Separate deployment control from telemetry flow. Draw OBI configuration and language-agent injection as parallel paths, not a chain from OBI into the SDK. Explain which layer owns checkout request spans for each profile and which baseline metrics remain. Identify custom or experimental integration. Details that do not explain a consequence belong in backup material. Name the selected implementation and distinguish existing components from proposed coordination; do not imply a unified policy API has been established. Start with both control branches visible. Add the telemetry route and ownership rule together only after explaining control; retain both branches for reference.",
+    "transition": "The shared workflow also needs to manage instrumentation versions.",
+    "needs": "D4 · Choose or build the final implementation, then make this diagram match it. The two paths and ownership rules are requirements, not an upstream feature claim.",
+    "start": 450
+  },
+  {
+    "title": "An upgrade needs evidence from the running workload",
+    "short": "Central upgrade checkpoint",
+    "duration": 75,
+    "phase": "Manage",
+    "owner": "Nikola",
+    "kind": "upgrade",
+    "media": "Planned clip + verification frame",
+    "beats": [
+      "Keep requested and running versions visible before and after the upgrade"
+    ],
+    "question": "Can I upgrade instrumentation without rebuilding the app?",
+    "message": "The requested profile and the observed running version must agree.",
+    "delivery": "Use a short verified upgrade recording and an evidence frame showing old/new agent and bundled SDK versions, workload convergence, and unchanged application image identity. State any restart or rollout. The profile edit is the instruction; the telemetry and workload observations prove the result. Let the recording show the operation; hold one complete before-and-after evidence frame with requested and running versions together. Do not add a separate slide build for the version labels.",
+    "transition": "The same lifecycle should let us remove depth after the investigation.",
+    "needs": "D5 · Build a real upgrade and exercise rollback. Placeholder version labels are not verified versions; playback is planned, not already recorded.",
+    "start": 570
+  },
+  {
+    "title": "Remove selected detail while retaining the baseline",
+    "short": "Return to breadth",
+    "duration": 75,
+    "phase": "Manage",
+    "owner": "Nikola",
+    "kind": "return",
+    "media": "Planned short clip + trace pair",
+    "beats": [
+      "Request breadth while retaining the depth request for comparison",
+      "Inspect the fresh baseline request after convergence"
+    ],
+    "question": "Can the profile follow the investigation in both directions?",
+    "message": "Temporary depth can end without discarding the useful baseline.",
+    "delivery": "Show a brief verified removal recording and a fresh request after convergence. Keep the comparison on screen. Explain that the pricing work remains, while the selected method span is no longer emitted. Describe any required workload replacement without turning waiting into the show.",
+    "transition": "Tyler, which costs should determine how much detail we retain?",
+    "needs": "D3 + D4 · Build removal and verify retained coverage. The target trace is a schematic until that evidence exists.",
+    "start": 645
+  },
+  {
+    "title": "Measure the profile, then decide what to retain",
+    "short": "The cost decision",
+    "duration": 150,
+    "phase": "Apply",
+    "owner": "Tyler",
+    "kind": "cost",
+    "media": "Measurement comparison to produce",
+    "beats": [
+      "Show both cost comparisons, all three profiles, and measurement conditions together"
+    ],
+    "question": "Is the diagnostic value worth the measured cost?",
+    "message": "The cost claim must identify both the layer being measured and its unit.",
+    "delivery": "Use at most two evidence-backed comparisons: OTLP bytes per completed request, and application CPU at matched completed-request throughput. Keep breadth, selected depth, and restored breadth together. State measurement location, load, sampling, warm-up treatment, repeated trials, and variation in notes and a concise caption. A small or inconclusive difference remains useful evidence. Do not infer a bill or CPU saving from span count. Display both comparisons and their measurement conditions from the start; guide attention by pointing rather than hiding a chart or its caption.",
+    "transition": "Cost is only one side of the decision. Can we still trust the request view during a change?",
+    "needs": "D6 · Produce repeated, comparable measurements. These are empty chart locations, not fabricated data or a predicted savings curve.",
+    "start": 720
+  },
+  {
+    "title": "A ready pod does not prove a correct trace",
+    "short": "The trust test",
+    "duration": 120,
+    "phase": "Apply",
+    "owner": "Tyler",
+    "kind": "verify",
+    "media": "Verification sequence + scope",
+    "beats": [
+      "Show the complete verification gate before promotion and retirement"
+    ],
+    "question": "What must pass before I rely on a profile change?",
+    "message": "Verify the telemetry, not only the application’s availability.",
+    "delivery": "Make the specialist lesson concrete: a 200 response alone cannot establish the correct trace parent chain or owner. Explain the chosen mechanism’s promotion, retirement, and recovery boundaries. State the final demo’s supported conditions plainly. Use one counterexample only when it makes this check easier to understand. Keep the entire candidate, verification, promotion, and retirement flow visible. Place the required telemetry checks at the verification gate, before the promotion arrow.",
+    "transition": "Nikola, what is the smallest useful trial an attendee can run?",
+    "needs": "D4 + D6 · Validate the final mechanism and its scope. Existing prototype failures inform development but do not define a required story subplot.",
+    "start": 870
+  },
+  {
+    "title": "Try one service, one question, and a rollback",
+    "short": "A practical adoption experiment",
+    "duration": 120,
+    "phase": "Apply",
+    "owner": "Nikola",
+    "kind": "adopt",
+    "media": "Practical decision sequence",
+    "beats": [
+      "Show the full experiment from question to retention or rollback"
+    ],
+    "question": "What can I try after this session?",
+    "message": "A bounded experiment can test fit before a fleet-wide adoption decision.",
+    "delivery": "Give an operationally useful first step: establish baseline telemetry, name the unresolved question, select meaningful detail, compare a new request, and roll back or retain. A newcomer gets the model; an operator gets the profile/rollout sequence; a specialist gets verification criteria. Explain that selecting a method still needs application knowledge. Keep the complete experiment visible as a usable checklist; do not replace an earlier step with a later one.",
+    "transition": "Let’s see whether that decision rule works for a different question.",
+    "needs": "Companion material · Prepare prerequisites, supported scope, pinned versions, expected observations, and rollback. Verify the published link before displaying it.",
+    "start": 990
+  },
+  {
+    "title": "Which question actually needs more depth?",
+    "short": "Audience transfer check",
+    "duration": 60,
+    "phase": "Apply",
+    "owner": "Nikola",
+    "kind": "question",
+    "media": "Prediction → answer → contrast",
+    "beats": [
+      "Ask the audience to choose a first observation",
+      "Explain the answer alongside the contrasting local-work question"
+    ],
+    "question": "Would I add instrumentation before examining the signals I already have?",
+    "message": "Use existing coverage first; add selected depth when the question still needs it.",
+    "delivery": "Give five quiet seconds to choose the first observation for which service is returning errors. Reveal the answer: inspect the existing request signals first. Then contrast a question about work inside a pricing calculation. State that these are hypothetical questions, not new measured incidents. Use one reveal after the pause: keep the original question and options visible, identify A, and show the local-work contrast alongside the explanation.",
+    "transition": "The instrumentation profile follows the question we need to answer.",
+    "needs": "No new claimed result. The prompt and answer should be understandable without learning another application.",
+    "interaction": "Five-second quiet prediction; reveal an explicit answer and explain the contrast within the minute.",
+    "start": 1110
+  },
+  {
+    "title": "Pick one service. Name one unanswered question.",
+    "short": "Close with a usable next step",
+    "duration": 90,
+    "phase": "Apply",
+    "owner": "Tyler",
+    "kind": "close",
+    "media": "Closing frame retained for Q&A",
+    "beats": [
+      "Keep the takeaway, next action, and companion destination visible together"
+    ],
+    "question": "What should I remember and do next?",
+    "message": "Start broad. Add depth with purpose. Manage and verify the profile.",
+    "delivery": "Recall the opening question and point to the named local work. Ask attendees to choose one service and write the question that would justify more detail. Provide a readable companion link after it is verified. Thank the audience and invite questions. This closes by minute 21; the next minute is unallocated recovery time, not extra planned content. Use one static closing frame, with the next action and companion destination visible from its first appearance and throughout Q&A.",
+    "transition": "Start with coverage. Let the next unanswered question determine the detail you add.",
+    "needs": "Verify the companion destination. Planned content ends at 21:00; keep 21:00–22:00 flexible and 22:00–25:00 for Q&A.",
+    "start": 1170
+  }
+];
+const requirements=[['D1','A recognizable investigation','Build a repeatable slow request in a small mixed-language workload.'],['D2','Broad deployment and coverage','Show one central workflow producing correlated requests across the selected services.'],['D3','Selected depth in both directions','Add and remove method detail, preserving application identity and baseline signals.'],['D4','A coherent operating mechanism','Match the shared workflow, ownership, transition verification, and recovery to the chosen implementation.'],['D5','A verified central upgrade','Observe running versions, workload convergence, post-upgrade traces, and rollback.'],['D6','A measured cost/detail choice','Repeat comparable measurements and state the cost layer, units, conditions, and variability.']];
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const stamp=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+// This repository file is the editable source. State stays in this browser.
+const stateKey='opentelemetry-far-and-wide-storyboard-v2';
+function readState(){try{return JSON.parse(localStorage.getItem(stateKey));}catch{return null;}}
+const saved=readState();
+let index=Number.isInteger(saved?.modelContent?.scene)&&saved.modelContent.scene>=1&&saved.modelContent.scene<=15?saved.modelContent.scene-1:0;
+let view=saved?.privateContent?.view==='scene'?'scene':'overview';
+let beat=0;
+const node=(name,lang,selected=false)=>`<div class="sb-node${selected?' selected':''}"><span>${name}</span><span class="text-small text-muted">${lang}</span></div>`;
+const path=(selected=false)=>`<div class="sb-path">${node('Gateway','Go')}<span class="sb-arrow">→</span>${node('Checkout','Java',selected)}<span class="sb-arrow">→</span>${node('Inventory','Node.js')}</div>`;
+const trace=(depth=false,focus=false,aligned=false)=>`<div class="sb-trace"><div class="sb-trace-row"><span class="text-small">Gateway</span><div class="sb-track"><div class="sb-bar" style="width:96%"></div></div></div><div class="sb-trace-row"><span class="text-small">Checkout</span><div class="sb-track"><div class="sb-bar" style="width:86%;margin-left:4%"></div></div></div>${depth?'<div class="sb-trace-row"><span class="text-small">Method</span><div class="sb-track"><div class="sb-bar depth" style="width:65%;margin-left:9%"></div></div></div>':aligned?'<div class="sb-trace-row sb-missing" aria-label="No named method span in the baseline"><span class="text-small">Unnamed</span><div class="sb-track"></div></div>':''}<div class="sb-trace-row"><span class="text-small">Inventory</span><div class="sb-track"><div class="sb-bar" style="width:8%;margin-left:78%"></div></div></div>${focus?'<div class="sb-ghost text-small">Which local operation?</div>':''}</div>`;
+const steps=(labels,active)=>`<div class="sb-steps">${labels.map((x,i)=>`<span class="sb-step text-small${i===active?' active':''}">${x}</span>`).join('<span class="sb-arrow">→</span>')}</div>`;
+const compare=(full,removal=false)=>`<div class="sb-compare"><div class="sb-compare-view"><div class="sb-comparison-label text-small">${removal?'Selected depth':'Baseline request'}</div>${trace(removal,false,true)}</div><div class="sb-compare-view"><div class="sb-comparison-label text-small">${removal?'Restored breadth':'New request · depth'}</div>${full?trace(!removal,false,true):'<div class="sb-ghost text-small">Fresh baseline request after convergence</div>'}</div></div>${full?`<div class="sb-result text-small">${removal?'Baseline retained · selected method detail removed':'Same framing · separate requests · newly named work'}</div>`:''}`;
+const costSlot=(label,unit)=>`<div class="sb-cost-figure"><strong>${label}</strong><span class="text-small">${unit}</span><div class="sb-plot-slot text-small text-muted">To measure</div><div class="sb-cost-states text-small"><span>Breadth</span><span>Depth</span><span>Restored</span></div></div>`;
+function art(s,b,mini){
+const full=b>=s.beats.length-1;
+switch(s.kind){
+case 'title':return `<div class="sb-question"><h2>OpenTelemetry<br>Far and Wide</h2><div class="text-small">Tyler Yahn · Nikola Grcevski</div></div>${full?'<div class="sb-caption">Broad coverage · selected depth</div>':''}`;
+case 'problem':return `<div class="sb-question"><h3>Checkout is slow.</h3><div class="text-small">One platform · several service owners</div></div><div class="sb-focus">Which work inside checkout explains it?</div>`;
+case 'model':return `${path(full)}<div class="sb-caption text-small">Coverage across the request</div>${full?'<div class="sb-nested"><span>↑ Inside checkout</span><div class="sb-method-label">Selected application operation</div></div>':''}`;
+case 'breadth':return `<div class="sb-terminal text-small">Central deployment action</div>${full?`${path(false)}<div class="sb-caption text-small">One correlated request path</div>`:'<div class="sb-ghost">Apply baseline profile → observe a fresh request</div>'}`;
+case 'gap':return trace(false,true);
+case 'depth':return `${trace(full,false,true)}${full?'<div class="sb-method-label"><strong>PricingEngine.calculate</strong><div class="text-small">Linked inside the new checkout request</div></div>':'<div class="sb-focus">Change checkout’s profile → observe convergence</div><div class="sb-caption text-small">Look for a named local operation in the next request.</div>'}`;
+case 'answer':return compare(true);
+case 'control':return `<div class="sb-focus">Shared deployment workflow<div class="text-small">Proposed Operator integration</div></div><div class="sb-two sb-control-paths"><div class="sb-stack"><div class="sb-caption text-small">↓ Configure</div><div class="sb-node">OBI<div class="text-small">Request view + baseline metrics</div></div></div><div class="sb-stack"><div class="sb-caption text-small">↓ Inject</div><div class="sb-node">Language SDK<div class="text-small">Selected runtime detail</div></div></div></div>${full?`<div class="sb-caption text-small">↓ Telemetry from the selected trace owner</div><div class="sb-ghost">Collector</div>${mini?'':'<div class="sb-caption text-small">Checkout request spans: OBI in breadth; SDK in depth.<br>Retain the configured OBI baseline metrics.</div>'}`:''}`;
+case 'upgrade':return `<div class="sb-two"><div class="sb-version"><strong>Before</strong><div class="text-small">Requested: target version<br>Running: current version</div></div><div class="sb-version"><strong>After convergence</strong><div class="text-small">Requested: target version<br>Running: target version</div></div></div><div class="sb-focus">Verify the running agent / SDK and unchanged application image</div>`;
+case 'return':return `${full?'':'<div class="sb-terminal text-small">Request breadth profile → observe convergence</div>'}${compare(full,true)}`;
+case 'cost':return `<div class="sb-cost-plots">${costSlot('Export volume','OTLP bytes / completed request')}${costSlot('Application CPU','Matched request throughput')}</div><div class="sb-caption text-small">Matched load · repeated trials · report variation</div>`;
+case 'verify':return `${steps(['Candidate','Verify','Promote','Retire'],1)}<div class="sb-inset"><strong>Verification gate</strong><div class="text-small">Correct parent chain · one trace owner · retained baseline</div></div><div class="sb-caption text-small">Pass → promote and retire the previous profile<br>Fail → recover before proceeding</div>`;
+case 'adopt':return `<div class="sb-stack"><div class="sb-ghost">1 · One service, one unanswered question</div><div class="sb-inset">2 · Compare profiles and verify a fresh request</div><div class="sb-ghost">3 · Retain or remove detail · keep a rollback path</div></div>${mini?'':'<div class="sb-caption text-small">Companion example: prerequisites, commands, expected evidence, rollback</div>'}`;
+case 'question':return mini?'<div class="sb-stack"><div class="sb-ghost">Which service returns errors?<br>→ Inspect the baseline</div><div class="sb-inset">Which local work takes time?<br>→ Consider selected depth</div></div>':`<div class="sb-question">Which service is returning errors?</div><div class="sb-two"><div class="${full?'sb-focus':'sb-ghost'}">A · Inspect existing request signals</div><div class="sb-ghost">B · Add method detail first</div></div>${full?'<div class="sb-caption text-small">A · The existing request signals may already answer this.</div><div class="sb-inset">Which local calculation consumes time?<br>Now consider selected runtime detail.</div>':''}`;
+case 'close':return `<div class="sb-focus">Start broad.<br>Add depth with purpose.</div><div class="sb-question">Your next step: one service, one question.</div><div class="sb-caption text-small">Companion example</div>`;
+}
+return '';
+}
+function shot(s,b,mini){return `<div class="sb-sketch" role="img" aria-label="Concept sketch: ${escape(s.title)}">${mini?'':`<div class="sb-shot-label text-small text-muted"><span>${escape(s.phase)}</span><span>${String(scenes.indexOf(s)+1).padStart(2,'0')}</span></div>${s.kind==='title'?'':`<h2 class="sb-stage-title">${escape(s.title)}</h2>`}`}<div class="sb-art">${art(s,b,mini)}</div>${mini?'':`<div class="text-small text-muted">${['gap','depth','answer','return'].includes(s.kind)?'Conceptual trace geometry · replace with measured requests':'Composition sketch · planned content'}</div>`}</div>`}
+const overview=root.querySelector('#sb-overview');
+overview.innerHTML=scenes.map((s,i)=>`<article class="sb-tile"><div class="sb-tile-top text-small text-muted"><span>${String(i+1).padStart(2,'0')} · ${stamp(s.start)}–${stamp(s.start+s.duration)}</span><span>${stamp(s.duration)}</span></div><h3>${escape(s.title)}</h3>${shot(s,s.beats.length-1,true)}<div><button type="button" class="btn btn-ghost" data-scene="${i}">Open scene ${String(i+1).padStart(2,'0')} →</button></div></article>`).join('');
+const picker=root.querySelector('#sb-picker');
+picker.innerHTML=scenes.map((s,i)=>`<option value="${i}">${String(i+1).padStart(2,'0')} · ${escape(s.short)}</option>`).join('');
+root.querySelector('#sb-requirements').innerHTML=requirements.map(([id,title,note])=>`<div class="sb-requirement"><span>${id}</span><div><strong>${title}</strong><div class="sb-note">${note}</div></div></div>`).join('');
+function persist(){
+  try{localStorage.setItem(stateKey,JSON.stringify({modelContent:{scene:index+1,title:scenes[index].title,demoStatus:'Requirements to build and validate',revision:2},privateContent:{view}}));}catch{}
+}
+function render(){
+const expanded=Array.from(root.querySelectorAll('#sb-detail details')).map(el=>el.open);
+root.querySelector('#sb-overview').hidden=view!=='overview';root.querySelector('#sb-scene').hidden=view!=='scene';
+root.querySelectorAll('[data-view]').forEach(el=>{const on=el.dataset.view===view;el.setAttribute('aria-pressed',String(on));el.classList.toggle('btn-primary',on)});
+const s=scenes[index];picker.value=String(index);
+root.querySelectorAll('.sb-timeline span').forEach((el,i)=>el.classList.toggle('current',view==='scene'&&i===(index<3?0:index<7?1:index<10?2:3)));
+root.querySelector('#sb-prev').disabled=index===0;root.querySelector('#sb-next').disabled=index===scenes.length-1;
+root.querySelector('#sb-meta').textContent=`SCENE ${String(index+1).padStart(2,'0')} · ${stamp(s.start)}–${stamp(s.start+s.duration)} · ${s.owner} · ${s.media}`;
+root.querySelector('#sb-stage').innerHTML=shot(s,beat,false);
+root.querySelector('.sb-reveal-row').hidden=s.beats.length<2;
+root.querySelector('#sb-beat-label').textContent=`State ${beat+1}/${s.beats.length} · ${s.beats[beat]}`;
+root.querySelector('#sb-reveal').textContent=beat===s.beats.length-1?'Restart reveals ↺':'Next reveal →';
+root.querySelector('#sb-detail').innerHTML=`<div class="sb-note"><strong>Audience question</strong><p>${escape(s.question)}</p><strong>Takeaway</strong><p>${escape(s.message)}</p>${s.interaction?`<strong>Audience pause</strong><p>${escape(s.interaction)}</p>`:''}</div><details><summary>Delivery and presenter handoff</summary><div class="sb-note"><p>${escape(s.delivery)}</p><p><strong>Transition:</strong> ${escape(s.transition)}</p></div></details><details><summary>Demo or asset requirement</summary><div class="sb-note"><p>${escape(s.needs)}</p></div></details>`;
+root.querySelectorAll('#sb-detail details').forEach((el,i)=>{el.open=Boolean(expanded[i])});
+}
+root.addEventListener('click',event=>{const open=event.target.closest('[data-scene]');if(open){index=Number(open.dataset.scene);beat=0;view='scene';render();picker.focus({preventScroll:true});root.scrollIntoView({block:'start'});persist();return}const mode=event.target.closest('[data-view]');if(mode){view=mode.dataset.view;render();persist()}});
+picker.addEventListener('change',()=>{index=Number(picker.value);beat=0;render();persist()});
+root.querySelector('#sb-prev').addEventListener('click',()=>{if(index>0){index--;beat=0;render();persist()}});
+root.querySelector('#sb-next').addEventListener('click',()=>{if(index<14){index++;beat=0;render();persist()}});
+root.querySelector('#sb-reveal').addEventListener('click',()=>{beat=(beat+1)%scenes[index].beats.length;render()});
+render();
+})();
+</script>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,339 @@
+{
+  "research_date": "2026-10-05",
+  "scope": "Source review for OpenTelemetry Far and Wide. Not runtime or performance proof.",
+  "upstream_tests_executed": false,
+  "deployment_executed": false,
+  "container_image_digests_verified": false,
+  "hash_algorithm": "SHA-256",
+  "releases": [
+    {
+      "component": "OBI",
+      "tag": "v0.14.0",
+      "published_at": "2026-10-02T19:11:33Z",
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/releases/tag/v0.14.0",
+      "source_commit": "13d9b0c3f600a060bd78820a63ebec882b10757e"
+    },
+    {
+      "component": "Operator",
+      "tag": "v0.160.0",
+      "published_at": "2026-09-28T22:11:14Z",
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/releases/tag/v0.160.0",
+      "source_commit": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad"
+    },
+    {
+      "component": "Java agent",
+      "tag": "v2.30.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/tag/v2.30.0",
+      "source_commit": "080c1d32ca676ba7b0210c21b60cce8e7ac39058"
+    },
+    {
+      "component": "Java agent",
+      "tag": "v2.31.1",
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/tag/v2.31.1",
+      "source_commit": "8ad06a082e051f366f19c16ad95a7b68edf30afd"
+    }
+  ],
+  "files": [
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "SUPPORT_MATRIX.md",
+      "sha256": "c4a63f569979a05c39d61143a485e472cf3b169a8c82597fdb7cbfe3c7f78ac8",
+      "bytes": 24329,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/SUPPORT_MATRIX.md",
+      "id": "obi-support",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/SUPPORT_MATRIX.md",
+      "evidence_type": "upstream documentation"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "devdocs/context-propagation.md",
+      "sha256": "184ca059d76582ea1b53e27f0917774664bf4c397be2979248a57117cd99ceae",
+      "bytes": 13882,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/devdocs/context-propagation.md",
+      "id": "obi-propagation",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/devdocs/context-propagation.md#configuration",
+      "evidence_type": "upstream documentation"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "pkg/appolly/discover/dynamic_selector.go",
+      "sha256": "33a4e9b81edad9fe61a5dc4be9888c3b1cef4869f1da5117912dffa02230f44f",
+      "bytes": 18505,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/dynamic_selector.go",
+      "id": "obi-selector",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/dynamic_selector.go#L55-L60",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "pkg/appolly/discover/dynamic_k8s_workload.go",
+      "sha256": "09e0e0218613e1749954ac22ee04e6475f6b10cb9c1964a13b680b6bea37c009",
+      "bytes": 9165,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/dynamic_k8s_workload.go",
+      "id": "obi-workload",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/dynamic_k8s_workload.go#L15-L34",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "examples/dynamicselector/dynamicselector.go",
+      "sha256": "0a05aaabcb9975f93f8519434e4fb0fc14c73fd192f0417c4f2b6a016ee0e628",
+      "bytes": 9689,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/examples/dynamicselector/dynamicselector.go",
+      "id": "obi-example",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/examples/dynamicselector/dynamicselector.go",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "pkg/appolly/dynamic_signal_gate.go",
+      "sha256": "e6dfc180b2aa47b2395115cc677842e5fbdf2af476f5a875bb73de35643bfaa5",
+      "bytes": 6353,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/dynamic_signal_gate.go",
+      "id": "obi-gate",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/dynamic_signal_gate.go#L41-L108",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "devdocs/exclude-otel-instrumented-services.md",
+      "sha256": "30bac5740ae23ef2b9a6a29821b12514e4b1659c7ebf9493faf82e11f7084bb5",
+      "bytes": 10730,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/devdocs/exclude-otel-instrumented-services.md",
+      "id": "obi-avoidance",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/devdocs/exclude-otel-instrumented-services.md",
+      "evidence_type": "upstream documentation"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "e285e7587e8542eab0305895b6187eb667760274",
+      "path": "pkg/ebpf/common/pids.go",
+      "sha256": "e7e4031896d3df4d82e255d7edeb3026d59b95cfad5265c234d1e0b4f519b909",
+      "bytes": 10082,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/pkg/ebpf/common/pids.go",
+      "id": "obi-detection",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/pkg/ebpf/common/pids.go",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "13d9b0c3f600a060bd78820a63ebec882b10757e",
+      "path": "pkg/appolly/discover/k8s_workload_test.go",
+      "sha256": "edacad74d73cd7da6a9b05e82133c81642ae60a8907008c1115fc6f0dfef9bab",
+      "bytes": 8867,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/k8s_workload_test.go",
+      "id": "obi-workload-test",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/13d9b0c3f600a060bd78820a63ebec882b10757e/pkg/appolly/discover/k8s_workload_test.go",
+      "evidence_type": "upstream test source, not executed"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "e285e7587e8542eab0305895b6187eb667760274",
+      "path": "pkg/appolly/dynamic_signal_gate_test.go",
+      "sha256": "174f519167baccb9e3f0ab2b8f363b6aab472c2c85f8d463dff99c14a99c543a",
+      "bytes": 10423,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/pkg/appolly/dynamic_signal_gate_test.go",
+      "id": "obi-gate-test",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/pkg/appolly/dynamic_signal_gate_test.go",
+      "evidence_type": "upstream test source, not executed"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-ebpf-instrumentation",
+      "ref": "e285e7587e8542eab0305895b6187eb667760274",
+      "path": "internal/test/integration/avoided_services_otel_test.go",
+      "sha256": "c3f05be1a086659bc19f990feb1fba59b628b5dbf29311666b04c7e4e818ed18",
+      "bytes": 2691,
+      "url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/internal/test/integration/avoided_services_otel_test.go",
+      "id": "obi-avoidance-test",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/e285e7587e8542eab0305895b6187eb667760274/internal/test/integration/avoided_services_otel_test.go",
+      "evidence_type": "upstream test source, not executed"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "docs/use-cases/obi-ebpf-receiver.md",
+      "sha256": "6e25ac06f6e137fc489d3ee64d7349d3eb7a46a998f6ef9b3e33db93e8138233",
+      "bytes": 5770,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/docs/use-cases/obi-ebpf-receiver.md",
+      "id": "operator-obi",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/docs/use-cases/obi-ebpf-receiver.md",
+      "evidence_type": "upstream documentation"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "internal/instrumentation/podmutator.go",
+      "sha256": "0a4ea51e168f3d5d63ccc18b9d622207f979e9a669f4874f6fd42c7dc9603456",
+      "bytes": 16305,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/podmutator.go",
+      "id": "operator-selection",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/podmutator.go#L362-L390",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "internal/instrumentation/javaagent.go",
+      "sha256": "0c0dd6c7de5e370a1ab927a41e676f487dfe741fd8ac587bf355df54a380a8ad",
+      "bytes": 4364,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/javaagent.go",
+      "id": "operator-java",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/javaagent.go#L43-L126",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "apis/v1alpha1/instrumentation_types.go",
+      "sha256": "ca648aae45f9ba0113a75a17d147dc55bcb918dddf68f441c68bac6ef91da921",
+      "bytes": 19898,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/apis/v1alpha1/instrumentation_types.go",
+      "id": "operator-config",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/apis/v1alpha1/instrumentation_types.go#L35-L39",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "internal/instrumentation/upgrade/upgrade.go",
+      "sha256": "ea7236c90ab5a8b91b5fb4d0771c126097ee3e8473f50087964f8a5fc0869e53",
+      "bytes": 8734,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/upgrade/upgrade.go",
+      "id": "operator-upgrade",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/instrumentation/upgrade/upgrade.go#L73-L105",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "versions.txt",
+      "sha256": "f3fd649a9d9cb39d22cad172d1a0112170bb9bdcc484950048ebd2f480b62507",
+      "bytes": 1542,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/versions.txt",
+      "id": "operator-versions",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/versions.txt",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "docs/collector/cluster-observability.md",
+      "sha256": "6f021442823445501b99ba0f5e8c25490cce028689db29c21a0c4cfbc3761648",
+      "bytes": 15186,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/docs/collector/cluster-observability.md",
+      "id": "cluster-observability",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/docs/collector/cluster-observability.md#auto-instrumentation",
+      "evidence_type": "upstream documentation"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-operator",
+      "ref": "c7cc68b4b4b8e7450315fa22da1a1f23a7664fad",
+      "path": "internal/manifests/clusterobservability/clusterobservability.go",
+      "sha256": "092d2b667e0f2d416b398bcb1538579c39530fb4a9ff462501333dc96033ef7e",
+      "bytes": 13221,
+      "url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/manifests/clusterobservability/clusterobservability.go",
+      "id": "cluster-profile",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-operator/blob/c7cc68b4b4b8e7450315fa22da1a1f23a7664fad/internal/manifests/clusterobservability/clusterobservability.go#L216-L292",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "8ad06a082e051f366f19c16ad95a7b68edf30afd",
+      "path": "instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodConfiguration.java",
+      "sha256": "2daab05be4b93f0c7faebe904b29f65160288b2dce1f35dd4a084a3b2b6a2342",
+      "bytes": 4168,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodConfiguration.java",
+      "id": "java-method-config",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodConfiguration.java#L105-L113",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "8ad06a082e051f366f19c16ad95a7b68edf30afd",
+      "path": "instrumentation/methods/javaagent/src/test/java/io/opentelemetry/javaagent/instrumentation/methods/MethodTest.java",
+      "sha256": "e3603639ed31449ccdc100cd7ab52bb16ea392654f78410ea0a9878feab73b09",
+      "bytes": 4463,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/test/java/io/opentelemetry/javaagent/instrumentation/methods/MethodTest.java",
+      "id": "java-method-test",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/test/java/io/opentelemetry/javaagent/instrumentation/methods/MethodTest.java#L33-L78",
+      "evidence_type": "upstream test source, not executed"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "8ad06a082e051f366f19c16ad95a7b68edf30afd",
+      "path": "instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodInstrumentation.java",
+      "sha256": "e030747dbe3a5655982fbfc1ace60571877f308dd0ce5cc0f7d2301e51d09056",
+      "bytes": 6227,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodInstrumentation.java",
+      "id": "java-method-advice",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/src/main/java/io/opentelemetry/javaagent/instrumentation/methods/MethodInstrumentation.java#L110-L126",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "080c1d32ca676ba7b0210c21b60cce8e7ac39058",
+      "path": "dependencyManagement/build.gradle.kts",
+      "sha256": "98d046c04dd35ffa5e8e50e6eb47a424e03a79a6224beaa05edf084a56182180",
+      "bytes": 6254,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/080c1d32ca676ba7b0210c21b60cce8e7ac39058/dependencyManagement/build.gradle.kts",
+      "id": "java-old-sdk",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/080c1d32ca676ba7b0210c21b60cce8e7ac39058/dependencyManagement/build.gradle.kts#L8",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "8ad06a082e051f366f19c16ad95a7b68edf30afd",
+      "path": "dependencyManagement/build.gradle.kts",
+      "sha256": "ca43ea3a4073bf5f827e291ae83526aa6bbc44e7d3bd0476703793329dda39d8",
+      "bytes": 6726,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/dependencyManagement/build.gradle.kts",
+      "id": "java-new-sdk",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/dependencyManagement/build.gradle.kts#L8",
+      "evidence_type": "upstream implementation or version manifest"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-java-instrumentation",
+      "ref": "8ad06a082e051f366f19c16ad95a7b68edf30afd",
+      "path": "instrumentation/methods/javaagent/build.gradle.kts",
+      "sha256": "6b97de2ed1cfc7d5c8b5619a6d40792553a7cf09e533e224d29a48c0c6815bfd",
+      "bytes": 874,
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/build.gradle.kts",
+      "id": "java-method-test-config",
+      "citation_url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/8ad06a082e051f366f19c16ad95a7b68edf30afd/instrumentation/methods/javaagent/build.gradle.kts#L15-L19",
+      "evidence_type": "upstream test configuration, not executed"
+    }
+  ],
+  "web_sources": [
+    {
+      "id": "schedule",
+      "url": "https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/co-located-events/cncf-hosted-co-located-schedule/?id=1268232",
+      "accessed_date": "2026-10-05",
+      "evidence_type": "official documentation or event schedule"
+    },
+    {
+      "id": "java-method-doc",
+      "url": "https://opentelemetry.io/docs/zero-code/java/agent/annotations/#creating-spans-around-methods-with-otelinstrumentationmethodsinclude",
+      "accessed_date": "2026-10-05",
+      "evidence_type": "official documentation or event schedule"
+    },
+    {
+      "id": "sampling-spec",
+      "url": "https://opentelemetry.io/docs/specs/otel/trace/sdk/#parentbased",
+      "accessed_date": "2026-10-05",
+      "evidence_type": "official documentation or event schedule"
+    },
+    {
+      "id": "sampling",
+      "url": "https://opentelemetry.io/docs/concepts/sampling/",
+      "accessed_date": "2026-10-05",
+      "evidence_type": "official documentation or event schedule"
+    }
+  ]
+}

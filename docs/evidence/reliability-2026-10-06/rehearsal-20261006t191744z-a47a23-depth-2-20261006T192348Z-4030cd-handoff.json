@@ -1,0 +1,1077 @@
+{
+  "profile": "depth",
+  "events": [
+    {
+      "event": "profile_requested",
+      "time_ns": 1791314632822988864
+    },
+    {
+      "event": "candidate_started",
+      "time_ns": 1791314638346155815,
+      "target": {
+        "pod": "checkout-6c5c486bdb-l5w89",
+        "ip": "10.244.0.14"
+      }
+    },
+    {
+      "event": "admission_probe",
+      "time_ns": 1791314638913954567,
+      "trace_id": "ab7ee9d93ade04aff67ef9b4cc63b687",
+      "status": 200
+    },
+    {
+      "event": "admission_probe",
+      "time_ns": 1791314651713372002,
+      "trace_id": "00b3b8d5b83ebf91ca50099f4ecc896a",
+      "status": 200
+    },
+    {
+      "event": "candidate_telemetry_verified",
+      "time_ns": 1791314661991303549,
+      "trace_id": "00b3b8d5b83ebf91ca50099f4ecc896a",
+      "metric_verified": true
+    },
+    {
+      "event": "route_switched",
+      "time_ns": 1791314661998187704
+    },
+    {
+      "event": "old_requests_finished",
+      "time_ns": 1791314662009843166,
+      "count": 123
+    },
+    {
+      "event": "old_telemetry_exported",
+      "time_ns": 1791314674144648599,
+      "count": 123
+    },
+    {
+      "event": "readiness_released",
+      "time_ns": 1791314674263119494
+    },
+    {
+      "event": "handoff_complete",
+      "time_ns": 1791314674397299520
+    }
+  ],
+  "passed": true,
+  "reject_candidate": false,
+  "old_target": {
+    "pod": "checkout-5544db7569-s5fcg",
+    "ip": "10.244.0.13"
+  },
+  "new_target": {
+    "pod": "checkout-6c5c486bdb-l5w89",
+    "ip": "10.244.0.14"
+  },
+  "admission_probes": [
+    {
+      "trace_id": "ab7ee9d93ade04aff67ef9b4cc63b687",
+      "parent_span_id": "484896cc2146e179",
+      "start_ns": 1791314638547707532,
+      "status": 200,
+      "body": "{\"price\":42,\"inventory\":{\"available\":true}}\n",
+      "end_ns": 1791314638913941479,
+      "admission_errors": []
+    },
+    {
+      "trace_id": "00b3b8d5b83ebf91ca50099f4ecc896a",
+      "parent_span_id": "4bbcd7fcaae8988a",
+      "start_ns": 1791314651538381682,
+      "status": 200,
+      "body": "{\"price\":42,\"inventory\":{\"available\":true}}\n",
+      "end_ns": 1791314651713341575,
+      "admission_errors": []
+    }
+  ],
+  "candidate_metric_baseline": {
+    "checkout-6c5c486bdb-l5w89": 1
+  },
+  "drained_requests": [
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b66c365ae4ad29cf2bf65b0d6ae6acaf",
+      "parent_span_id": "3b237b99e4395f33",
+      "start_ns": 1791314590150424081,
+      "end_ns": 1791314590311657479,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9fc721ba4a4a321d5cb5767ef12ee22b",
+      "parent_span_id": "fa3f5c7225ef2a4a",
+      "start_ns": 1791314590543015021,
+      "end_ns": 1791314590699442796,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "817a211a3325e7405a14be93daa97e0a",
+      "parent_span_id": "43f9415cd9fbc7cf",
+      "start_ns": 1791314590951319660,
+      "end_ns": 1791314591106969155,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "40908a1c49c789137e08c0834508a384",
+      "parent_span_id": "7d323cf41b1b4091",
+      "start_ns": 1791314591352414056,
+      "end_ns": 1791314591511992431,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "5d16a40fc2e5c7a7825336ef02733b8f",
+      "parent_span_id": "fd062fc05bd767d4",
+      "start_ns": 1791314591743431177,
+      "end_ns": 1791314591898012204,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "5b7be78a31b4d0b9a947bd144ea588ac",
+      "parent_span_id": "cfa9980b93f2c9b5",
+      "start_ns": 1791314592152318211,
+      "end_ns": 1791314592309232935,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "eba8eaafa482cdb61bbde6c9305f9ba3",
+      "parent_span_id": "51071c1cf1bc052a",
+      "start_ns": 1791314592552318832,
+      "end_ns": 1791314592710194326,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b1c9c8f7e347d1727ec38c1756161d3c",
+      "parent_span_id": "d74c1c4342d8fc1f",
+      "start_ns": 1791314592943595235,
+      "end_ns": 1791314593099986735,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "925a9d4b5bcd296aa3236d83ba82d484",
+      "parent_span_id": "7758e0fda9afc905",
+      "start_ns": 1791314593352782844,
+      "end_ns": 1791314593509283575,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8ca1b94aa30d1ac42c4c9342cfbf109f",
+      "parent_span_id": "2fb487382f93a492",
+      "start_ns": 1791314593752866863,
+      "end_ns": 1791314593911659320,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f786aa1ce0cbed3f7cf03e00d4e44c98",
+      "parent_span_id": "c5acce55459809ef",
+      "start_ns": 1791314594144692271,
+      "end_ns": 1791314594301607420,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c9d5ee79cd2c318bd60d3821dfc34da7",
+      "parent_span_id": "4e2e593d42aa5b83",
+      "start_ns": 1791314594554746779,
+      "end_ns": 1791314594710238848,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "5aba21e6c1c9e17224feab9876e6db97",
+      "parent_span_id": "0272f691d7c4b31c",
+      "start_ns": 1791314594953732539,
+      "end_ns": 1791314595111974752,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "4801aa399d3f43a27e373943229ecfb3",
+      "parent_span_id": "190b9ff588e47875",
+      "start_ns": 1791314595344792685,
+      "end_ns": 1791314595500974192,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3c9a32e1066790c92f7147b5b3926bea",
+      "parent_span_id": "12207034c9503a8a",
+      "start_ns": 1791314595754697853,
+      "end_ns": 1791314595909788905,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8696ae35d4f7eb22837f2ae721a99a1f",
+      "parent_span_id": "7be99eee825ab28e",
+      "start_ns": 1791314596154147229,
+      "end_ns": 1791314596312909430,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "64ca0f04fae0ab5891a1a45663801c2c",
+      "parent_span_id": "3952f1672037b3d6",
+      "start_ns": 1791314596545258284,
+      "end_ns": 1791314596701377891,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c9ce719e6c07baec5e8d9e100a5c015a",
+      "parent_span_id": "4fa859b194fdbef2",
+      "start_ns": 1791314596955111254,
+      "end_ns": 1791314597110042020,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e5ae340950b1d532cd3fde7a64b0af29",
+      "parent_span_id": "6bf7794c9b7dcf24",
+      "start_ns": 1791314597353808512,
+      "end_ns": 1791314597512024302,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "ef6bfc30684d03defb6fed9c661d1557",
+      "parent_span_id": "84b086387318c251",
+      "start_ns": 1791314597745862939,
+      "end_ns": 1791314597901546803,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "496f8ce9e9e44b8647bb79aaaddca84b",
+      "parent_span_id": "9cce9ed890fb1a0d",
+      "start_ns": 1791314598149977785,
+      "end_ns": 1791314598303774062,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c2d752990530abeb1c9fb855b7f45630",
+      "parent_span_id": "eba83ccac9e9ba91",
+      "start_ns": 1791314598551747927,
+      "end_ns": 1791314598708034122,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "0b8ec1b14d489444c07b75b78e66c630",
+      "parent_span_id": "d47a5989ee838f95",
+      "start_ns": 1791314598946338608,
+      "end_ns": 1791314599099207960,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "df99f844a9135dbd36689db43fd167d5",
+      "parent_span_id": "c5cf8abaaa1f1eeb",
+      "start_ns": 1791314599354676816,
+      "end_ns": 1791314599510428494,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "fad3f05a638c63e89f46a9f69a853788",
+      "parent_span_id": "4bc244b2535ef1dd",
+      "start_ns": 1791314599748980895,
+      "end_ns": 1791314599905008945,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e3c1ae104fb234b5f897bc04607c5d62",
+      "parent_span_id": "b3631f1b2c219f19",
+      "start_ns": 1791314600157084964,
+      "end_ns": 1791314600315910121,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f6358534c122a29de149bb06ea97c946",
+      "parent_span_id": "6d248502761cf0b0",
+      "start_ns": 1791314600558541110,
+      "end_ns": 1791314600716720995,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "33fcb980e9c123d0aa62d6e4d82f0206",
+      "parent_span_id": "e8be3fe4e5663c39",
+      "start_ns": 1791314600956619478,
+      "end_ns": 1791314601114764856,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "ddb4711cb5a68f3eb3d0f9c8868c0a38",
+      "parent_span_id": "b7620f1086ada0f8",
+      "start_ns": 1791314601357084246,
+      "end_ns": 1791314601515977682,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8e9b5257c32bd317159f199f77485e31",
+      "parent_span_id": "0941a52783e710b8",
+      "start_ns": 1791314601756435877,
+      "end_ns": 1791314601914944924,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f485f1a7fd50083599f067e04cc4a62f",
+      "parent_span_id": "277724b3b05dbb11",
+      "start_ns": 1791314602156580789,
+      "end_ns": 1791314602314319830,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "71e7a671614dcdd4ab607bf67d7aad48",
+      "parent_span_id": "96ec48f8777b959e",
+      "start_ns": 1791314602557018660,
+      "end_ns": 1791314602715089668,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8cd7c3682447d2d430c9fb05920390a0",
+      "parent_span_id": "968a0be8a504f469",
+      "start_ns": 1791314602957436319,
+      "end_ns": 1791314603116001765,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "bbe567e40f6a790478e425ba363b710b",
+      "parent_span_id": "32b8cbdef93b35c9",
+      "start_ns": 1791314603357520188,
+      "end_ns": 1791314603516249247,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b793dec08b5d3d575ae77e183c535978",
+      "parent_span_id": "772e5e4aaa35c4a9",
+      "start_ns": 1791314603758074405,
+      "end_ns": 1791314603916312416,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b0e1568b5c4d21aa78235fc7ae74aac7",
+      "parent_span_id": "d71e36028b72f766",
+      "start_ns": 1791314604157280935,
+      "end_ns": 1791314604315219427,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f60046785dddf0dc77241524de9ece4f",
+      "parent_span_id": "636a30e04a2d5c63",
+      "start_ns": 1791314604549434158,
+      "end_ns": 1791314604702391099,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3029f5fb22b6ce50a2ba26781f107dda",
+      "parent_span_id": "6f991de776dff1f5",
+      "start_ns": 1791314604957542262,
+      "end_ns": 1791314605115589576,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "206d27e082f28fdc5d3c2b2dd7c3b62c",
+      "parent_span_id": "9c69a99c4e5cec31",
+      "start_ns": 1791314605357950340,
+      "end_ns": 1791314605515249336,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "23148fb7a74cfd6076a008c36c4e965d",
+      "parent_span_id": "38faed96908091be",
+      "start_ns": 1791314605758202797,
+      "end_ns": 1791314605913811337,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b367c17353d63893b590fa45c1dce9b2",
+      "parent_span_id": "667e4d86f6c830b3",
+      "start_ns": 1791314606158340642,
+      "end_ns": 1791314606316619736,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "bda682b0dd08405ea9f6941c54ff2c47",
+      "parent_span_id": "943d5dfed568ff2f",
+      "start_ns": 1791314606558058738,
+      "end_ns": 1791314606717446082,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "ef117b84357c1fbeb9f23d3d8871f70f",
+      "parent_span_id": "c09e6cf78c0d054d",
+      "start_ns": 1791314606958498392,
+      "end_ns": 1791314607117850020,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f5aa7b05ab3795fb46565ac19c6cb091",
+      "parent_span_id": "6ba25d48304371b0",
+      "start_ns": 1791314629995256673,
+      "end_ns": 1791314630150884342,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "dc653bb235ae033dba4da937f543930d",
+      "parent_span_id": "c8f938cb8de5b6fd",
+      "start_ns": 1791314630403536741,
+      "end_ns": 1791314630560100193,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e6f2573134ed8f1bc5bdd52712288ffd",
+      "parent_span_id": "964af0bde5a371ba",
+      "start_ns": 1791314630807557616,
+      "end_ns": 1791314630965208333,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f7dbe346f983ef0dddbf4aca13075f5f",
+      "parent_span_id": "db8ce79b06692c2e",
+      "start_ns": 1791314631204169445,
+      "end_ns": 1791314631361240897,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9e152ebedda704e6395b8b0969cb6864",
+      "parent_span_id": "9bf18222a93d8522",
+      "start_ns": 1791314631604775196,
+      "end_ns": 1791314631761821611,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "257442d163c843ad91073f4f63f17cd4",
+      "parent_span_id": "7db341882963f621",
+      "start_ns": 1791314632008285782,
+      "end_ns": 1791314632162811584,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "a6fd19f4ea13e62a0d189eda8eb93407",
+      "parent_span_id": "70bc62cd2edbbb77",
+      "start_ns": 1791314632400173748,
+      "end_ns": 1791314632555309116,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9889339a47f8fa9a60782996e19b0931",
+      "parent_span_id": "33405a6f50b04839",
+      "start_ns": 1791314632798807634,
+      "end_ns": 1791314632951263419,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "7eb3413fe2a7f91a14d1915d2e6a2c13",
+      "parent_span_id": "8dfce0487a879dac",
+      "start_ns": 1791314633210952021,
+      "end_ns": 1791314633369844932,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3c0bb4bfa065864f7588ce8e70db09c8",
+      "parent_span_id": "a18fd943f6fd04ae",
+      "start_ns": 1791314633598753606,
+      "end_ns": 1791314633751149732,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "79f557ead2cff2e1b81ea2c3aafe2e3f",
+      "parent_span_id": "b105208807323329",
+      "start_ns": 1791314634007848342,
+      "end_ns": 1791314634166571868,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "919d917c98bb2032cfb5f4912d5f7028",
+      "parent_span_id": "2b6d6caa90051779",
+      "start_ns": 1791314634399024085,
+      "end_ns": 1791314634551891752,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e89492e93a5202bc7d8b573505a93d4e",
+      "parent_span_id": "86ef06fd9a326984",
+      "start_ns": 1791314634799540233,
+      "end_ns": 1791314634951774480,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e3c2b8156209cb1cd65add7d9bb7444b",
+      "parent_span_id": "ea8a13b496f2e755",
+      "start_ns": 1791314635199040843,
+      "end_ns": 1791314635351600631,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "a6988719015545026370c02d0aab6874",
+      "parent_span_id": "cc4ace3039187f36",
+      "start_ns": 1791314635603503125,
+      "end_ns": 1791314635756576474,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "cf4212bc07998415d890b492eb25c018",
+      "parent_span_id": "3b84fe6129cce484",
+      "start_ns": 1791314636002382661,
+      "end_ns": 1791314636156215259,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "519a092f7e757c1e700bf8ab1e6513b2",
+      "parent_span_id": "24c38568c0c20ac6",
+      "start_ns": 1791314636402420528,
+      "end_ns": 1791314636555434610,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "d9ff491f9db50b2ef1c792ef5925af11",
+      "parent_span_id": "597900843e34db4e",
+      "start_ns": 1791314636804884827,
+      "end_ns": 1791314636957856737,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3afac604b8c3f311ff4bf8e87a501329",
+      "parent_span_id": "27a7ef5f820fed35",
+      "start_ns": 1791314637201868659,
+      "end_ns": 1791314637354692757,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "5d2582f50c1b418e3446276ec765f32d",
+      "parent_span_id": "3f793e0d2327aa0b",
+      "start_ns": 1791314637600585276,
+      "end_ns": 1791314637755716339,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c826a63c0f96bb886f9bf3336146b9a4",
+      "parent_span_id": "4c0b747f4f34a9a7",
+      "start_ns": 1791314638007354987,
+      "end_ns": 1791314638166615640,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f360a3a2d444ac5d21c2d5c0ce6f27de",
+      "parent_span_id": "ec123c1e01ee9cf9",
+      "start_ns": 1791314638401523548,
+      "end_ns": 1791314638557596785,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8ac9aa27e6eefee881bad5f05add8c48",
+      "parent_span_id": "f21fb6884be7924a",
+      "start_ns": 1791314638800847049,
+      "end_ns": 1791314638953158342,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b3ff5bead25c0c0d8b47c7c4e05002c0",
+      "parent_span_id": "2664659fb5dd74a3",
+      "start_ns": 1791314639210588998,
+      "end_ns": 1791314639366718637,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9c24870fd37ca55afb0eb179ce652f8a",
+      "parent_span_id": "cad5d2e68510abaf",
+      "start_ns": 1791314639601405231,
+      "end_ns": 1791314639756273606,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "d03b56c107418853429d71ce7e08343d",
+      "parent_span_id": "8e0541fd24a19e9e",
+      "start_ns": 1791314640003166203,
+      "end_ns": 1791314640159146857,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "24d57ea449d4dca7586561017ad5f375",
+      "parent_span_id": "0e2efbb5f4ce68f4",
+      "start_ns": 1791314640409767884,
+      "end_ns": 1791314640566862924,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "1da398cd1c5a31c763a8a47157659cb8",
+      "parent_span_id": "2fef1388cca5ffae",
+      "start_ns": 1791314640809698085,
+      "end_ns": 1791314640966662610,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "49a5fb547cdc2a3755c8cb08fe00214e",
+      "parent_span_id": "edc39783142e1d8e",
+      "start_ns": 1791314641209860678,
+      "end_ns": 1791314641363042107,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8748df58fa04a6b400a0e411ba8b1785",
+      "parent_span_id": "29a2d43eacc77337",
+      "start_ns": 1791314641602175267,
+      "end_ns": 1791314641754878691,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "28d1b97d5379a7ff7d04b3572e49963b",
+      "parent_span_id": "4f03f1746ec8347d",
+      "start_ns": 1791314642003231322,
+      "end_ns": 1791314642156200893,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "bc02d49df9f16364072321d20ac0048c",
+      "parent_span_id": "be8f90931fa56501",
+      "start_ns": 1791314642402567746,
+      "end_ns": 1791314642555054178,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3293c63f84f958316a2d1c16e3f52fbb",
+      "parent_span_id": "7030dfc3090f93a7",
+      "start_ns": 1791314642802181605,
+      "end_ns": 1791314642954602276,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c5781b18445cdb1c9ba30c53b30e7ff7",
+      "parent_span_id": "430ab1170babaea6",
+      "start_ns": 1791314643202511933,
+      "end_ns": 1791314643355299429,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "35668d0ccab4bd0b483ea42509b337b2",
+      "parent_span_id": "031a43f370734f5a",
+      "start_ns": 1791314643602349855,
+      "end_ns": 1791314643754859504,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "ab481366a1677d55494335279a824954",
+      "parent_span_id": "090bba54a793f16c",
+      "start_ns": 1791314644004295033,
+      "end_ns": 1791314644156733514,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "33428f6c5a284230a0ba486acc89f0f4",
+      "parent_span_id": "a95ed3ee47703f73",
+      "start_ns": 1791314644402517566,
+      "end_ns": 1791314644554942408,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "0edd8b4ac1c30d0f7994d6aa5c401a47",
+      "parent_span_id": "cfef54a0dfe495a1",
+      "start_ns": 1791314644802774575,
+      "end_ns": 1791314644955230815,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "6ca689276fd313285bd5aba35919378b",
+      "parent_span_id": "0fe293b7c0d424ad",
+      "start_ns": 1791314645202743263,
+      "end_ns": 1791314645355195722,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e2054e92946b7370e9909bd882097add",
+      "parent_span_id": "c2617465961d006c",
+      "start_ns": 1791314645602851068,
+      "end_ns": 1791314645758964138,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c58913eef91cae4a745b795b32bbe97d",
+      "parent_span_id": "510803f91bf41d6c",
+      "start_ns": 1791314646010282135,
+      "end_ns": 1791314646167223376,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "98e921f9dab19f591a5becd9498dd375",
+      "parent_span_id": "8bbf97d0ec99fa48",
+      "start_ns": 1791314646410682789,
+      "end_ns": 1791314646566866656,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "fcf7284fe974e44f5061a8f03ff37f7e",
+      "parent_span_id": "d9b6b73a21accfcb",
+      "start_ns": 1791314646809427810,
+      "end_ns": 1791314646965167713,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "6988e1798fb350cf1f5c07245197034b",
+      "parent_span_id": "4cc14bf9b4a97cc8",
+      "start_ns": 1791314647211053007,
+      "end_ns": 1791314647367443148,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "0e21234ed72c76a55633a84d9cd10a21",
+      "parent_span_id": "2a6200876af89f57",
+      "start_ns": 1791314647612588946,
+      "end_ns": 1791314647769592513,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "2488c56c97db0ce59c3ce1f8cb5d355e",
+      "parent_span_id": "fdc3893a932c7607",
+      "start_ns": 1791314648012108375,
+      "end_ns": 1791314648170050024,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "ed1171440cbe99a70c64d3be3af294f4",
+      "parent_span_id": "27ac6cae054dfc40",
+      "start_ns": 1791314648412193517,
+      "end_ns": 1791314648569152111,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8fc8186f92f1d10eb590f2bd84f3e461",
+      "parent_span_id": "51f4aa8a96fd748b",
+      "start_ns": 1791314648812749394,
+      "end_ns": 1791314648969614126,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "850750aab9003970f34d22d7fbab2c00",
+      "parent_span_id": "4a72c767534653a6",
+      "start_ns": 1791314649212344954,
+      "end_ns": 1791314649369203103,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "f152db87aeba42fc50dc023db8727435",
+      "parent_span_id": "1841bcdc87f4632d",
+      "start_ns": 1791314649612921813,
+      "end_ns": 1791314649770039564,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "b7d10c59a43e5604df5890cb7b57b282",
+      "parent_span_id": "d011f5abd1a67e43",
+      "start_ns": 1791314650006894291,
+      "end_ns": 1791314650164107464,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "43403933bcb996b3560eb35d1dda3c3c",
+      "parent_span_id": "018c38412740e0fa",
+      "start_ns": 1791314650414013625,
+      "end_ns": 1791314650570263371,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "106942a333ae3280f775215519fe2b44",
+      "parent_span_id": "b11e09598c60b5ce",
+      "start_ns": 1791314650812914500,
+      "end_ns": 1791314650969741427,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "4faa8f6b6db540c7af5f5fcc46e6d82b",
+      "parent_span_id": "77298ec4394713f6",
+      "start_ns": 1791314651213729097,
+      "end_ns": 1791314651370250127,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "54e925c10f6f6f387e677b107d88cf07",
+      "parent_span_id": "ec7942e77e79f57f",
+      "start_ns": 1791314651613769239,
+      "end_ns": 1791314651771485569,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "8055d94a3f7afdd7825c812743a508db",
+      "parent_span_id": "5111cc6447884271",
+      "start_ns": 1791314652013706853,
+      "end_ns": 1791314652170158008,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "d9fa84bdce3f947680480864a474357a",
+      "parent_span_id": "d96adc41054fc3a2",
+      "start_ns": 1791314652413740083,
+      "end_ns": 1791314652570184850,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9d5874651141afaad8c732dc9dec90e4",
+      "parent_span_id": "e6009427b8ce59f5",
+      "start_ns": 1791314652814251454,
+      "end_ns": 1791314652970794888,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e32d516719729fdd02bb680b34fecb2a",
+      "parent_span_id": "56d35435cf1e5a33",
+      "start_ns": 1791314653212997784,
+      "end_ns": 1791314653370340754,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "208db16053be01bd91b1fe5f2a5a858d",
+      "parent_span_id": "ae0deacd4e8a8652",
+      "start_ns": 1791314653615293885,
+      "end_ns": 1791314653772147962,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "511f83a840728c839d2f97dbe0ed515e",
+      "parent_span_id": "fbb0ebed78180eb3",
+      "start_ns": 1791314654014204752,
+      "end_ns": 1791314654171234742,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "30b092010c466fa574ad8d6dd1fc3ebd",
+      "parent_span_id": "648d22872fad2206",
+      "start_ns": 1791314654406794670,
+      "end_ns": 1791314654560203742,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "32a7e628575f408068432c7144925225",
+      "parent_span_id": "9d183f4078bb87a8",
+      "start_ns": 1791314654805897080,
+      "end_ns": 1791314654960888865,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "57f8c7dc84e311251b5941f0952b5c60",
+      "parent_span_id": "ec42a13e94fe8e3d",
+      "start_ns": 1791314655215039108,
+      "end_ns": 1791314655371749767,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "5f7aeb7b7b40e07eb199b5f9ed088a1a",
+      "parent_span_id": "bb0f672153c4b7f3",
+      "start_ns": 1791314655615382763,
+      "end_ns": 1791314655770286163,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c14f2643ab56490a1f8a05dde20180f2",
+      "parent_span_id": "de9ab1f76aac7984",
+      "start_ns": 1791314656014697009,
+      "end_ns": 1791314656170899355,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "407108e09bf27f1719256686f0d483dc",
+      "parent_span_id": "a5870f2eca8062a0",
+      "start_ns": 1791314656415329195,
+      "end_ns": 1791314656571657345,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "9cf64bfe5689562916cc2118bd9178ec",
+      "parent_span_id": "046e3dc946402abc",
+      "start_ns": 1791314656816010512,
+      "end_ns": 1791314656973166146,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "402d318e27e706acd47411d16e3ecd73",
+      "parent_span_id": "2ea59c377e828048",
+      "start_ns": 1791314657214891777,
+      "end_ns": 1791314657371811505,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "198331ca5b6e4efff582145e92a7b3bb",
+      "parent_span_id": "0b14347ea5d46c0b",
+      "start_ns": 1791314657616384984,
+      "end_ns": 1791314657772690061,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c9c8af4f5cb622b6b960d34677c04a45",
+      "parent_span_id": "0605bee2e5583dff",
+      "start_ns": 1791314658016138665,
+      "end_ns": 1791314658172695775,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "cee32c52fc338184819a54cb6183a668",
+      "parent_span_id": "8c17e8bec0daf48e",
+      "start_ns": 1791314658416130028,
+      "end_ns": 1791314658572193650,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "1aa1345877e07b25ae4afda38d2032e1",
+      "parent_span_id": "29dcf0213c526895",
+      "start_ns": 1791314658816320383,
+      "end_ns": 1791314658972362698,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "1d5587c1accc05556cc3e30cdb8c8c6b",
+      "parent_span_id": "47c6b8edbf2ead4a",
+      "start_ns": 1791314659217584021,
+      "end_ns": 1791314659373595548,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "0c9dabf7ff00ea58b794f38c57ca8f99",
+      "parent_span_id": "1814ea1ed4f6e6d0",
+      "start_ns": 1791314659617147205,
+      "end_ns": 1791314659781743629,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "e663c85544519e55a0faf09b08f87ab5",
+      "parent_span_id": "764bb445b4d060dd",
+      "start_ns": 1791314660016852033,
+      "end_ns": 1791314660173740918,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "41fc44e394f7efec79c0270117ce207b",
+      "parent_span_id": "e56502cd50b227be",
+      "start_ns": 1791314660418343852,
+      "end_ns": 1791314660575031487,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "2630bb710011011cd44f6bab7e9a32a6",
+      "parent_span_id": "60651f1f35b5e9c7",
+      "start_ns": 1791314660816319084,
+      "end_ns": 1791314660972589575,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "c29b30f14fe59f40924f240cf40e150f",
+      "parent_span_id": "aa4c1a98b3d348f4",
+      "start_ns": 1791314661216729008,
+      "end_ns": 1791314661372821674,
+      "status": 200
+    },
+    {
+      "pod": "checkout-5544db7569-s5fcg",
+      "trace_id": "3429ded00016ccf5e9768f38b622f509",
+      "parent_span_id": "5c33ae70b2e5346a",
+      "start_ns": 1791314661618271290,
+      "end_ns": 1791314661774671076,
+      "status": 200
+    }
+  ],
+  "drain_errors": {}
+}

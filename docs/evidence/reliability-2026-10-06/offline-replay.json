@@ -1,0 +1,194 @@
+[
+  {
+    "capture": "rehearsal-20261006t183930z-f769ab-breadth-20261006T183946Z-7573d6",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t183930z-f769ab-depth-1-20261006T184013Z-6e9f40",
+    "replayed": false,
+    "reason": "No normal capture metadata; saved manual failure evidence or interrupted partial evidence remains preserved"
+  },
+  {
+    "capture": "rehearsal-20261006t184614z-279bcd-breadth-20261006T185010Z-c0b8c0",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t184614z-279bcd-depth-1-20261006T185037Z-468e71",
+    "replayed": true,
+    "passed": false,
+    "exit_code": 1,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t185603z-c332c2-breadth-1-20261006T190049Z-f12b92",
+    "replayed": true,
+    "passed": false,
+    "exit_code": 1,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t185603z-c332c2-breadth-20261006T185904Z-81561b",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t185603z-c332c2-depth-1-20261006T185943Z-b6f2ea",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-breadth-1-20261006T190953Z-901ae5",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-breadth-2-20261006T191205Z-bd1446",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-breadth-20261006T190818Z-0fdf0e",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-breadth-3-20261006T191413Z-63d12e",
+    "replayed": true,
+    "passed": false,
+    "exit_code": 1,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-depth-1-20261006T190844Z-718070",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-depth-2-20261006T191056Z-eecd7d",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t190737z-c8614b-depth-3-20261006T191308Z-950419",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191551z-0d89e8-breadth-20261006T191620Z-6171b3",
+    "replayed": false,
+    "reason": "No normal capture metadata; saved manual failure evidence or interrupted partial evidence remains preserved"
+  },
+  {
+    "capture": "reliable-breadth-20261006T183517Z-7f29ed",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "reliable-to-breadth-1-20261006T183752Z-a016c9",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "reliable-to-depth-1-20261006T183613Z-5f899e",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-breadth-20261006T192039Z-3f0357",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-depth-1-20261006T192118Z-e1c03e",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-breadth-1-20261006T192239Z-970d4c",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-depth-2-20261006T192348Z-4030cd",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-breadth-2-20261006T192504Z-6a8bad",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-depth-3-20261006T192613Z-dc8340",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-breadth-3-20261006T192728Z-30aa57",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-recovered-depth-20261006T192940Z-ec91b0",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  },
+  {
+    "capture": "rehearsal-20261006t191744z-a47a23-recovered-breadth-20261006T193039Z-7209b7",
+    "replayed": true,
+    "passed": true,
+    "exit_code": 0,
+    "agrees_with_original": true
+  }
+]

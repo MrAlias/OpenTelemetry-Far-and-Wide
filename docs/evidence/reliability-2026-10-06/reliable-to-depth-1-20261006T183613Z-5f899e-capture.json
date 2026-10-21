@@ -1,0 +1,22 @@
+{
+  "label": "reliable-to-depth-1",
+  "mode": "transition",
+  "count": 520,
+  "requested_count": 240,
+  "concurrency": 4,
+  "interval": 0.4,
+  "transition": "depth",
+  "reject_candidate": false,
+  "drain_seconds": 20,
+  "telemetry_snapshot_attempts": 1,
+  "captured_at": "2026-10-06T18:37:28.766083+00:00",
+  "application_source_sha256": {
+    "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+    "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+    "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+    "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+    "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+  },
+  "telemetry_sha256": "ceaf49cde973d1c3b1de34de79a17ff4d75e8d5fa76e89a477083d8549e49d9f",
+  "verifier_sha256": "5df50e63c71744f2c4ef92874ea0cbd604abff7f2a04cccbdc71c4766bf6dff4"
+}

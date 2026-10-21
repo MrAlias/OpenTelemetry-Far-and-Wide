@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "errors": [],
+  "expected_requests_by_pod": {
+    "inventory-56bcbbdcc8-vgxks": 40,
+    "checkout-5544db7569-s472g": 40,
+    "gateway-7c9b8579f8-lx6zl": 40
+  },
+  "observed_count_increments_by_pod": {
+    "inventory-56bcbbdcc8-vgxks": 40,
+    "checkout-5544db7569-s472g": 40,
+    "gateway-7c9b8579f8-lx6zl": 40
+  },
+  "baseline": {
+    "inventory-56bcbbdcc8-vgxks": 3,
+    "checkout-5544db7569-s472g": 1
+  }
+}

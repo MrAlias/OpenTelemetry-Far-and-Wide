@@ -1,0 +1,40 @@
+{
+  "label": "rehearsal-20261006t184614z-279bcd-depth-1",
+  "mode": "transition",
+  "count": 1000,
+  "requested_count": 240,
+  "concurrency": 4,
+  "interval": 0.4,
+  "transition": "depth",
+  "reject_candidate": false,
+  "drain_seconds": 20,
+  "telemetry_snapshot_attempts": 1,
+  "captured_at": "2026-10-06T18:52:54.954369+00:00",
+  "harness_source_sha256": {
+    "scripts/analyze.py": "5df50e63c71744f2c4ef92874ea0cbd604abff7f2a04cccbdc71c4766bf6dff4",
+    "scripts/capture.py": "f257217c4fc9a7bc4e9199c776e64829087829c8890b66d38f62c196dd2df1f8",
+    "scripts/evidence_server.py": "dd532f6dbc082939f4b7a5f73b4b249c6d9390e31cde62e73fd654f8b5b31cd4",
+    "scripts/handoff.py": "459459fc77679a3ead7c392de795a79637e65be6c163b12f7a3103cd40f7d1bb",
+    "scripts/prepare.py": "5a231d8fa1ec392a467a54f7fac32493551d75530baf07c0449fce21d193f0fd",
+    "scripts/proof.sh": "ca49f4a0d23a452649f3db074876d4d0f86cbc6ec4832dc3fb118ff181e2e6ac",
+    "scripts/rehearse.py": "604cb3d963503cd4f9d1fe667532c42b254092c164d100ebb6fa1fe10b0bed6d",
+    "scripts/verify_rollout.py": "1d426f1261bb9d79435a5e1f2639ba16a82515c5243370ea5388b507f1300269",
+    "agent/Dockerfile": "7e146caa2d4e383101ac6af9a7d370355c9176f6759f7db6a55e6ac075d2644f",
+    "agent/main.go": "24f5222bd7b40d5ac8962990dd76eae404f5ff92b21099702421209379d2f787",
+    "router/Dockerfile": "a5eb39d783f922d7f6b34b4bd47a7ebffc73472223963767168dd7800de51728",
+    "router/main.go": "a4a17b214269bc999e941974a25bad384c32e90ec53d4359f76883df0a124174",
+    "router/main_test.go": "209be99cefabee07f9e2c4409bef36f2757d919f5e77053faa3dfda53673c5b6",
+    "k8s/breadth.yaml": "d244c5d07506cbc539bf61588ba5547e6b1b78de4492a2fc9cb7941d142136c8",
+    "k8s/depth.yaml": "5d821c72575351beb42cfe90874da5b3161221fc690fb6c489d5286b6dfa2071",
+    "k8s/operator-values.yaml": "de24df8613bc2439dfecab7a3536eedc7d07aa1177a0aaf8a1ff20be2a9876fd"
+  },
+  "application_source_sha256": {
+    "apps/Dockerfile": "4665ca94c850e1b1b875f10f9f823c6aad6bf4d4e0ac7252984ea7df45363ee2",
+    "apps/checkout/Checkout.java": "ade28e8527f70a21e2e8d763db8a5ee88ab73c0960a8f88a6da0ed553a5fca51",
+    "apps/checkout/PricingEngine.java": "470be4dc8e155d543b1d155a050869a0a928ee2673b9e3c77cb0d226deaf5a94",
+    "apps/gateway.go": "9f7fb58ae81148b24a2661d5ecb2c7acfc2849acf8482a70fe94a53d69a754e4",
+    "apps/inventory.js": "f5808f3099bbed942226c2c46d90b36436d9e58bbd0b6f3d0264c5273b68fec3"
+  },
+  "telemetry_sha256": "ac2c4639703a0f602f60e147edf57bf58d41fff087464d8736e4c22aa99a347d",
+  "verifier_sha256": "5df50e63c71744f2c4ef92874ea0cbd604abff7f2a04cccbdc71c4766bf6dff4"
+}

@@ -1,0 +1,1 @@
+{"admissionWebhooks":{"autoGenerateCert":{"enabled":true},"certManager":{"enabled":false},"pods":{"failurePolicy":"Fail"}},"manager":{"image":{"tag":"0.160.0"}}}

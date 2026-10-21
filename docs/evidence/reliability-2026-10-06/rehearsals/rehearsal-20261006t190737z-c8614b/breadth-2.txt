@@ -1,0 +1,30 @@
+Evidence directory: /home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-breadth-2-20261006T191205Z-bd1446
+{
+  "passed": true,
+  "mode": "transition",
+  "requests": 396,
+  "passed_requests": 396,
+  "method_span_counts": {
+    "1": 280,
+    "0": 116
+  },
+  "metric_names": {
+    "inventory": [
+      "http.server.request.duration"
+    ],
+    "checkout": [
+      "http.server.request.duration"
+    ],
+    "gateway": [
+      "http.server.request.duration"
+    ]
+  },
+  "observed_metric_count_increments": {
+    "inventory": 398,
+    "gateway": 396,
+    "checkout": 396
+  },
+  "errors": [],
+  "metric_counts_passed": true,
+  "rollout_passed": true
+}

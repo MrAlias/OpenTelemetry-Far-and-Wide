@@ -17,7 +17,8 @@ mechanism with dynamic cost controls.
 ├── style.css          # Shared presentation styles
 ├── components/        # Reusable Slidev Vue components
 ├── layouts/           # Talk-specific Slidev layouts
-├── public/            # Static files served unchanged by Slidev
+├── public/            # Static assets and the interactive storyboard
+├── demo/proof/        # Executable coexistence and reliability checks
 └── docs/              # Talk brief and architecture/content notes
 ```
 
@@ -44,6 +45,41 @@ npm run export
 The `export` command may prompt Slidev to install a browser dependency the first
 time it is used.
 
+## Review the storyboard
+
+The [interactive visual storyboard](public/storyboard.html) is a self-contained,
+editable HTML file in this repository. Open it directly in a browser, or run
+`npm run dev` and open `/storyboard.html` on the development server.
+
+It includes all 15 scene sketches, progressive reveals, timing, presenter notes,
+and requirements for the next demo phase. It works offline
+and needs no Codex installation, external assets, or build step. Edit
+`public/storyboard.html` as the source of truth for the visual storyboard.
+
+The [companion scene plan](docs/talk-storyboard.md) provides a text reference.
+
+## Review the animated talk
+
+Open [the animation player](public/animation.html) for the 20-minute version.
+It includes two distinct male synthetic draft voices performing the Tyler and
+Nikola parts as a conversation, with questions, handoffs, and light banter.
+Narration is optional. Chapter selection, seeking, speaker-labelled captions,
+speed controls, and chapter looping support review. The six visual builds
+also have separate 20-second silent clips for use while presenting live.
+
+Serve the files with `npm run animation:serve`, then open
+`http://localhost:8010/animation.html`. For mobile review, use the serving
+computer's reachable address instead of `localhost`.
+
+The full narrated MP4, silent MP4, separate narration track, and silent chapter
+clips are generated inside `public/animation/`. Traces and operational outcomes
+are concept illustrations; cost results remain unmeasured. The animation does
+not assume a completed demo.
+
+Edit [the narration and chapter durations](scripts/animation/talk.json) and
+[the visual renderer](public/animation/art.js). Build instructions are in
+[scripts/animation/README.txt](scripts/animation/README.txt).
+
 ## Content direction
 
 The audience should leave understanding that eBPF and SDK instrumentation are
@@ -53,6 +89,14 @@ its code or Kubernetes manifests.
 
 The talk proposal and narrative outline live in
 [`docs/talk-brief.md`](docs/talk-brief.md).
+
+The executable coexistence experiment lives in
+[`demo/proof/`](demo/proof/README.md). Its
+[`specification`](docs/demo-spec.md) and [`results`](docs/proof-results.md)
+record the original experiment. The [reliability follow-up](docs/reliability-results.md)
+documents the revised handoff and its repeatable rehearsal: 1,086/1,086 measured
+requests passed at serial load; broader compatibility and concurrency failures
+remain preserved.
 
 ## License
 

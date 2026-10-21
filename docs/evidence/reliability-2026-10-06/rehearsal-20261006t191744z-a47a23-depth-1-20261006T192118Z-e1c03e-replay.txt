@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "mode": "transition",
+  "requests": 147,
+  "passed_requests": 147,
+  "method_span_counts": {
+    "0": 96,
+    "1": 51
+  },
+  "metric_names": {
+    "gateway": [
+      "http.server.request.duration"
+    ],
+    "checkout": [
+      "http.server.request.duration"
+    ],
+    "inventory": [
+      "http.server.request.duration"
+    ]
+  },
+  "observed_metric_count_increments": {
+    "gateway": 147,
+    "checkout": 147,
+    "inventory": 149
+  },
+  "errors": [],
+  "metric_counts_passed": true,
+  "rollout_passed": true
+}

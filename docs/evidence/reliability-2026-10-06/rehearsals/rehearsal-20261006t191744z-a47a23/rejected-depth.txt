@@ -1,0 +1,30 @@
+Evidence directory: /home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t191744z-a47a23-rejected-depth-20261006T192838Z-1e5c91
+Found 2 pods, using pod/checkout-5544db7569-v9h4c
+{
+  "passed": true,
+  "mode": "breadth",
+  "requests": 96,
+  "passed_requests": 96,
+  "method_span_counts": {
+    "0": 96
+  },
+  "metric_names": {
+    "inventory": [
+      "http.server.request.duration"
+    ],
+    "checkout": [
+      "http.server.request.duration"
+    ],
+    "gateway": [
+      "http.server.request.duration"
+    ]
+  },
+  "observed_metric_count_increments": {
+    "inventory": 98,
+    "gateway": 96,
+    "checkout": 96
+  },
+  "errors": [],
+  "metric_counts_passed": true,
+  "rollout_passed": true
+}

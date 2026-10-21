@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "errors": [],
+  "expected_requests_by_pod": {
+    "gateway-7c9b8579f8-2wr25": 40,
+    "checkout-5544db7569-55cpv": 40,
+    "inventory-56bcbbdcc8-4srz9": 40
+  },
+  "observed_count_increments_by_pod": {
+    "gateway-7c9b8579f8-2wr25": 40,
+    "checkout-5544db7569-55cpv": 40,
+    "inventory-56bcbbdcc8-4srz9": 41
+  },
+  "baseline": {
+    "inventory-56bcbbdcc8-4srz9": 975,
+    "checkout-5544db7569-nzsxv": 451,
+    "gateway-7c9b8579f8-2wr25": 968,
+    "checkout-6c5c486bdb-gmg5v": 387,
+    "checkout-5544db7569-55cpv": 134
+  }
+}

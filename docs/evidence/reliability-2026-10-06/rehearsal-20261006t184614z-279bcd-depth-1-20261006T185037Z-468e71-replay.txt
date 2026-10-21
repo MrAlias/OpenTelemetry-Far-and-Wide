@@ -1,0 +1,34 @@
+{
+  "passed": false,
+  "mode": "transition",
+  "requests": 1000,
+  "passed_requests": 995,
+  "method_span_counts": {
+    "0": 240,
+    "1": 760
+  },
+  "metric_names": {
+    "checkout": [
+      "http.server.request.duration"
+    ],
+    "gateway": [
+      "http.server.request.duration"
+    ],
+    "inventory": [
+      "http.server.request.duration"
+    ]
+  },
+  "observed_metric_count_increments": {
+    "checkout": 1000,
+    "gateway": 1000,
+    "inventory": 1001
+  },
+  "errors": [
+    "Final checkout injection state differs from expected profile",
+    "Checkout pod was not replaced",
+    "Injection state did not change",
+    "Handoff did not follow telemetry admission and drain ordering"
+  ],
+  "metric_counts_passed": true,
+  "rollout_passed": false
+}

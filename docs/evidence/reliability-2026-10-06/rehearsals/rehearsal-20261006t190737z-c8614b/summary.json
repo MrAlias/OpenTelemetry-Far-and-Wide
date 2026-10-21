@@ -1,0 +1,45 @@
+{
+  "label": "rehearsal-20261006t190737z-c8614b",
+  "passed": false,
+  "cycles": 3,
+  "concurrency": 4,
+  "captures": [
+    {
+      "stage": "breadth",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-breadth-20261006T190818Z-0fdf0e",
+      "passed": true,
+      "requests": 40
+    },
+    {
+      "stage": "depth-1",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-depth-1-20261006T190844Z-718070",
+      "passed": true,
+      "requests": 456
+    },
+    {
+      "stage": "breadth-1",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-breadth-1-20261006T190953Z-901ae5",
+      "passed": true,
+      "requests": 404
+    },
+    {
+      "stage": "depth-2",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-depth-2-20261006T191056Z-eecd7d",
+      "passed": true,
+      "requests": 456
+    },
+    {
+      "stage": "breadth-2",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-breadth-2-20261006T191205Z-bd1446",
+      "passed": true,
+      "requests": 396
+    },
+    {
+      "stage": "depth-3",
+      "directory": "/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/.artifacts/runs/rehearsal-20261006t190737z-c8614b-depth-3-20261006T191308Z-950419",
+      "passed": true,
+      "requests": 404
+    }
+  ],
+  "error": "Command '['/usr/bin/python3', '/home/tyler/Documents/talks/KubeCon_NA_2026/OpenTelemetry-Far-and-Wide/demo/proof/scripts/capture.py', 'rehearsal-20261006t190737z-c8614b-breadth-3', '--mode', 'transition', '--count', '240', '--concurrency', '4', '--transition', 'breadth']' returned non-zero exit status 1."
+}

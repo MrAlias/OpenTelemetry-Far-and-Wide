@@ -1,0 +1,30 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: checkout-depth
+  namespace: far-wide-proof
+spec:
+  exporter:
+    endpoint: http://collector.far-wide-proof.svc.cluster.local:4318
+  propagators:
+  - tracecontext
+  sampler:
+    type: parentbased_traceidratio
+    argument: '1'
+  java:
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.30.0
+    env:
+    - name: OTEL_SERVICE_NAME
+      value: checkout
+    - name: OTEL_RESOURCE_ATTRIBUTES
+      value: service.namespace=far-wide-proof
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: http/protobuf
+    - name: OTEL_METRICS_EXPORTER
+      value: none
+    - name: OTEL_LOGS_EXPORTER
+      value: none
+    - name: OTEL_BSP_SCHEDULE_DELAY
+      value: '1000'
+    - name: OTEL_INSTRUMENTATION_METHODS_INCLUDE
+      value: demo.checkout.PricingEngine[calculate]
