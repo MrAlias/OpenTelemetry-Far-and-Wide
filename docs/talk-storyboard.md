@@ -1,6 +1,6 @@
 # OpenTelemetry Far and Wide presentation storyboard
 
-Revision 2, October 19, 2026. The [interactive visual storyboard](../public/storyboard.html)
+The [interactive visual storyboard](../public/storyboard.html)
 is the primary review surface and editable source. This companion keeps the scene plan and production requirements
 available alongside the Slidev source.
 
@@ -8,28 +8,6 @@ The narrative follows one investigation: find the slow service, explain the loca
 work, then operate and evaluate the instrumentation profile. The demo is not
 assumed complete. Every proposed demonstration and measurement is a requirement
 for the next phase, and may require implementation changes.
-
-## Research review
-
-The first version had a coherent investigation but delayed its payoff, repeated
-service maps in place of explanatory comparisons, suggested a sequential OBI to
-SDK pipeline, and depended on four live operations. Its audience questions did
-not specify an answer sequence, and its later scenes risked becoming a feature
-tour with a repetitive close.
-
-The revision applies the [presentation research](presentation-research.md):
-
-- Compress the opening to two minutes and place the main reveal at 4:30–6:30.
-- Magnify the service interior, compare separate requests side by side, and
-  show distinct instrumentation paths managed through a shared deployment workflow.
-- Plan one main live operation; use verified clips and evidence frames for
-  the other lifecycle checkpoints. Reserve one minute for recovery.
-- Specify quiet prediction pauses and explicit answers in scenes 5 and 14.
-- Tie upgrades, removal, cost, and verification to an operating decision.
-- End with an adoption experiment, a transfer question, and a concrete next step.
-
-These are editorial applications of the research, not evidence of a particular
-audience rating or a substitute for rehearsal.
 
 ## Audience promise
 

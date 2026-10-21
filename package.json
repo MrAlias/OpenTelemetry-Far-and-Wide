@@ -8,6 +8,7 @@
     "dev": "slidev slides.md --open",
     "build": "slidev build slides.md",
     "export": "slidev export slides.md",
+    "storyboard:serve": "python3 -m http.server 8010 --bind 0.0.0.0 --directory public",
     "animation:serve": "python3 -m http.server 8010 --bind 0.0.0.0 --directory public"
   },
   "engines": {

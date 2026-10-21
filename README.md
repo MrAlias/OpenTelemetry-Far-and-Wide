@@ -9,6 +9,10 @@ auto-injection can work together: broad, zero-touch coverage first, then
 language-level detail where it is valuable, all through a shared deployment
 mechanism with dynamic cost controls.
 
+The current starting point is the visual storyboard and its companion research.
+The Slidev deck contains the title slide and shared base styling; the remaining
+slides and demo evidence still need to be built against the storyboard.
+
 ## Repository map
 
 ```text
@@ -57,28 +61,16 @@ and needs no Codex installation, external assets, or build step. Edit
 `public/storyboard.html` as the source of truth for the visual storyboard.
 
 The [companion scene plan](docs/talk-storyboard.md) provides a text reference.
+The rehearsal target is 21 minutes of content, one minute of recovery time,
+and three minutes of questions within the 25-minute slot.
 
-## Review the animated talk
+For mobile review, run `npm run storyboard:serve` and open
+`http://<computer-address>:8010/storyboard.html` on a phone that can reach the
+serving computer. On that computer, use `http://localhost:8010/storyboard.html`.
+This preview command serves the contents of `public/`.
 
-Open [the animation player](public/animation.html) for the 20-minute version.
-It includes two distinct male synthetic draft voices performing the Tyler and
-Nikola parts as a conversation, with questions, handoffs, and light banter.
-Narration is optional. Chapter selection, seeking, speaker-labelled captions,
-speed controls, and chapter looping support review. The six visual builds
-also have separate 20-second silent clips for use while presenting live.
-
-Serve the files with `npm run animation:serve`, then open
-`http://localhost:8010/animation.html`. For mobile review, use the serving
-computer's reachable address instead of `localhost`.
-
-The full narrated MP4, silent MP4, separate narration track, and silent chapter
-clips are generated inside `public/animation/`. Traces and operational outcomes
-are concept illustrations; cost results remain unmeasured. The animation does
-not assume a completed demo.
-
-Edit [the narration and chapter durations](scripts/animation/talk.json) and
-[the visual renderer](public/animation/art.js). Build instructions are in
-[scripts/animation/README.txt](scripts/animation/README.txt).
+The [presentation research](docs/presentation-research.md) explains the choices
+behind the structure, visuals, audience interaction, and delivery.
 
 ## Content direction
 
@@ -97,6 +89,14 @@ record the original experiment. The [reliability follow-up](docs/reliability-res
 documents the revised handoff and its repeatable rehearsal: 1,086/1,086 measured
 requests passed at serial load; broader compatibility and concurrency failures
 remain preserved.
+
+## Experimental animation
+
+The [animation sources and rebuild instructions](scripts/animation/README.txt)
+preserve an optional 20-minute narration and playback experiment. Animation is
+still under evaluation; the storyboard is the current presentation plan.
+Generated audio and video are ignored by Git and must be rebuilt before using
+[the player](public/animation.html) on a fresh checkout.
 
 ## License
 

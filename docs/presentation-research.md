@@ -2,10 +2,10 @@
 
 Research checked on October 19, 2026. This guide applies presentation research
 and experienced speakers' advice to Tyler Yahn and Nikola Grcevski's
-25-minute Observability Day session. The proposed timing is **22 minutes of
-content and three minutes of Q&A**, consistent with the existing
-[technical findings](technical-findings.md). The Q&A allocation is our planning
-choice, not a confirmed organizer requirement.
+25-minute Observability Day session. The current plan reserves **21 minutes of
+content, one minute of recovery time, and three minutes of Q&A**, as detailed in
+the [storyboard](talk-storyboard.md). This allocation is our planning choice,
+not a confirmed organizer requirement.
 
 The central recommendation is to build the talk around a diagnostic question:
 **We can see that checkout is slow. What additional instrumentation will let
@@ -235,30 +235,27 @@ pace aloud.
 
 ## Proposed sequence for the 25 minute slot
 
-The detailed [presentation storyboard](talk-storyboard.md) develops this initial
-allocation and is the current plan for the slide sequence and demo requirements.
-
-This is a first storyboard, not an implemented slide deck. Plan approximately
-12–15 projected scenes; some may use progressive reveals. The timing includes
-speaker transitions and audience pauses.
+The detailed [presentation storyboard](talk-storyboard.md) is the current plan
+for the 15 projected scenes, presenter roles, and demo requirements. Timing
+includes speaker transitions and audience pauses.
 
 | Elapsed time | Narrative job | Likely material |
 | --- | --- | --- |
-| 0:00–1:30 | Establish the slow-checkout question and the session's promise. | Minimal title, then the demo trace; brief presenter introduction. |
-| 1:30–4:00 | Give everyone the breadth/depth model. | One three-service example and a visual distinction between request and method spans. |
-| 4:00–6:00 | Establish the baseline evidence. | Existing breadth trace and the question it cannot yet answer. |
-| 6:00–11:00 | Demonstrate selected depth and return to breadth. | One controlled profile change, the resulting method detail, and removal. |
-| 11:00–14:00 | Explain why the combined result can be trusted. | Central policy/control path, trace ownership, admission and drain checks. |
-| 14:00–17:00 | Address upgrades and the cost promise. | A verified version-change artifact if available; distinguish rollout from live controls and volume from resource or billing measurements. |
-| 17:00–19:00 | State the tested boundary and a meaningful failure. | Passing serial-load evidence beside the concurrency/compatibility limitation. |
-| 19:00–21:00 | Give attendees a practical adoption experiment. | Select one service, pin versions, compare telemetry, check transitions, roll back. |
-| 21:00–22:00 | Resolve the opening question and leave a next step. | Final trace comparison, central takeaway, readable repository link. |
+| 0:00–2:00 | Establish the slow-checkout question and breadth/depth model. | Brief introduction, platform constraint, and one three-service example. |
+| 2:00–4:30 | Establish coverage and the question it cannot answer. | Planned baseline playback followed by a prediction about the unnamed local work. |
+| 4:30–7:30 | Reveal selected depth and interpret the result. | One live profile change, then a comparison of two requests with matching framing. |
+| 7:30–12:00 | Explain control, upgrade, and removal. | Parallel instrumentation paths under a shared workflow; verified playback for lifecycle checkpoints. |
+| 12:00–16:30 | Make the cost decision and establish trust. | Measured profile comparisons when available, correctness gates, and limitations. |
+| 16:30–19:30 | Help attendees transfer the idea to their work. | One-service adoption checklist and a prediction question with an explicit answer. |
+| 19:30–21:00 | Resolve the opening question and leave a next step. | Named local work, central takeaway, and a verified companion destination. |
+| 21:00–22:00 | Allow recovery time. | No additional planned content; begin questions early if unused. |
 | 22:00–25:00 | Take questions. | Keep the useful closing slide visible; use backup material as needed. |
 
-The five-minute live segment needs a measured full run before that allocation
-is accepted. If real rollout and drain times exceed it, show one transition live
-and use a clearly labeled recording or captured evidence for the remaining
-states. Preserve the promised outcome instead of rushing commands.
+Plan one main live operation in scene 6. If its result is not visible within
+60 seconds of starting the operation, switch to a verified recording of that
+sequence. Validate this cutoff against measured rollout and drain times in
+rehearsal. Use recorded evidence for the other lifecycle checkpoints and
+label playback clearly.
 
 If the session runs short on time, compress explanation of the full failure
 matrix and move configuration detail to backup slides. Preserve the central
@@ -353,7 +350,7 @@ Use these as proposed rehearsal gates, not a validated scoring instrument:
 | Listener unfamiliar with this implementation | Can they explain breadth versus depth and what the new span tells them? | Clarify the model and remove unexplained terms. |
 | Practicing platform engineer | Can they describe an initial bounded trial and its rollout implications? | Make the operational sequence and next step more concrete. |
 | Instrumentation specialist | Which claim is broader than the supporting evidence? | Narrow the claim or add the necessary proof. |
-| Both presenters with the real demo | Does the complete presentation land by minute 22, including pauses? | Cut secondary content or reduce live operations. |
+| Both presenters with the real demo | Does the complete presentation land by minute 21, including pauses? | Cut secondary content or reduce live operations. |
 | Failure rehearsal | Can they complete the explanation after a failed command or unavailable UI? | Improve fallback artifacts and the handoff. |
 | Recording and distance check | Are terminal output, span labels, speech, captions, and the final link understandable? | Crop, enlarge, simplify, or describe missing information. |
 

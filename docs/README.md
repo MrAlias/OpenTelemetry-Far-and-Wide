@@ -11,8 +11,6 @@ presentation assets in `public/`.
   slide design, audience engagement, delivery, and a proposed 25-minute sequence.
 - [Interactive visual storyboard](../public/storyboard.html): editable, standalone
   scene sketches, reveals, timing, presenter notes, and demo requirements.
-- [Animated talk](../public/animation.html): 20-minute review with two male draft
-  voices in conversation, chapter controls, and silent clips for live reuse.
 - [Companion scene plan](talk-storyboard.md): text reference for the visual storyboard.
 - [Technical findings](technical-findings.md): evidence-backed preparation answers,
   architecture decisions, and the experimental proof still required.
@@ -29,3 +27,7 @@ presentation assets in `public/`.
 - [Injector prototype evaluation](technical-findings.md#injector-prototype-evaluation--2026-10-19):
   Grafana fork identification, pinned source review, migration requirements and
   the role of `otelc`; includes candidate policy and cluster configurations.
+
+The [animation experiment](../scripts/animation/README.txt) is retained for
+possible review and live playback. Its use in the talk is undecided. Generated
+audio and video are excluded from Git; rebuild them before opening the player.

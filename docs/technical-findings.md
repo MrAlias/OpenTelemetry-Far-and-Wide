@@ -51,10 +51,9 @@ The official schedule lists this talk at **10:40–11:05**, labels it **Any Leve
 and places it in **Observability Cost + Quality + Scale + Efficiency**. That is
 25 minutes, not a presumed 35- or 40-minute conference slot. [Official schedule][schedule]
 
-Plan for 22 minutes of content and three minutes of questions; that allocation is
-our choice, not an event requirement. A workable budget is three minutes for the
-incident and model, four for breadth, five for depth, four for the architecture
-and ownership, four for upgrade/cost controls, and two for adoption takeaways.
+The [current storyboard](talk-storyboard.md) plans 21 minutes of content, one
+minute of recovery time, and three minutes of questions. This allocation is
+our choice, not an event requirement.
 The attendee should leave able to choose an instrumentation profile and understand
 the operational consequences. Kernel implementation details belong in the
 companion material unless needed to explain an observed limitation.

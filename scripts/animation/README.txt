@@ -1,6 +1,10 @@
 Animated talk: purpose and files
 ===============================
 
+This optional experiment is still under evaluation. The storyboard remains
+the current presentation plan; animation is not a required delivery format.
+Generated audio and video are excluded from Git and require rebuilding.
+
 The 20-minute dialogue version supports review of the talk's explanation and
 pacing. Two distinct male synthetic stand-ins perform the Tyler and Nikola
 roles, with questions, short reactions, and light banter. Narration is optional.
