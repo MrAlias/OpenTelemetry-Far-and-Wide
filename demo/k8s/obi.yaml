@@ -44,13 +44,9 @@ metadata:
 data:
   obi.yaml: |
     # Config v1, supported by the pinned OBI release below.
-    attributes:
-      kubernetes:
-        enable: true
     discovery:
       instrument:
         - k8s_namespace: demo-apps
-      exclude_otel_instrumented_services: true
     ebpf:
       context_propagation: headers
     metrics:
@@ -63,8 +59,6 @@ data:
       endpoint: http://lgtm.observability.svc.cluster.local:4318
       protocol: http/protobuf
       batch_timeout: 1s
-    routes:
-      patterns: [/checkout, /inventory]
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -80,6 +74,7 @@ spec:
     spec:
       serviceAccountName: obi
       hostPID: true
+      hostNetwork: true
       nodeSelector:
         kubernetes.io/os: linux
       tolerations:
@@ -98,6 +93,7 @@ spec:
             - {name: config, mountPath: /config, readOnly: true}
             - {name: tracefs, mountPath: /sys/kernel/tracing}
             - {name: btf, mountPath: /sys/kernel/btf, readOnly: true}
+            - {name: cgroup, mountPath: /sys/fs/cgroup, readOnly: true}
       volumes:
         - name: config
           configMap: {name: obi}
@@ -105,3 +101,5 @@ spec:
           hostPath: {path: /sys/kernel/tracing, type: Directory}
         - name: btf
           hostPath: {path: /sys/kernel/btf, type: Directory}
+        - name: cgroup
+          hostPath: {path: /sys/fs/cgroup, type: Directory}
