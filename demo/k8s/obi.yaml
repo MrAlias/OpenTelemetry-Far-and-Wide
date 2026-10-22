@@ -75,6 +75,7 @@ spec:
       serviceAccountName: obi
       hostPID: true
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       nodeSelector:
         kubernetes.io/os: linux
       tolerations:

@@ -1,12 +1,14 @@
 # Full demo guide: OBI first, Java detail next
 
-Start with three uninstrumented services, see their HTTP traffic through OBI,
-then use the Injector operator to reveal what happens inside Java checkout.
+Start with three uninstrumented services and PostgreSQL, see their HTTP and SQL
+traffic through OBI, then use the Injector operator to reveal what happens inside
+Java checkout.
 
 ```text
 curl > gateway (Go) > checkout (Java) > inventory (Node.js)
                          │
-                         └─ PricingEngine.calculate(): about 150 ms
+                         ├─ PricingEngine.calculate(): about 150 ms
+                         └─ Hibernate > PostgreSQL: save the checkout order
 
 OBI + injected Java agent > Collector > Tempo / Prometheus / Loki > Grafana
 ```
@@ -33,22 +35,25 @@ enabled. Wait for the node to show `Ready` before continuing.
 
 ## 2. Deploy the demo applications
 
-Build the three application images from the existing demo sources:
+Build the three application images. Checkout adds Hibernate and PostgreSQL access
+while sharing the original pricing-method example:
 
 ```bash
 docker build --target gateway -t far-wide-demo-gateway:local \
   -f demo/proof/apps/Dockerfile demo/proof/apps
-docker build --target checkout -t far-wide-demo-checkout:local \
-  -f demo/proof/apps/Dockerfile demo/proof/apps
+docker build -t far-wide-demo-checkout:local \
+  -f demo/apps/checkout/Dockerfile demo
 docker build --target inventory -t far-wide-demo-inventory:local \
   -f demo/proof/apps/Dockerfile demo/proof/apps
 ```
 
-Load them into kind and start the applications in `demo-apps`:
+Load them into kind, start PostgreSQL, then start the applications in `demo-apps`:
 
 ```bash
 kind load docker-image --name far-wide-demo \
   far-wide-demo-gateway:local far-wide-demo-checkout:local far-wide-demo-inventory:local
+kubectl apply -f demo/k8s/postgres.yaml
+kubectl rollout status deployment/postgres -n demo-apps --timeout=180s
 kubectl apply -f demo/k8s/applications.yaml
 kubectl rollout status deployment/gateway deployment/checkout deployment/inventory \
   -n demo-apps --timeout=180s
@@ -66,15 +71,28 @@ Back in the main terminal, make a request:
 curl -fsS http://localhost:8080/checkout
 ```
 
-Expected response:
+Expected response (`orderId` increases with each successful checkout):
 
 ```json
-{"price":42,"inventory":{"available":true}}
+{"price":42,"inventory":{"available":true},"orderId":1}
 ```
 
 These applications have no OpenTelemetry SDK dependencies. The Java service's
-pricing method deliberately takes about 150 ms. That is the delay we will explain
-with instrumentation.
+pricing method still deliberately takes about 150 ms. Each request also loads
+the seeded product and saves an order through Hibernate, using a HikariCP
+connection pool and the PostgreSQL JDBC driver.
+
+You can check the saved orders directly:
+
+```bash
+kubectl exec -n demo-apps deployment/postgres -- \
+  psql -U checkout -d checkout -c 'SELECT id, product_id, total FROM checkout_orders ORDER BY id DESC LIMIT 5;'
+```
+
+The [database manifest](k8s/postgres.yaml) creates the schema, a sample product,
+local-demo credentials, and a 1 GiB persistent volume. Orders survive application
+and PostgreSQL Pod replacement. Checkout validates the existing schema at startup;
+it does not recreate it during instrumentation rollouts.
 
 ## 3. Deploy the observability stack
 
@@ -128,8 +146,17 @@ range to **Last 15 minutes**, and run:
 
 Open a recent trace. Look for HTTP spans involving `gateway`, `checkout`, and
 `inventory`. The checkout request takes roughly 150 ms or more, but there is no
-`PricingEngine.calculate` span yet. OBI shows the HTTP boundary; the pricing
-method's internal work is still hidden. Keep a baseline trace open for comparison.
+`PricingEngine.calculate` span yet. The pricing method and Hibernate operations
+are not named in this baseline. Keep a trace open for comparison.
+
+OBI also captures PostgreSQL calls. Search for those separately:
+
+```traceql
+{ resource.service.name = "checkout" && span.db.system.name = "postgresql" }
+```
+
+Query text may be absent for statements prepared before OBI started; see
+[OBI's database support](https://opentelemetry.io/docs/zero-code/obi/configure/export-data/#instrumentation-compatibility).
 
 Switch Explore to **Prometheus**, choose the **Code** query editor, and run:
 
@@ -186,6 +213,10 @@ It enables Java traces and asks the Java agent to create a span for
 `demo.checkout.PricingEngine[calculate]`. Metrics and logs are disabled for the
 Java agent in this walkthrough; OBI supplies the HTTP metrics.
 
+Hibernate and JDBC use the Java agent's default instrumentation. The policy
+retains the existing pricing-method selection and needs no additional options
+for the database extension.
+
 Apply the policy to start the restart:
 
 ```bash
@@ -233,6 +264,23 @@ Open a recent result and expand checkout's spans. **`PricingEngine.calculate`
 takes about 150 ms**, explaining the delay you saw with OBI. The application
 image and source have not changed; the policy added the language-level detail.
 
+In the same trace, expand the Hibernate operations and their JDBC query spans.
+Look for `Session.get demo.checkout.Product`,
+`Session.persist demo.checkout.CheckoutOrder`, and `Transaction.commit`.
+The `SELECT` and `INSERT` JDBC spans are nested beneath the Hibernate operations
+that issued them. These spans appear automatically, alongside the existing
+pricing-method span.
+
+You can also search specifically for the Hibernate transaction span:
+
+```traceql
+{ resource.service.name = "checkout" && name = "Transaction.commit" }
+```
+
+The comparison has two parts: the configured pricing-method span explains the
+150 ms delay, and the default Hibernate/JDBC spans expose the order-persistence
+operations. Connection-acquisition tracing is not enabled in this demo.
+
 OBI continues covering the other services. Its automatic SDK detection suppresses
 overlapping telemetry after it observes SDK exports; initial requests can contain
 overlap during that transition. Use a later trace from this batch for the demo.
@@ -256,6 +304,13 @@ wildcard rule:
 
 ```yaml
 rules:
+  - name: skip-database
+    selector:
+      namespaces: [demo-apps]
+      workloads:
+        - kind: Deployment
+          name: postgres
+    action: Skip
   - name: skip-infrastructure
     selector:
       namespaces: [kube-system, kube-public, kube-node-lease, local-path-storage, observability, obi-system]
@@ -267,6 +322,8 @@ rules:
 ```
 
 Rules use the first match. The operator always excludes its own namespace.
+Keep PostgreSQL excluded when broadening selection: it is the database backend
+and its Deployment uses `Recreate`, rather than an application rolling update.
 Keep the Java-specific `env` settings on a checkout-specific rule if you retain
 them; do not give every service the name `checkout`.
 
@@ -293,19 +350,23 @@ To remove the whole demo, stop both port-forward commands with **Ctrl+C**, then:
 kind delete cluster --name far-wide-demo
 ```
 
-This also deletes the telemetry stored in the cluster.
+This also deletes the telemetry and PostgreSQL orders stored in the cluster.
 
 ## If a step does not work
 
 | Symptom | Check |
 | --- | --- |
 | Application `ImagePullBackOff` | Repeat the `kind load docker-image` command in step 2 for this cluster. |
+| Checkout fails to start or returns 502 | Check `kubectl logs -n demo-apps deployment/checkout` and `kubectl rollout status deployment/postgres -n demo-apps`. PostgreSQL must be ready with its seeded schema. |
 | LGTM is pending | `kubectl describe pod -n observability -l app=demo-lgtm` and `kubectl get pvc -n observability`. It needs the default storage class and enough memory. |
 | OBI is running but Tempo is empty | Generate traffic, refresh the time range, and inspect `kubectl logs -n obi-system daemonset/obi`. Check the host kernel's BTF/eBPF support. A running Pod alone does not prove probes attached. |
 | Policy never reaches `Ready` | Inspect `kubectl get demoinstr cluster -o yaml` and `kubectl logs -n otel-injector-system deployment/otel-injector`. A failed candidate is rolled back; status records the reason. |
 | Java is ready but the method span is missing | Send new traffic and inspect checkout's log for agent/export errors. Check that `OTEL_INSTRUMENTATION_METHODS_INCLUDE` matches the policy. |
+| Hibernate spans are missing | Confirm you built checkout with `demo/apps/checkout/Dockerfile`, generate new requests, and inspect a recent trace after the Java rollout. The original proof image has no database access. |
 
 For more detail, see the [operator reference](../components/otel-injector-operator/README.md)
 and [observability stack guide](observability/README.md). The older
-[proof harness](proof/README.md) remains a separate experiment; this walkthrough
-uses its application sources with ordinary readiness probes and direct Services.
+[proof harness](proof/README.md) remains a separate experiment. This walkthrough
+shares its gateway, inventory, and pricing-method sources, and adds the
+[Hibernate checkout application](apps/checkout/) with ordinary readiness probes
+and direct Services.

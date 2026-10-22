@@ -1,0 +1,12 @@
+# Build from the demo directory so the original pricing example is shared.
+FROM gradle:8.14.4-jdk21-noble AS build
+WORKDIR /src
+COPY apps/checkout/build.gradle apps/checkout/settings.gradle ./
+COPY apps/checkout/src ./src
+COPY proof/apps/checkout/PricingEngine.java ./src/main/java/demo/checkout/PricingEngine.java
+RUN gradle --no-daemon installDist
+
+FROM eclipse-temurin:21-jre-noble
+WORKDIR /app
+COPY --from=build /src/build/install/checkout/lib ./lib
+ENTRYPOINT ["java", "--add-modules", "jdk.httpserver", "-cp", "/app/lib/*", "demo.checkout.Checkout"]
