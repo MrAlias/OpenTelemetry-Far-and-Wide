@@ -22,7 +22,7 @@ slides and demo evidence still need to be built against the storyboard.
 ├── components/        # Slidev components and the demo injection projects
 ├── layouts/           # Talk-specific Slidev layouts
 ├── public/            # Static assets and the interactive storyboard
-├── demo/proof/        # Executable coexistence and reliability checks
+├── demo/              # Full demo walkthrough, manifests, and proof harness
 └── docs/              # Talk brief and architecture/content notes
 ```
 
@@ -82,6 +82,10 @@ its code or Kubernetes manifests.
 The talk proposal and narrative outline live in
 [`docs/talk-brief.md`](docs/talk-brief.md).
 
+The [full demo walkthrough](demo/README.md) starts with a kind cluster and the
+three demo services, adds the LGTM stack and OBI, then installs the Injector
+operator and rolls Java checkout to show method-level traces.
+
 The executable coexistence experiment lives in
 [`demo/proof/`](demo/proof/README.md). Its
 [`specification`](docs/demo-spec.md) and [`results`](docs/proof-results.md)
@@ -97,6 +101,10 @@ They provide a CRD-driven injection operator and a five-language payload image,
 including automatic rollouts, health-based rollback, and native-image-volume
 detection with an init-container fallback. OBI and the application demo are
 separate from these components.
+
+The [demo observability stack](demo/observability/README.md) runs the Collector,
+Tempo, Prometheus, Loki, and Grafana together using `grafana/otel-lgtm`. Its
+Kubernetes manifest and the operator guide share the same OTLP endpoint.
 
 ## Experimental animation
 

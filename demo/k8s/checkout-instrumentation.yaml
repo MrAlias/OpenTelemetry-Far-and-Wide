@@ -1,0 +1,28 @@
+apiVersion: demo.opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: cluster
+spec:
+  image: otel-injector-images:demo
+  endpoint: http://lgtm.observability.svc.cluster.local:4318
+  # Java adds detailed traces; OBI continues supplying HTTP metrics.
+  signals:
+    traces: true
+    metrics: false
+    logs: false
+  timeoutSeconds: 300
+  rules:
+    - name: checkout-depth
+      selector:
+        namespaces: [demo-apps]
+        workloads:
+          - kind: Deployment
+            name: checkout
+      action: Inject
+      env:
+        - name: OTEL_SERVICE_NAME
+          value: checkout
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: service.namespace=demo-apps
+        - name: OTEL_INSTRUMENTATION_METHODS_INCLUDE
+          value: demo.checkout.PricingEngine[calculate]

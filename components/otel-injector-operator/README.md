@@ -8,9 +8,9 @@ The payload comes from [the image component](../otel-injector-images/README.md).
 Application images do not need an SDK, an Injector, or instrumentation annotations.
 The operator owns a few bookkeeping annotations on workload templates and Pods.
 
-Start with the [step-by-step demo installation guide](INSTALL.md). It covers image
-builds, installation, selecting one or all namespaces, signal configuration,
-verification, and removal.
+Start with the [full demo guide](../../demo/README.md) for cluster creation,
+applications, the observability stack, OBI, and the Java instrumentation rollout.
+For this component's setup, see [Build and install](#build-and-install) below.
 
 ## Configuration
 
@@ -25,7 +25,7 @@ metadata:
   name: cluster
 spec:
   image: otel-injector-images:demo
-  endpoint: http://collector.observability.svc.cluster.local:4318
+  endpoint: http://lgtm.observability.svc.cluster.local:4318
   signals:
     traces: true
     metrics: true

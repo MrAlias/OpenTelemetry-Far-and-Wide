@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-apps
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: demo-apps
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: gateway}
+  template:
+    metadata:
+      labels:
+        app: gateway
+        app.kubernetes.io/name: gateway
+        app.kubernetes.io/part-of: demo-apps
+    spec:
+      containers:
+        - name: gateway
+          image: far-wide-demo-gateway:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8080}
+          readinessProbe:
+            tcpSocket: {port: http}
+            periodSeconds: 2
+          resources:
+            requests: {cpu: 50m, memory: 32Mi}
+            limits: {memory: 128Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: demo-apps
+spec:
+  selector: {app: gateway}
+  ports:
+    - {name: http, port: 8080, targetPort: http}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  namespace: demo-apps
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: checkout}
+  template:
+    metadata:
+      labels:
+        app: checkout
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/part-of: demo-apps
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: checkout
+          image: far-wide-demo-checkout:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8080}
+          readinessProbe:
+            tcpSocket: {port: http}
+            periodSeconds: 2
+          # Let endpoint updates reach kube-proxy before the JVM stops.
+          lifecycle:
+            preStop:
+              exec:
+                command: [sh, -c, sleep 5]
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {memory: 768Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout
+  namespace: demo-apps
+spec:
+  selector: {app: checkout}
+  ports:
+    - {name: http, port: 8080, targetPort: http}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory
+  namespace: demo-apps
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: inventory}
+  template:
+    metadata:
+      labels:
+        app: inventory
+        app.kubernetes.io/name: inventory
+        app.kubernetes.io/part-of: demo-apps
+    spec:
+      containers:
+        - name: inventory
+          image: far-wide-demo-inventory:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8080}
+          readinessProbe:
+            tcpSocket: {port: http}
+            periodSeconds: 2
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {memory: 192Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+  namespace: demo-apps
+spec:
+  selector: {app: inventory}
+  ports:
+    - {name: http, port: 8080, targetPort: http}

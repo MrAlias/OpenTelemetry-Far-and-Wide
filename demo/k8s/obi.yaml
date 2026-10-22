@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: obi-system
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: obi
+  namespace: obi-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: far-wide-demo-obi
+rules:
+  - apiGroups: ['']
+    resources: [pods, nodes, namespaces, services, replicationcontrollers]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, replicasets, statefulsets, daemonsets]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: far-wide-demo-obi
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: far-wide-demo-obi
+subjects:
+  - kind: ServiceAccount
+    name: obi
+    namespace: obi-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: obi
+  namespace: obi-system
+data:
+  obi.yaml: |
+    # Config v1, supported by the pinned OBI release below.
+    attributes:
+      kubernetes:
+        enable: true
+    discovery:
+      instrument:
+        - k8s_namespace: demo-apps
+      exclude_otel_instrumented_services: true
+    ebpf:
+      context_propagation: headers
+    metrics:
+      features: [application]
+    otel_metrics_export:
+      endpoint: http://lgtm.observability.svc.cluster.local:4318
+      protocol: http/protobuf
+      interval: 5s
+    otel_traces_export:
+      endpoint: http://lgtm.observability.svc.cluster.local:4318
+      protocol: http/protobuf
+      batch_timeout: 1s
+    routes:
+      patterns: [/checkout, /inventory]
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: obi
+  namespace: obi-system
+spec:
+  selector:
+    matchLabels: {app: obi}
+  template:
+    metadata:
+      labels: {app: obi}
+    spec:
+      serviceAccountName: obi
+      hostPID: true
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations:
+        - operator: Exists
+      containers:
+        - name: obi
+          image: otel/ebpf-instrument:v0.15.2
+          args: [--config=/config/obi.yaml]
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {memory: 1Gi}
+          volumeMounts:
+            - {name: config, mountPath: /config, readOnly: true}
+            - {name: tracefs, mountPath: /sys/kernel/tracing}
+            - {name: btf, mountPath: /sys/kernel/btf, readOnly: true}
+      volumes:
+        - name: config
+          configMap: {name: obi}
+        - name: tracefs
+          hostPath: {path: /sys/kernel/tracing, type: Directory}
+        - name: btf
+          hostPath: {path: /sys/kernel/btf, type: Directory}
