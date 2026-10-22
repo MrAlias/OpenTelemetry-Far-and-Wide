@@ -26,8 +26,9 @@ public final class Checkout {
           inventory = new String(input.readAllBytes(), StandardCharsets.UTF_8);
         }
         long orderId = orders.createOrder(price);
+        String services = CommerceFlow.run();
         byte[] body = ("{\"price\":" + price + ",\"inventory\":" + inventory.trim()
-            + ",\"orderId\":" + orderId + "}\n").getBytes(StandardCharsets.UTF_8);
+            + ",\"orderId\":" + orderId + ",\"services\":" + services + "}\n").getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(status, body.length);
         exchange.getResponseBody().write(body);

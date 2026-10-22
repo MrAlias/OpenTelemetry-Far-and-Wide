@@ -1,0 +1,8 @@
+plugins { id 'application' }
+repositories { mavenCentral() }
+dependencies {
+    implementation 'com.google.code.gson:gson:2.13.2'
+    runtimeOnly 'org.postgresql:postgresql:42.7.14'
+}
+application { mainClass = 'demo.commerce.Service' }
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }

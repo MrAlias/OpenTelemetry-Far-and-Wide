@@ -1,14 +1,22 @@
 # Full demo guide: OBI first, Java detail next
 
-Start with three uninstrumented services and PostgreSQL, see their HTTP and SQL
-traffic through OBI, then use the Injector operator to reveal what happens inside
-Java checkout.
+Start with 18 uninstrumented services, PostgreSQL, and Redis. See their HTTP and
+database traffic through OBI, then use the Injector operator to reveal what
+happens inside Java checkout.
 
 ```text
 curl > gateway (Go) > checkout (Java) > inventory (Node.js)
                          │
                          ├─ PricingEngine.calculate(): about 150 ms
-                         └─ Hibernate > PostgreSQL: save the checkout order
+                         ├─ Hibernate > PostgreSQL: save the checkout order
+                         ├─ cart (Rails) > catalog (Java) > recommendations (Python) > promotions (Rails)
+                         │       └─ tax (.NET) > currency (Go)
+                         ├─ shipping (Go) > warehouse (Go) > stock-planner (Python)
+                         ├─ payments (Java) > fraud (Java) > customer-profile (.NET) > loyalty (Rails)
+                         └─ notifications (.NET) > receipts (Python)
+
+PostgreSQL: checkout, catalog, stock-planner, loyalty, receipts
+Redis: cart, recommendations, promotions
 
 OBI + injected Java agent > Collector > Tempo / Prometheus / Loki > Grafana
 ```
@@ -17,7 +25,7 @@ Run commands from the repository root. You need Docker, kind, kubectl, Make,
 Python 3, OpenSSL, and curl. Use a Linux Docker host with a kernel supported by
 [OBI](https://opentelemetry.io/docs/zero-code/obi/#compatibility), including BTF at
 `/sys/kernel/btf/vmlinux`. On Docker Desktop, it is the Docker VM's kernel that
-matters. Allow roughly 4 CPUs and 8 GiB of memory for the demo and builds.
+matters. Allow roughly 8 CPUs and 16 GiB of memory for the expanded demo and builds.
 
 The commands use your **default kubeconfig**. Keep two extra terminals available
 for port-forwarding the application and Grafana.
@@ -35,29 +43,26 @@ enabled. Wait for the node to show `Ready` before continuing.
 
 ## 2. Deploy the demo applications
 
-Build the three application images. Checkout adds Hibernate and PostgreSQL access
-while sharing the original pricing-method example:
+Build and load the images. The 15 commerce services share five small images,
+with three services per language; gateway, checkout, and inventory keep their
+own images. You only need Docker, not the language toolchains:
 
 ```bash
-docker build --target gateway -t far-wide-demo-gateway:local \
-  -f demo/proof/apps/Dockerfile demo/proof/apps
-docker build -t far-wide-demo-checkout:local \
-  -f demo/apps/checkout/Dockerfile demo
-docker build --target inventory -t far-wide-demo-inventory:local \
-  -f demo/proof/apps/Dockerfile demo/proof/apps
+make -C demo images
+make -C demo load
 ```
 
-Load them into kind, start PostgreSQL, then start the applications in `demo-apps`:
+Deploy all 18 applications, PostgreSQL, and Redis from one manifest, then wait
+for every Deployment to be ready:
 
 ```bash
-kind load docker-image --name far-wide-demo \
-  far-wide-demo-gateway:local far-wide-demo-checkout:local far-wide-demo-inventory:local
-kubectl apply -f demo/k8s/postgres.yaml
-kubectl rollout status deployment/postgres -n demo-apps --timeout=180s
 kubectl apply -f demo/k8s/applications.yaml
-kubectl rollout status deployment/gateway deployment/checkout deployment/inventory \
-  -n demo-apps --timeout=180s
+kubectl rollout status deployment -n demo-apps --timeout=300s
 ```
+
+There should be **20 application-namespace Pods**: 18 services, PostgreSQL, and
+Redis. Each request to gateway calls all 15 commerce services through the tree
+above. See the [service catalog](apps/README.md) for each service's role.
 
 In a **second terminal**, expose the gateway and leave this running:
 
@@ -68,17 +73,25 @@ kubectl port-forward -n demo-apps service/gateway 8080:8080
 Back in the main terminal, make a request:
 
 ```bash
-curl -fsS http://localhost:8080/checkout
+curl -fsS http://localhost:8080/checkout | python3 -m json.tool
 ```
 
-Expected response (`orderId` increases with each successful checkout):
+The response contains `price: 42`, `inventory: {"available": true}`, and an
+increasing `orderId`. The `services` array contains the four branches and their
+nested responses, including product data, loyalty points, and Redis cart visits.
 
-```json
-{"price":42,"inventory":{"available":true},"orderId":1}
+Check the entire flow with two more checkouts:
+
+```bash
+make -C demo smoke
 ```
+
+The check verifies all 15 services, their call relationships, PostgreSQL results,
+and an increasing Redis counter. Payments and notifications are simulated;
+no real payment provider or email service is contacted.
 
 These applications have no OpenTelemetry SDK dependencies. The Java service's
-pricing method still deliberately takes about 150 ms. Each request also loads
+pricing method deliberately takes about 150 ms. Each request also loads
 the seeded product and saves an order through Hibernate, using a HikariCP
 connection pool and the PostgreSQL JDBC driver.
 
@@ -89,10 +102,22 @@ kubectl exec -n demo-apps deployment/postgres -- \
   psql -U checkout -d checkout -c 'SELECT id, product_id, total FROM checkout_orders ORDER BY id DESC LIMIT 5;'
 ```
 
-The [database manifest](k8s/postgres.yaml) creates the schema, a sample product,
-local-demo credentials, and a 1 GiB persistent volume. Orders survive application
-and PostgreSQL Pod replacement. Checkout validates the existing schema at startup;
-it does not recreate it during instrumentation rollouts.
+The PostgreSQL resources in the [applications manifest](k8s/applications.yaml)
+create the schema, a sample product, local-demo credentials, and a 1 GiB
+persistent volume. Orders survive application and PostgreSQL Pod replacement.
+Checkout validates the existing schema at startup; it does not recreate it during
+instrumentation rollouts. Catalog, stock-planner, loyalty, and receipts read
+these same tables.
+
+Inspect the Redis cache after a checkout:
+
+```bash
+kubectl exec -n demo-apps deployment/redis -- \
+  redis-cli MGET cart:demo-shopper:visits recommendations:demo-shopper promotions:active
+```
+
+Redis is a disposable cache: replacing its Pod resets these keys, and the next
+checkout recreates them. PostgreSQL remains the persistent order store.
 
 ## 3. Deploy the observability stack
 
@@ -145,7 +170,9 @@ range to **Last 15 minutes**, and run:
 ```
 
 Open a recent trace. Look for HTTP spans involving `gateway`, `checkout`, and
-`inventory`. The checkout request takes roughly 150 ms or more, but there is no
+`inventory`, followed by the cart, shipping, payments, and notifications branches.
+Search by another service name, such as `recommendations` or `loyalty`, to explore
+that part of the flow. The checkout request takes roughly 150 ms or more, but there is no
 `PricingEngine.calculate` span yet. The pricing method and Hibernate operations
 are not named in this baseline. Keep a trace open for comparison.
 
@@ -166,8 +193,21 @@ sum by (service_name) (
 )
 ```
 
-You should see an HTTP request count for each of the three services. Allow a few
-seconds for export and refresh if the first query is empty.
+You should see HTTP request counts across the 18 application services. Allow a
+few seconds for export and refresh if the first query is empty. The new services'
+`/healthz` probes also contribute traffic; use `/work` spans to inspect commerce
+requests.
+
+For example, this Tempo query finds cart requests from the checkout flow:
+
+```traceql
+{ resource.service.name = "cart" && name = "GET /work" }
+```
+
+For the Redis side of the flow, search in Tempo for `cart`, `recommendations`, or
+`promotions` and inspect their database spans. For additional PostgreSQL traffic,
+search for `catalog`, `stock-planner`, `loyalty`, or `receipts`. OBI's available
+query text and trace correlation depend on protocol and runtime support.
 
 This baseline produces **traces and metrics**. Loki is available, but these apps
 do not yet produce OTLP logs, and the stack does not collect container stdout.
@@ -228,9 +268,9 @@ kubectl get pods -n demo-apps
 
 **Applying the policy triggers the graceful rollout automatically.** The operator
 replaces the Java Pod, injects its replacement, and waits for workload health.
-The Deployment keeps the old Pod until the new one is ready. Gateway and
-inventory stay running. A separate `kubectl rollout restart` would cause an
-unnecessary second restart.
+The Deployment keeps the old Pod until the new one is ready. Gateway, inventory,
+and all 15 commerce services stay running. A separate `kubectl rollout restart`
+would cause an unnecessary second restart.
 
 The operator uses native image volumes when its capability check succeeds and
 otherwise copies the payload with an init container. Inspect the policy status
@@ -293,8 +333,9 @@ directly in `selector.namespaces`; no per-namespace labels are needed.
 
 - For Java checkout in another namespace, change `demo-apps` to that namespace
   and update `service.namespace` in the rule's `OTEL_RESOURCE_ATTRIBUTES` value.
-- For all supported workloads in `demo-apps`, remove the `workloads` selector
-  and the checkout-specific `env` block.
+- For all supported applications in `demo-apps`, first add the database `Skip`
+  rule shown below, then remove the `workloads` selector and checkout-specific
+  `env` block from the application rule.
 - For checkout Deployments in several namespaces, use
   `namespaces: [demo-apps, payments]`. They share the rule's `service.namespace`
   value in Grafana; use separate rules if you want distinct telemetry groups.
@@ -304,12 +345,14 @@ wildcard rule:
 
 ```yaml
 rules:
-  - name: skip-database
+  - name: skip-databases
     selector:
       namespaces: [demo-apps]
       workloads:
         - kind: Deployment
           name: postgres
+        - kind: Deployment
+          name: redis
     action: Skip
   - name: skip-infrastructure
     selector:
@@ -322,8 +365,9 @@ rules:
 ```
 
 Rules use the first match. The operator always excludes its own namespace.
-Keep PostgreSQL excluded when broadening selection: it is the database backend
-and its Deployment uses `Recreate`, rather than an application rolling update.
+Keep PostgreSQL and Redis excluded when broadening selection: they are database
+backends and their Deployments use `Recreate`. Go services remain covered by OBI;
+the Injector payload supplies agents for Java, .NET, Python, Ruby, and Node.js.
 Keep the Java-specific `env` settings on a checkout-specific rule if you retain
 them; do not give every service the name `checkout`.
 
@@ -350,14 +394,16 @@ To remove the whole demo, stop both port-forward commands with **Ctrl+C**, then:
 kind delete cluster --name far-wide-demo
 ```
 
-This also deletes the telemetry and PostgreSQL orders stored in the cluster.
+This also deletes the telemetry, PostgreSQL orders, and Redis cache in the cluster.
 
 ## If a step does not work
 
 | Symptom | Check |
 | --- | --- |
-| Application `ImagePullBackOff` | Repeat the `kind load docker-image` command in step 2 for this cluster. |
+| Application `ImagePullBackOff` | Run `make -C demo load` for this cluster. |
 | Checkout fails to start or returns 502 | Check `kubectl logs -n demo-apps deployment/checkout` and `kubectl rollout status deployment/postgres -n demo-apps`. PostgreSQL must be ready with its seeded schema. |
+| Checkout returns 502 after adding commerce services | Run `kubectl get pods -n demo-apps`, then inspect checkout's log and the named dependency's log. All 15 services and both databases must be ready. |
+| A commerce service is pending | Check node memory with `kubectl describe node`; allow roughly 16 GiB for the demo and builds. |
 | LGTM is pending | `kubectl describe pod -n observability -l app=demo-lgtm` and `kubectl get pvc -n observability`. It needs the default storage class and enough memory. |
 | OBI is running but Tempo is empty | Generate traffic, refresh the time range, and inspect `kubectl logs -n obi-system daemonset/obi`. Check the host kernel's BTF/eBPF support. A running Pod alone does not prove probes attached. |
 | Policy never reaches `Ready` | Inspect `kubectl get demoinstr cluster -o yaml` and `kubectl logs -n otel-injector-system deployment/otel-injector`. A failed candidate is rolled back; status records the reason. |
@@ -368,5 +414,5 @@ For more detail, see the [operator reference](../components/otel-injector-operat
 and [observability stack guide](observability/README.md). The older
 [proof harness](proof/README.md) remains a separate experiment. This walkthrough
 shares its gateway, inventory, and pricing-method sources, and adds the
-[Hibernate checkout application](apps/checkout/) with ordinary readiness probes
-and direct Services.
+[Hibernate checkout application](apps/checkout/) and the [polyglot commerce
+services](apps/README.md), with ordinary readiness probes and direct Services.

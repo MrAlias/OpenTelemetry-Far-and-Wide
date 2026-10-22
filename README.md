@@ -83,9 +83,10 @@ The talk proposal and narrative outline live in
 [`docs/talk-brief.md`](docs/talk-brief.md).
 
 The [full demo walkthrough](demo/README.md) starts with a kind cluster and the
-three demo services and PostgreSQL, adds the LGTM stack and OBI, then installs the
-Injector operator and rolls Java checkout to show method, Hibernate, and JDBC
-spans. The Hibernate/JDBC instrumentation uses the Java agent's defaults.
+18 demo services across six languages, PostgreSQL, and Redis, adds the LGTM stack
+and OBI, then installs the Injector operator and rolls Java checkout to show
+method, Hibernate, and JDBC spans. The Hibernate/JDBC instrumentation uses the
+Java agent's defaults.
 
 The executable coexistence experiment lives in
 [`demo/proof/`](demo/proof/README.md). Its
