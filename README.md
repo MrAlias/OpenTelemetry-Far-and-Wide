@@ -19,7 +19,7 @@ slides and demo evidence still need to be built against the storyboard.
 .
 ├── slides.md          # Slidev presentation entry point
 ├── style.css          # Shared presentation styles
-├── components/        # Reusable Slidev Vue components
+├── components/        # Slidev components and the demo injection projects
 ├── layouts/           # Talk-specific Slidev layouts
 ├── public/            # Static assets and the interactive storyboard
 ├── demo/proof/        # Executable coexistence and reliability checks
@@ -89,6 +89,14 @@ record the original experiment. The [reliability follow-up](docs/reliability-res
 documents the revised handoff and its repeatable rehearsal: 1,086/1,086 measured
 requests passed at serial load; broader compatibility and concurrency failures
 remain preserved.
+
+The new demo components live in
+[`components/otel-injector-operator/`](components/otel-injector-operator/README.md)
+and [`components/otel-injector-images/`](components/otel-injector-images/README.md).
+They provide a CRD-driven injection operator and a five-language payload image,
+including automatic rollouts, health-based rollback, and native-image-volume
+detection with an init-container fallback. OBI and the application demo are
+separate from these components.
 
 ## Experimental animation
 

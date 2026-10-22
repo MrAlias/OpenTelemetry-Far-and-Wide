@@ -1,0 +1,30 @@
+# Illustrative policy only; applying it starts automatic workload rollouts.
+apiVersion: demo.opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: cluster
+spec:
+  image: otel-injector-images:demo
+  endpoint: http://collector.observability.svc.cluster.local:4318
+  signals: {traces: true, metrics: true, logs: true}
+  timeoutSeconds: 300
+  retryToken: "initial"
+  rules:
+    - name: exclude-observability
+      selector:
+        namespaces: [observability, kube-system, kube-public, kube-node-lease]
+      action: Skip
+    - name: checkout-detail
+      selector:
+        namespaces: [checkout]
+        workloads:
+          - {kind: Deployment, name: checkout}
+      action: Inject
+      signals: {metrics: false, logs: false}
+      env:
+        - name: OTEL_TRACES_SAMPLER
+          value: parentbased_always_on
+    - name: all-applications
+      selector:
+        namespaces: ['*']
+      action: Inject

@@ -1,0 +1,9 @@
+*
+!Dockerfile
+!versions.json
+!otelinject.conf
+!*.sh
+!scripts/download.py
+!node/**
+!python/**
+!ruby/**
