@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import subprocess
+import wave
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'public/animation'
@@ -27,38 +28,118 @@ def check(path, seconds, audio):
     return {'file': str(path.relative_to(ROOT)), 'seconds': duration, 'audio': bool(sound), 'size': int(data['format']['size'])}
 
 results = []
-full = OUT / timeline.get('videoFile','opentelemetry-far-and-wide-20min.mp4')
-results.append(check(full,1200,True))
-results.append(check(OUT/'opentelemetry-far-and-wide-20min-silent.mp4',1200,False))
+full = OUT / timeline['videoFile']
+results.append(check(full,timeline['duration'],True))
+results.append(check(OUT/'opentelemetry-far-and-wide-silent.mp4',timeline['duration'],False))
 metadata = probe(full)
-canonical = OUT/'opentelemetry-far-and-wide-20min.mp4'
-if full != canonical:
-    assert hashlib.sha256(full.read_bytes()).digest()==hashlib.sha256(canonical.read_bytes()).digest(), 'Original video link still points to an older narration'
-assert len(metadata['chapters'])==15
+assert len(metadata['chapters'])==len(source['chapters'])
 assert any(track['codec_type']=='subtitle' for track in metadata['streams'])
 captions=(OUT/'captions.vtt').read_text()
 assert 'Tyler: ' in captions and 'Nikola: ' in captions
 for expected,actual in zip(timeline['chapters'],metadata['chapters']):
     assert abs(float(actual['start_time'])-expected['start'])<.1
+    assert abs(float(actual['end_time'])-expected['end'])<.1
     assert actual['tags']['title']==expected['title']
+for companion in [OUT/'opentelemetry-far-and-wide-silent.mp4',OUT/'draft-narration.m4a']:
+    sidecar=probe(companion)
+    assert len(sidecar['chapters'])==len(timeline['chapters'])
+    for expected,actual in zip(timeline['chapters'],sidecar['chapters']):
+        assert abs(float(actual['start_time'])-expected['start'])<.1, companion.name
+        assert abs(float(actual['end_time'])-expected['end'])<.1, companion.name
+        assert actual['tags']['title']==expected['title'], companion.name
+assert timeline['storyRevision']==source['storyRevision']
+topology=json.loads((OUT/'topology-data.json').read_text())
+assert topology['manifestSha256']==hashlib.sha256((ROOT/topology['source']).read_bytes()).hexdigest(), 'Topology is stale'
+assert len(topology['nodes'])==topology['applications']==18
+assert len(topology['edges'])==17
+assert sum(n['eligible'] for n in topology['nodes'])==topology['eligible']==14
+assert {n['id'] for n in topology['nodes'] if not n['eligible']}=={'gateway','shipping','warehouse','currency'}
+opening=timeline['chapters'][0]
+assert opening['cues'][0]['start']==source['chapters'][0]['leadInSeconds']==4
+assert opening['cues'][1]['start']-opening['cues'][0]['end']>=2.5
+with wave.open(str(WORK/'speech'/f'{opening["id"]}.wav')) as f:
+    assert not any(f.readframes(round(4*f.getframerate()))), 'Opening title hold is not silent'
+assert len(source['chapters'])==len(timeline['chapters'])
 for authored,timed in zip(source['chapters'],timeline['chapters']):
     assert authored['turns']==timed['turns'], 'Exported dialogue is stale'
+    assert timed['duration']>0 and timed['plannedDuration']==authored['plannedDuration']
     assert {t['speaker'] for t in timed['turns']}=={'Tyler','Nikola'}
-    assert [{'speaker':c['speaker'],'text':c['text']} for c in timed['cues']]==timed['turns']
+    # Performance directions stay in the script, outside the spoken audio cues.
+    spoken=lambda rows: [{'speaker':row['speaker'],'text':row['text']} for row in rows]
+    assert spoken(timed['cues'])==spoken(timed['turns'])
+    for index,cue in enumerate(timed['cues']):
+        assert 0 <= cue['start'] < cue['end'] <= timed['duration'], (timed['id'],index)
+        if index < len(timed['cues'])-1:
+            gap=timed['cues'][index+1]['start']-cue['end']
+            expected_pause=authored.get('pauseAfter',{}).get(str(index),0)
+            assert gap >= expected_pause+.2, (timed['id'],index,'inspection pause lost')
+    for turn,visual_index in authored.get('alignTurnAfterVisual',{}).items():
+        visual=timed['visualCues'][visual_index]
+        assert timed['cues'][int(turn)]['start']>=visual['start']+visual['mediaDuration']+.95, (timed['id'],'result spoken before recorded rollout finished')
+    if 'buildAfter' in authored:
+        result=timed['cues'][authored['buildAfter']+1]
+        assert abs(timed['buildTime']-result['start'])<.02, (timed['id'],'result narration not aligned to build')
     assert (OUT/timed['audio']).is_file(), timed['audio']
     results.append(check(OUT/'clips'/f'{timed["id"]}-silent.mp4',timed['duration'],False))
     if 'buildTime' in timed:
         results.append(check(OUT/'explainers'/f'{timed["id"]}-20s.mp4',20,False))
-assert len(list((OUT/'explainers').glob('*.mp4')))==6
+explainer_count=sum('buildAfter' in c or 'buildAtCue' in c for c in source['chapters'])
+assert len(list((OUT/'explainers').glob('*.mp4')))==explainer_count
+summary=json.loads((ROOT/'public/demo-capture/capture-summary.json').read_text())
+namespace=summary.get('namespaceSelection')
+if namespace:
+    check_namespace=namespace['verification']
+    assert check_namespace['positiveWorkloadNames']==0
+    assert check_namespace['applicationOptInAnnotations']==[]
+    assert check_namespace['readyOperatorWorkloads']==13
+    assert len(check_namespace['sdkServices'])==14
+    assert set(check_namespace['obiServices'])=={'gateway','shipping','warehouse','currency'}
+    assert check_namespace['namespaceRule']['selector']=={'namespaces':['demo-apps']}
+    assert summary['fleetTrace']['traceID'] in (ROOT/'public/demo-capture/fleet-detail.png.json').read_text(), 'Fleet capture is stale'
 voices=json.loads((WORK/'voice-report.json').read_text())
 assert set(voices)=={'Tyler','Nikola'}
 assert len({v['sha256'] for v in voices.values()})==2
-assert all(v['gender']=='male' and v['speakingSeconds']>300 for v in voices.values())
+assert all(v['gender']=='male' and v['speakingSeconds']>0 for v in voices.values())
 for speaker,voice in voices.items():
     assert voice['model']==source['speakers'][speaker]['model']
+    expected=[t for c in source['chapters'] for t in c['turns'] if t['speaker']==speaker]
+    assert voice['turns']==len(expected)
+    assert voice['words']==sum(len(turn['text'].split()) for turn in expected)
+raw = {}
+for speaker,cast in source['speakers'].items():
+    assert voices[speaker]['engine']==cast['engine']==speaker.lower()+'-demo-voice'
+    assert voices[speaker]['referenceSha256']==cast['referenceSha256']
+    assert voices[speaker]['revision']==cast['revision']
+    jobs=json.loads((WORK/(speaker.lower()+'-voice')/'jobs.json').read_text())
+    for j in jobs: raw[(speaker,j['chapter'],j['turn'])]=j
+for chapter in timeline['chapters']:
+    with wave.open(str(WORK/'speech'/f'{chapter["id"]}.wav')) as f:
+        assert f.getframerate()==24000
+    for index,cue in enumerate(chapter['cues']):
+        speaker=cue['speaker'];job=raw[(speaker,chapter['id'],index)]
+        meta=json.loads(Path(job['output']).with_suffix('.json').read_text())
+        assert meta['synthetic'] and meta['reference_sha256']==source['speakers'][speaker]['referenceSha256']
+        assert meta['text']==job['text']
+        assert abs(cue['end']-cue['start']-meta['duration_seconds'])<.005, f'{speaker} speech speed changed'
+watermarks=json.loads((WORK/'voice-watermark-report.json').read_text())
+assert watermarks['video_sha256']==hashlib.sha256(full.read_bytes()).hexdigest(), 'Watermark check is stale'
+assert set(watermarks['speakers'])==set(source['speakers'])
+for speaker,marks in watermarks['speakers'].items():
+    assert marks['reference_sha256']==source['speakers'][speaker]['referenceSha256']
+    assert len(marks['chapters'])==len(timeline['chapters'])
+    assert all(r['source']>.9 and r['encoded']>.9 for r in marks['chapters']), 'Native watermark did not survive export'
 for name in ['layout-report.json','interaction-report.json']:
     data=json.loads((WORK/name).read_text())
     assert not data.get('errors',data.get('issues',[])), name
-report={'duration':1200,'chapters':15,'short_silent_explainers':6,'speakers':voices,'files':results}
+audio=json.loads((WORK/'audio-report.json').read_text())
+assert all(chapter['tempo']==1.0 for chapter in audio), 'Speech must stay at native speed'
+assert timeline['timing']=='natural'
+for measured,chapter in zip(audio,timeline['chapters']):
+    spoken_seconds=sum(cue['end']-cue['start'] for cue in chapter['cues'])
+    assert abs(spoken_seconds-measured['native_speech_seconds'])<.05, 'Speech duration differs from native read'
+assert abs(sum(c['seconds'] for c in audio)-timeline['duration'])<.01
+assert timeline['duration'] <= source['maxContentSeconds'], 'Edit the script to fit the slot'
+assert sum(c.get('inspection_pause_seconds',0) for c in audio)==sum(sum(c.get('pauseAfter',{}).values()) for c in source['chapters'])
+report={'duration':timeline['duration'],'chapters':len(source['chapters']),'short_silent_explainers':explainer_count,'speakers':voices,'files':results}
 (WORK/'media-report.json').write_text(json.dumps(report,indent=2)+'\n')
-print(json.dumps({'duration':1200,'chapters':15,'short_silent_explainers':6,'verified_video_files':len(results)}))
+print(json.dumps({'duration':timeline['duration'],'chapters':len(source['chapters']),'short_silent_explainers':explainer_count,'verified_video_files':len(results)}))

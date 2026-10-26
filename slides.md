@@ -1,19 +1,52 @@
 ---
 theme: default
 title: OpenTelemetry Far and Wide
+titleTemplate: '%s · Observability Day 2026'
 info: |
-  KubeCon + CloudNativeCon North America 2026 — Observability Day
-  Presented by Tyler Yahn and Nikola Grcevski.
-transition: slide-left
-mdc: true
+  Tyler Yahn and Nikola Grcevski · KubeCon + CloudNativeCon North America 2026.
+  Follow a request with OBI, add zero-code detail, then instrument a namespace.
+author: Tyler Yahn and Nikola Grcevski
+layout: talk-cover
+defaults:
+  layout: talk
+transition: fade
+canvasWidth: 1280
+aspectRatio: 16/9
+duration: 25min
 drawings:
   persist: false
+fonts:
+  sans: DejaVu Sans
+  mono: DejaVu Sans Mono
+  provider: none
+mdc: true
+download: false
+exportFilename: opentelemetry-far-and-wide
 ---
 
-<main class="title-slide">
-  <p class="title-kicker">KubeCon + CloudNativeCon NA 2026 · Observability Day</p>
+# OpenTelemetry<br>Far and Wide
 
-  # OpenTelemetry<br>Far and Wide
+<!--
+Tyler · 10 seconds. Hold the complete title for four seconds; no reveal.
+The 25-minute slot has 21 minutes of live content, one minute flex and three minutes questions. Use the actual demo live; recordings are manual-play fallbacks. Presenter notes carry handoffs, commands, timing and source references.
+-->
 
-  <p class="title-speakers">Tyler Yahn · Nikola Grcevski</p>
-</main>
+---
+src: ./slides/01-opening.md
+---
+
+---
+src: ./slides/02-investigation.md
+---
+
+---
+src: ./slides/03-language-detail.md
+---
+
+---
+src: ./slides/04-namespace.md
+---
+
+---
+src: ./slides/05-takeaways.md
+---

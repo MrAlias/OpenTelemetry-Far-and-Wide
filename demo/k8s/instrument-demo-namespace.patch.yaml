@@ -1,0 +1,8 @@
+# Add the application selection to the prepared shared configuration.
+- op: add
+  path: /spec/rules/-
+  value:
+    name: instrument-demo-namespace
+    selector:
+      namespaces: [demo-apps]
+    action: Inject

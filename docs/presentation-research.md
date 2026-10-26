@@ -1,3 +1,21 @@
+# Current use of this research · October 22, 2026
+
+The [current scene plan](talk-storyboard.md) applies the sources below to a new
+fleet story: brief introduction; OBI discovers slow services across approximately
+15 services; direct agent setup proves detail on one; the custom operator handles
+the repeated setup for the remaining eligible fleet; slides make the savings
+inspectable. Earlier scene allocations and selective-depth/upgrade/removal
+examples below are retained research history, not the current running order.
+
+The audience should leave able to distinguish broad investigation, useful runtime
+detail, and the cost of arranging that detail repeatedly. The demonstration must
+earn each step with visible evidence. Use the [savings inventory](instrumentation-savings.md)
+for the broader coordination and lifecycle argument, not an assumed reduction in
+telemetry volume. The [visual storyboard](../public/storyboard.html) contains the
+current timing and purposeful reveals.
+
+---
+
 # Presentation research for OpenTelemetry Far and Wide
 
 Research checked on October 19, 2026. This guide applies presentation research
@@ -8,8 +26,8 @@ the [storyboard](talk-storyboard.md). This allocation is our planning choice,
 not a confirmed organizer requirement.
 
 The central recommendation is to build the talk around a diagnostic question:
-**We can see that checkout is slow. What additional instrumentation will let
-us explain why?** Broad coverage, selective depth, and controlled removal then
+**A request is slow. How does OBI reveal its end-to-end path and show where to
+investigate? What additional detail answers the question that remains?** Broad coverage, selective depth, and controlled removal then
 become successive answers to a problem the audience already understands.
 
 An exceptional audience experience is the ambition. No presentation method can
@@ -67,21 +85,18 @@ practical meaning of breadth and depth.
 
 ### Start with a recognizable problem and reveal the answer early
 
-Use the existing demo workload to establish the stakes: a slow checkout request,
-a visible service boundary, and an unanswered question inside that service.
+Use a slow end-to-end request as the starting symptom. OBI must establish the
+request path and support the choice of a service before discussing its interior.
 Introduce the complementary instrumentation idea early, then create curiosity
 about whether the evidence will support it. Avoid hiding the thesis until a
 late reveal.
 
 Suggested opening, to adapt into the presenters' natural voices:
 
-> In this demo, checkout is slow. We can follow the request across the services
-> and see where the time is spent. But that still leaves a question: what is
-> happening inside checkout?
->
-> We could add instrumentation across the whole estate. For this investigation,
-> we need more detail in one place. We'll show how to add it centrally, what
-> changes in the trace, and what we have to verify before trusting the result.
+> A request is slow, but we don't yet know which service deserves attention.
+> We'll use OBI to trace the request across the system and follow that evidence
+> to the next question. If the trace leaves local work unnamed, we'll add
+> selected detail and check whether it gives us a useful answer.
 
 Show the evidence while making this introduction. Identify it as a demonstration
 with an intentional delay; do not imply that it is a customer incident.
@@ -241,8 +256,8 @@ includes speaker transitions and audience pauses.
 
 | Elapsed time | Narrative job | Likely material |
 | --- | --- | --- |
-| 0:00–2:00 | Establish the slow-checkout question and breadth/depth model. | Brief introduction, platform constraint, and one three-service example. |
-| 2:00–4:30 | Establish coverage and the question it cannot answer. | Planned baseline playback followed by a prediction about the unnamed local work. |
+| 0:00–2:00 | Establish the slow-request symptom and reveal OBI end-to-end coverage. | Brief introduction, platform constraint, and one three-service example. |
+| 2:00–4:30 | Use OBI timing to select checkout, then identify its unnamed local work. | Planned baseline playback followed by a prediction about the unnamed local work. |
 | 4:30–7:30 | Reveal selected depth and interpret the result. | One live profile change, then a comparison of two requests with matching framing. |
 | 7:30–12:00 | Explain control, upgrade, and removal. | Parallel instrumentation paths under a shared workflow; verified playback for lifecycle checkpoints. |
 | 12:00–16:30 | Make the cost decision and establish trust. | Measured profile comparisons when available, correctness gates, and limitations. |
@@ -270,13 +285,17 @@ described as proposed rather than demonstrated.
 For each action, use this pattern: **question → expected observation → action
 → observed evidence → implication**.
 
-1. Show the existing broad request view and identify the unexplained local time.
-2. Tell the audience exactly which new detail to look for.
-3. Change the selected checkout instrumentation profile.
-4. Show a new comparable request with the method span. Compare equivalent
+1. Start with a slow response; the service to investigate is still unknown.
+2. Apply OBI coverage and reveal a fresh end-to-end trace through the system.
+   Verify trace identity and parent links across the participating services.
+3. Read the trace's parent/child timing to justify investigating checkout.
+   Identify the local interval that its downstream call does not explain.
+4. Tell the audience which selected method detail could answer that question.
+5. Change the selected checkout instrumentation profile.
+6. Show a new comparable request with the method span. Compare equivalent
    observations; do not imply that an old trace acquired spans retrospectively.
-5. State what this reveals and what it still does not establish.
-6. Return to breadth and show the evidence appropriate to that state.
+7. State what this reveals and what it still does not establish.
+8. Return to breadth and show the evidence appropriate to that state.
 
 Assign one presenter to narration and the other to the controls during the demo.
 The narrator keeps the audience oriented while the operator verifies the
@@ -462,3 +481,13 @@ a prerequisite to drafting the storyboard.
 [cncf-speaking]: https://www.cncf.io/blog/2024/01/24/things-ive-learned-about-conference-speaking/
 [w3c]: https://www.w3.org/WAI/teach-advocate/accessible-presentations/
 [cncf-accessibility]: https://contribute.cncf.io/projects/best-practices/accessibility/deaf-and-hard-of-hearing/tips-when-attending-or-speaking-at-a-conference/
+
+
+## Evidence and zero-code terminology (October 23)
+
+The current storyboard applies the demo research to real request and terminal
+recordings: outcome first, opaque duration, observed request, earned service
+selection, useful new detail, then the fleet scaling problem. Verification
+lectures are preparation notes rather than audience content. The visuals must
+show the result being discussed. Use [OpenTelemetry’s preferred zero-code
+terminology](https://opentelemetry.io/docs/zero-code/) throughout narration.

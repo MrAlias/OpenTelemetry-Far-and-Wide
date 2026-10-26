@@ -1,0 +1,34 @@
+/* Graphviz supplies geometry; semantic layers distinguish evidence and enrollment. */
+window.renderDemoTopology=({mode='plain',progress=1,palette:C}={})=>{
+ const model=window.DEMO_TOPOLOGY;
+ const branch=window.DEMO_EVIDENCE?.highlightedBranch||['gateway','checkout','cart','catalog','recommendations','promotions'];
+ const active=new Set(branch.slice(0,Math.ceil(progress*branch.length)));
+ const observed=mode!=='plain'&&(mode!=='obi'||progress>0);
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const txt=(x,y,s,size,color,extra='')=>`<text x="${x}" y="${y}" font-size="${size}" fill="${color}" ${extra}>${esc(s)}</text>`;
+ let art='';
+ for(const e of model.edges){
+  const points=e.points;let d=`M ${points[0].join(' ')}`;
+  for(let i=1;i<points.length;i+=3)d+=' C '+points.slice(i,i+3).map(p=>p.join(' ')).join(' ');
+  const edge=(color,width)=>`<path data-edge="${e.from}:${e.to}" d="${d}" stroke="${color}" stroke-width="${width}" fill="none"/>`;
+  art+=edge(C.line,2);
+  if(mode!=='plain'&&(mode!=='observed'||active.has(e.from)&&active.has(e.to)))art+=`<g opacity="${mode==='obi'?progress:1}">${edge(C.blue,3)}</g>`;
+  const a=points.at(-2),b=points.at(-1),angle=Math.atan2(b[1]-a[1],b[0]-a[0]);
+  art+=`<path d="M${b[0]-7*Math.cos(angle-.45)} ${b[1]-7*Math.sin(angle-.45)} L${b[0]} ${b[1]} L${b[0]-7*Math.cos(angle+.45)} ${b[1]-7*Math.sin(angle+.45)}" stroke="${observed?C.blue:C.line}" stroke-width="2" fill="none"/>`;
+ }
+ for(const n of model.nodes){
+  const marked=mode==='slow'&&progress>0&&n.id==='checkout';
+  const agent=n.eligible&&(mode==='complete'||mode==='deploy'&&(n.id==='checkout'||progress>0)||mode==='one'&&n.id==='checkout');
+  const color=marked?C.depth:agent?C.green:mode==='observed'?(active.has(n.id)?C.blue:C.line):observed?C.blue:C.line;
+  const x=n.x-n.w/2,y=n.y-(n.h+8)/2;
+  art+=`<g data-service="${n.id}" data-agent="${agent}" data-selected="${marked}" data-eligible="${n.eligible}"><rect x="${x}" y="${y}" width="${n.w}" height="${n.h+8}" rx="5" fill="${C.panel}" stroke="${color}" stroke-width="${marked?4:2}"/>`;
+  art+=txt(n.x,n.y-5,n.label,22,C.ink,'text-anchor="middle"');
+  art+=txt(n.x,n.y+22,mode==='observed'&&active.has(n.id)?(window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,18,observed?color:C.muted,'text-anchor="middle"');
+  if(agent)art+=`<circle cx="${x+n.w-8}" cy="${y+8}" r="4" fill="${C.green}"/>`;
+  art+='</g>';
+ }
+ art+=`<line x1="70" y1="557" x2="1210" y2="557" stroke="${C.line}"/>`;
+ art+=txt(75,583,'PostgreSQL',22,C.muted)+txt(75,611,model.databases.PostgreSQL.join(' · '),19,C.muted);
+ art+=txt(790,583,'Redis',22,C.muted)+txt(790,611,model.databases.Redis.join(' · '),19,C.muted);
+ return art;
+};

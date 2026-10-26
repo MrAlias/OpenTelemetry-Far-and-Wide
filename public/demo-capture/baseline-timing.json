@@ -1,0 +1,30 @@
+{
+  "traceId": "1fa60f9d3116c8aad6e17c1cfa9c6f1",
+  "rootDurationMs": 306,
+  "checkoutDurationMs": 304.684373,
+  "checkoutInitialLocalMs": 151.776476,
+  "checkoutSpanId": "FV6nx4Vdn70=",
+  "spanCount": 90,
+  "services": [
+    "cart",
+    "catalog",
+    "checkout",
+    "currency",
+    "customer-profile",
+    "fraud",
+    "gateway",
+    "inventory",
+    "loyalty",
+    "notifications",
+    "payments",
+    "postgres",
+    "promotions",
+    "receipts",
+    "recommendations",
+    "redis",
+    "shipping",
+    "stock-planner",
+    "tax",
+    "warehouse"
+  ]
+}

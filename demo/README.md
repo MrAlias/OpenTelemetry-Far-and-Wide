@@ -416,3 +416,14 @@ and [observability stack guide](observability/README.md). The older
 shares its gateway, inventory, and pricing-method sources, and adds the
 [Hibernate checkout application](apps/checkout/) and the [polyglot commerce
 services](apps/README.md), with ordinary readiness probes and direct Services.
+
+
+## Presentation recording sequence
+
+The expanded presentation uses OBI first, then a direct Java-agent setup for
+Checkout, then operator enrollment for the remaining supported services. See
+[the recorded demo handoff](../docs/fleet-demo-handoff.md) for captured timings,
+prerequisites, source files and the live rehearsal sequence. The direct patch
+is `k8s/checkout-direct-agent.patch.yaml`; shared enrollment uses
+`k8s/fleet-instrumentation.yaml`. This is an alternative to the single-Checkout
+operator walkthrough above; begin from a clean, isolated demo installation.

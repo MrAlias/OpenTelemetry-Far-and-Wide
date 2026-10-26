@@ -5,6 +5,9 @@ require "active_record"
 require "redis"
 require "net/http"
 
+# Initialize bundled integrations after Rails components are loaded.
+Bundler.require(*Rails.groups)
+
 module Commerce
   NAME = ENV.fetch("SERVICE_NAME")
   raise "Unknown SERVICE_NAME: #{NAME}" unless %w[cart promotions loyalty].include?(NAME)

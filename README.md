@@ -1,121 +1,89 @@
 # OpenTelemetry Far and Wide
 
-Materials for **“OpenTelemetry Far and Wide”**, presented by Tyler Yahn and
-Nikola Grcevski at KubeCon + CloudNativeCon North America 2026, Observability
-Day.
+Tyler Yahn and Nikola Grcevski · Observability Day · KubeCon + CloudNativeCon
+North America 2026.
 
-The talk explores how OpenTelemetry eBPF instrumentation and SDK
-auto-injection can work together: broad, zero-touch coverage first, then
-language-level detail where it is valuable, all through a shared deployment
-mechanism with dynamic cost controls.
+A 25-minute talk: use OBI to find where a request spends time, add Java zero-code
+detail on one service, then select a namespace to carry instrumentation across
+supported services. The closing slides explain coordination and lifecycle savings
+and how to measure them.
 
-The current starting point is the visual storyboard and its companion research.
-The Slidev deck contains the title slide and shared base styling; the remaining
-slides and demo evidence still need to be built against the storyboard.
+## Run the Slidev presentation
 
-## Repository map
-
-```text
-.
-├── slides.md          # Slidev presentation entry point
-├── style.css          # Shared presentation styles
-├── components/        # Slidev components and the demo injection projects
-├── layouts/           # Talk-specific Slidev layouts
-├── public/            # Static assets and the interactive storyboard
-├── demo/              # Full demo walkthrough, manifests, and proof harness
-└── docs/              # Talk brief and architecture/content notes
-```
-
-Put images, video, downloadable manifests, and other files that should be
-addressable directly as `/filename` in `public/`. Keep speaker notes alongside
-their slides in `slides.md`, and keep generated files out of version control.
-
-## Work on the slides
-
-Prerequisites: Node.js 20 or newer and npm.
-
-```bash
-npm install
+```sh
+npm ci
 npm run dev
 ```
 
-Useful commands:
+Open the URL printed by Slidev. Use `/presenter/` for notes and handoffs.
+`npm run present` opens the deck in a browser. `npm run build` creates the static
+site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-```bash
-npm run build
-npm run export
+The **21-slide deck is editable Slidev source** in [slides.md](slides.md) and
+[slides/](slides/README.md), with reusable Vue components and custom layouts.
+Actual dashboard stills and short terminal recordings are checked in alongside
+the slides, so a fresh checkout can present without a demo cluster, synthetic
+voice model, or media rebuild. The live plan has 21 minutes of content, one minute
+flex and three minutes of questions.
+
+## Project structure
+
+```text
+slides.md                  Slidev configuration, cover and section imports
+slides/                    Editable sections and presenter notes
+layouts/                   Cover and standard talk layouts
+components/presentation/   Reusable Slidev evidence and media components
+styles/                    Scoped presentation styles
+setup/                     Slidev application setup
+presentation/data/         Source-derived topology and measured capture data
+public/presentation/       Versioned still images and short demo clips
+public/storyboard.html     Editable visual storyboard
+public/animation/          Optional narrated review and its player
+scripts/presentation/      Evidence preparation and slide validation
+scripts/animation/         Optional narration and rehearsal export pipeline
+demo/                      Live application, manifests and walkthrough
+components/otel-injector-*/ Injector payload and controller implementation
+docs/                      Talk brief, research, findings and savings definitions
+.artifacts/                Ignored working files, captures, profiles and checks
 ```
 
-The `export` command may prompt Slidev to install a browser dependency the first
-time it is used.
+Keep all generated working files inside this repository. Never use `/tmp` for
+project assets. Slidev files are authored independently; animation exports cannot
+overwrite them. See [editing and presenting](slides/README.md) for slide ranges,
+media behavior, checks, exports and deployment under a URL prefix.
 
-## Review the storyboard
+## Live demo and evidence
 
-The [interactive visual storyboard](public/storyboard.html) is a self-contained,
-editable HTML file in this repository. Open it directly in a browser, or run
-`npm run dev` and open `/storyboard.html` on the development server.
+The [demo walkthrough](demo/README.md) runs eighteen services, PostgreSQL and
+Redis. OBI supplies the baseline. A captured 306.26 ms request contains a
+151.78 ms initial Checkout interval; a fresh Java-agent request names its
+150.38 ms pricing method. These are exemplars, not performance benchmarks.
 
-It includes all 15 scene sketches, progressive reveals, timing, presenter notes,
-and requirements for the next demo phase. It works offline
-and needs no Codex installation, external assets, or build step. Edit
-`public/storyboard.html` as the source of truth for the visual storyboard.
+The custom controller and OpenTelemetry Injector then enroll thirteen additional
+supported workloads using one namespace rule. Fourteen language-agent services
+and four Go services with OBI appear in the fresh request. Upstream already
+supports language-specific workload or namespace opt-in; the custom integration
+combines central selection, runtime handling and managed rollout.
 
-The [companion scene plan](docs/talk-storyboard.md) provides a text reference.
-The rehearsal target is 21 minutes of content, one minute of recovery time,
-and three minutes of questions within the 25-minute slot.
+Use the [live handoff](docs/fleet-demo-handoff.md) for the exact direct-agent and
+namespace sequence. The original [proof harness](demo/proof/README.md) is historical
+and separate. Savings remain qualitative; adding language detail does not
+establish a smaller telemetry bill. The [savings inventory](docs/instrumentation-savings.md)
+defines the comparison.
 
-For mobile review, run `npm run storyboard:serve` and open
-`http://<computer-address>:8010/storyboard.html` on a phone that can reach the
-serving computer. On that computer, use `http://localhost:8010/storyboard.html`.
-This preview command serves the contents of `public/`.
+## Storyboard and narrated review
 
-The [presentation research](docs/presentation-research.md) explains the choices
-behind the structure, visuals, audience interaction, and delivery.
+The [visual storyboard](public/storyboard.html) retains the reviewed 17-scene arc.
+Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
+use the serving computer's address. Its stills work offline; recorded video
+links use local generated capture files.
 
-## Content direction
+The optional [animated review](public/animation.html) uses Tyler's and Nikola's
+separate authorized synthetic voice profiles at native pace. Full generated
+movies, narration and original capture intermediates are ignored by Git; see
+[scripts/animation/README.txt](scripts/animation/README.txt) to rebuild them.
+The Slidev deck includes its own portable short clips.
 
-The audience should leave understanding that eBPF and SDK instrumentation are
-complementary layers—not competing choices—and that teams can dynamically
-trade telemetry depth for cost without asking every application team to change
-its code or Kubernetes manifests.
-
-The talk proposal and narrative outline live in
-[`docs/talk-brief.md`](docs/talk-brief.md).
-
-The [full demo walkthrough](demo/README.md) starts with a kind cluster and the
-18 demo services across six languages, PostgreSQL, and Redis, adds the LGTM stack
-and OBI, then installs the Injector operator and rolls Java checkout to show
-method, Hibernate, and JDBC spans. The Hibernate/JDBC instrumentation uses the
-Java agent's defaults.
-
-The executable coexistence experiment lives in
-[`demo/proof/`](demo/proof/README.md). Its
-[`specification`](docs/demo-spec.md) and [`results`](docs/proof-results.md)
-record the original experiment. The [reliability follow-up](docs/reliability-results.md)
-documents the revised handoff and its repeatable rehearsal: 1,086/1,086 measured
-requests passed at serial load; broader compatibility and concurrency failures
-remain preserved.
-
-The new demo components live in
-[`components/otel-injector-operator/`](components/otel-injector-operator/README.md)
-and [`components/otel-injector-images/`](components/otel-injector-images/README.md).
-They provide a CRD-driven injection operator and a five-language payload image,
-including automatic rollouts, health-based rollback, and native-image-volume
-detection with an init-container fallback. OBI and the application demo are
-separate from these components.
-
-The [demo observability stack](demo/observability/README.md) runs the Collector,
-Tempo, Prometheus, Loki, and Grafana together using `grafana/otel-lgtm`. Its
-Kubernetes manifest and the operator guide share the same OTLP endpoint.
-
-## Experimental animation
-
-The [animation sources and rebuild instructions](scripts/animation/README.txt)
-preserve an optional 20-minute narration and playback experiment. Animation is
-still under evaluation; the storyboard is the current presentation plan.
-Generated audio and video are ignored by Git and must be rebuilt before using
-[the player](public/animation.html) on a fresh checkout.
-
-## License
-
-Licensed under the [Apache License 2.0](LICENSE).
+The [presentation research](docs/presentation-research.md),
+[script research](docs/animation-script-research.md) and
+[talk brief](docs/talk-brief.md) explain the communication choices and sources.

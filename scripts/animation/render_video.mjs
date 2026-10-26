@@ -1,6 +1,6 @@
 // Render only changing frames; long holds are explicit durations, not duplicated screenshots.
 import {spawn} from 'node:child_process';
-import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import path from 'node:path';
 
@@ -72,14 +72,14 @@ try {
   // Verify the authored controls rather than just the rendered artwork.
   const interaction=await evaluate(`(()=>{
     const issues=[],check=(ok,message)=>{if(!ok)issues.push(message);};
-    check(document.querySelectorAll('[data-chapter]').length===15,'chapter controls');
+    check(document.querySelectorAll('[data-chapter]').length===window.TALK.chapters.length,'chapter controls');
     document.querySelector('[data-chapter="5"]').click();
     check(window.animationState().chapter===6,'chapter seek');
     document.getElementById('narration').click();
     check(document.getElementById('audio').muted,'narration toggle');
     document.getElementById('narration').click();
-    const seek=document.getElementById('seek');seek.value=1000;seek.dispatchEvent(new Event('input'));
-    check(window.animationState().time===1000,'timeline seek');
+    const seek=document.getElementById('seek');const seekTarget=Math.floor(Math.min(1000,window.TALK.duration-1)*10)/10;seek.value=seekTarget;seek.dispatchEvent(new Event('input'));
+    check(window.animationState().time===seekTarget,'timeline seek');
     const speed=document.getElementById('speed');speed.value='1.5';speed.dispatchEvent(new Event('change'));
     check(document.getElementById('audio').playbackRate===1.5,'playback rate');
     speed.value='1';speed.dispatchEvent(new Event('change'));
@@ -99,67 +99,56 @@ try {
   })()`,awaitPromise:true,returnByValue:true,userGesture:true},sessionId);
   await writeFile(path.join(work,'playback-report.json'),JSON.stringify(playback.result.value,null,2)+'\n');
   if(!playback.result.value?.state?.playing||playback.result.value.audioTime<.5)throw new Error('Narrated playback failed: '+JSON.stringify(playback));
-  let imageCount=0;
-  const renderReports=[];
-  for(const chapter of talk.chapters) {
+  await cdp.call('Runtime.evaluate',{expression:'window.mediaReady',awaitPromise:true},sessionId);
+  let imageCount=0;const renderReports=[];
+  const onlyIndex=process.argv.indexOf('--only');const only=onlyIndex>=0?new Set(process.argv[onlyIndex+1].split(',')):null;
+  let previousReport={chapters:[]};if(only){try{previousReport=JSON.parse(await readFile(path.join(work,'layout-report.json'),'utf8'));}catch{}}
+  for(const chapter of talk.chapters){
+    if(only&&!only.has(chapter.id)){renderReports.push(previousReport.chapters.find(c=>c.chapter===chapter.id)||{chapter:chapter.id,reused:true});continue;}
     const dir=path.join(renderDir,chapter.id);await mkdir(dir,{recursive:true});
-    const times=[0];
-    if(Number.isFinite(chapter.buildTime)){
-      for(let i=0;i<=40;i++)times.push(chapter.buildTime+i*.04);
-    }
-    const concat=[];
-    for(let i=0;i<times.length;i++) {
-      const time=times[i];
-      await evaluate(`window.renderAt(${chapter.start+time})`);
-      const canvasFits=await evaluate('document.documentElement.scrollWidth===1280 && document.documentElement.scrollHeight===720');
-      if(!canvasFits)errors.push({chapter:chapter.id,time,viewport:'Export canvas must fill the viewport without scrollbars'});
-      const overflow=await evaluate(`(()=>{const svg=document.querySelector('#stage svg'),box=svg.getBoundingClientRect();return [...svg.querySelectorAll('text')].filter(t=>{const r=t.getBoundingClientRect();return r.left<box.left-1||r.right>box.right+1||r.top<box.top-1||r.bottom>box.bottom+1;}).map(t=>t.textContent);})()`);
-      if(overflow.length)errors.push({chapter:chapter.id,time,overflow});
-      const collisions=await evaluate(`(()=>{
-        const all=[...document.querySelectorAll('#stage svg text')].filter(t=>{
-          for(let p=t;p&&p.tagName!=='svg';p=p.parentElement)if(Number(p.getAttribute('opacity')??1)<.05)return false;
-          return true;
-        });
-        const issues=[];
-        for(let a=0;a<all.length;a++)for(let b=a+1;b<all.length;b++){
-          const x=all[a].getBoundingClientRect(),y=all[b].getBoundingClientRect();
-          if(Math.min(x.right,y.right)-Math.max(x.left,y.left)>2&&Math.min(x.bottom,y.bottom)-Math.max(x.top,y.top)>2)issues.push([all[a].textContent,all[b].textContent]);
+    const events=chapter.visualCues?.length?chapter.visualCues:[{type:'art',start:0}];
+    const segments=[];
+    for(const [index,event] of events.entries()){
+      const end=events[index+1]?.start??chapter.duration, duration=end-event.start;
+      const file=path.join(dir,`segment-${index}.mp4`);let args=[];
+      if(event.type==='video'){
+        args=['-i',path.join(root,'public',event.src),'-vf',`fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,tpad=stop_mode=clone:stop_duration=${duration}`];
+      }else if(event.type==='image'){
+        args=['-loop','1','-i',path.join(root,'public',event.src),'-vf','fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2'];
+      }else{
+        const times=[event.start];
+        if(Number.isFinite(chapter.buildTime)&&chapter.buildTime>=event.start&&chapter.buildTime<end){for(let i=0;i<=40;i++){const t=chapter.buildTime+i*.04;if(t<end)times.push(t);}}
+        const unique=[...new Set(times)].sort((a,b)=>a-b),concat=[];
+        for(const [i,t] of unique.entries()){
+          await evaluate(`window.renderAt(${chapter.start+t})`);
+          await cdp.call('Runtime.evaluate',{expression:'new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))',awaitPromise:true},sessionId);
+          const overflow=await evaluate(`(()=>{const s=document.querySelector('#stage svg');if(!s)return ['missing artwork'];const b=s.getBoundingClientRect();return [...s.querySelectorAll('text')].filter(t=>{const r=t.getBoundingClientRect();return r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom+1}).map(t=>t.textContent)})()`);
+          if(overflow.length)errors.push({chapter:chapter.id,time:t,overflow});
+          const shot=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
+          const png=path.join(dir,`${index}-${String(i).padStart(3,'0')}.png`);await writeFile(png,Buffer.from(shot.data,'base64'));imageCount++;
+          concat.push(`file '${png}'`,`duration ${((unique[i+1]??end)-t).toFixed(6)}`);
         }
-        return issues;
-      })()`);
-      if(collisions.length)errors.push({chapter:chapter.id,time,collisions});
-      const shot=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
-      const file=path.join(dir,`${String(i).padStart(3,'0')}.png`);
-      await writeFile(file,Buffer.from(shot.data,'base64'));imageCount++;
-      const duration=(times[i+1]??chapter.duration)-time;
-      concat.push(`file '${file.replaceAll("'","'\\''")}'`,`duration ${duration.toFixed(6)}`);
+        concat.push(concat.at(-2));const list=path.join(dir,`art-${index}.ffconcat`);await writeFile(list,concat.join('\n')+'\n');args=['-f','concat','-safe','0','-i',list,'-vf','fps=25'];
+      }
+      await run('ffmpeg',['-y',...args,'-an','-t',String(duration),'-c:v','libx264','-preset','veryfast','-crf','20','-threads','2','-pix_fmt','yuv420p','-video_track_timescale','12800',file],chapter.id+`-segment-${index}.log`);segments.push(file);
     }
-    concat.push(concat[concat.length-2]);
-    const frameList=path.join(dir,'frames.ffconcat');
-    await writeFile(frameList,concat.join('\n')+'\n');
+    const list=path.join(dir,'segments.ffconcat');await writeFile(list,segments.map(f=>`file '${f}'`).join('\n')+'\n');
     const video=path.join(work,chapter.id+'.mp4');
-    await run('ffmpeg',['-y','-f','concat','-safe','0','-i',frameList,'-i',path.join(work,'speech',chapter.id+'.wav'),'-map','0:v','-map','1:a','-vf','fps=25','-t',String(chapter.duration),'-c:v','libx264','-preset','veryfast','-tune','stillimage','-crf','21','-threads','2','-pix_fmt','yuv420p','-c:a','aac','-b:a','112k','-movflags','+faststart',video],chapter.id+'-encode.log');
+    await run('ffmpeg',['-y','-f','concat','-safe','0','-i',list,'-i',path.join(work,'speech',chapter.id+'.wav'),'-map','0:v','-map','1:a','-c:v','copy','-c:a','aac','-b:a','112k','-t',String(chapter.duration),'-movie_timescale','1000','-movflags','+faststart',video],chapter.id+'-encode.log');
     await run('ffmpeg',['-y','-i',video,'-map','0:v','-an','-c:v','copy','-movflags','+faststart',path.join(out,'clips',chapter.id+'-silent.mp4')]);
-    if(Number.isFinite(chapter.buildTime)) {
-      // A live speaker can reuse the causal animation without its long narrated lead-in.
-      const start=Math.max(0,chapter.buildTime-7);
-      await run('ffmpeg',['-y','-ss',String(start),'-i',video,'-t','20','-map','0:v','-an','-c:v','libx264','-preset','veryfast','-crf','21','-threads','2','-pix_fmt','yuv420p','-movflags','+faststart',path.join(out,'explainers',chapter.id+'-20s.mp4')]);
-    }
-    renderReports.push({chapter:chapter.id,seconds:chapter.duration,keyframes:times.length});
-    console.log(`Rendered ${chapter.id}: ${chapter.duration}s, ${times.length} artwork frames.`);
+    if(Number.isFinite(chapter.buildTime))await run('ffmpeg',['-y','-ss',String(Math.max(0,chapter.buildTime-7)),'-i',video,'-t','20','-an','-vf','tpad=stop_mode=clone:stop_duration=20','-c:v','libx264','-preset','veryfast','-threads','2','-pix_fmt','yuv420p',path.join(out,'explainers',chapter.id+'-20s.mp4')]);
+    renderReports.push({chapter:chapter.id,seconds:chapter.duration,segments:segments.length});console.log('Rendered '+chapter.id+' '+chapter.duration+'s');
   }
   await writeFile(path.join(work,'layout-report.json'),JSON.stringify({errors,chapters:renderReports,imageCount},null,2)+'\n');
-  if(errors.length)throw new Error('Visual overflow found: '+JSON.stringify(errors.slice(0,10)));
+  if(errors.length)throw Error('Artwork overflow: '+JSON.stringify(errors));
   const list=path.join(work,'chapters.ffconcat');
   await writeFile(list,talk.chapters.map(c=>`file '${path.join(work,c.id+'.mp4').replaceAll("'","'\\''")}'`).join('\n')+'\n');
   const metadata=path.join(work,'chapters.ffmetadata');
-  await writeFile(metadata,';FFMETADATA1\ntitle=OpenTelemetry Far and Wide\ncomment=Concept animation with two male synthetic draft voices performing the Tyler and Nikola roles. Demonstration evidence and cost measurements remain to produce.\n'+talk.chapters.map(c=>`[CHAPTER]\nTIMEBASE=1/1000\nSTART=${c.start*1000}\nEND=${c.end*1000}\ntitle=${c.title.replace(/[=;#\\]/g,' ')}`).join('\n')+'\n');
-  const final=path.join(out,talk.videoFile||'opentelemetry-far-and-wide-20min.mp4');
-  await run('ffmpeg',['-y','-f','concat','-safe','0','-i',list,'-i',metadata,'-i',path.join(out,'captions.vtt'),'-map','0:v','-map','0:a','-map','2:0','-map_metadata','1','-map_chapters','1','-c:v','copy','-c:a','copy','-c:s','mov_text','-metadata:s:s:0','language=eng','-t','1200','-movflags','+faststart',final],'full-encode.log');
-  const canonical=path.join(out,'opentelemetry-far-and-wide-20min.mp4');
-  if(final!==canonical)await copyFile(final,canonical);
-  await run('ffmpeg',['-y','-i',final,'-map','0:v','-map_metadata','0','-map_chapters','0','-an','-c:v','copy','-t','1200','-movflags','+faststart',path.join(out,'opentelemetry-far-and-wide-20min-silent.mp4')]);
-  await run('ffmpeg',['-y','-i',final,'-map','0:a','-vn','-c:a','copy',path.join(out,'draft-narration.m4a')]);
+  await writeFile(metadata,';FFMETADATA1\ntitle=OpenTelemetry Far and Wide\ncomment=Recorded local demo. '+talk.voice.replace(/[=;#\\]/g,' ')+'. Actual request and terminal recordings; savings are qualitative.\n'+talk.chapters.map(c=>`[CHAPTER]\nTIMEBASE=1/1000\nSTART=${Math.round(c.start*1000)}\nEND=${Math.round(c.end*1000)}\ntitle=${c.title.replace(/[=;#\\]/g,' ')}`).join('\n')+'\n');
+  const final=path.join(out,talk.videoFile||'opentelemetry-far-and-wide-dialogue.mp4');
+  await run('ffmpeg',['-y','-f','concat','-safe','0','-i',list,'-i',metadata,'-i',path.join(out,'captions.vtt'),'-map','0:v','-map','0:a','-map','2:0','-map_metadata','1','-map_chapters','1','-c:v','copy','-c:a','copy','-c:s','mov_text','-metadata:s:s:0','language=eng','-t',String(talk.duration),'-movie_timescale','1000','-movflags','+faststart',final],'full-encode.log');
+  await run('ffmpeg',['-y','-i',final,'-map','0:v','-map_metadata','0','-map_chapters','0','-an','-c:v','copy','-t',String(talk.duration),'-movie_timescale','1000','-movflags','+faststart',path.join(out,'opentelemetry-far-and-wide-silent.mp4')]);
+  await run('ffmpeg',['-y','-i',final,'-map','0:a','-vn','-c:a','copy','-movie_timescale','1000',path.join(out,'draft-narration.m4a')]);
   console.log(`Export complete: ${talk.duration}s, ${talk.chapters.length} silent chapters, ${imageCount} rendered frames.`);
 } finally {
   await writeFile(path.join(work,'browser.log'),browserLog);

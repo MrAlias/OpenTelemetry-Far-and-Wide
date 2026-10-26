@@ -28,3 +28,12 @@ __pycache__/
 # Logs
 *.log
 npm-debug.log*
+
+# Rebuildable real-demo screen recordings
+public/demo-capture/*.mp4
+public/demo-capture/*.webm
+
+# Legacy storyboard exports and browser inspection metadata
+public/slides/
+public/demo-capture/*.png.json
+public/demo-capture/*.png.requests.json

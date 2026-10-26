@@ -1,286 +1,124 @@
-Two male synthetic stand-ins perform the Tyler and Nikola draft roles.
+Recorded local demonstration on October 23, 2026: 18 application services, PostgreSQL and Redis. Captured request: 306.26 ms; Checkout initial local interval: 151.78 ms; a fresh Java-agent request shows PricingEngine.calculate at 150.38 ms. Direct Checkout plus 13 operator-enrolled services produce language SDK spans; four Go services retain OBI. Engineering and coordination savings are qualitative, not measured cost results.
+
+Tyler and Nikola use their separate authorized synthetic voice profiles.
 
 OpenTelemetry Far and Wide
-Tyler: I'm Tyler, and this is OpenTelemetry Far and Wide.
+Tyler: You know the application is slow. The hard part is knowing where to look.
 
-Nikola: And I'm Nikola. Start with broad coverage, then add the detail your investigation needs.
+Tyler: Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
 
-Tyler: One request. One missing answer. Let's follow it.
+Nikola: I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.
 
-You found the slow service. What happens inside it?
-Tyler: Checkout is slow. Nikola, I've narrowed the problem down to the service named checkout.
+Tyler: I'm Tyler. That sounds suspiciously like you've given me the homework. Let's get straight to the system.
 
-Nikola: Excellent. The service name has really pulled its weight there. What is it actually doing?
+One application, many places to look
+Tyler: Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow.
 
-Tyler: That's the question. Imagine you own the platform, but different teams own the applications. Our illustrated request enters a Go gateway, passes through Java checkout, and reaches Node inventory.
+Nikola: Every team can have a different definition of healthy. Following the request gives us one shared starting point.
 
-Nikola: So you can follow the request across services. But the expensive work inside checkout still has no useful name.
+Start with OBI
+Tyler: First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications.
 
-Tyler: I could ask every team to change its instrumentation. That sounds like a meeting before an investigation.
+Nikola: That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running.
 
-Nikola: Start smaller. What can the existing signals answer, and which observation is missing?
+Tyler: OBI is ready. Let's open a checkout request.
 
-Tyler: That's our investigation. Broad coverage gets us oriented. Selected application detail should explain the local work.
+One request across the application
+Nikola: The useful result is a connected trace. This is the request behind the duration we started with.
 
-Nikola: And adding a span will not magically make checkout faster. We still have to fix the actual application.
+Tyler: Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating.
 
-Follow the request. Then look inside one service.
-Tyler: Think of a trace as one linked request. Its spans describe timed operations. First, follow that request across gateway, checkout, and inventory.
+Follow the cart branch of this request
+Tyler: Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
 
-Nikola: That gives us context. Which service deserves attention, and how does it connect to the rest of the request?
+Nikola: Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
 
-Tyler: Now look inside checkout. A selected application operation can become another span within that request.
+Find the time before the downstream calls
+Tyler: Start with the waterfall. The Gateway span is long, but almost all of that time is spent waiting for Checkout. Checkout's total also contains its downstream calls.
 
-Nikola: Same investigation, a more specific observation. We haven't replaced the service view; we've explained something inside it.
+Nikola: So choosing the longest bar would send us back to the beginning. Look instead at the gap before Checkout makes its first downstream call.
 
-Tyler: One qualification: eBPF instrumentation and language agents have overlapping capabilities. This example uses broad coverage first and method detail where the question needs it.
+Tyler: That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout.
 
-A deployment is useful when it produces request evidence.
-Tyler: Let's establish that broad view through the shared deployment workflow. Our proposed Operator integration should manage eBPF coverage and selected language instrumentation together.
+Nikola: Now we've got a reason to add language-level detail.
 
-Nikola: Shared workflow sounds convenient. What does the platform actually have to bring?
+Add Java zero-code instrumentation
+Tyler: We have source access here. The pricing calculation happens before the Inventory call. We'll use the Java agent to time that method and expose the library work around it.
 
-Tyler: A working cluster, the applications, admission components where needed, and somewhere to export telemetry. One command can coordinate the work. It cannot make those dependencies disappear.
+Nikola: This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes.
 
-Nikola: So the command finishing is the beginning of the check, not the end.
+Tyler: Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout.
 
-Tyler: Right. The person investigating needs useful request evidence. A successful installation message doesn't tell them whether gateway, checkout, and inventory belong to the same trace.
+Nikola: Zero code is useful. It hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
 
-Nikola: Now follow the illustrated request. Gateway reaches checkout, checkout reaches inventory, and their operations are linked. That's the baseline we're trying to establish.
+The missing interval has a name
+Tyler: Here's a fresh request with the Java agent running. The missing interval now has a name: PricingEngine.calculate.
 
-Tyler: I want to check service identities and parent relationships before interpreting any timing. Otherwise a convincing diagram can send us toward the wrong explanation.
+Nikola: There it is: about a hundred and fifty milliseconds. Below it, Hibernate and JDBC show the product lookup, the order insert, and the transaction commit.
 
-Nikola: And these bar lengths are schematic. They aren't measured latency values or a recording of a completed deployment.
+Tyler: OBI got us to the right service. The language agent gave us a way to describe the work inside it.
 
-Tyler: Once the real request path is trustworthy, we can ask a much better question than, is something somewhere slow?
+What about the rest of the application?
+Nikola: That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?
 
-Nikola: Which local work inside checkout explains its time? Coverage has brought us to the right door. Now we need to look inside.
+Tyler: In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen.
 
-The service is visible. Its local work is unnamed.
-Tyler: Stay with checkout's baseline span. Inventory is nested inside it, but the downstream call doesn't explain all the local work.
+Nikola: And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
-Nikola: Can I add the bars together and report a really impressive total?
+Injection still needs a selection
+Tyler: The upstream OpenTelemetry Operator can supply the agent. You opt in using language-specific annotations, on workloads or namespaces. That already removes much of the agent setup.
 
-Tyler: Only if you want to count some time twice. A parent span can already include the time in its children.
+Nikola: For this mixed-language application, we want one shared choice: instrument the namespace. Then let the system choose the agents and manage the rollout.
 
-Nikola: Fair. What would everyone want to observe next: another service map, or an operation inside checkout? Give that five seconds.
+Let the namespace be the selection
+Tyler: This demo uses the custom namespace-driven controller and the OpenTelemetry Injector. The controller selects workloads and manages their rollout. The Injector detects the supported runtime and loads its language agent.
 
-Tyler: A local application operation. For this workload, the target is a pricing calculation.
+Nikola: Here we install the controller once. The agent payload, exporter, and exclusions are shared settings. Next comes the application choice: instrument this namespace.
 
-Nikola: And selecting that method takes application knowledge. Someone has to know which class and operation mean something to this investigation.
+Instrument this namespace
+Nikola: Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.
 
-Tyler: We aren't discovering business meaning automatically. We're choosing the observation that could close this gap.
+Tyler: Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand.
 
-Nikola: Good. A reason for more detail. Tyler, let's get that calculation into the request view.
+Nikola: Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. One namespace choice carries the setup across the application.
 
-Add a method span to explain the local work.
-Nikola: Before changing anything, say what success would look like. We want a span around the existing pricing calculation, linked inside a fresh checkout request.
+Open language detail in more services
+Tyler: Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
 
-Tyler: Same application image, more information about the work it already does?
+Nikola: Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
 
-Nikola: Yes. The running process can still change. With startup agent injection, adding or changing the agent can require replacement pods. No application rebuild doesn't mean no rollout.
+Tyler: The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup.
 
-Tyler: That's an important distinction. Where does the method selection come from?
+The work around a deployment adds up
+Tyler: Think about the direct setup we just watched. We knew the runtime, had access, and could deploy when we wanted. In a real organization, how much happens before the person at the keyboard can even begin?
 
-Nikola: For this Java example, configuration identifies a class and method. The agent must load in the process and apply that setting. A configuration field alone doesn't prove either happened.
+Nikola: Finding an owner. Explaining the request. A ticket. A meeting to agree on scope. Access requests. A review. A place in the release schedule. Then someone switches away from their actual feature work to pick this up.
 
-Tyler: So while the profile converges, we keep the original diagnostic question visible. We're waiting for a named operation in a new request, not just a green workload indicator.
+Tyler: With the namespace selected, the platform no longer needs a separate enrollment change from each application team. That can remove repeated tickets, reviews, and release coordination, while keeping the shared settings consistent.
 
-Nikola: And keep the baseline request available. Old and new processes can coexist during a transition, and their instrumentation can differ. We need to know which request we're inspecting.
+Nikola: The saving is bigger than typing fewer commands. It's fewer people arranging the same routine work, and less waiting between them.
 
-Tyler: There it is in the illustrated depth view: Pricing Engine calculate, inside checkout. Gateway and inventory are still around it.
+Reuse the workflow after day one
+Tyler: Setup is only the first bill. A new service arrives. An agent needs an update. A version is incompatible. A team needs to turn instrumentation off. Without a shared path, each of those can reopen the same chain of requests.
 
-Nikola: That's the useful change. The local operation has a name and a place in the request. An isolated method span in another trace would leave us doing the detective work ourselves.
+Nikola: A new compatible service in the selected namespace inherits the selection. No new opt-in ticket. Agent updates use the shared rollout path, and a tested recovery path can save teams from inventing one during an incident.
 
-Tyler: What would make you trust it?
+Tyler: That can reduce duplicated configuration, version drift, repeated debugging, and the documentation and training each team has to maintain.
 
-Nikola: The correct parent chain, the intended producer of checkout request spans, and the baseline signals that should remain. Also, verify that the fresh request really came from the new configuration.
+Nikola: The platform still has a job: maintain the shared path, test compatibility, and handle failures. Central work belongs in the cost calculation too.
 
-Tyler: So the prize is an explanation we can use. The extra colored bar is just how we're seeing it.
+Measure effort and waiting separately
+Tyler: To measure the benefit, compare the effort needed to reach the same useful coverage. Include shared preparation and maintenance on both sides, then count the work left for each service team.
 
-Nikola: Exactly. Hold onto that distinction when we compare the two views.
+Nikola: There are two different clocks. Hands-on effort is the time people spend doing work. Calendar delay is how long the request sits waiting between those steps. Reducing one doesn't automatically measure the other.
 
-The work was already happening. Now it has a name.
-Nikola: Here's the comparison, with both requests visible together. They're separate executions, so use matching framing and a common time scale.
+Tyler: And adding agent detail may increase telemetry volume and runtime overhead. Engineering savings don't establish a smaller backend bill. Measure compute, export volume, storage, and sampling separately if you want to make that claim.
 
-Tyler: Baseline on the left: checkout does some unnamed local work. Depth on the right: a pricing calculation is linked inside checkout.
+Make the next investigation easier
+Tyler: We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand.
 
-Nikola: Now we can form a specific hypothesis and decide what to inspect in the application. That is the diagnostic improvement.
+Nikola: Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services.
 
-Tyler: The tracing got better. Checkout didn't get faster. We have upgraded our explanation, not our pricing algorithm.
+Tyler: Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate.
 
-Nikola: And that is still a useful result. We can act on a named operation instead of treating the whole service as one mystery interval.
-
-Tyler: All right. The investigation makes sense. How do we operate these two instrumentation paths without creating another hand-maintained project for every application team?
-
-Manage two instrumentation paths through one workflow.
-Nikola: Separate the control of instrumentation from the path its telemetry takes. At the top is the proposed Operator integration and its shared deployment workflow.
-
-Tyler: What is that box responsible for, in concrete terms?
-
-Nikola: Selecting an enrolled workload, expressing its intended instrumentation configuration, and coordinating the changes needed to reach it. That coordination is part of the proposed integration, not a finished upstream feature we can assume exists.
-
-Tyler: Underneath it, there are two paths. One configures OBI. The other selects and injects a language agent. eBPF isn't secretly installing the Java agent on its way past.
-
-Nikola: Correct. They're parallel responsibilities. An Operator Instrumentation resource can describe agent settings, and injection annotations select it in the current proof. Custom orchestration handles that proof's transitions.
-
-Tyler: One entry point still needs configuration ownership, explicit workload selection, and checks on the actual running result. We haven't made those responsibilities disappear behind a friendlier button.
-
-Nikola: Now follow the telemetry toward the Collector. Both paths can export there, but they should not both produce the same checkout request spans without an ownership plan.
-
-Tyler: So who owns checkout tracing in this example?
-
-Nikola: In the intended breadth view, OBI. In the depth view, the Java agent supplies checkout request spans while the configured OBI baseline metrics remain. That ownership rule has to be verified during the transition too.
-
-Tyler: Otherwise we could add detail and also add a confusing duplicate request view. More data, less understanding.
-
-Nikola: The operating goal is to choose the workload and profile, then verify what's running and what's exported. A shared workflow should make that easier to do consistently.
-
-Tyler: Let's test the lifecycle, then. If we own the configuration centrally, can we also manage an instrumentation upgrade?
-
-An upgrade needs evidence from the running workload.
-Nikola: An upgrade has a requested state and an observed state. Keep both in view before and after convergence.
-
-Tyler: I've changed the version field. Can I put upgraded on the slide?
-
-Nikola: Your configuration has upgraded. The running process hasn't agreed yet.
-
-Tyler: Fair point. What evidence gets the process a vote?
-
-Nikola: Observe the running agent version. Where relevant, identify the SDK bundled inside that agent too. Those are related version numbers, not interchangeable labels.
-
-Tyler: And compare the application image identity. The intended result is new instrumentation with the same application image, while acknowledging any replacement pods or restart.
-
-Nikola: Then send a fresh request and check the expected method span, parent relationships, and baseline signals. Starting successfully isn't the same as exporting the right telemetry.
-
-Tyler: So this complete comparison answers three questions: what did we request, what is actually running, and did we rebuild the application?
-
-Nikola: Yes. A single version field would leave at least two of those open. And record the rollback path as part of the upgrade, rather than discovering it when a candidate fails.
-
-Tyler: Good. Let's see whether that same lifecycle can take the extra detail away again.
-
-Remove selected detail. Keep the useful baseline.
-Nikola: The investigation ends, so selected detail needs a way out as well as a way in. Retain it deliberately, or return to the breadth configuration.
-
-Tyler: We're removing the method span. Unfortunately, the pricing calculation doesn't go away with it.
-
-Nikola: If only performance fixes were that easy. The application still does the work; we're changing the observations it emits.
-
-Tyler: With startup agent injection, removal can require replacement processes too. We request breadth, follow convergence, and keep the earlier depth request available for comparison.
-
-Nikola: Now inspect the illustrated fresh baseline request. The selected method span is absent, while the service path remains connected.
-
-Tyler: But one missing span doesn't prove the baseline survived. We also need the expected request relationships and the baseline metrics.
-
-Nikola: And an old trace can't establish a new configuration. Use a fresh request from the converged workload and verify what actually arrived.
-
-Tyler: That's the reversible part of the operating model. Depth can follow an investigation instead of becoming a permanent collection of every setting we've ever enabled.
-
-Nikola: Which raises the next question: what does that detail cost, and what information makes it worth keeping? Tyler, this is where the units matter.
-
-Measure the profile before deciding what to retain.
-Tyler: Instrumentation cost hides more than one question. How much telemetry leaves the system? And how much application resource use is associated with producing it?
-
-Nikola: I was hoping to count the spans, announce a saving, and finish early.
-
-Tyler: Tempting. But which saving, measured where? Span count alone doesn't answer either of those questions.
-
-Nikola: Let's start with export volume. What comparison would be useful?
-
-Tyler: OTLP bytes per completed request, at a stated measurement boundary. Keep breadth, selected depth, and restored breadth together. Otherwise a smaller total might just mean that one run completed less work.
-
-Nikola: The denominator gets a speaking part. Good. And the application CPU view?
-
-Tyler: Compare CPU use at matched completed-request throughput. State the unit and measurement location, and say which components are included. Application CPU doesn't automatically include the node agent, Collector, network, or backend.
-
-Nikola: So we can't turn a change at one layer into a claim about the entire system, or translate a span count directly into a bill.
-
-Tyler: We also need comparable conditions: workload, request mix, sampling, warm-up treatment, and repeated trials. Report variation. If a configuration fails requests or slows completion, discuss that before interpreting a normalized number.
-
-Nikola: Otherwise the cheapest profile might be the one that stopped doing the job. That's a fairly important footnote.
-
-Tyler: Exactly. Correctness and completed work belong in the measurement context. Cost without those can be a misleading comparison.
-
-Nikola: What do the empty plotting areas mean here?
-
-Tyler: The measurements are still pending. There is no percentage saving to report from this illustration. A small or inconclusive difference would still help us decide, or show where the experiment needs more precision.
-
-Nikola: Then the decision is specific to the service and investigation: did the information we gained justify the effect we measured?
-
-Tyler: Keep detail when it earns its place. Remove it when it no longer helps. And don't promise a faster application or a smaller bill just because a graph has fewer bars.
-
-A ready application does not prove a correct trace.
-Tyler: There's one more gate before relying on a profile change. A workload can accept requests while its telemetry is still wrong.
-
-Nikola: The pod is green. You're saying the trace needs its own interview?
-
-Tyler: A short one. A successful HTTP response doesn't establish the parent chain, the intended span producer, or the baseline signals. Application readiness answers a different question.
-
-Nikola: Then put verification before promotion. Inspect a fresh request for the expected relationships, selected method detail where required, and the baseline signals that should remain.
-
-Tyler: Check observed configuration and version when they're part of the change too. Desired settings describe intent. Exported telemetry helps establish behavior.
-
-Nikola: How does that affect a rollout while old requests are still in flight?
-
-Tyler: A candidate can stay away from normal traffic until it passes the relevant checks. The previous process may need time to finish its requests and export before it retires. Candidate checks, routing, and export drain are separate responsibilities.
-
-Nikola: And those boundaries depend on the actual mechanism. They aren't all guaranteed by a ready indicator or a released Operator feature.
-
-Tyler: If the checks pass, promote and retire according to that mechanism. If they fail, preserve a usable state and follow the recovery path. A rejected candidate should be something we can explain, not an unexpected plot twist.
-
-Nikola: We should exercise the path between steady states, including rejection and return to breadth. Two attractive screenshots don't establish the transition.
-
-Tyler: And define the load and request patterns under which those checks apply. That gives the claim a scope people can assess.
-
-Nikola: Candidate, verify, promote, retire. We can use that order to reason about a change even when our platforms use different controllers.
-
-Try one service, one question, and a rollback.
-Nikola: Let's make this something people can try. Pick one supported service and a question that matters to its owner.
-
-Tyler: Not instrument the entire fleet and hope a question turns up?
-
-Nikola: Let's give the fleet a quiet afternoon. First establish baseline telemetry. Ask whether that existing view can already answer the question.
-
-Tyler: If it can, we have useful evidence without changing another profile. If it can't, what would the next observation need to tell us?
-
-Nikola: Choose detail that could change the diagnosis. Work with someone who understands the application. For a named method, knowing which operation to select is part of the investigation, not an automatic discovery feature.
-
-Tyler: Then apply the profile through the chosen mechanism, compare a fresh request, and check the relationships, ownership, and application identity.
-
-Nikola: Measure the relevant cost under comparable load. Keep the original question beside the result: did this observation actually help answer it?
-
-Tyler: That makes it harder to confuse having more telemetry with having a better answer.
-
-Nikola: Decide what to retain, or remove the selected detail and verify the baseline. Keep a rollback path for the transition itself. That makes this a bounded experiment an application team can understand.
-
-Tyler: What should we leave for the next person who wants to repeat it?
-
-Nikola: Prerequisites, supported conditions, pinned versions, each change operation, the observations that establish success, and the recovery procedure. Enough to understand what enrolling a service will do.
-
-Tyler: One service, one question, and a clear way back. That sounds like an experiment we can discuss, rather than a platform migration hidden in a debugging session.
-
-Which question actually needs more depth?
-Nikola: Let's test that rule. Which service is returning errors? Do you inspect existing request signals first, or add method instrumentation first? Take five seconds to choose.
-
-Tyler: Start with the existing request signals. They may already identify the service and the affected request path.
-
-Nikola: Correct. Now change the question: which local calculation inside checkout consumes the time?
-
-Tyler: The baseline may leave that work unnamed. Now selected runtime detail is worth considering, because the question needs a different observation.
-
-Nikola: Same system, different question, different next step. These are hypothetical cases, but the decision rule travels: examine the evidence you have, then add what the unanswered question needs.
-
-Pick one service. Name one unanswered question.
-Tyler: Back to checkout. We started with a slow service and an unexplained local interval. In the illustrated depth view, the pricing operation has a name and a place inside the request.
-
-Nikola: And checkout is still slow. We should probably stop congratulating the tracing and investigate the calculation.
-
-Tyler: That's the point. The explanation improved, so we have a specific operation to investigate. Broad coverage got us oriented; selected detail closed a gap.
-
-Nikola: A shared deployment workflow should make those views manageable. Upgrades, removal, measured cost, and verified transitions determine whether the workflow is useful to operate.
-
-Tyler: Your next step is small. Choose one service. Write down a question its current telemetry cannot answer. Identify the observation that could close that gap, and what would convince you the change is correct.
-
-Nikola: Keep the detail that helps, and remove it when it no longer earns its place.
-
-Tyler: Start broad. Add depth with purpose. Manage and verify the profile. Thank you.
+Nikola: Keep the engineering. Lose the repetition. Let's take your questions.

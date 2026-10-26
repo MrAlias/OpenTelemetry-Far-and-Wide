@@ -8,14 +8,14 @@
 </head>
 <body>
   <main>
-    <header><h1>OpenTelemetry Far and Wide</h1><p>20-minute animated talk · two-presenter draft dialogue</p></header>
+    <header><h1>OpenTelemetry Far and Wide</h1><p id="voice-cast">Loading narration cast…</p></header>
     <div id="stage" role="region" aria-label="Animated presentation"></div>
     <div id="captions" class="captions" hidden aria-live="off"></div>
     <nav class="controls" aria-label="Playback">
       <button id="play" type="button">Play</button>
       <button id="previous" type="button" aria-label="Previous chapter">Previous</button>
       <button id="next" type="button" aria-label="Next chapter">Next</button>
-      <output id="time" aria-label="Playback time">0:00 / 20:00</output>
+      <output id="time" aria-label="Playback time">Loading runtime…</output>
       <label>Speed <select id="speed"><option value="1">1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
       <label><input id="narration" type="checkbox" checked> Narration</label>
       <label><input id="caption-toggle" type="checkbox"> Captions</label>
@@ -23,13 +23,15 @@
       <button id="fullscreen" type="button">Fullscreen</button>
     </nav>
     <label class="seek-label" for="seek">Talk position</label>
-    <input id="seek" type="range" min="0" max="1200" step="0.1" value="0" aria-label="Seek through the talk">
-    <div class="chapter-heading"><h2>Chapters</h2><a href="animation/opentelemetry-far-and-wide-20min-dialogue.mp4">Dialogue MP4</a><a href="animation/opentelemetry-far-and-wide-20min-silent.mp4">Silent MP4</a><a href="animation/transcript.txt">Dialogue script</a></div>
+    <input id="seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="Seek through the talk">
+    <div class="chapter-heading"><h2>Chapters</h2><a href="animation/opentelemetry-far-and-wide-tyler-voice.mp4">Dialogue MP4</a><a href="animation/opentelemetry-far-and-wide-silent.mp4">Silent MP4</a><a href="animation/transcript.txt">Dialogue script</a></div>
     <ol id="chapters"></ol>
-    <details><summary>About this version</summary><p>Two distinct male synthetic stand-ins perform the Tyler and Nikola draft roles. These are scripted performances, not recordings of the presenters. Traces, transitions, and version outcomes illustrate the intended explanation; they are not recordings of a completed demo. Cost results remain unmeasured. The integration is proposed. Each chapter has a silent clip for live reuse.</p><p>Draft voices: Bryce for the Tyler role; John for the Nikola role. <a href="animation/credits.txt">Sources and voice credits</a>. <a href="storyboard.html">Storyboard</a>.</p></details>
+    <details><summary>About this version</summary><p><span id="voice-credit"></span> These are scripted synthetic performances. The map follows the checked-in 18-service demo, with PostgreSQL and Redis. Dashboard views and installation terminal clips were recorded from the local demo. A Java agent instruments Checkout directly. After the upstream Operator opt-in comparison, one namespace rule selects thirteen more supported services through the custom controller and Injector. Shared defaults and exclusions are prepared beforehand. Long readiness waits are cut with explicit cards; commands and results play at normal speed. Four Go services retain OBI coverage. Coordination, engineering and lifecycle savings remain unmeasured. The custom integration is a prototype; current upstream operator automation is credited in the talk. Each chapter has a silent clip for live reuse.</p><p>The installed voice skills retain native PerTh watermarks. <a href="animation/credits.txt">Sources and voice credits</a>. <a href="storyboard.html">Storyboard</a>.</p></details>
   </main>
   <audio id="audio" preload="metadata"></audio>
   <script src="animation/timeline.js"></script>
+  <script src="animation/topology.js"></script>
+  <script src="animation/evidence.js"></script>
   <script src="animation/art.js"></script>
   <script src="animation/player.js"></script>
 </body>

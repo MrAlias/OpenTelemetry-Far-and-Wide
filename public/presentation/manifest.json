@@ -1,0 +1,138 @@
+{
+  "recorded": "2026-10-23",
+  "provenance": "Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
+  "assets": [
+    {
+      "asset": "public/presentation/images/request-latency.png",
+      "source": "public/demo-capture/request-latency.png",
+      "sha256": "05836e4ce71b31f13314c60b917592a4601fa8e07229373bc1cea9a92851a4be",
+      "bytes": 34477
+    },
+    {
+      "asset": "public/presentation/images/connected-trace.png",
+      "source": "public/demo-capture/connected-trace.png",
+      "sha256": "9200ad2e098b8d9c2ed5b3285d7a4161f338c76b3c2acfecd60582287f83636f",
+      "bytes": 88306
+    },
+    {
+      "asset": "public/presentation/images/java-detail-poster.png",
+      "source": "public/demo-capture/java-detail-poster.png",
+      "sha256": "8b31e4ee6f367c96bb5ab6cafc786f1f8d11100cb50b5f71a6c319260271a67a",
+      "bytes": 85347
+    },
+    {
+      "asset": "public/presentation/images/fleet-catalog.png",
+      "source": "public/demo-capture/fleet-catalog.png",
+      "sha256": "24f33b96a6df13c57c35c66c7ea1113ec4fa486b48ac8aa5578dd61b10672642",
+      "bytes": 77879
+    },
+    {
+      "asset": "public/presentation/images/namespace-rule.png",
+      "source": "public/demo-capture/namespace-rule.png",
+      "sha256": "37b7210c8787617fb1e41fc383ac00c3b7479351543b2cdf51eef30e1c4e9d80",
+      "bytes": 132295
+    },
+    {
+      "asset": "public/presentation/images/install-obi-edited-poster.png",
+      "source": "public/demo-capture/install-obi-edited-poster.png",
+      "sha256": "d8090677eced69a8a273eacbd240d39f26e8e9376810b123cbadf7c56afdc128",
+      "bytes": 281021
+    },
+    {
+      "asset": "public/presentation/images/install-java-agent-edited-poster.png",
+      "source": "public/demo-capture/install-java-agent-edited-poster.png",
+      "sha256": "6dd9ac4e3c78158d8a5e096e8610db8da014c9d9086f55e6e3bfc0b38292f1f8",
+      "bytes": 229984
+    },
+    {
+      "asset": "public/presentation/images/install-operator-edited-poster.png",
+      "source": "public/demo-capture/install-operator-edited-poster.png",
+      "sha256": "3017b243e07b77fb6bd187c9b811a891c799c564035fcd5fcb5d197c969fabe7",
+      "bytes": 426586
+    },
+    {
+      "asset": "public/presentation/images/instrument-namespace-edited-poster.png",
+      "source": "public/demo-capture/instrument-namespace-edited-poster.png",
+      "sha256": "61079a37e4e9c8568e5c861452e3ebbe19e3e33bc4adb6dec1b9edcdf9e762d1",
+      "bytes": 206845
+    },
+    {
+      "asset": "public/presentation/clips/install-obi-edited.mp4",
+      "source": "public/demo-capture/install-obi-edited.mp4",
+      "sha256": "aaa7056db196fa5d3b88b252c6662ca4842a626241f7a5f0e7d2bcd62532d42d",
+      "bytes": 266423
+    },
+    {
+      "asset": "public/presentation/clips/install-java-agent-edited.mp4",
+      "source": "public/demo-capture/install-java-agent-edited.mp4",
+      "sha256": "cb62c44d427e967c0f1d0e3d305130aea219a8229252ec2127298ca459205035",
+      "bytes": 260952
+    },
+    {
+      "asset": "public/presentation/clips/install-operator-edited.mp4",
+      "source": "public/demo-capture/install-operator-edited.mp4",
+      "sha256": "168b4d72f93980c4ad39cc4c25b1d9a11378f10ff2a565e6dffc4950dd27daa9",
+      "bytes": 638558
+    },
+    {
+      "asset": "public/presentation/clips/instrument-namespace-edited.mp4",
+      "source": "public/demo-capture/instrument-namespace-edited.mp4",
+      "sha256": "d0917af8da034d8c5cf1417024b0972411e02a71afc0e6db1c253cd0552eaebc",
+      "bytes": 581379
+    },
+    {
+      "asset": "public/presentation/clips/java-detail.mp4",
+      "source": "public/demo-capture/java-detail.mp4",
+      "sha256": "c774196901bc1d88265e87b562cd4e9e44f51c6308b3516e28517b56cd0b03d8",
+      "bytes": 184911
+    },
+    {
+      "asset": "public/presentation/clips/fleet-detail.mp4",
+      "source": "public/demo-capture/fleet-detail.mp4",
+      "sha256": "ade553e267aaaeb6af8862c8181a67cb69ec44f95ff65c5b0efba953da29ce02",
+      "bytes": 188482
+    },
+    {
+      "asset": "public/presentation/clips/install-obi-edited.webm",
+      "source": "public/presentation/clips/install-obi-edited.mp4",
+      "sha256": "fb4e582034af4dc1df762549db9a8058bafb7c51dfd3b4544eac5d5195c26251",
+      "bytes": 345468,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/install-java-agent-edited.webm",
+      "source": "public/presentation/clips/install-java-agent-edited.mp4",
+      "sha256": "d6ad18bf84d6489e3bf8515de98bbd63fdfb84b923b867b8c3c279465f8581e1",
+      "bytes": 379646,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/install-operator-edited.webm",
+      "source": "public/presentation/clips/install-operator-edited.mp4",
+      "sha256": "2df13668f77dc0f5e9032a57e7e3718cf4986e3b323baf669e99900e6007f821",
+      "bytes": 677204,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/instrument-namespace-edited.webm",
+      "source": "public/presentation/clips/instrument-namespace-edited.mp4",
+      "sha256": "f1787a23819e79e02549c6135b9878b7de54a11f51027d73cfa7582c9b5573a3",
+      "bytes": 677301,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/java-detail.webm",
+      "source": "public/presentation/clips/java-detail.mp4",
+      "sha256": "72596d91db5344ed046e46cfab08ebe3c5ea1aeb2b9bbb8e9f7470ed17afa4dc",
+      "bytes": 170286,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/fleet-detail.webm",
+      "source": "public/presentation/clips/fleet-detail.mp4",
+      "sha256": "ec947b4aaa74036e0a9283af556fc0f62f823c53ab3dbbf962ac5464982d5c03",
+      "bytes": 220319,
+      "encoding": "VP9; native playback duration"
+    }
+  ]
+}

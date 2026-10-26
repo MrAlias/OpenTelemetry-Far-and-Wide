@@ -1,0 +1,309 @@
+{
+  "source": "Recorded isolated local demo, October 23 2026",
+  "baseline": {
+    "traceId": "1fa60f9d3116c8aad6e17c1cfa9c6f1",
+    "rootDurationMs": 306,
+    "checkoutDurationMs": 304.684373,
+    "checkoutInitialLocalMs": 151.776476,
+    "checkoutSpanId": "FV6nx4Vdn70=",
+    "spanCount": 90,
+    "services": [
+      "cart",
+      "catalog",
+      "checkout",
+      "currency",
+      "customer-profile",
+      "fraud",
+      "gateway",
+      "inventory",
+      "loyalty",
+      "notifications",
+      "payments",
+      "postgres",
+      "promotions",
+      "receipts",
+      "recommendations",
+      "redis",
+      "shipping",
+      "stock-planner",
+      "tax",
+      "warehouse"
+    ]
+  },
+  "fleetTrace": {
+    "traceID": "49401c2760df8762c7030f1276a89d42",
+    "rootServiceName": "gateway",
+    "rootTraceName": "GET /checkout",
+    "startTimeUnixNano": "1792793639441957686",
+    "durationMs": 522,
+    "spanSet": {
+      "spans": [
+        {
+          "spanID": "e2c2bc5fe0afde37",
+          "name": "GET /checkout",
+          "startTimeUnixNano": "1792793639442101418",
+          "durationNanos": "522076194",
+          "attributes": [
+            {
+              "key": "service.name",
+              "value": {
+                "stringValue": "gateway"
+              }
+            }
+          ]
+        },
+        {
+          "spanID": "124de2e5aa67b7d0",
+          "name": "GET /checkout",
+          "startTimeUnixNano": "1792793639441957686",
+          "durationNanos": "522651843",
+          "attributes": [
+            {
+              "key": "service.name",
+              "value": {
+                "stringValue": "gateway"
+              }
+            }
+          ]
+        }
+      ],
+      "matched": 2
+    },
+    "spanSets": [
+      {
+        "spans": [
+          {
+            "spanID": "e2c2bc5fe0afde37",
+            "name": "GET /checkout",
+            "startTimeUnixNano": "1792793639442101418",
+            "durationNanos": "522076194",
+            "attributes": [
+              {
+                "key": "service.name",
+                "value": {
+                  "stringValue": "gateway"
+                }
+              }
+            ]
+          },
+          {
+            "spanID": "124de2e5aa67b7d0",
+            "name": "GET /checkout",
+            "startTimeUnixNano": "1792793639441957686",
+            "durationNanos": "522651843",
+            "attributes": [
+              {
+                "key": "service.name",
+                "value": {
+                  "stringValue": "gateway"
+                }
+              }
+            ]
+          }
+        ],
+        "matched": 2
+      }
+    ],
+    "serviceStats": {
+      "cart": {
+        "spanCount": 7
+      },
+      "catalog": {
+        "spanCount": 3
+      },
+      "checkout": {
+        "spanCount": 13
+      },
+      "currency": {
+        "spanCount": 3
+      },
+      "customer-profile": {
+        "spanCount": 2
+      },
+      "fraud": {
+        "spanCount": 2
+      },
+      "gateway": {
+        "spanCount": 4
+      },
+      "inventory": {
+        "spanCount": 1
+      },
+      "loyalty": {
+        "spanCount": 2
+      },
+      "notifications": {
+        "spanCount": 2
+      },
+      "payments": {
+        "spanCount": 2
+      },
+      "postgres": {
+        "spanCount": 3
+      },
+      "promotions": {
+        "spanCount": 4
+      },
+      "receipts": {
+        "spanCount": 2
+      },
+      "recommendations": {
+        "spanCount": 4
+      },
+      "redis": {
+        "spanCount": 15
+      },
+      "shipping": {
+        "spanCount": 4
+      },
+      "stock-planner": {
+        "spanCount": 2
+      },
+      "tax": {
+        "spanCount": 2
+      },
+      "warehouse": {
+        "spanCount": 4
+      }
+    }
+  },
+  "languageSdkServices": {
+    "stock-planner": [
+      "opentelemetry.instrumentation.flask",
+      "opentelemetry.instrumentation.psycopg"
+    ],
+    "promotions": [
+      "OpenTelemetry::Instrumentation::Rack",
+      "OpenTelemetry::Instrumentation::Redis"
+    ],
+    "checkout": [
+      "io.opentelemetry.hibernate-6.0",
+      "io.opentelemetry.http-url-connection",
+      "io.opentelemetry.java-http-server",
+      "io.opentelemetry.jdbc",
+      "io.opentelemetry.methods"
+    ],
+    "notifications": [
+      "Microsoft.AspNetCore",
+      "System.Net.Http"
+    ],
+    "customer-profile": [
+      "Microsoft.AspNetCore",
+      "System.Net.Http"
+    ],
+    "tax": [
+      "Microsoft.AspNetCore",
+      "System.Net.Http"
+    ],
+    "recommendations": [
+      "opentelemetry.instrumentation.flask",
+      "opentelemetry.instrumentation.redis",
+      "opentelemetry.instrumentation.requests"
+    ],
+    "catalog": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server",
+      "io.opentelemetry.jdbc"
+    ],
+    "fraud": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server"
+    ],
+    "loyalty": [
+      "OpenTelemetry::Instrumentation::PG",
+      "OpenTelemetry::Instrumentation::Rack"
+    ],
+    "payments": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server"
+    ],
+    "cart": [
+      "OpenTelemetry::Instrumentation::Net::HTTP",
+      "OpenTelemetry::Instrumentation::Rack",
+      "OpenTelemetry::Instrumentation::Redis"
+    ],
+    "inventory": [
+      "@opentelemetry/instrumentation-http"
+    ],
+    "receipts": [
+      "opentelemetry.instrumentation.flask",
+      "opentelemetry.instrumentation.psycopg"
+    ]
+  },
+  "terminalSpeed": 1,
+  "readinessWaits": "Long waits cut with explicit cards; original recordings and event metadata retained in .artifacts/demo-capture",
+  "namespaceSelection": {
+    "file": "demo/k8s/instrument-demo-namespace.patch.yaml",
+    "selector": {
+      "namespaces": [
+        "demo-apps"
+      ]
+    },
+    "action": "Inject",
+    "operator": "components/otel-injector-operator",
+    "positiveWorkloadNames": 0,
+    "applicationInstrumentationOptInAnnotations": 0,
+    "prerequisites": "Controller, shared payload/exporter and exclusions prepared beforehand",
+    "recording": "public/demo-capture/instrument-namespace-edited.mp4",
+    "verification": {
+      "namespace": "demo-apps",
+      "positiveWorkloadNames": 0,
+      "applicationOptInAnnotations": [],
+      "readyOperatorWorkloads": 13,
+      "sdkServices": [
+        "cart",
+        "catalog",
+        "checkout",
+        "customer-profile",
+        "fraud",
+        "inventory",
+        "loyalty",
+        "notifications",
+        "payments",
+        "promotions",
+        "receipts",
+        "recommendations",
+        "stock-planner",
+        "tax"
+      ],
+      "namespaceRule": {
+        "action": "Inject",
+        "name": "instrument-demo-namespace",
+        "selector": {
+          "namespaces": [
+            "demo-apps"
+          ]
+        }
+      },
+      "fullPolicyGeneration": 2,
+      "obiServices": [
+        "currency",
+        "gateway",
+        "shipping",
+        "warehouse"
+      ],
+      "observedServices": [
+        "cart",
+        "catalog",
+        "checkout",
+        "currency",
+        "customer-profile",
+        "fraud",
+        "gateway",
+        "inventory",
+        "loyalty",
+        "notifications",
+        "payments",
+        "postgres",
+        "promotions",
+        "receipts",
+        "recommendations",
+        "redis",
+        "shipping",
+        "stock-planner",
+        "tax",
+        "warehouse"
+      ]
+    }
+  }
+}

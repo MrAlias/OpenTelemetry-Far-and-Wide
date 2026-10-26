@@ -1,0 +1,30 @@
+# Direct Java zero-code setup for the presentation's first worked example.
+# Apply with kubectl patch deployment/checkout -n demo-apps --type=strategic --patch-file ...
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: provide-java-agent
+          image: otel-injector-images:demo
+          imagePullPolicy: IfNotPresent
+          command: [/bin/sh, -ec]
+          args:
+            - cp /dist/agents/java/opentelemetry-javaagent.jar /java-agent/opentelemetry-javaagent.jar
+          volumeMounts:
+            - {name: java-agent, mountPath: /java-agent}
+      containers:
+        - name: checkout
+          env:
+            - {name: JAVA_TOOL_OPTIONS, value: '-javaagent:/java-agent/opentelemetry-javaagent.jar'}
+            - {name: OTEL_SERVICE_NAME, value: checkout}
+            - {name: OTEL_RESOURCE_ATTRIBUTES, value: service.namespace=demo-apps}
+            - {name: OTEL_EXPORTER_OTLP_ENDPOINT, value: 'http://lgtm.observability.svc.cluster.local:4318'}
+            - {name: OTEL_EXPORTER_OTLP_PROTOCOL, value: http/protobuf}
+            - {name: OTEL_METRICS_EXPORTER, value: none}
+            - {name: OTEL_LOGS_EXPORTER, value: none}
+            - {name: OTEL_INSTRUMENTATION_METHODS_INCLUDE, value: 'demo.checkout.PricingEngine[calculate]'}
+          volumeMounts:
+            - {name: java-agent, mountPath: /java-agent, readOnly: true}
+      volumes:
+        - name: java-agent
+          emptyDir: {}

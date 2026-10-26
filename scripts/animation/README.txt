@@ -1,96 +1,141 @@
 Animated talk: purpose and files
 ===============================
 
-This optional experiment is still under evaluation. The storyboard remains
-the current presentation plan; animation is not a required delivery format.
-Generated audio and video are excluded from Git and require rebuilding.
+This is an optional recorded demo rehearsal based on the actual 18-service commerce
+topology plus PostgreSQL and Redis. Fourteen services use payload-supported
+language runtimes; four Go services retain OBI coverage.
+OBI establishes the system view and guides the service selection; direct language-agent setup proves
+useful detail on one; a custom operator/injector addresses the remaining fleet;
+then the speakers examine coordination, engineering and lifecycle savings.
+Trace and terminal views were recorded from the running demo. Savings remain
+qualitative; request timings are single exemplars, not benchmarks.
 
-The 20-minute dialogue version supports review of the talk's explanation and
-pacing. Two distinct male synthetic stand-ins perform the Tyler and Nikola
-roles, with questions, short reactions, and light banter. Narration is optional.
-For live delivery, use the silent full version,
-silent chapters, or the six 20-second explainer clips. Each explainer starts
-with seven seconds of context, makes its substantive visual change, and holds
-the result. It does not require the draft voices or a network connection.
+The narration uses Tyler Yahn's and Nikola Grcevski's separate authorized
+synthetic voice profiles. These are scripted synthetic performances, not a
+recording of the presenters. Tyler's profile uses the Go reference; Nikola's
+uses the default October 7 OBI reference. Tyler relayed a positive assessment of
+Nikola's sample likeness on October 22, 2026. Both retain native PerTh marks.
 
-The animation is a concept visualization. It is not a demo recording. The
-shared Operator integration is proposed, schematic requests have no measured
-latency, and the cost comparisons contain no invented results. Replace these
-illustrations with verified evidence when the demonstration is ready.
+For live use, narration is optional. The player supports silent chapters and
+three 20-second explainers. Each short clip gives context, shows a substantive
+change and holds the result. The storyboard remains the current live plan;
+the animation does not have to become the presentation format.
 
 Editable sources
 ----------------
-scripts/animation/talk.json       Speaker-tagged turns, cast, pauses, build cues
-public/animation/art.js           Deterministic SVG compositions and six builds
-public/animation/player.js        Optional audio, chapter controls, seeking, looping
-public/animation/player.css       Responsive review player
-public/animation.html             Player entry point
+public/storyboard.html               Authoritative standalone visual storyboard
+scripts/animation/talk.json           Speaker-tagged script, profiles and cues
+public/animation/art.js               Shared vector compositions and three builds
+public/animation/player.js            Playback, optional audio, captions and looping
+public/animation.html                 Review entry point
+scripts/animation/build_topology.py   Source-checked Graphviz layout and offline embed
+scripts/animation/topology-renderer.js  Topology evidence/enrollment rendering
+public/animation/topology.js          Generated topology geometry and renderer
+scripts/animation/export_slides.mjs   Vector rehearsal frames and a draft in .artifacts/animation/
+scripts/animation/generate_demo_voice.py  Installed skill invocation and model reuse
+scripts/animation/build_audio.py      Separate profile caches and natural timing
+scripts/animation/check_demo_watermarks.py  Both source and encoded voice checks
+scripts/animation/verify_media.py     Media, timing, profiles and reuse verification
 
-public/storyboard.html remains the source of the storyboard. This animation
-is a separate deliverable; its timing is 20 minutes rather than the storyboard's
-21-minute rehearsal plan. The current chapter durations sum to exactly 1200 s.
-Changing those durations requires updating the total and seek range too.
+The generated timeline records measured speech duration plus authored pauses.
+The live rehearsal budget is 21 minutes, one minute flex and three for questions.
+A shorter natural read is fine. If the read exceeds 22 minutes, edit the script;
+never stretch, accelerate or slow speech to hit a duration. The opening has a
+four-second silent title and a 2.5-second inspection pause after its first line.
 
-Generated deliverables, all inside public/animation/
----------------------------------------------------
-opentelemetry-far-and-wide-20min-dialogue.mp4 Two-voice H.264/AAC video with chapters
-opentelemetry-far-and-wide-20min.mp4          Compatibility copy of the dialogue film
-opentelemetry-far-and-wide-20min-silent.mp4   H.264 video, no audio stream
-draft-narration.m4a                          Separate two-voice draft track
-clips/*-silent.mp4                          Fifteen full-length silent chapters
-explainers/*-20s.mp4                         Six short silent clips for live use
-timeline.js                                 Shared cues for rendering and playback
-captions.vtt                                Optional sentence captions
-transcript.txt                              Reviewable, speaker-labelled dialogue
-credits.txt                                 Sources and speech provenance
+Generated deliverables, inside public/animation/
+------------------------------------------------
+opentelemetry-far-and-wide-tyler-voice.mp4  Two-profile H.264/AAC film with chapters
+opentelemetry-far-and-wide-silent.mp4       Silent full film
+clips/*-silent.mp4                        Seventeen silent chapters
+explainers/*-20s.mp4                      Three silent live explainers
+draft-narration.m4a                       Mixed two-speaker narration
+nikola-voice-preview.m4a                  Sample used for likeness assessment
+timeline.js                              Actual timings, cues and profile identities
+captions.vtt                             Draft sentence captions, speaker-labelled
+transcript.txt                           Readable dialogue and synthetic disclosure
+credits.txt                              Sources, voice references and credits
+
+Generated audio/video is ignored by Git. A fresh checkout needs a media rebuild.
+All working scripts, original skill WAVs, metadata, browser profiles and QA output
+stay under .artifacts/animation/ inside this repository. They are not project
+assets in a system temporary directory.
 
 Serving
 -------
 npm run animation:serve
 
-Open http://localhost:8010/animation.html. For a reachable phone, replace
-localhost with the serving computer's address. All media is local; there is
-no external browser dependency. Press Space to play/pause, or use the native
-controls. Arrow keys seek by five seconds when not focused on a control.
+Open http://localhost:8010/animation.html. A reachable phone can use the serving
+computer's address instead of localhost. Press Space to play/pause, use arrows to
+seek, or use the visible controls. Playback speed controls are for viewer choice;
+the authored film uses the original native speech rate.
 
 Rebuilding
 ----------
-Requirements: uv/Python 3.13, Node.js 20+, FFmpeg with libx264, and Chromium.
-Working directories, caches, model files and browser profiles stay in the repo.
-The checked-in sources do not contain the speech engine or model binary.
+Requirements: Node.js 20+, FFmpeg with libx264, local Chromium, Graphviz, Python with NumPy and PyYAML,
+and both installed personal voice skills with their verified runtimes/model cache.
+The model and reference files remain in those installations; never copy them
+into the repository. Read their SKILL.md for installation and authorized scope.
+Routine narration needs no bootstrap or source-recording extraction.
 
-From the repository root:
-
-mkdir -p .artifacts/animation/runtime/tmp .artifacts/animation/runtime/cache .artifacts/animation/voice/dialogue
+mkdir -p .artifacts/animation/runtime/tmp
 export TMPDIR="$PWD/.artifacts/animation/runtime/tmp"
-export UV_CACHE_DIR="$PWD/.artifacts/animation/runtime/cache"
-export UV_PYTHON_INSTALL_DIR="$PWD/.artifacts/animation/runtime/python"
-uv venv --python 3.13 .artifacts/animation/runtime/venv
-uv pip install --python .artifacts/animation/runtime/venv/bin/python piper-tts==1.8.0 pillow==13.0.0
-
-Download en_US-bryce-medium.onnx and its .onnx.json configuration, plus
-en_US-john-medium.onnx and its .onnx.json configuration, into
-.artifacts/animation/voice/dialogue/ from:
-https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/bryce/medium
-https://huggingface.co/rhasspy/piper-voices/tree/main/en/en_US/john/medium
-Model cards and provenance are linked in public/animation/credits.txt.
-
+python3 scripts/animation/build_topology.py
+node scripts/animation/export_slides.mjs
 .artifacts/animation/runtime/venv/bin/python scripts/animation/build_audio.py
 ANIMATION_CHROMIUM=/absolute/path/to/chromium node scripts/animation/render_video.mjs
+"${TYLER_VOICE_PYTHON:-$HOME/.local/share/tyler-demo-voice/venv/bin/python}" scripts/animation/check_demo_watermarks.py
+python3 scripts/animation/verify_media.py
 
-build_audio.py caches synthesis by model hash and turn text. It uses the cast
-on every turn, shortens only leading/trailing silence for quicker handoffs,
-balances loudness, and fits the conversation to each chapter's timing. Both
-five-second audience prediction pauses remain.
-The current tempo adjustments are recorded in .artifacts/animation/audio-report.json.
-The model identities, turn counts, and speaking time are recorded in
-.artifacts/animation/voice-report.json. Captions and the transcript identify
-each speaker. Captions use sentence word weights within each turn; they are
-draft timings, not a forced-alignment transcript.
+The main builder needs NumPy, not a stock voice model. Existing local environments
+can be reused. It invokes each speaker's installed Chatterbox Turbo 0.1.7 generator
+at its pinned model revision, verifies reference hashes, and keeps the skills'
+original 24 kHz WAVs and JSON provenance unchanged. Each installed generator uses
+its own reference and saved conditioning states. A loaded CPU model is retained
+within each speaker's generation process to avoid loading it for every turn.
 
-render_video.mjs captures every changing artwork frame and holds static frames
-for their actual time. It checks text against frame boundaries, encodes each
-chapter, creates silent live clips, and assembles the full film with chapter
-metadata and optional subtitles. It writes logs and layout validation results
-under .artifacts/animation/. The browser executable can be overridden through
-ANIMATION_CHROMIUM; no system temporary directory is used.
+TYLER_VOICE_SKILL / TYLER_VOICE_PYTHON and NIKOLA_VOICE_SKILL /
+NIKOLA_VOICE_PYTHON override the two installation/runtime locations. Defaults are
+~/.codex/skills/<speaker>-demo-voice and
+~/.local/share/<speaker>-demo-voice/venv/bin/python. Speaker identities must match
+their profiles. No stock voice fallback is allowed.
+
+Caches are separate: .artifacts/animation/tyler-voice/ and nikola-voice/.
+Cache keys include the whole profile identity and pronounced text. A cast change
+cannot reuse the other speaker's audio. Completed Tyler passages are reused when
+only Nikola changes. Performance directions stay outside the synthesized text.
+
+The delivery mix normalizes loudness without altering speech duration. Cues and
+builds derive from measured original WAVs, handoff gaps and explicit inspection
+pauses. Caption sentence chunks use word weights within each turn; they remain
+draft timings, not forced alignment. Native source and encoded PerTh detection
+is checked separately for both speakers against the final movie's hash.
+
+Original WAV metadata, .artifacts/animation/voice-report.json and audio-report.json
+record reference identity, native duration, unchanged tempo and both speaking
+roles. voice-watermark-report.json checks each role in each chapter. Layout and
+interaction reports cover the actual frames and controls. The legacy
+check_tyler_watermark.py and generate_tyler_voice.py commands forward to the
+shared implementations for compatibility.
+
+Namespace Injector revision
+---------------------------
+The upstream Operator scene credits language-specific workload OR namespace
+opt-in. The merged custom component then selects demo-apps using one central
+namespace rule and manages the rollout with the Injector's runtime selection.
+Shared defaults/exclusions are prepared beforehand. Existing direct Checkout
+and four Go OBI services remain clear. Supported new workloads inherit selection.
+
+The namespace recording is public/demo-capture/instrument-namespace-edited.mp4.
+Its raw recording and native-speed wait-cut ledger are retained in the repo.
+The topology lighting is trace-derived illustration after the real rollout;
+the following native Grafana scene opens the fresh fleet trace and Catalog detail.
+
+For a script/media iteration whose other chapters are unchanged, reuse existing
+chapter encodes with render_video.mjs --only ID1,ID2. The final movie, captions,
+chapter metadata and silent companion are rebuilt from the current timeline.
+Always rerun watermark/media checks after replacing the final movie.
+
+The authored presentation is slides.md plus slides/*.md. This exporter never
+overwrites those files. Native Vue components and layouts belong to the live
+Slidev deck; public/animation remains an optional narrated review.

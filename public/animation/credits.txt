@@ -1,34 +1,67 @@
-OpenTelemetry Far and Wide — concept animation
+OpenTelemetry Far and Wide — recorded demo review
 
 Talk: Tyler Yahn and Nikola Grcevski.
-Dialogue: two distinct male synthetic stand-ins perform the Tyler and Nikola
-roles. This is an authored draft conversation, not an actual recording or an
-imitation of either presenter's voice.
-Visuals: original explanatory diagrams derived from the repository storyboard.
-Traces, versions, and transitions are schematic. No measured cost results appear.
-The shared Operator integration remains proposed; the animation does not certify
-that the demo is complete or that an upstream unified policy API exists.
+Dialogue: Tyler Yahn and Nikola Grcevski each use their separate authorized
+synthetic voice profiles. This is an authored synthetic conversation, not a
+recording of the presenters speaking together. Both native PerTh watermarks
+remain in source narration and are checked after final AAC encoding.
+Visuals: actual terminal and Grafana captures, plus explanatory topology builds
+derived from the recorded request and repository graph.
+Topology: demo/k8s/applications.yaml and demo/apps/README.md at 759cc0979909.
+18 applications plus PostgreSQL and Redis; 14 payload-supported language
+services and four Go OBI baselines. Graphviz supplies the graph layout.
+Trace timing and instrumentation results come from individual local demo
+requests, not benchmarks. Engineering and coordination savings are qualitative.
+The merged custom controller/Injector is a demo integration; a standalone official
+repository is future work, and no upstream release commitment is implied.
 
 Content sources, with pinned upstream references retained in those documents:
   docs/talk-brief.md
   public/storyboard.html
   docs/technical-findings.md
-  docs/demo-spec.md
+  docs/fleet-demo-handoff.md
+  docs/instrumentation-savings.md
   docs/presentation-research.md
+  docs/animation-script-research.md
 
-Speech engine:
-  Piper, Open Home Foundation, piper-tts 1.8.0 (GPL-3.0)
-  https://github.com/OHF-Voice/piper1-gpl
-Voice models:
-  Tyler role: en_US-bryce-medium (male), rhasspy/piper-voices
-  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/bryce/medium/MODEL_CARD
-  Nikola role: en_US-john-medium (male), rhasspy/piper-voices
-  https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/john/medium/MODEL_CARD
-  Model repository: https://huggingface.co/rhasspy/piper-voices (MIT)
-  Both model cards identify public-domain training recordings.
-  Training and voice preparation: https://brycebeattie.com/files/tts/
-  John recordings: https://librivox.org
+Script and narration guidance:
+  Nancy Duarte, HBR, How to Present to Senior Executives (public introduction)
+  https://hbr.org/2012/10/how-to-present-to-senior-execu
+  Nancy Duarte, How the Duarte Big Idea Formula Can Make Your Presentation the Best
+  https://www.duarte.com/blog/how-to-develop-the-best-big-idea-for-your-presentation/
+  Gabe Sumner, Salesforce, 5 Simple Steps To Delivering Better Product Demos
+  https://www.salesforce.com/blog/better-product-demo/
+  Chris Lavigne and Courtney Lefferts, Wistia, How to Write a Video Script
+  https://wistia.com/blog/wistias-scripting-tips
+  Katie Eidelson, TechSmith, How to Record a Voice Over: Complete Guide
+  https://www.techsmith.com/blog/voice-over/
 
-The speech engine and voice models are build dependencies, kept under the
-repository's ignored .artifacts/animation/ directory. They are not included in
-the rendered video or silent clips.
+Savings and baseline guidance:
+  Google, Site Reliability Workbook, Eliminating Toil
+  https://sre.google/workbook/eliminating-toil/
+  OpenTelemetry, Injecting Auto-instrumentation
+  https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
+
+Draft narration is synthetic. Voice profiles, reference recordings and detailed
+generation provenance remain local build inputs and are not distributed with
+the slides. Native narration watermarks are preserved.
+
+October 23 recorded-evidence revision
+Actual local Grafana/Tempo request and terminal execution captures.
+Baseline: 306.26 ms; Checkout initial interval: 151.78 ms; fresh method span:150.38 ms.
+Zero-code terminology: https://opentelemetry.io/docs/zero-code/
+Java agent: https://opentelemetry.io/docs/zero-code/java/agent/
+OBI: https://opentelemetry.io/docs/zero-code/obi/
+Ruby bootstrap: https://github.com/open-telemetry/opentelemetry-ruby-instrumentation
+Voice narration remains authorized synthetic; natural native pacing.
+
+Namespace Injector revision, October 23
+Upstream Operator: language-specific opt-in can be on workloads or namespaces.
+The merged demo adds central namespace rules, runtime-aware Injector activation,
+and managed rollout. Prepared shared defaults and exclusions are separate from
+the single application namespace selection. Actual capture uses:
+  demo/k8s/instrument-demo-namespace.patch.yaml
+  public/demo-capture/instrument-namespace-edited.mp4
+Jack Berg's prototype implementation and Nikola's design participation are
+recorded in docs/technical-findings.md under Identified implementation.
+This repository's demo integration uses its own demo.opentelemetry.io API.

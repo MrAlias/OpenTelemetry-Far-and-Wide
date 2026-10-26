@@ -1,0 +1,73 @@
+# Editing and presenting the deck
+
+`../slides.md` owns the Slidev configuration and cover. These five files are
+hand-authored sections; the animation exporter does not generate them.
+
+| File | Slides | Purpose |
+| --- | --- | --- |
+| `01-opening.md` | 2 | The visible slow request and the promise |
+| `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
+| `03-language-detail.md` | 8–10 | Explicit Java configuration, rollout and useful method detail |
+| `04-namespace.md` | 11–17 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 18–21 | Coordination, lifecycle, measurement and the close |
+
+The live budget is 21 minutes, one minute flex and three minutes questions.
+Speaker notes include handoffs, time budgets, commands, source references and
+places to switch into the running demo. Use Slidev's presenter view (`/presenter/`)
+and press `F` for fullscreen. Only slides 6, 7 and 16 have click builds; each
+adds evidence or changes the enrollment state.
+
+Terminal recordings play manually using their native controls. They are muted,
+run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback
+material; execute the actual commands during the live demo. The namespace rule
+assumes the shared payload, exporter and exclusions were configured first.
+
+## Structure
+
+- `../layouts/`: cover and standard talk layouts.
+- `../components/presentation/`: reusable topology, trace and demo-video views.
+- `../styles/presentation.css`: canvas styles scoped away from presenter UI.
+- `../setup/main.ts`: registers presentation components separately from demo code.
+- `../presentation/data/`: graph geometry, measured request and capture provenance.
+- `../public/presentation/`: checked-in stills and short clips; no narration runtime
+  or demo cluster is needed to view the slides.
+
+Code, headings and conclusions are editable Markdown/HTML. The Vue graph uses
+Graphviz geometry generated from the demo manifest; actual trace screenshots
+remain evidence rather than redrawn span diagrams.
+
+## Checks and exports
+
+From the repository root:
+
+```sh
+npm ci
+npm run dev
+npm run build
+npm run export
+```
+
+The PDF export goes into ignored `.artifacts/slides/`. It uses posters and click
+states; live video playback belongs to the Slidev deck. Slidev may require its
+export browser dependency on a fresh machine.
+
+With the development server running on port 3030, run:
+
+```sh
+SLIDEV_URL=http://localhost:3030 npm run slides:verify
+```
+
+The check renders every slide, checks bounds and collisions, exercises all three
+click builds, plays a real clip and verifies pause-on-leave and presenter notes.
+Set `SLIDEV_CHROMIUM` to an installed Chromium executable if necessary. Browser
+profiles, screenshots and reports stay in `.artifacts/slides/`.
+
+For static hosting under the repository path:
+
+```sh
+npm run build -- --base /OpenTelemetry-Far-and-Wide/ --router-mode hash
+```
+
+`npm run slides:assets` refreshes the curated evidence from local demo captures.
+The checked-in manifest records hashes and source paths. Changing the optional
+animation or regenerating its rehearsal frames cannot overwrite this deck.

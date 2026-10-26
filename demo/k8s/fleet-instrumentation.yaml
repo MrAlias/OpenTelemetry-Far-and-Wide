@@ -1,0 +1,38 @@
+# Keep direct Checkout, Go and database workloads out of language-agent enrollment.
+apiVersion: demo.opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: cluster
+spec:
+  image: otel-injector-images:demo
+  endpoint: http://lgtm.observability.svc.cluster.local:4318
+  signals:
+    traces: true
+    metrics: false
+    logs: false
+  timeoutSeconds: 300
+  rules:
+  - name: retain-existing-and-obi-only
+    selector:
+      namespaces:
+      - demo-apps
+      workloads:
+      - kind: Deployment
+        name: checkout
+      - kind: Deployment
+        name: gateway
+      - kind: Deployment
+        name: shipping
+      - kind: Deployment
+        name: warehouse
+      - kind: Deployment
+        name: currency
+      - kind: Deployment
+        name: postgres
+      - kind: Deployment
+        name: redis
+    action: Skip
+  - name: instrument-demo-namespace
+    selector:
+      namespaces: [demo-apps]
+    action: Inject

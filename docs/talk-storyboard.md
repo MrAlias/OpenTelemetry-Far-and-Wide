@@ -1,359 +1,211 @@
-# OpenTelemetry Far and Wide presentation storyboard
+# Presentation scene plan
 
-The [interactive visual storyboard](../public/storyboard.html)
-is the primary review surface and editable source. This companion keeps the scene plan and production requirements
-available alongside the Slidev source.
+The editable visual review is [storyboard.html](../public/storyboard.html). The 25-minute live slot allocates 21 minutes to content, one minute to flex and three minutes to questions. The synthetic narrated review follows natural speech pace and may be shorter.
 
-The narrative follows one investigation: find the slow service, explain the local
-work, then operate and evaluate the instrumentation profile. The demo is not
-assumed complete. Every proposed demonstration and measurement is a requirement
-for the next phase, and may require implementation changes.
+The final arc distinguishes upstream language-specific opt-in, which also supports namespaces, from this custom controller/Injector integration: choose a namespace, detect supported runtimes and manage rollout. Exporter settings, payload and exclusions are prepared once; the captured selection adds no positive service list or per-service annotations.
 
-## Audience promise
+## 01 · OpenTelemetry Far and Wide
 
-Attendees should leave able to choose a useful instrumentation profile and plan
-how to manage and verify it. The central idea is to start with coverage, add
-detail for an unanswered question, and retain that detail deliberately.
+Make the slow request visible before introducing the investigation.
 
-## Timing and presenter roles
+Live budget: 60 seconds.
 
-Plan 21 minutes of content, one unallocated minute from 21:00 to 22:00, and
-three minutes of Q&A from 22:00 to 25:00. If recovery time is unused, begin
-questions early. Timing includes pauses and handoffs and remains a rehearsal
-target. The proposed narration blocks give each presenter 10½ minutes.
+**Tyler:** You know the application is slow. The hard part is knowing where to look.
 
-| Scene | Time | Lead | Message |
-| --- | --- | --- | --- |
-| 01 | 0:00–0:15 | Tyler | OpenTelemetry Far and Wide |
-| 02 | 0:15–1:15 | Tyler | You found the slow service. What happens inside it? |
-| 03 | 1:15–2:00 | Tyler | Start with coverage. Add detail where needed. |
-| 04 | 2:00–3:30 | Tyler · Nikola controls playback | One deployment workflow reveals the request path |
-| 05 | 3:30–4:30 | Tyler | The service is visible. The local work is unnamed. |
-| 06 | 4:30–6:30 | Nikola narrates · Tyler operates | Add a method span to explain the local time |
-| 07 | 6:30–7:30 | Nikola | The same slow work now has a name |
-| 08 | 7:30–9:30 | Nikola | A shared workflow manages both instrumentation paths |
-| 09 | 9:30–10:45 | Nikola | An upgrade needs evidence from the running workload |
-| 10 | 10:45–12:00 | Nikola | Remove selected detail while retaining the baseline |
-| 11 | 12:00–14:30 | Tyler | Measure the profile, then decide what to retain |
-| 12 | 14:30–16:30 | Tyler | A ready pod does not prove a correct trace |
-| 13 | 16:30–18:30 | Nikola | Try one service, one question, and a rollback |
-| 14 | 18:30–19:30 | Nikola | Which question actually needs more depth? |
-| 15 | 19:30–21:00 | Tyler | Pick one service. Name one unanswered question. |
+**Tyler:** Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
 
-Tyler leads scenes 1–5, 11–12, and 15. Nikola leads scenes 6–10 and 13–14.
-Tyler operates the main live depth change while Nikola narrates. Other lifecycle
-checkpoints use planned playback and observed evidence rather than another live
-rollout. Assignments can be exchanged during rehearsal without changing the story.
+**Nikola:** I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.
 
-## Scenes
+**Tyler:** I'm Tyler. That sounds suspiciously like you've given me the homework. Let's get straight to the system.
 
-### Scene 01 The promise
+## 02 · One application, many places to look
 
-**On screen:** OpenTelemetry Far and Wide
+Orient in the actual application without selecting a culprit.
 
-**Audience question:** What will this session help me do?
+Live budget: 50 seconds.
 
-**Takeaway:** Get broad visibility first, then add the detail a specific investigation needs.
+**Tyler:** Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow.
 
-**Medium:** Opening
+**Nikola:** Every team can have a different definition of healthy. Following the request gives us one shared starting point.
 
-**Visual:** Static frame. Show the title, presenters, and promise together.
+## 03 · Start with OBI
 
-**Delivery:** Introduce both presenters in one sentence. Say the promise aloud: we will locate the slow service, explain its local work, and manage the instrumentation from one place.
+Show the real OBI installation, then move to its result.
 
-**Transition:** Imagine you own the platform, but you do not own every application.
+Live budget: 60 seconds.
 
-**Requirement:** Static opening; no reveal. The following investigation is a planned demonstration, not a customer incident.
+**Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications.
 
-### Scene 02 A question the audience recognizes
+**Nikola:** That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running.
 
-**On screen:** You found the slow service. What happens inside it?
+**Tyler:** OBI is ready. Let's open a checkout request.
 
-**Audience question:** How do I investigate when different teams own the services?
+## 04 · One request across the application
 
-**Takeaway:** The useful outcome is an explanation of the request without first rebuilding every application.
+Give the connected-trace statement its own actual waterfall exemplar.
 
-**Medium:** Staged scenario
+Live budget: 55 seconds.
 
-**Visual:** Static frame. Show the platform constraint and investigation question together.
+**Nikola:** The useful result is a connected trace. This is the request behind the duration we started with.
 
-**Delivery:** Use a small staged checkout workload with an intentional delay. Establish the operational constraint: several languages and service owners. Tell the audience early that breadth and selected depth can share a platform workflow. Do not invent customer harm or imply that the defect will be fixed by instrumentation.
+**Tyler:** Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating.
 
-**Transition:** First get the request path. Then add detail only where that view leaves a question.
+## 05 · Follow the cart branch of this request
 
-**Requirement:** D1 · Build a repeatable slow request. The opening can use a cropped preview of the planned baseline trace; it does not establish a completed demo.
+Transform orientation into an observed path, using the captured request.
 
-### Scene 03 The mental model
+Live budget: 45 seconds.
 
-**On screen:** Start with coverage. Add detail where needed.
+**Tyler:** Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
 
-**Audience question:** What does each instrumentation layer contribute?
+**Nikola:** Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
 
-**Takeaway:** Broad request visibility and selected runtime detail are complementary views.
+## 06 · Find the time before the downstream calls
 
-**Medium:** Explanatory visual
+Earn Checkout selection from the measured 151.8 ms local interval, not inclusive duration.
 
-**Visual sequence:** Follow the request across services → Open checkout to locate detail within that request.
+Live budget: 95 seconds.
 
-**Delivery:** Define a trace as one linked request and spans as timed operations. Introduce OpenTelemetry eBPF Instrumentation and SDK auto-injection using the two views on screen. The magnified interior must show where detail fits rather than merely label a box depth. Do not imply that eBPF is limited to network telemetry or that SDKs cannot provide broad coverage.
+**Tyler:** Start with the waterfall. The Gateway span is long, but almost all of that time is spent waiting for Checkout. Checkout's total also contains its downstream calls.
 
-**Transition:** Let’s establish the broad view first.
+**Nikola:** So choosing the longest bar would send us back to the beginning. Look instead at the gap before Checkout makes its first downstream call.
 
-**Requirement:** Conceptual model. Replace example geometry with actual traces later; verify support for the final workload.
+**Tyler:** That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout.
 
-### Scene 04 Establish breadth
+**Nikola:** Now we've got a reason to add language-level detail.
 
-**On screen:** One deployment workflow reveals the request path
+## 07 · Add Java zero-code instrumentation
 
-**Audience question:** Can a platform establish a useful baseline across this workload?
+Show actual source-informed configuration and the real direct-agent installation.
 
-**Takeaway:** Show the coverage that arrived, not just a successful install command.
+Live budget: 150 seconds.
 
-**Medium:** Planned short clip + evidence
+**Tyler:** We have source access here. The pricing calculation happens before the Inventory call. We'll use the Java agent to time that method and expose the library work around it.
 
-**Visual sequence:** Show the central deployment action → Inspect the resulting correlated request.
+**Nikola:** This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes.
 
-**Delivery:** Use a short, captioned recording of the real deployment action, then freeze on its resulting trace. Explain prepared prerequisites. If waiting is edited out, show the actual elapsed time. Do not make a second live installation a prerequisite for the main reveal.
+**Tyler:** Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout.
 
-**Transition:** The request is connected. Most of its local time is in checkout; what is that work?
+**Nikola:** Zero code is useful. It hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
 
-**Requirement:** D2 · Build the deployment path and resulting telemetry. Planned clip length is an editorial target, not a claim about installation speed.
+## 08 · The missing interval has a name
 
-### Scene 05 Create the need for depth
+Show the actual 150.4 ms method span and Hibernate/JDBC observations.
 
-**On screen:** The service is visible. The local work is unnamed.
+Live budget: 75 seconds.
 
-**Audience question:** What is the baseline trace still unable to name?
+**Tyler:** Here's a fresh request with the Java agent running. The missing interval now has a name: PricingEngine.calculate.
 
-**Takeaway:** A specific gap in the evidence justifies the next instrumentation change.
+**Nikola:** There it is: about a hundred and fifty milliseconds. Below it, Hibernate and JDBC show the product lookup, the order insert, and the transaction commit.
 
-**Medium:** Trace interpretation + prediction
+**Tyler:** OBI got us to the right service. The language agent gave us a way to describe the work inside it.
 
-**Visual:** Static frame. Inspect the baseline trace and ask which local observation is missing.
+## 09 · What about the rest of the application?
 
-**Delivery:** Read the service timing and downstream call with the audience. Explain inclusive versus nested time only as needed. Pause for five seconds after asking what they would want to see inside checkout, then name the target: a local application operation. Keep the trace and question visible throughout; give the answer aloud without a slide build.
+Make the repeated workflow create the need for the operator.
 
-**Transition:** Nikola, can we expose that operation without changing the application image?
+Live budget: 45 seconds.
 
-**Requirement:** D2 · Build a baseline trace supporting this exact question. Preserve actual parent relationships and time scale in the final asset.
+**Nikola:** That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?
 
-**Audience pause:** Five seconds of silent prediction, then name the target observation aloud: a local application operation. Keep the same trace on screen.
+**Tyler:** In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen.
 
-### Scene 06 The main live reveal
+**Nikola:** And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
-**On screen:** Add a method span to explain the local time
+## 10 · Injection still needs a selection
 
-**Audience question:** Can selected runtime detail answer the unresolved question?
+Credit upstream injection and namespace opt-in, then set up the custom component’s combined namespace selection, runtime handling and rollout value.
 
-**Takeaway:** A centrally selected profile exposes the application work inside the request.
+Live budget: 45 seconds.
 
-**Medium:** One planned live operation
+**Tyler:** The upstream OpenTelemetry Operator can supply the agent. You opt in using language-specific annotations, on workloads or namespaces. That already removes much of the agent setup.
 
-**Visual sequence:** Keep the baseline visible while changing the profile → Inspect the new request and its named method span.
+**Nikola:** For this mixed-language application, we want one shared choice: instrument the namespace. Then let the system choose the agents and manage the rollout.
 
-**Delivery:** Tyler operates the one main live profile change while Nikola keeps the audience oriented. Show a fresh request after convergence, keep the surrounding trace visible, and hold the method span for at least five seconds. Reserve the last part of the two-minute slot for interpretation. If the target is not visible by 60 seconds after starting the operation, switch to a verified recording of the same sequence. Keep the baseline request on screen during the action; move directly to the new request with its method span, without an intermediate status-only slide.
+## 11 · Let the namespace be the selection
 
-**Transition:** Let’s compare what we knew before with what we know now.
+Install the merged custom component as a distinct step after upstream opt-in; earn the namespace-wide payoff.
 
-**Requirement:** D3 · Build selective injection, a linked method span, continued baseline signals, and unchanged application identity. Prepare the fallback; no operation is assumed complete.
+Live budget: 75 seconds.
 
-### Scene 07 Resolve the opening question
+**Tyler:** This demo uses the custom namespace-driven controller and the OpenTelemetry Injector. The controller selects workloads and manages their rollout. The Injector detects the supported runtime and loads its language agent.
 
-**On screen:** The same slow work now has a name
+**Nikola:** Here we install the controller once. The agent payload, exporter, and exclusions are shared settings. Next comes the application choice: instrument this namespace.
 
-**Audience question:** What conclusion became possible?
+## 12 · Instrument this namespace
 
-**Takeaway:** Selected detail names the work without implying that the request became faster.
+Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.
 
-**Medium:** Aligned before and after comparison
+Live budget: 105 seconds.
 
-**Visual:** Static frame. Show both requests together on a common time scale.
+**Nikola:** Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.
 
-**Delivery:** Keep two separate requests visible together, with matching framing and a common time scale. Point to the newly named pricing calculation. Explain that the work was already happening: observability improved; application performance was not repaired. Display the complete pair from the start so attendees can compare without waiting for an animation.
+**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand.
 
-**Transition:** The diagnostic result is useful. How does a platform own the two instrumentation layers?
+**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. One namespace choice carries the setup across the application.
 
-**Requirement:** D3 · Capture measured baseline and depth traces and verify correlation. PricingEngine.calculate remains the proposed illustrative method.
+## 13 · Open language detail in more services
 
-### Scene 08 The operating model
+Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.
 
-**On screen:** A shared workflow manages both instrumentation paths
+Live budget: 85 seconds.
 
-**Audience question:** What makes the combined approach manageable?
+**Tyler:** Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
 
-**Takeaway:** The proposed Operator integration should manage OBI configuration and SDK injection through a shared workflow.
+**Nikola:** Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
 
-**Medium:** One architecture diagram
+**Tyler:** The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup.
 
-**Visual sequence:** Follow the OBI configuration and SDK injection paths → Add telemetry flow and the trace ownership rule.
+## 14 · The work around a deployment adds up
 
-**Delivery:** Separate deployment control from telemetry flow. Draw OBI configuration and language-agent injection as parallel paths, not a chain from OBI into the SDK. Explain which layer owns checkout request spans for each profile and which baseline metrics remain. Identify custom or experimental integration. Details that do not explain a consequence belong in backup material. Name the selected implementation and distinguish existing components from proposed coordination; do not imply a unified policy API has been established. Start with both control branches visible. Add the telemetry route and ownership rule together only after explaining control; retain both branches for reference.
+Connect the demonstrated workflow to people, coordination and waiting.
 
-**Transition:** The shared workflow also needs to manage instrumentation versions.
+Live budget: 90 seconds.
 
-**Requirement:** D4 · Choose or build the final implementation, then make this diagram match it. The two paths and ownership rules are requirements, not an upstream feature claim.
+**Tyler:** Think about the direct setup we just watched. We knew the runtime, had access, and could deploy when we wanted. In a real organization, how much happens before the person at the keyboard can even begin?
 
-### Scene 09 Central upgrade checkpoint
+**Nikola:** Finding an owner. Explaining the request. A ticket. A meeting to agree on scope. Access requests. A review. A place in the release schedule. Then someone switches away from their actual feature work to pick this up.
 
-**On screen:** An upgrade needs evidence from the running workload
+**Tyler:** With the namespace selected, the platform no longer needs a separate enrollment change from each application team. That can remove repeated tickets, reviews, and release coordination, while keeping the shared settings consistent.
 
-**Audience question:** Can I upgrade instrumentation without rebuilding the app?
+**Nikola:** The saving is bigger than typing fewer commands. It's fewer people arranging the same routine work, and less waiting between them.
 
-**Takeaway:** The requested profile and the observed running version must agree.
+## 15 · Reuse the workflow after day one
 
-**Medium:** Planned clip + verification frame
+Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
-**Visual:** Static evidence frame. Keep requested and running versions visible before and after the upgrade.
+Live budget: 95 seconds.
 
-**Delivery:** Use a short verified upgrade recording and an evidence frame showing old/new agent and bundled SDK versions, workload convergence, and unchanged application image identity. State any restart or rollout. The profile edit is the instruction; the telemetry and workload observations prove the result. Let the recording show the operation; hold one complete before-and-after evidence frame with requested and running versions together. Do not add a separate slide build for the version labels.
+**Tyler:** Setup is only the first bill. A new service arrives. An agent needs an update. A version is incompatible. A team needs to turn instrumentation off. Without a shared path, each of those can reopen the same chain of requests.
 
-**Transition:** The same lifecycle should let us remove depth after the investigation.
+**Nikola:** A new compatible service in the selected namespace inherits the selection. No new opt-in ticket. Agent updates use the shared rollout path, and a tested recovery path can save teams from inventing one during an incident.
 
-**Requirement:** D5 · Build a real upgrade and exercise rollback. Placeholder version labels are not verified versions; playback is planned, not already recorded.
+**Tyler:** That can reduce duplicated configuration, version drift, repeated debugging, and the documentation and training each team has to maintain.
 
-### Scene 10 Return to breadth
+**Nikola:** The platform still has a job: maintain the shared path, test compatibility, and handle failures. Central work belongs in the cost calculation too.
 
-**On screen:** Remove selected detail while retaining the baseline
+## 16 · Measure effort and waiting separately
 
-**Audience question:** Can the profile follow the investigation in both directions?
+Give an honest measurement approach without a trace-verification or accounting tutorial.
 
-**Takeaway:** Temporary depth can end without discarding the useful baseline.
+Live budget: 75 seconds.
 
-**Medium:** Planned short clip + trace pair
+**Tyler:** To measure the benefit, compare the effort needed to reach the same useful coverage. Include shared preparation and maintenance on both sides, then count the work left for each service team.
 
-**Visual sequence:** Request breadth while retaining the depth request for comparison → Inspect the fresh baseline request after convergence.
+**Nikola:** There are two different clocks. Hands-on effort is the time people spend doing work. Calendar delay is how long the request sits waiting between those steps. Reducing one doesn't automatically measure the other.
 
-**Delivery:** Show a brief verified removal recording and a fresh request after convergence. Keep the comparison on screen. Explain that the pricing work remains, while the selected method span is no longer emitted. Describe any required workload replacement without turning waiting into the show.
+**Tyler:** And adding agent detail may increase telemetry volume and runtime overhead. Engineering savings don't establish a smaller backend bill. Measure compute, export volume, storage, and sampling separately if you want to make that claim.
 
-**Transition:** Tyler, which costs should determine how much detail we retain?
+## 17 · Make the next investigation easier
 
-**Requirement:** D3 + D4 · Build removal and verify retained coverage. The target trace is a schematic until that evidence exists.
+Resolve the opening and leave a practical next step.
 
-### Scene 11 The cost decision
+Live budget: 55 seconds.
 
-**On screen:** Measure the profile, then decide what to retain
+**Tyler:** We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand.
 
-**Audience question:** Is the diagnostic value worth the measured cost?
+**Nikola:** Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services.
 
-**Takeaway:** The cost claim must identify both the layer being measured and its unit.
+**Tyler:** Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate.
 
-**Medium:** Measurement comparison to produce
-
-**Visual:** Static frame. Show both cost comparisons, all three profiles, and measurement conditions together.
-
-**Delivery:** Use at most two evidence-backed comparisons: OTLP bytes per completed request, and application CPU at matched completed-request throughput. Keep breadth, selected depth, and restored breadth together. State measurement location, load, sampling, warm-up treatment, repeated trials, and variation in notes and a concise caption. A small or inconclusive difference remains useful evidence. Do not infer a bill or CPU saving from span count. Display both comparisons and their measurement conditions from the start; guide attention by pointing rather than hiding a chart or its caption.
-
-**Transition:** Cost is only one side of the decision. Can we still trust the request view during a change?
-
-**Requirement:** D6 · Produce repeated, comparable measurements. These are empty chart locations, not fabricated data or a predicted savings curve.
-
-### Scene 12 The trust test
-
-**On screen:** A ready pod does not prove a correct trace
-
-**Audience question:** What must pass before I rely on a profile change?
-
-**Takeaway:** Verify the telemetry, not only the application’s availability.
-
-**Medium:** Verification sequence + scope
-
-**Visual:** Static frame. Show the complete verification gate before promotion and retirement.
-
-**Delivery:** Make the specialist lesson concrete: a 200 response alone cannot establish the correct trace parent chain or owner. Explain the chosen mechanism’s promotion, retirement, and recovery boundaries. State the final demo’s supported conditions plainly. Use one counterexample only when it makes this check easier to understand. Keep the entire candidate, verification, promotion, and retirement flow visible. Place the required telemetry checks at the verification gate, before the promotion arrow.
-
-**Transition:** Nikola, what is the smallest useful trial an attendee can run?
-
-**Requirement:** D4 + D6 · Validate the final mechanism and its scope. Existing prototype failures inform development but do not define a required story subplot.
-
-### Scene 13 A practical adoption experiment
-
-**On screen:** Try one service, one question, and a rollback
-
-**Audience question:** What can I try after this session?
-
-**Takeaway:** A bounded experiment can test fit before a fleet-wide adoption decision.
-
-**Medium:** Practical decision sequence
-
-**Visual:** Static frame. Show the full experiment from question to retention or rollback.
-
-**Delivery:** Give an operationally useful first step: establish baseline telemetry, name the unresolved question, select meaningful detail, compare a new request, and roll back or retain. A newcomer gets the model; an operator gets the profile/rollout sequence; a specialist gets verification criteria. Explain that selecting a method still needs application knowledge. Keep the complete experiment visible as a usable checklist; do not replace an earlier step with a later one.
-
-**Transition:** Let’s see whether that decision rule works for a different question.
-
-**Requirement:** Companion material · Prepare prerequisites, supported scope, pinned versions, expected observations, and rollback. Verify the published link before displaying it.
-
-### Scene 14 Audience transfer check
-
-**On screen:** Which question actually needs more depth?
-
-**Audience question:** Would I add instrumentation before examining the signals I already have?
-
-**Takeaway:** Use existing coverage first; add selected depth when the question still needs it.
-
-**Medium:** Prediction → answer → contrast
-
-**Visual sequence:** Ask the audience to choose a first observation → Explain the answer alongside the contrasting local-work question.
-
-**Delivery:** Give five quiet seconds to choose the first observation for which service is returning errors. Reveal the answer: inspect the existing request signals first. Then contrast a question about work inside a pricing calculation. State that these are hypothetical questions, not new measured incidents. Use one reveal after the pause: keep the original question and options visible, identify A, and show the local-work contrast alongside the explanation.
-
-**Transition:** The instrumentation profile follows the question we need to answer.
-
-**Requirement:** No new claimed result. The prompt and answer should be understandable without learning another application.
-
-**Audience pause:** Five-second quiet prediction; reveal an explicit answer and explain the contrast within the minute.
-
-### Scene 15 Close with a usable next step
-
-**On screen:** Pick one service. Name one unanswered question.
-
-**Audience question:** What should I remember and do next?
-
-**Takeaway:** Start broad. Add depth with purpose. Manage and verify the profile.
-
-**Medium:** Closing frame retained for Q&A
-
-**Visual:** Static frame. Keep the takeaway, next action, and companion destination visible together.
-
-**Delivery:** Recall the opening question and point to the named local work. Ask attendees to choose one service and write the question that would justify more detail. Provide a readable companion link after it is verified. Thank the audience and invite questions. This closes by minute 21; the next minute is unallocated recovery time, not extra planned content. Use one static closing frame, with the next action and companion destination visible from its first appearance and throughout Q&A.
-
-**Transition:** Start with coverage. Let the next unanswered question determine the detail you add.
-
-**Requirement:** Verify the companion destination. Planned content ends at 21:00; keep 21:00–22:00 flexible and 22:00–25:00 for Q&A.
-
-## Production requirements for the next phase
-
-- **D1:** Build the repeatable slow request in the selected workload.
-- **D2:** Demonstrate central baseline deployment and correlated request coverage.
-- **D3:** Add and remove selected method detail, retaining baseline signals and
-  application identity, then capture comparable fresh requests.
-- **D4:** Select or build the shared deployment mechanism, ownership rules, transition
-  checks, and recovery path. Match the final diagram to the implementation.
-- **D5:** Perform a real central instrumentation upgrade, verify running agent
-  and SDK versions, and exercise rollback.
-- **D6:** Produce repeated comparable cost measurements with named units, load
-  conditions, measurement location, and variability.
-
-Prepare captioned recordings of deployment, upgrade, and removal and a verified
-fallback for the main live depth change. At 60 seconds after starting that live
-operation, switch to the fallback if the target observation has not arrived.
-The cutoff is a proposed rehearsal rule, not a measured operation duration.
-
-Keep all trace geometry schematic until real evidence replaces it. A recording
-can preserve an authentic observation; it cannot supply functionality that does
-not work. Do not fabricate cost results or imply an observed profile change
-without verifying it.
-
-## Rehearsal checks
-
-- Can a newcomer explain the two views before the architecture discussion?
-- Does the main method reveal leave time to inspect and interpret the result?
-- Can a practitioner explain the version check and rollback implication?
-- Does a specialist agree that each conclusion stays within its evidence?
-- Can both presenters finish by minute 21 with the real playback and live action?
-- Can the explanation survive an unavailable live environment without losing the
-  diagnostic payoff or the audience’s next step?
-
-Keep full manifests, compatibility matrices, cost methodology, and extended
-failure analysis in companion material or backup slides. Put final delivery
-notes beside the relevant slides in `slides.md`.
+**Nikola:** Keep the engineering. Lose the repetition. Let's take your questions.
