@@ -1,4 +1,4 @@
-# Current presentation direction · October 23, 2026
+# Current presentation direction · October 26, 2026
 
 Use the [current storyboard](talk-storyboard.md): brief introduction → actual
 18-service topology with PostgreSQL and Redis → OBI connected view and timing
@@ -12,7 +12,9 @@ instrumentation can add useful detail, and shared automation can remove repeated
 setup across the fleet. Compare with a capable direct/upstream baseline. The
 recorded presentation now shows direct Checkout setup and broader enrollment;
 rehearse the same sequence live. Savings are hypotheses until measured;
-adding agent detail does not automatically reduce a backend bill.
+adding agent detail does not automatically reduce a backend bill. The closing
+slides and review video include an explicitly hypothetical dollar-capacity model
+for the demo and larger fleets; see [the inputs and scope](instrumentation-savings.md#illustrative-dollar-model--october-26-2026).
 
 The submitted proposal below is retained as the original event abstract. It is
 historical context; the current storyboard supersedes its proposed live sequence.

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What could the repeated work cost?</title>
+<style>
+  :root { font: 18px/1.5 system-ui, sans-serif; color: #16182b; background: #fbfbfd; }
+  body { margin: 0; } main { max-width: 1040px; margin: auto; padding: 32px 24px 64px; }
+  h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.15; margin: 12px 0 20px; }
+  h2 { font-size: 24px; margin: 28px 0 14px; } a { color: #514dcc; }
+  .muted { color: #5f6475; } .label { text-transform: uppercase; font-size: 14px; letter-spacing: .07em; }
+  .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+  label { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+  input, select, button { font: inherit; border: 1px solid #a0a7b8; border-radius: 4px; padding: 8px; background: white; }
+  input { width: 105px; text-align: right; } select { max-width: 100%; } button { cursor: pointer; margin-left: 10px; }
+  .results { border-top: 2px solid #c0c5d3; margin-top: 32px; padding-top: 16px; }
+  .money { color: #087b6a; font-size: 54px; line-height: 1.2; margin: 12px 0; font-variant-numeric: tabular-nums; }
+  .negative { color: #a23b2e; } table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 12px 0; border-bottom: 1px solid #c0c5d3; } th:first-child, td:first-child { text-align: left; }
+  #error { color: #a23b2e; } .table-scroll { overflow-x: auto; } footer { margin-top: 32px; font-size: 16px; }
+  @media(max-width: 700px) { .inputs { grid-template-columns: 1fr; } main { padding: 22px 16px 40px; } input { width: 90px; } .money { font-size: 43px; } th,td { padding: 10px 12px; white-space: nowrap; } button { margin: 12px 0; } }
+</style>
+<main>
+  <div class="label muted">OpenTelemetry Far and Wide · editable scenario</div>
+  <h1>What could the repeated work cost?</h1>
+  <p>This is a theoretical <strong>labor-capacity model</strong>, not an average customer result or a measured saving. Replace the inputs with your best existing workflow, including deployment templates and upstream namespace opt-in.</p>
+  <p><label style="display:inline">Load a scenario <select id="scenario" aria-label="Load a scenario"></select></label><button id="reset" type="button">Reset this scenario</button></p>
+  <form id="inputs" novalidate>
+    <h2>Fleet and useful investigations</h2>
+    <div class="inputs">
+      <label>Total services<input id="services" type="number" min="1" step="1"></label>
+      <label>Agent-compatible services<input id="eligible" type="number" min="0" step="1"></label>
+      <label>Rollout domains<input id="domains" type="number" min="1" step="1"></label>
+      <label>Qualifying investigations / year<input id="cases" type="number" min="0" step="1"></label>
+      <label>Loaded USD / person-hour<input id="rate" type="number" min="0" step="1"></label>
+      <label>People in the baseline investigation<input id="peopleBefore" type="number" min="0" step="1"></label>
+      <label>People with OBI visibility<input id="peopleAfter" type="number" min="0" step="1"></label>
+      <label>Minutes per investigation<input id="minutes" type="number" min="0" step="1"></label>
+    </div>
+    <p class="muted">One pilot service is common to both paths and excluded. Count only investigations where OBI supplies useful visibility the baseline lacks; use zero if existing traces already provide it. These investigations are separate from enrollment work.</p>
+    <h2>Active person-hours per remaining eligible service</h2>
+    <div class="inputs">
+      <label>Baseline initial setup<input id="directSetup" type="number" min="0" step="0.25"></label>
+      <label>Assisted initial setup<input id="sharedSetup" type="number" min="0" step="0.25"></label>
+      <label>Changes per year<input id="changes" type="number" min="0" step="1"></label>
+      <label>Baseline hours per change<input id="directChange" type="number" min="0" step="0.25"></label>
+      <label>Assisted hours per change<input id="sharedChange" type="number" min="0" step="0.25"></label>
+    </div>
+    <h2>Incremental shared costs</h2>
+    <div class="inputs">
+      <label>Initial platform adoption, hours<input id="platformSetup" type="number" min="0" step="1"></label>
+      <label>Annual platform upkeep, hours<input id="platformAnnual" type="number" min="0" step="1"></label>
+      <label>Extra hardening / adoption hours<input id="extraSetup" type="number" min="0" step="1" value="0"></label>
+      <label>Extra annual platform hours<input id="extraAnnual" type="number" min="0" step="1" value="0"></label>
+      <label>Extra telemetry / support USD / year<input id="extraCost" type="number" min="0" step="100" value="0"></label>
+    </div>
+    <p class="muted">Each additional rollout domain adds four adoption hours and four annual upkeep hours. Domains can represent separate clusters or rollout boundaries; the counts are assumptions, not a fixed services-to-cluster rule. The defaults assume adoption of maintained tooling. Add production prototype hardening separately.</p>
+  </form>
+  <div id="error" role="alert"></div>
+  <section class="results" aria-live="polite" aria-label="Calculated capacity value">
+    <h2>First-year capacity after platform labor</h2>
+    <div id="firstYear" class="money"></div>
+    <p id="equation"></p>
+    <p id="recurring"></p>
+    <p id="adjusted"></p>
+  </section>
+  <h2>Talk scenarios, using the original assumptions</h2>
+  <div class="table-scroll"><table><thead><tr><th>Services</th><th>Remaining eligible</th><th>First year</th><th>Then / year</th></tr></thead><tbody id="comparison"></tbody></table></div>
+  <footer>
+    <p>These figures value released engineering capacity. They become cash savings only if actual spending falls. Waiting time, outage revenue, new-service growth and telemetry-bill reductions are not credited. The recurring year excludes initial per-service setup and initial platform adoption.</p>
+    <p>The $100 rate is a rounded planning input, informed by <a href="https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm">BLS developer wages</a> and <a href="https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm">broad employer benefit costs</a>. Every workflow hour, investigation frequency and rollout-domain count is an authored assumption, not a benchmark from those sources.</p>
+    <p><a href="savings-assumptions.json">Original inputs and source notes</a> · <a href="savings-results.json">Reproducible results</a></p>
+  </footer>
+</main>
+<script type="module">
+  import { calculateSavings } from './savings-model.js'
+  const original = await fetch('./savings-assumptions.json').then(r => r.json())
+  const $ = id => document.getElementById(id)
+  const money = v => new Intl.NumberFormat('en-US', {style:'currency',currency:'USD',maximumFractionDigits:0}).format(v)
+  const picker = $('scenario')
+  original.scenarios.forEach((s,i) => picker.add(new Option(s.label,i)))
+  const mapping = {rate:['hourlyRate'],directSetup:['perService','initialBaselineHours'],sharedSetup:['perService','initialAssistedHours'],changes:['perService','changesPerYear'],directChange:['perService','changeBaselineHours'],sharedChange:['perService','changeAssistedHours'],platformSetup:['platform','setupHours'],platformAnnual:['platform','annualMaintenanceHours'],peopleBefore:['investigation','peopleBefore'],peopleAfter:['investigation','peopleAfter'],minutes:['investigation','minutes']}
+  const number = id => { if ($(id).value.trim()==='') throw Error('Please fill in every input.'); return Number($(id).value) }
+  function render() {
+    try {
+      const model=structuredClone(original)
+      for (const [id, keys] of Object.entries(mapping)) {
+        const target=keys.length===1?model:model[keys[0]]; target[keys.at(-1)]=number(id)
+      }
+      const row=calculateSavings(model,{services:number('services'),eligibleServices:number('eligible'),domains:number('domains'),qualifyingInvestigations:number('cases'),extraSetupHours:number('extraSetup'),extraAnnualHours:number('extraAnnual'),additionalAnnualCost:number('extraCost')})
+      $('error').textContent=''
+      $('firstYear').textContent=money(row.firstYearValue);$('firstYear').classList.toggle('negative',row.firstYearValue<0)
+      $('equation').textContent=`${row.remaining} remaining eligible services: ${row.initialHours+row.lifecycleHours} hours avoided + ${row.investigationHours} investigation hours − ${row.setupHours+row.upkeepHours} platform hours = ${row.firstYearHours} hours × ${money(model.hourlyRate)}.`
+      $('recurring').textContent=`Following year, with no new-service growth: ${money(row.recurringValue)} (${row.recurringHours} hours).`
+      $('adjusted').textContent=`After the extra annual telemetry/support costs you entered: ${money(row.firstYearAfterAdditionalCosts)} in year one; ${money(row.recurringAfterAdditionalCosts)} in the following year. This is an economic value comparison, not a prediction of cash savings.`
+      document.querySelector('.results').hidden=false
+    } catch (e) { $('error').textContent=e.message;document.querySelector('.results').hidden=true }
+  }
+  function load() {
+    const s=original.scenarios[Number(picker.value)]
+    $('services').value=s.services;$('eligible').value=Math.floor(s.services*original.runtimeMix.eligible/original.runtimeMix.total);$('domains').value=s.domains;$('cases').value=s.qualifyingInvestigations
+    for (const [id,keys] of Object.entries(mapping)) $(id).value=keys.reduce((v,k)=>v[k],original)
+    for (const id of ['extraSetup','extraAnnual','extraCost']) $(id).value=0
+    render()
+  }
+  $('comparison').innerHTML=original.scenarios.map(s=>{const r=calculateSavings(original,s);return `<tr><td>${r.services.toLocaleString('en-US')}</td><td>${r.remaining}</td><td>${money(r.firstYearValue)}</td><td>${money(r.recurringValue)}</td></tr>`}).join('')
+  $('inputs').addEventListener('input',render);$('inputs').addEventListener('submit',e=>e.preventDefault());picker.addEventListener('change',load);$('reset').addEventListener('click',load);load()
+</script>
+</html>

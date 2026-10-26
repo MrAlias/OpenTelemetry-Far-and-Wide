@@ -52,6 +52,17 @@
 .slidev-layout .measurements th { color:var(--accent); font-weight:500; }
 .slidev-layout .closing-lines { font-size:60px; line-height:1.45; margin-top:60px; letter-spacing:-.025em; }
 .slidev-layout .closing-link { font-size:22px; margin-top:40px; }
+.slidev-layout .savings-ledger { width:100%; margin-top:30px; font-size:29px; border-collapse:collapse; }
+.slidev-layout .savings-ledger td { border-bottom:1px solid var(--line); padding:15px 0; }
+.slidev-layout .savings-ledger td:last-child { text-align:right; color:var(--accent); }
+.slidev-layout .savings-total { display:flex; align-items:center; gap:40px; margin:25px 0 18px; }
+.slidev-layout .savings-total strong { font-size:76px; font-weight:500; color:var(--agent); letter-spacing:-.04em; }
+.slidev-layout .savings-total span { font-size:29px; line-height:1.35; }
+.slidev-layout .savings-scale { width:100%; margin:25px 0 24px; font-size:29px; border-collapse:collapse; }
+.slidev-layout .savings-scale th { font-size:23px; font-weight:500; color:var(--muted); text-align:left; padding:10px 0 18px; }
+.slidev-layout .savings-scale td { border-top:1px solid var(--line); padding:15px 0; }
+.slidev-layout .savings-scale th:not(:first-child),.slidev-layout .savings-scale td:not(:first-child) { text-align:right; padding-left:28px; }
+.slidev-layout .savings-context { font-size:23px!important; line-height:1.35!important; color:var(--muted); margin:8px 0; }
 .slidev-layout.talk-cover { padding:55px 70px; background:radial-gradient(ellipse at 92% 18%,#e9e8fb 0,transparent 48%),#fbfbfd; }
 .slidev-layout.talk-cover .cover-event { font-size:20px; color:var(--muted); margin:0; }
 .slidev-layout.talk-cover h1 { font-size:92px; font-weight:600; line-height:1.02; letter-spacing:-.05em; margin:135px 0 0; max-width:950px; }

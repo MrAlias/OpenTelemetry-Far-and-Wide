@@ -11,7 +11,8 @@ Topology: demo/k8s/applications.yaml and demo/apps/README.md at 759cc0979909.
 18 applications plus PostgreSQL and Redis; 14 payload-supported language
 services and four Go OBI baselines. Graphviz supplies the graph layout.
 Trace timing and instrumentation results come from individual local demo
-requests, not benchmarks. Engineering and coordination savings are qualitative.
+requests, not benchmarks. Engineering and coordination dollars are an illustrative labor-capacity model,
+not measured customer savings.
 The merged custom controller/Injector is a demo integration; a standalone official
 repository is future work, and no upstream release commitment is implied.
 
@@ -65,3 +66,13 @@ the single application namespace selection. Actual capture uses:
 Jack Berg's prototype implementation and Nikola's design participation are
 recorded in docs/technical-findings.md under Identified implementation.
 This repository's demo integration uses its own demo.opentelemetry.io API.
+
+October 26 illustrative dollar model
+Inputs: presentation/data/savings-assumptions.json
+Calculation: presentation/savings-model.js
+Editable scenario: public/presentation/savings.html
+Uses a $100/person-hour planning input; workflow effort and frequencies are
+assumptions. Values deduct platform labor, before additional telemetry, support
+or prototype hardening. Released capacity is not automatically cash savings.
+https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm
+https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm

@@ -1,7 +1,7 @@
 window.TALK = {
   "title": "OpenTelemetry Far and Wide",
   "voice": "Tyler Yahn's and Nikola Grcevski's authorized synthetic voices; not a recording of the presenters",
-  "status": "Recorded local demonstration on October 23, 2026: 18 application services, PostgreSQL and Redis. Captured request: 306.26 ms; Checkout initial local interval: 151.78 ms; a fresh Java-agent request shows PricingEngine.calculate at 150.38 ms. Direct Checkout plus 13 operator-enrolled services produce language SDK spans; four Go services retain OBI. Engineering and coordination savings are qualitative, not measured cost results.",
+  "status": "Recorded local demonstration on October 23, 2026: 18 application services, PostgreSQL and Redis. Captured request: 306.26 ms; Checkout initial local interval: 151.78 ms; a fresh Java-agent request shows PricingEngine.calculate at 150.38 ms. Direct Checkout plus 13 operator-enrolled services produce language SDK spans; four Go services retain OBI. Dollar figures are an explicitly hypothetical labor-capacity model, not measured savings or an average customer result; additional telemetry, support and prototype hardening are outside the headline amounts.",
   "chapters": [
     {
       "id": "01-promise",
@@ -905,186 +905,272 @@ window.TALK = {
       "id": "13-hidden-cost",
       "kind": "savings",
       "title": "The work around a deployment adds up",
-      "plannedDuration": 90,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Think about the direct setup we just watched. We knew the runtime, had access, and could deploy when we wanted. In a real organization, how much happens before the person at the keyboard can even begin?",
-          "direction": "Conversational, curious, unhurried. Let the visual carry the technical detail."
+          "text": "Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?"
         },
         {
           "speaker": "Nikola",
-          "text": "Finding an owner. Explaining the request. A ticket. A meeting to agree on scope. Access requests. A review. A place in the release schedule. Then someone switches away from their actual feature work to pick this up."
+          "text": "Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work."
         },
         {
           "speaker": "Tyler",
-          "text": "With the namespace selected, the platform no longer needs a separate enrollment change from each application team. That can remove repeated tickets, reviews, and release coordination, while keeping the shared settings consistent."
+          "text": "One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands."
         },
         {
           "speaker": "Nikola",
-          "text": "The saving is bigger than typing fewer commands. It's fewer people arranging the same routine work, and less waiting between them."
+          "text": "It is fewer people arranging the same work. Count their active effort separately from the time spent waiting."
         }
       ],
       "purpose": "Connect the demonstrated workflow to people, coordination and waiting.",
       "cues": [
         {
           "start": 0.65,
-          "end": 10.25,
+          "end": 9.49,
           "sampleStart": 15600,
-          "sampleEnd": 246000,
+          "sampleEnd": 227760,
           "speaker": "Tyler",
-          "text": "Think about the direct setup we just watched. We knew the runtime, had access, and could deploy when we wanted. In a real organization, how much happens before the person at the keyboard can even begin?"
+          "text": "Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?"
         },
         {
-          "start": 10.57,
-          "end": 26.21,
-          "sampleStart": 253680,
-          "sampleEnd": 629040,
+          "start": 9.81,
+          "end": 19.73,
+          "sampleStart": 235440,
+          "sampleEnd": 473520,
           "speaker": "Nikola",
-          "text": "Finding an owner. Explaining the request. A ticket. A meeting to agree on scope. Access requests. A review. A place in the release schedule. Then someone switches away from their actual feature work to pick this up."
+          "text": "Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work."
         },
         {
-          "start": 26.53,
-          "end": 37.49,
-          "sampleStart": 636720,
-          "sampleEnd": 899760,
+          "start": 20.05,
+          "end": 27.29,
+          "sampleStart": 481200,
+          "sampleEnd": 654960,
           "speaker": "Tyler",
-          "text": "With the namespace selected, the platform no longer needs a separate enrollment change from each application team. That can remove repeated tickets, reviews, and release coordination, while keeping the shared settings consistent."
+          "text": "One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands."
         },
         {
-          "start": 37.81,
-          "end": 45.09,
-          "sampleStart": 907440,
-          "sampleEnd": 1082160,
+          "start": 27.61,
+          "end": 33.21,
+          "sampleStart": 662640,
+          "sampleEnd": 797040,
           "speaker": "Nikola",
-          "text": "The saving is bigger than typing fewer commands. It's fewer people arranging the same routine work, and less waiting between them."
+          "text": "It is fewer people arranging the same work. Count their active effort separately from the time spent waiting."
         }
       ],
       "visualCues": [],
-      "duration": 45.76,
+      "duration": 33.88,
       "start": 387.0,
-      "end": 432.76,
+      "end": 420.88,
       "audio": "narration/13-hidden-cost.mp3"
     },
     {
       "id": "14-lifecycle",
       "kind": "lifecycle",
       "title": "Reuse the workflow after day one",
-      "plannedDuration": 95,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Setup is only the first bill. A new service arrives. An agent needs an update. A version is incompatible. A team needs to turn instrumentation off. Without a shared path, each of those can reopen the same chain of requests.",
-          "direction": "Conversational, curious, unhurried. Let the visual carry the technical detail."
+          "text": "And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off."
         },
         {
           "speaker": "Nikola",
-          "text": "A new compatible service in the selected namespace inherits the selection. No new opt-in ticket. Agent updates use the shared rollout path, and a tested recovery path can save teams from inventing one during an incident."
+          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve."
         },
         {
           "speaker": "Tyler",
-          "text": "That can reduce duplicated configuration, version drift, repeated debugging, and the documentation and training each team has to maintain."
+          "text": "That can reduce drift and repeated troubleshooting. But the platform does not maintain itself."
         },
         {
           "speaker": "Nikola",
-          "text": "The platform still has a job: maintain the shared path, test compatibility, and handle failures. Central work belongs in the cost calculation too."
+          "text": "Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too."
         }
       ],
       "purpose": "Cover onboarding, updates, consistency, recovery, training and shared upkeep.",
       "cues": [
         {
           "start": 0.65,
-          "end": 13.17,
+          "end": 7.13,
           "sampleStart": 15600,
-          "sampleEnd": 316080,
+          "sampleEnd": 171120,
           "speaker": "Tyler",
-          "text": "Setup is only the first bill. A new service arrives. An agent needs an update. A version is incompatible. A team needs to turn instrumentation off. Without a shared path, each of those can reopen the same chain of requests."
+          "text": "And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off."
         },
         {
-          "start": 13.49,
-          "end": 28.01,
-          "sampleStart": 323760,
-          "sampleEnd": 672240,
+          "start": 7.45,
+          "end": 18.17,
+          "sampleStart": 178800,
+          "sampleEnd": 436080,
           "speaker": "Nikola",
-          "text": "A new compatible service in the selected namespace inherits the selection. No new opt-in ticket. Agent updates use the shared rollout path, and a tested recovery path can save teams from inventing one during an incident."
+          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve."
         },
         {
-          "start": 28.33,
-          "end": 35.53,
-          "sampleStart": 679920,
-          "sampleEnd": 852720,
+          "start": 18.49,
+          "end": 23.41,
+          "sampleStart": 443760,
+          "sampleEnd": 561840,
           "speaker": "Tyler",
-          "text": "That can reduce duplicated configuration, version drift, repeated debugging, and the documentation and training each team has to maintain."
+          "text": "That can reduce drift and repeated troubleshooting. But the platform does not maintain itself."
         },
         {
-          "start": 35.85,
-          "end": 44.49,
-          "sampleStart": 860400,
-          "sampleEnd": 1067760,
+          "start": 23.73,
+          "end": 30.81,
+          "sampleStart": 569520,
+          "sampleEnd": 739440,
           "speaker": "Nikola",
-          "text": "The platform still has a job: maintain the shared path, test compatibility, and handle failures. Central work belongs in the cost calculation too."
+          "text": "Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too."
         }
       ],
       "visualCues": [],
-      "duration": 45.16,
-      "start": 432.76,
-      "end": 477.92,
+      "duration": 31.48,
+      "start": 420.88,
+      "end": 452.36,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
       "id": "15-measure",
-      "kind": "measure",
-      "title": "Measure effort and waiting separately",
-      "plannedDuration": 75,
+      "kind": "cost-demo",
+      "title": "Put a price on the repetition",
+      "plannedDuration": 80,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "To measure the benefit, compare the effort needed to reach the same useful coverage. Include shared preparation and maintenance on both sides, then count the work left for each service team."
+          "text": "Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour."
         },
         {
           "speaker": "Nikola",
-          "text": "There are two different clocks. Hands-on effort is the time people spend doing work. Calendar delay is how long the request sits waiting between those steps. Reducing one doesn't automatically measure the other."
+          "text": "Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours."
         },
         {
           "speaker": "Tyler",
-          "text": "And adding agent detail may increase telemetry volume and runtime overhead. Engineering savings don't establish a smaller backend bill. Measure compute, export volume, storage, and sampling separately if you want to make that claim."
+          "text": "Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs."
         }
       ],
-      "purpose": "Give an honest measurement approach without a trace-verification or accounting tutorial.",
+      "purpose": "Work through one explicitly hypothetical first-year labor-capacity calculation, including platform costs and a conditional OBI credit.",
+      "sources": [
+        "docs/instrumentation-savings.md",
+        "presentation/data/savings-assumptions.json",
+        "https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm",
+        "https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm"
+      ],
       "cues": [
         {
           "start": 0.65,
-          "end": 9.93,
+          "end": 8.17,
           "sampleStart": 15600,
-          "sampleEnd": 238320,
+          "sampleEnd": 196080,
           "speaker": "Tyler",
-          "text": "To measure the benefit, compare the effort needed to reach the same useful coverage. Include shared preparation and maintenance on both sides, then count the work left for each service team."
+          "text": "Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour."
         },
         {
-          "start": 10.25,
-          "end": 21.77,
-          "sampleStart": 246000,
-          "sampleEnd": 522480,
+          "start": 8.49,
+          "end": 20.53,
+          "sampleStart": 203760,
+          "sampleEnd": 492720,
           "speaker": "Nikola",
-          "text": "There are two different clocks. Hands-on effort is the time people spend doing work. Calendar delay is how long the request sits waiting between those steps. Reducing one doesn't automatically measure the other."
+          "text": "Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours."
         },
         {
-          "start": 22.09,
-          "end": 35.01,
-          "sampleStart": 530160,
-          "sampleEnd": 840240,
+          "start": 20.85,
+          "end": 32.09,
+          "sampleStart": 500400,
+          "sampleEnd": 770160,
           "speaker": "Tyler",
-          "text": "And adding agent detail may increase telemetry volume and runtime overhead. Engineering savings don't establish a smaller backend bill. Measure compute, export volume, storage, and sampling separately if you want to make that claim."
+          "text": "Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero."
+        },
+        {
+          "start": 32.41,
+          "end": 45.69,
+          "sampleStart": 777840,
+          "sampleEnd": 1096560,
+          "speaker": "Nikola",
+          "text": "Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs."
         }
       ],
       "visualCues": [],
-      "duration": 35.68,
-      "start": 477.92,
-      "end": 513.6,
+      "duration": 46.36,
+      "start": 452.36,
+      "end": 498.72,
       "audio": "narration/15-measure.mp3"
+    },
+    {
+      "id": "15-scale",
+      "kind": "cost-scale",
+      "title": "Repetition changes the economics",
+      "plannedDuration": 60,
+      "lead": "Tyler",
+      "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill."
+        }
+      ],
+      "purpose": "Extrapolate with explicit runtime eligibility, qualifying investigation counts and growing platform costs; distinguish first-year and recurring capacity value.",
+      "sources": [
+        "docs/instrumentation-savings.md",
+        "presentation/data/savings-assumptions.json",
+        "public/presentation/savings.html"
+      ],
+      "cues": [
+        {
+          "start": 0.65,
+          "end": 15.59,
+          "sampleStart": 15600,
+          "sampleEnd": 374160,
+          "speaker": "Tyler",
+          "text": "Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars."
+        },
+        {
+          "start": 15.91,
+          "end": 26.71,
+          "sampleStart": 381840,
+          "sampleEnd": 641040,
+          "speaker": "Nikola",
+          "text": "The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill."
+        },
+        {
+          "start": 27.03,
+          "end": 37.39,
+          "sampleStart": 648720,
+          "sampleEnd": 897360,
+          "speaker": "Tyler",
+          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return."
+        },
+        {
+          "start": 37.71,
+          "end": 45.11,
+          "sampleStart": 905040,
+          "sampleEnd": 1082640,
+          "speaker": "Nikola",
+          "text": "And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill."
+        }
+      ],
+      "visualCues": [],
+      "duration": 45.76,
+      "start": 498.72,
+      "end": 544.48,
+      "audio": "narration/15-scale.mp3"
     },
     {
       "id": "16-close",
@@ -1147,8 +1233,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 28.88,
-      "start": 513.6,
-      "end": 542.48,
+      "start": 544.48,
+      "end": 573.36,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1218,10 +1304,10 @@ window.TALK = {
     }
   },
   "bigIdea": "Use OBI to find the work worth investigating, add zero-code language detail, then select one namespace to carry instrumentation across supported services.",
-  "scriptRevision": "Namespace selection, runtime-aware injection and controller-managed rollout; upstream namespace annotation credited.",
+  "scriptRevision": "Add an assumption-driven first-year and recurring dollar model, with shared platform labor and conditional OBI investigation credit.",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "namespace-injector-2026-10-23",
-  "duration": 542.48
+  "storyRevision": "illustrative-economics-2026-10-26",
+  "duration": 573.36
 };

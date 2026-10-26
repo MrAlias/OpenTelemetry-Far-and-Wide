@@ -19,7 +19,7 @@ Open the URL printed by Slidev. Use `/presenter/` for notes and handoffs.
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-The **21-slide deck is editable Slidev source** in [slides.md](slides.md) and
+The **22-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
@@ -67,13 +67,14 @@ combines central selection, runtime handling and managed rollout.
 
 Use the [live handoff](docs/fleet-demo-handoff.md) for the exact direct-agent and
 namespace sequence. The original [proof harness](demo/proof/README.md) is historical
-and separate. Savings remain qualitative; adding language detail does not
-establish a smaller telemetry bill. The [savings inventory](docs/instrumentation-savings.md)
-defines the comparison.
+and separate. The closing dollar figures are hypothetical engineering-capacity
+values, not measured savings or a smaller telemetry bill. The
+[savings model and inventory](docs/instrumentation-savings.md) define the inputs
+and comparison; open `/presentation/savings.html` for the editable calculator.
 
 ## Storyboard and narrated review
 
-The [visual storyboard](public/storyboard.html) retains the reviewed 17-scene arc.
+The [visual storyboard](public/storyboard.html) retains the reviewed 18-scene arc.
 Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
 use the serving computer's address. Its stills work offline; recorded video
 links use local generated capture files.

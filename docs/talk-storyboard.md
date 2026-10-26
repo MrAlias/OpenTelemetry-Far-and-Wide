@@ -160,43 +160,59 @@ Live budget: 85 seconds.
 
 Connect the demonstrated workflow to people, coordination and waiting.
 
-Live budget: 90 seconds.
+Live budget: 60 seconds.
 
-**Tyler:** Think about the direct setup we just watched. We knew the runtime, had access, and could deploy when we wanted. In a real organization, how much happens before the person at the keyboard can even begin?
+**Tyler:** Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?
 
-**Nikola:** Finding an owner. Explaining the request. A ticket. A meeting to agree on scope. Access requests. A review. A place in the release schedule. Then someone switches away from their actual feature work to pick this up.
+**Nikola:** Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work.
 
-**Tyler:** With the namespace selected, the platform no longer needs a separate enrollment change from each application team. That can remove repeated tickets, reviews, and release coordination, while keeping the shared settings consistent.
+**Tyler:** One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands.
 
-**Nikola:** The saving is bigger than typing fewer commands. It's fewer people arranging the same routine work, and less waiting between them.
+**Nikola:** It is fewer people arranging the same work. Count their active effort separately from the time spent waiting.
 
 ## 15 · Reuse the workflow after day one
 
 Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
-Live budget: 95 seconds.
+Live budget: 60 seconds.
 
-**Tyler:** Setup is only the first bill. A new service arrives. An agent needs an update. A version is incompatible. A team needs to turn instrumentation off. Without a shared path, each of those can reopen the same chain of requests.
+**Tyler:** And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
 
-**Nikola:** A new compatible service in the selected namespace inherits the selection. No new opt-in ticket. Agent updates use the shared rollout path, and a tested recovery path can save teams from inventing one during an incident.
+**Nikola:** Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve.
 
-**Tyler:** That can reduce duplicated configuration, version drift, repeated debugging, and the documentation and training each team has to maintain.
+**Tyler:** That can reduce drift and repeated troubleshooting. But the platform does not maintain itself.
 
-**Nikola:** The platform still has a job: maintain the shared path, test compatibility, and handle failures. Central work belongs in the cost calculation too.
+**Nikola:** Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
 
-## 16 · Measure effort and waiting separately
+## 16 · Put a price on the repetition
 
-Give an honest measurement approach without a trace-verification or accounting tutorial.
+Work through one explicitly hypothetical first-year labor-capacity calculation, including platform costs and a conditional OBI credit.
 
-Live budget: 75 seconds.
+Live budget: 80 seconds.
 
-**Tyler:** To measure the benefit, compare the effort needed to reach the same useful coverage. Include shared preparation and maintenance on both sides, then count the work left for each service team.
+**Tyler:** Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour.
 
-**Nikola:** There are two different clocks. Hands-on effort is the time people spend doing work. Calendar delay is how long the request sits waiting between those steps. Reducing one doesn't automatically measure the other.
+**Nikola:** Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours.
 
-**Tyler:** And adding agent detail may increase telemetry volume and runtime overhead. Engineering savings don't establish a smaller backend bill. Measure compute, export volume, storage, and sampling separately if you want to make that claim.
+**Tyler:** Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero.
 
-## 17 · Make the next investigation easier
+**Nikola:** Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs.
+
+## 17 · Repetition changes the economics
+
+Extrapolate with explicit runtime eligibility, qualifying investigation counts and growing platform costs; distinguish first-year and recurring capacity value.
+
+Live budget: 60 seconds.
+
+**Tyler:** Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars.
+
+**Nikola:** The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill.
+
+**Tyler:** These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return.
+
+**Nikola:** And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill.
+
+## 18 · Make the next investigation easier
 
 Resolve the opening and leave a practical next step.
 

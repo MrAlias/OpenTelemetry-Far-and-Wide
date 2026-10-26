@@ -9,7 +9,7 @@ hand-authored sections; the animation exporter does not generate them.
 | `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
 | `03-language-detail.md` | 8–10 | Explicit Java configuration, rollout and useful method detail |
 | `04-namespace.md` | 11–17 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 18–21 | Coordination, lifecycle, measurement and the close |
+| `05-takeaways.md` | 18–22 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
 
 The live budget is 21 minutes, one minute flex and three minutes questions.
 Speaker notes include handoffs, time budgets, commands, source references and
@@ -71,3 +71,17 @@ npm run build -- --base /OpenTelemetry-Far-and-Wide/ --router-mode hash
 `npm run slides:assets` refreshes the curated evidence from local demo captures.
 The checked-in manifest records hashes and source paths. Changing the optional
 animation or regenerating its rehearsal frames cannot overwrite this deck.
+
+## Dollar examples
+
+Slides 20–21 and the review video's final cost scenes share the calculator in
+`../presentation/savings-model.js`, with inputs in
+`../presentation/data/savings-assumptions.json`. These are theoretical capacity
+values, not measured customer savings. The scope and sensitivity examples are
+in `../docs/instrumentation-savings.md`.
+
+Run `npm run savings:build` after changing the inputs. `npm run build` also
+refreshes these results automatically.
+It refreshes the video data and the editable browser calculator at
+`/presentation/savings.html`. The notes keep the live content at 21 minutes;
+the existing coordination and lifecycle sections were shortened to make room.

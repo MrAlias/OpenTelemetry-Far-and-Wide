@@ -9,6 +9,7 @@
   const box=(x,y,w,h,label,sub='',color=C.blue)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${C.panel}" stroke="${color}" stroke-width="2"/>`+text(x+w/2,y+(sub?32:h/2+10),label,30,C.ink,'text-anchor="middle"')+(sub?text(x+w/2,y+72,sub,22,C.muted,'text-anchor="middle"'):'');
   const center=(y,s,size=29,color=C.muted)=>text(640,y,s,size,color,'text-anchor="middle"');
   const fleet=(mode='plain',progress=1)=>window.renderDemoTopology({mode,progress,palette:C});
+  const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
   function localTrace(detail=0){
     const names=['Gateway','Checkout',detail>0?'PricingEngine.calculate':'Unexplained local work','Inventory call',detail>0?'Hibernate / JDBC':'Persistence question','Commerce calls'];let s='';
     names.forEach((name,i)=>{const y=225+i*58,internal=i===2||i===4;
@@ -37,7 +38,15 @@
     case 'complete':return fleet('complete')+center(655,'14 language agents · 4 Go OBI baselines · latency still needs investigation',26,C.green);
     case 'savings':return text(80,245,'Request for visibility',30,C.blue)+text(1200,245,'Useful telemetry',30,C.green,'text-anchor="end"')+arrow(80,305,1195,305)+list(['Agree and coordinate','Configure and deploy','Wait and switch context','Validate and recover'],{x:95,y:380,size:33,gap:67})+text(680,400,'People doing the work',31,C.depth)+text(680,470,'Time waiting between steps',31,C.depth)+text(680,555,'Measure both clocks separately',26,C.muted);
     case 'lifecycle':return list(['New compatible service → inherit namespace selection','Agent update → reuse the rollout and checks','Configuration change → reduce drift and rework','Failure → reuse a tested recovery path'],{size:31,gap:78})+center(635,'Include platform maintenance, compatibility, and blast radius',27,C.depth);
-    case 'measure':return text(75,245,'Direct setup',36,C.blue)+lines(75,310,['Shared setup + maintenance','+ Σ actual per-service effort'],30)+text(75,425,'Operator workflow',36,C.green)+lines(75,490,['Shared setup + maintenance','+ residual per-service effort'],30)+`<line x1="665" y1="220" x2="665" y2="620" stroke="${C.line}"/>`+lines(715,270,['Compare equal verified coverage.','Track lead time separately.','Include ongoing costs.','Measure telemetry bills separately.'],28,C.muted)+text(715,580,'Count effort and elapsed time',29,C.depth);
+    case 'cost-demo':{
+      const r=window.SAVINGS.rows[0];
+      const entries=[['Repeated setup + four changes','+'+(r.initialHours+r.lifecycleHours)+' h'],[r.qualifyingInvestigations+' qualifying investigations','+'+r.investigationHours+' h'],['Shared adoption + annual upkeep','−'+(r.setupHours+r.upkeepHours)+' h']];
+      return text(75,185,'18 services · 13 remaining eligible · illustrative first year',25,C.muted)+entries.map(([label,value],i)=>text(75,265+i*65,label,31)+text(1195,265+i*65,value,33,C.blue,'text-anchor="end"')+`<line x1="75" y1="${285+i*65}" x2="1195" y2="${285+i*65}" stroke="${C.line}"/>`).join('')+text(75,520,money(r.firstYearValue),84,C.green)+text(445,490,r.firstYearHours+' hours × '+money(window.SAVINGS.hourlyRate),31)+text(445,537,'of engineering capacity',31)+lines(75,615,['Hypothetical USD; not measured savings. Additional telemetry, support','and prototype hardening must be deducted separately.'],23,C.muted);
+    }
+    case 'cost-scale':{
+      const xs=[75,410,780,1195],headers=['Services','Remaining eligible','First year','Then / year'];
+      return headers.map((v,i)=>text(xs[i],225,v,25,C.muted,i===3?'text-anchor="end"':'')).join('')+window.SAVINGS.rows.map((r,i)=>{const y=292+i*76;return `<line x1="75" y1="${y-40}" x2="1195" y2="${y-40}" stroke="${C.line}"/>`+[r.services.toLocaleString('en-US'),String(r.remaining),money(r.firstYearValue),money(r.recurringValue)].map((v,j)=>text(xs[j],y,v,33,j===2?C.green:C.ink,j===3?'text-anchor="end"':'')).join('')}).join('')+lines(75,615,['Illustrative USD capacity after platform labor; $100 per person-hour.','More domains and upkeep at scale. Initial setup savings happen once.'],23,C.muted);
+    }
     case 'close':return lines(75,285,['Find the slow services.','Add detail on one.','Scale the workflow.'],60)+text(78,590,'Measure the work your next team can avoid.',33,C.blue);
     default:throw new Error('Unknown artwork kind: '+scene.kind);
   }}

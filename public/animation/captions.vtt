@@ -445,233 +445,273 @@ Tyler: We didn't need a separate instrumentation change from each application te
 Tyler: They keep their services; the platform carries the shared setup.
 
 112
-00:06:27.650 --> 00:06:29.783
-Tyler: Think about the direct setup we just watched.
+00:06:27.650 --> 00:06:29.784
+Tyler: Think about the direct setup we watched.
 
 113
-00:06:29.783 --> 00:06:32.983
-Tyler: We knew the runtime, had access, and could deploy when we wanted.
+00:06:29.784 --> 00:06:32.832
+Tyler: We knew the runtime, had access, and controlled the release.
 
 114
-00:06:32.983 --> 00:06:36.717
-Tyler: In a real organization, how much happens before the person at the keyboard can
+00:06:32.832 --> 00:06:36.490
+Tyler: How much happens before someone in a real organization can even begin?
 
 115
-00:06:36.717 --> 00:06:37.250
-Tyler: even begin?
+00:06:36.810 --> 00:06:38.050
+Nikola: Find an owner.
 
 116
-00:06:37.570 --> 00:06:38.838
-Nikola: Finding an owner.
+00:06:38.050 --> 00:06:39.290
+Nikola: Explain the request.
 
 117
-00:06:38.838 --> 00:06:40.106
-Nikola: Explaining the request.
+00:06:39.290 --> 00:06:43.423
+Nikola: A ticket, a meeting, access, review, and a release slot.
 
 118
-00:06:40.106 --> 00:06:40.952
-Nikola: A ticket.
+00:06:43.423 --> 00:06:46.730
+Nikola: Then somebody switches away from their feature work.
 
 119
-00:06:40.952 --> 00:06:43.488
-Nikola: A meeting to agree on scope.
+00:06:47.050 --> 00:06:50.842
+Tyler: One namespace choice can remove repeated enrollment changes and keep shared
 
 120
-00:06:43.488 --> 00:06:44.333
-Nikola: Access requests.
+00:06:50.842 --> 00:06:51.532
+Tyler: settings consistent.
 
 121
-00:06:44.333 --> 00:06:45.179
-Nikola: A review.
+00:06:51.532 --> 00:06:54.290
+Tyler: The saving is more than typing fewer commands.
 
 122
-00:06:45.179 --> 00:06:47.715
-Nikola: A place in the release schedule.
+00:06:54.610 --> 00:06:57.099
+Nikola: It is fewer people arranging the same work.
 
 123
-00:06:47.715 --> 00:06:53.210
-Nikola: Then someone switches away from their actual feature work to pick this up.
+00:06:57.099 --> 00:07:00.210
+Nikola: Count their active effort separately from the time spent waiting.
 
 124
-00:06:53.530 --> 00:06:57.640
-Tyler: With the namespace selected, the platform no longer needs a separate enrollment
+00:07:01.530 --> 00:07:03.502
+Tyler: And setup is only the first bill.
 
 125
-00:06:57.640 --> 00:06:59.352
-Tyler: change from each application team.
-
-126
-00:06:59.352 --> 00:07:02.778
-Tyler: That can remove repeated tickets, reviews, and release coordination, while
-
-127
-00:07:02.778 --> 00:07:04.490
-Tyler: keeping the shared settings consistent.
-
-128
-00:07:04.810 --> 00:07:07.583
-Nikola: The saving is bigger than typing fewer commands.
-
-129
-00:07:07.583 --> 00:07:11.743
-Nikola: It's fewer people arranging the same routine work, and less waiting between
-
-130
-00:07:11.743 --> 00:07:12.090
-Nikola: them.
-
-131
-00:07:13.410 --> 00:07:15.288
-Tyler: Setup is only the first bill.
-
-132
-00:07:15.288 --> 00:07:16.540
+00:07:03.502 --> 00:07:04.629
 Tyler: A new service arrives.
 
-133
-00:07:16.540 --> 00:07:18.105
+126
+00:07:04.629 --> 00:07:06.038
 Tyler: An agent needs an update.
 
-134
-00:07:18.105 --> 00:07:19.357
-Tyler: A version is incompatible.
-
-135
-00:07:19.357 --> 00:07:21.548
+127
+00:07:06.038 --> 00:07:08.010
 Tyler: A team needs to turn instrumentation off.
 
+128
+00:07:08.330 --> 00:07:11.593
+Nikola: Compatible new services inherit the namespace choice.
+
+129
+00:07:11.593 --> 00:07:14.389
+Nikola: Updates reuse the shared rollout path.
+
+130
+00:07:14.389 --> 00:07:18.584
+Nikola: Configuration, documentation, and recovery instructions have one place to
+
+131
+00:07:18.584 --> 00:07:19.050
+Nikola: improve.
+
+132
+00:07:19.370 --> 00:07:21.830
+Tyler: That can reduce drift and repeated troubleshooting.
+
+133
+00:07:21.830 --> 00:07:24.290
+Tyler: But the platform does not maintain itself.
+
+134
+00:07:24.610 --> 00:07:25.082
+Nikola: Exactly.
+
+135
+00:07:25.082 --> 00:07:28.386
+Nikola: Compatibility, rollout, and recovery still need people.
+
 136
-00:07:21.548 --> 00:07:25.930
-Tyler: Without a shared path, each of those can reopen the same chain of requests.
+00:07:28.386 --> 00:07:31.690
+Nikola: Their time goes into the calculation too.
 
 137
-00:07:26.250 --> 00:07:30.687
-Nikola: A new compatible service in the selected namespace inherits the selection.
+00:07:33.010 --> 00:07:35.299
+Tyler: Let us put dollars on the repetition.
 
 138
-00:07:30.687 --> 00:07:32.300
-Nikola: No new opt-in ticket.
+00:07:35.299 --> 00:07:39.549
+Tyler: This is a hypothetical first year for our eighteen-service system, at a hundred
 
 139
-00:07:32.300 --> 00:07:37.947
-Nikola: Agent updates use the shared rollout path, and a tested recovery path can save
+00:07:39.549 --> 00:07:40.530
+Tyler: dollars per person-hour.
 
 140
-00:07:37.947 --> 00:07:40.770
-Nikola: teams from inventing one during an incident.
+00:07:40.850 --> 00:07:44.171
+Nikola: Thirteen compatible services remain after the Checkout pilot.
 
 141
-00:07:41.090 --> 00:07:44.879
-Tyler: That can reduce duplicated configuration, version drift, repeated debugging, and
+00:07:44.171 --> 00:07:50.814
+Nikola: Assume two hours saved setting up each, then half an hour on each of four later
 
 142
-00:07:44.879 --> 00:07:48.290
-Tyler: the documentation and training each team has to maintain.
+00:07:50.814 --> 00:07:51.229
+Nikola: changes.
 
 143
-00:07:48.610 --> 00:07:53.493
-Nikola: The platform still has a job: maintain the shared path, test compatibility, and
+00:07:51.229 --> 00:07:52.890
+Nikola: That is fifty-two person-hours.
 
 144
-00:07:53.493 --> 00:07:54.245
-Nikola: handle failures.
+00:07:53.210 --> 00:07:56.846
+Tyler: Add twelve investigations where OBI fills a gap in our tracing.
 
 145
-00:07:54.245 --> 00:07:57.250
-Nikola: Central work belongs in the cost calculation too.
+00:07:56.846 --> 00:08:01.144
+Tyler: Three people spending thirty minutes becomes one person: an hour saved per case.
 
 146
-00:07:58.570 --> 00:08:02.462
-Tyler: To measure the benefit, compare the effort needed to reach the same useful
+00:08:01.144 --> 00:08:02.797
+Tyler: Already have equally useful traces?
 
 147
-00:08:02.462 --> 00:08:02.761
-Tyler: coverage.
+00:08:02.797 --> 00:08:04.450
+Tyler: Set that credit to zero.
 
 148
-00:08:02.761 --> 00:08:06.353
-Tyler: Include shared preparation and maintenance on both sides, then count the work
+00:08:04.770 --> 00:08:09.807
+Nikola: Then subtract twenty-four hours adopting the shared tools and twenty-four for
 
 149
-00:08:06.353 --> 00:08:07.850
-Tyler: left for each service team.
+00:08:09.807 --> 00:08:10.723
+Nikola: annual upkeep.
 
 150
-00:08:08.170 --> 00:08:09.915
-Nikola: There are two different clocks.
+00:08:10.723 --> 00:08:15.302
+Nikola: Sixteen hours remain: sixteen hundred dollars of engineering capacity, before
 
 151
-00:08:09.915 --> 00:08:13.057
-Nikola: Hands-on effort is the time people spend doing work.
+00:08:15.302 --> 00:08:18.050
+Nikola: extra telemetry, support, or prototype-hardening costs.
 
 152
-00:08:13.057 --> 00:08:17.246
-Nikola: Calendar delay is how long the request sits waiting between those steps.
+00:08:19.370 --> 00:08:23.553
+Tyler: Keep the same runtime mix, and allow more rollout domains and upkeep as the
 
 153
-00:08:17.246 --> 00:08:19.690
-Nikola: Reducing one doesn't automatically measure the other.
+00:08:23.553 --> 00:08:24.151
+Tyler: fleet grows.
 
 154
-00:08:20.010 --> 00:08:24.190
-Tyler: And adding agent detail may increase telemetry volume and runtime overhead.
+00:08:24.151 --> 00:08:27.438
+Tyler: At a hundred services, the first-year value is about twenty-seven thousand
 
 155
-00:08:24.190 --> 00:08:27.230
-Tyler: Engineering savings don't establish a smaller backend bill.
+00:08:27.438 --> 00:08:27.736
+Tyler: dollars.
 
 156
-00:08:27.230 --> 00:08:31.790
-Tyler: Measure compute, export volume, storage, and sampling separately if you want to
+00:08:27.736 --> 00:08:31.023
+Tyler: At five hundred services, about a hundred and fifty-three thousand dollars.
 
 157
-00:08:31.790 --> 00:08:32.930
-Tyler: make that claim.
+00:08:31.023 --> 00:08:34.310
+Tyler: At a thousand services, about three hundred and ten thousand dollars.
 
 158
-00:08:34.250 --> 00:08:37.621
-Tyler: We began with a slow request and no chosen culprit.
+00:08:34.630 --> 00:08:36.790
+Nikola: The following-year figures are lower.
 
 159
-00:08:37.621 --> 00:08:39.981
-Tyler: OBI showed us where its time went.
+00:08:36.790 --> 00:08:38.950
+Nikola: Initial setup savings happen once.
 
 160
-00:08:39.981 --> 00:08:43.690
-Tyler: Java zero-code instrumentation named the local work we wanted to understand.
+00:08:38.950 --> 00:08:43.270
+Nikola: Ongoing changes and qualifying investigations still save time, and platform
 
 161
-00:08:44.010 --> 00:08:45.788
-Nikola: Then we chose one namespace.
+00:08:43.270 --> 00:08:45.430
+Nikola: upkeep stays in the bill.
 
 162
-00:08:45.788 --> 00:08:49.699
-Nikola: The custom controller and Injector carried the repeated setup across the
+00:08:45.750 --> 00:08:48.938
+Tyler: These are replaceable assumptions, not average customer results.
 
 163
-00:08:49.699 --> 00:08:50.410
-Nikola: supported services.
+00:08:48.938 --> 00:08:53.321
+Tyler: If existing namespace templates already remove this work, lower the per-service
 
 164
-00:08:50.730 --> 00:08:51.625
-Tyler: Try one service.
+00:08:53.321 --> 00:08:53.719
+Tyler: saving.
 
 165
-00:08:51.625 --> 00:08:53.713
-Tyler: Measure the whole path to useful detail.
+00:08:53.719 --> 00:08:56.110
+Tyler: Less repetition means a smaller return.
 
 166
-00:08:53.713 --> 00:08:57.890
-Tyler: Then ask which repeated steps your platform can take off the next team's plate.
+00:08:56.430 --> 00:08:59.601
+Nikola: And capacity is not automatically cash in the bank.
 
 167
-00:08:58.210 --> 00:08:59.290
-Nikola: Keep the engineering.
+00:08:59.601 --> 00:09:03.830
+Nikola: We have not priced outages, waiting time, or a smaller telemetry bill.
 
 168
-00:08:59.290 --> 00:09:00.370
-Nikola: Lose the repetition.
+00:09:05.130 --> 00:09:08.501
+Tyler: We began with a slow request and no chosen culprit.
 
 169
-00:09:00.370 --> 00:09:01.810
+00:09:08.501 --> 00:09:10.861
+Tyler: OBI showed us where its time went.
+
+170
+00:09:10.861 --> 00:09:14.570
+Tyler: Java zero-code instrumentation named the local work we wanted to understand.
+
+171
+00:09:14.890 --> 00:09:16.668
+Nikola: Then we chose one namespace.
+
+172
+00:09:16.668 --> 00:09:20.579
+Nikola: The custom controller and Injector carried the repeated setup across the
+
+173
+00:09:20.579 --> 00:09:21.290
+Nikola: supported services.
+
+174
+00:09:21.610 --> 00:09:22.505
+Tyler: Try one service.
+
+175
+00:09:22.505 --> 00:09:24.593
+Tyler: Measure the whole path to useful detail.
+
+176
+00:09:24.593 --> 00:09:28.770
+Tyler: Then ask which repeated steps your platform can take off the next team's plate.
+
+177
+00:09:29.090 --> 00:09:30.170
+Nikola: Keep the engineering.
+
+178
+00:09:30.170 --> 00:09:31.250
+Nikola: Lose the repetition.
+
+179
+00:09:31.250 --> 00:09:32.690
 Nikola: Let's take your questions.
