@@ -84,6 +84,11 @@ movies, narration and original capture intermediates are ignored by Git; see
 [scripts/animation/README.txt](scripts/animation/README.txt) to rebuild them.
 The Slidev deck includes its own portable short clips.
 
+Synthetic voice recordings, voice previews and narrated movies must stay local
+and untracked. The versioned slide clips contain no audio tracks; asset refresh
+rejects clips containing audio. Text transcripts, scripts and captions remain
+versioned.
+
 The [presentation research](docs/presentation-research.md),
 [script research](docs/animation-script-research.md) and
 [talk brief](docs/talk-brief.md) explain the communication choices and sources.

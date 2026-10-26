@@ -4,13 +4,23 @@ dist/
 
 # Slide and demo output
 .artifacts/
-# Rebuildable animation media; source and player remain versioned.
-public/animation/*.mp4
-public/animation/*.m4a
-public/animation/clips/*.mp4
-public/animation/explainers/*.mp4
-public/animation/narration/*.m4a
-public/animation/narration/*.mp3
+# Audio and generated movies stay local, including synthetic voice renders.
+# The existing tracked presentation clips are silent; review new video explicitly.
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.flac
+*.aif
+*.aiff
+*.wma
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.avi
 *.pdf
 *.pptx
 coverage/
@@ -28,10 +38,6 @@ __pycache__/
 # Logs
 *.log
 npm-debug.log*
-
-# Rebuildable real-demo screen recordings
-public/demo-capture/*.mp4
-public/demo-capture/*.webm
 
 # Legacy storyboard exports and browser inspection metadata
 public/slides/
