@@ -53,7 +53,9 @@
 .slidev-layout .closing-lines { font-size:60px; line-height:1.45; margin-top:60px; letter-spacing:-.025em; }
 .slidev-layout .closing-link { font-size:22px; margin-top:40px; }
 .slidev-layout .savings-ledger { width:100%; margin-top:30px; font-size:29px; border-collapse:collapse; }
-.slidev-layout .savings-ledger td { border-bottom:1px solid var(--line); padding:15px 0; }
+.slidev-layout .savings-ledger td, .slidev-layout .savings-ledger th { border-bottom:1px solid var(--line); padding:10px 0; text-align:right; }
+.slidev-layout .savings-ledger th { font-size:23px; color:var(--muted); font-weight:400; }
+.slidev-layout .savings-ledger td:first-child, .slidev-layout .savings-ledger th:first-child { text-align:left; }
 .slidev-layout .savings-ledger td:last-child { text-align:right; color:var(--accent); }
 .slidev-layout .savings-total { display:flex; align-items:center; gap:40px; margin:25px 0 18px; }
 .slidev-layout .savings-total strong { font-size:76px; font-weight:500; color:var(--agent); letter-spacing:-.04em; }

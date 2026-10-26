@@ -186,29 +186,33 @@ Live budget: 60 seconds.
 
 ## 16 · Put a price on the repetition
 
-Work through one explicitly hypothetical first-year labor-capacity calculation, including platform costs and a conditional OBI credit.
+Compare baseline and shared work directly; show centralized updates once per rollout domain, service exceptions separately, and conditional OBI investigation savings.
 
 Live budget: 80 seconds.
 
-**Tyler:** Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour.
+**Tyler:** Let us compare the actual work in each approach. This is a hypothetical year for our eighteen-service system, at a hundred dollars per person-hour.
 
-**Nikola:** Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours.
+**Nikola:** Thirteen compatible services remain after our pilot. Initial setup takes thirty-two and a half person-hours across those teams. With the shared tools, we allow two hours for deployment and policy, plus half an hour per service. Eight and a half hours altogether.
 
-**Tyler:** Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero.
+**Tyler:** Upkeep is where centralization keeps paying back. Four updates take thirty-nine hours when repeated across those services. Four shared updates take four hours. Allow another two hours for service exceptions: six hours instead of thirty-nine. That saves thirty-three hours every year.
 
-**Nikola:** Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs.
+**Nikola:** Then twelve investigations where OBI adds missing visibility: eighteen person-hours becomes six. Twelve more hours saved. Already have equally useful traces? That part is zero.
+
+**Tyler:** Add the three rows: eighty-nine and a half hours before, twenty and a half with the tools. Sixty-nine hours saved, worth sixty-nine hundred dollars of engineering capacity. Central setup and upkeep are already included.
+
+**Nikola:** Every time estimate is an assumption to replace with your own. Prototype development, extra telemetry, and support need separate estimates.
 
 ## 17 · Repetition changes the economics
 
-Extrapolate with explicit runtime eligibility, qualifying investigation counts and growing platform costs; distinguish first-year and recurring capacity value.
+Scale the explicit before/with-tools ledgers using declared rollout groups, exceptions and qualifying investigations; distinguish first-year and recurring capacity.
 
 Live budget: 60 seconds.
 
-**Tyler:** Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars.
+**Tyler:** Keep the same runtime mix, and allow more rollout groups and service exceptions as the fleet grows. At a hundred services, the first-year value is about thirty-eight thousand dollars. At five hundred services, about a hundred and ninety-three thousand dollars. At a thousand services, about three hundred and eighty-six thousand dollars.
 
-**Nikola:** The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill.
+**Nikola:** The following-year figures are lower because initial setup savings happen once. Centralized upkeep keeps saving work: updates happen per rollout group, plus the service exceptions we explicitly allow for.
 
-**Tyler:** These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return.
+**Tyler:** These are replaceable assumptions, not average customer results. If existing namespace templates already centralize your updates, compare against that workflow. There may be little extra work left to save.
 
 **Nikola:** And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill.
 

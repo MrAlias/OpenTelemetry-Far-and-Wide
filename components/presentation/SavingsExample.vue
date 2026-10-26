@@ -9,10 +9,11 @@ const money = (value: number) => new Intl.NumberFormat('en-US', { style: 'curren
 <template>
   <div v-if="mode === 'demo'" class="savings-demo" data-savings="demo">
     <table class="savings-ledger">
+      <thead><tr><th>Person-hours</th><th>Before</th><th>With tools</th><th>Saved</th></tr></thead>
       <tbody>
-        <tr><td>Repeated setup + {{ model.perService.changesPerYear }} changes</td><td>+{{ demo.initialHours + demo.lifecycleHours }} h</td></tr>
-        <tr><td>{{ demo.qualifyingInvestigations }} qualifying investigations</td><td>+{{ demo.investigationHours }} h</td></tr>
-        <tr><td>Shared adoption + annual upkeep</td><td>−{{ demo.setupHours + demo.upkeepHours }} h</td></tr>
+        <tr><td>Initial setup</td><td>{{ demo.initialBaselineHours }}</td><td>{{ demo.initialSharedHours }}</td><td>{{ demo.initialHours }}</td></tr>
+        <tr><td>Annual updates</td><td>{{ demo.lifecycleBaselineHours }}</td><td>{{ demo.lifecycleSharedHours }}</td><td>{{ demo.lifecycleHours }}</td></tr>
+        <tr><td>Investigations</td><td>{{ demo.investigationBaselineHours }}</td><td>{{ demo.investigationSharedHours }}</td><td>{{ demo.investigationHours }}</td></tr>
       </tbody>
     </table>
     <div class="savings-total"><strong>{{ money(demo.firstYearValue) }}</strong><span>{{ demo.firstYearHours }} hours × {{ money(model.hourlyRate) }}<br>of engineering capacity</span></div>

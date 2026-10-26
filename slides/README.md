@@ -77,9 +77,13 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 Slides 20–21 and the review video's final cost scenes share the calculator in
 `../presentation/savings-model.js`, with inputs in
 `../presentation/data/savings-assumptions.json`. These are theoretical capacity
-values, not measured customer savings. The scope and sensitivity examples are
+values, not measured customer savings. They compare complete work ledgers;
+shared upkeep is counted per rollout group with service exceptions separately.
+The scope and sensitivity examples are
 in `../docs/instrumentation-savings.md`.
 
+Run `npm run savings:verify` to check the worked examples and accounting,
+including an already-centralized baseline with zero additional savings.
 Run `npm run savings:build` after changing the inputs. `npm run build` also
 refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at

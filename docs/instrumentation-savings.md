@@ -184,143 +184,168 @@ Sources checked October 26, 2026:
 - [BLS Occupational Outlook Handbook: software developers](https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm).
 - [BLS: June 2026 employer compensation and benefit shares](https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm).
 
-### Baseline, boundaries and assumed work
+### Baseline and boundaries
 
-Compare against the user's **best practical existing workflow**, including
-competent direct setup, runtime templates, upstream namespace opt-in and existing
-tracing. The custom integration's name alone establishes no monetary advantage.
-Both instrumentation paths must produce the same required useful detail and
-healthy requests. The following effort deltas apply only where that repeated
-work actually exists. Common prerequisites and the directly configured pilot
-cancel; the platform budget below is additional to that common work.
+Compare equivalent useful instrumentation and healthy requests against the
+**best practical existing workflow**, including runtime templates, existing
+tracing and upstream namespace opt-in. A custom operator's name establishes no
+saving. Only instrumentation work is priced here, not unrelated application
+release work. The common directly configured Checkout pilot and other genuinely
+common prerequisites cancel. Four Go services receive no injector credit.
 
-| Assumed activity | Baseline | Shared workflow | Difference credited |
-| --- | ---: | ---: | ---: |
-| Initial setup per remaining compatible service: active owner coordination, configuration, review, deployment and checks | 2.5 person-hours | 0.5 person-hours | 2 hours |
-| Each later agent/configuration change, four per year | 0.75 person-hours | 0.25 person-hours | 0.5 hours per change |
-| Qualifying investigation where OBI supplies useful cross-service visibility absent from the baseline | 3 people × 30 minutes | 1 person × 30 minutes | 1 person-hour |
-| Initial shared adoption, first rollout domain | — | 24 hours | Subtract all 24 |
-| Annual shared maintenance, first rollout domain | — | 24 hours | Subtract all 24 |
-| Each extra rollout domain | — | 4 initial + 4 annual hours | Subtract both |
+The calculation compares **complete work ledgers**, not gross avoided effort
+minus a generic platform allowance. Centralizing existing maintenance is a
+saving: distributed update effort is replaced by shared update effort plus
+exceptions. Shared work is counted once in the with-tools ledger. It is not
+charged again to every routine service or deducted again as an annual surcharge.
 
-The investigation credit is **conditional**, not a claim that OBI uniquely
-provides connected tracing or automatically reduces MTTR. Count only cases where
-it adds missing visibility, for example before detailed SDK instrumentation is
-available. If existing traces provide equally useful evidence, set the count or
-people-hour difference to zero. Do not apply this credit to every incident in a
-fully instrumented system. These are investigation activities, separate from the
-enrollment coordination already included in setup. Do not count repair time or
-calendar waiting as avoided person-hours.
+Every workflow time below is an authored hypothetical input. Sources support
+the comparison method and rate context, not these time estimates. The example
+assumes adoption of maintained tools, not development of this prototype. Actual
+prototype development/hardening needs its own estimate; no arbitrary development
+allowance is silently applied to users adopting OBI or the injector.
 
-The 24-hour adoption allowance could represent one day adopting OBI and two
-days adopting the shared injector workflow. The 24-hour annual allowance is two
-hours per month for routine platform upkeep. These are scenario budgets, not
-observed requirements; real compatibility testing, support, security review,
-exceptions and production rollout can require much more. Add that work rather
-than claiming the allowance covers unknown prototype development.
+### Explicit work assumptions
 
-A rollout domain can be a separately maintained cluster or rollout boundary.
-The scenario counts below are explicit inputs, not an assertion that every 100
-services need one cluster. Unsupported runtimes receive no injector credit.
-Residual supported-service effort remains in both setup and each later change.
+| Activity | Baseline workflow | With shared tools |
+| --- | --- | --- |
+| Initial work per remaining eligible service | 2.5 person-hours for active coordination, configuration, review, rollout and checks | 0.5 person-hours of residual enrollment/validation |
+| Shared initial work per rollout domain | 0 additional hours in this example | 2 hours deploying/configuring OBI and the injector, policy and shared checks |
+| Routine updates | Four changes/year × 0.75 hours per service, including change/review/checks | Four changes/year × 1 hour per rollout domain for shared configuration, compatibility checks and rollout |
+| Exceptions at each shared update | Already included in baseline service work | 0.5 hours per exception service; explicit scenario counts below |
+| Qualifying investigation | 3 people × 30 minutes | 1 person × 30 minutes |
 
-### Formula and the 18-service example
+The two shared deployment hours and one shared hour per update are **editable
+scenario work estimates**, not measured installation requirements, a quoted
+adoption charge or a universal production budget. Replace them with actual
+compatibility, security, rollout and support effort for the intended deployment.
+Initial shared work is charged once per domain; ongoing shared work is charged
+once per change per domain. The 0.5-hour exception budget is additional to shared
+checks, only for services requiring individual attention. It is not a claim
+that the demo observed a failure or that the prototype already automates every
+compatibility check. The scenario assumes the shared path can perform the stated
+routine work; measure it before using these values for an adoption decision.
 
-Let `N` be total services, `E = floor(N × 14 / 18)` be agent-compatible services
-for this illustrative runtime mix, and `K = max(0, E − 1)` be the remainder after
-one directly configured pilot common to both paths. Let `Q` be qualifying
-investigations and `D` be rollout domains.
+A rollout domain is an independently maintained rollout group, perhaps a
+cluster or a runtime/compatibility cohort. Service count does not determine its
+count automatically. If mixed runtimes need separate validation, increase groups
+or shared hours. Normal checks must be in the shared-update budget; individual
+exceptions belong in the exception count. Neither is free, and neither is counted
+twice. Exception counts refer to each update, not a cumulative annual total.
+
+The OBI investigation credit applies **only where it supplies missing useful
+visibility**. It is not unique ownership of connected tracing or an automatic
+MTTR reduction. Count separate investigation events, excluding setup meetings,
+repair time and calendar waiting. If existing traces are equally useful, set
+qualifying investigations to zero. Additional telemetry/backend/support costs
+need actual estimates and are outside the labor headline unless entered.
+
+### Formula
+
+Let `K` be remaining eligible services, `D` rollout domains, `X` exception
+services per update and `Q` qualifying investigations/year. For the scale
+illustration, eligible services are `floor(N × 14 / 18)`, with one common pilot
+excluded. Four changes/year and the following times are scenario inputs:
 
 ```text
-Initial enrollment hours avoided = K × (2.5 − 0.5)
-Annual lifecycle hours avoided   = K × 4 × (0.75 − 0.25)
-Investigation hours avoided      = Q × (3 − 1) × 0.5
-Initial platform hours          = 24 + (D − 1) × 4
-Annual platform hours           = 24 + (D − 1) × 4
+Baseline initial work = K × 2.5
+Shared initial work   = K × 0.5 + D × 2
 
-First-year net labor hours = initial + lifecycle + investigation
-                            − initial platform − annual platform
-First-year capacity value = first-year net labor hours × $100
+Baseline annual upkeep = K × 4 × 0.75
+Shared annual upkeep   = 4 × (D × 1 + X × 0.5)
 
-Following-year net labor hours = lifecycle + investigation − annual platform
-Following-year capacity value = following-year net labor hours × $100
+Baseline investigations = Q × 3 × 0.5
+With-OBI investigations  = Q × 1 × 0.5
+
+First-year hours saved = sum(baseline ledger) − sum(with-tools ledger)
+First-year value       = first-year hours saved × $100
+
+Recurring hours saved = (baseline upkeep + baseline investigations)
+                      − (shared upkeep + with-OBI investigations)
+Recurring value       = recurring hours saved × $100
 ```
 
-For the demo: 18 services, 14 compatible, one common Checkout pilot, **13
-remaining eligible**, one domain and 12 qualifying investigations:
+Any baseline shared work can also be entered. Additional initial or annual work
+is added to the relevant with-tools row once. Extra annual non-labor spending is
+subtracted from economic value separately, not converted into invented hours.
 
-| First-year contribution | Person-hours | Value at $100/hour |
-| --- | ---: | ---: |
-| Avoided initial repetition: 13 × 2 | +26 | +$2,600 |
-| Four later changes: 13 × 4 × 0.5 | +26 | +$2,600 |
-| Qualifying investigations: 12 × 1 | +12 | +$1,200 |
-| Shared adoption | −24 | −$2,400 |
-| Annual shared upkeep | −24 | −$2,400 |
-| **First-year capacity after platform labor** | **16** | **$1,600** |
+### The 18-service demo
 
-The unchanged following-year fleet yields `26 + 12 − 24 = 14` hours, or
-**$1,400 per year**, under the same recurring assumptions. Initial setup savings
-and initial platform adoption both disappear from that recurring year. The
-first rollout alone, without recurring changes or investigations, would avoid
-only `26 − 24 = 2` hours, or **$200**. This is why the talk emphasizes repetition
-and lifecycle work rather than pricing a few terminal commands.
+Of 18 services, 14 support the language payload. Excluding the common Checkout
+pilot leaves **13 remaining eligible services**. Assume one rollout domain,
+one exception service per update and 12 qualifying investigations in the year:
+
+| Activity | Before, person-hours | With tools, person-hours | Saved | Value at $100/hour |
+| --- | ---: | ---: | ---: | ---: |
+| Initial setup | 13 × 2.5 = 32.5 | 13 × 0.5 + 2 = 8.5 | 24 | $2,400 |
+| Annual upkeep | 13 × 4 × 0.75 = 39 | 4 × (1 + 1 × 0.5) = 6 | 33 | $3,300 |
+| Qualifying investigations | 12 × 3 × 0.5 = 18 | 12 × 1 × 0.5 = 6 | 12 | $1,200 |
+| **First year** | **89.5** | **20.5** | **69** | **$6,900** |
+
+**Centralized upkeep saves $3,300/year in this example.** Its six remaining
+hours consist of four shared update hours and two service-exception hours. They
+are already included in the comparison. No additional generic adoption or
+maintenance allowance is deducted, and routine shared upkeep is not also
+charged to every service.
+
+The same stable fleet saves **45 hours, or $4,500/year**, in following years:
+33 upkeep hours + 12 investigation hours. Initial work is removed from both
+ledgers. Initial setup alone saves 24 hours, or $2,400. Setup plus upkeep saves
+57 hours, or **$5,700**, even with no OBI investigation credit.
 
 ### Scale beyond the demo
 
-Maintain the approximate demo runtime mix, rounded down, and exclude one common
-pilot per fleet. These investigation frequencies and domain counts are
-illustrative inputs, not observed incident rates or a validated scaling law.
+These independent domain, exception and investigation counts are hypothetical
+inputs, not average organizations or a validated service-to-incident scaling
+law. The same per-service and per-domain times apply throughout:
 
-| Total services | Compatible | Remaining credited | Domains | Qualifying investigations/year | First-year capacity | Then per year |
+| Services | Eligible left | Domains | Exceptions/update | Qualifying investigations/year | First year | Then/year |
 | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 18 | 14 | 13 | 1 | 12 | **$1,600** | $1,400 |
-| 100 | 77 | 76 | 2 | 24 | **$27,200** | $14,800 |
-| 500 | 388 | 387 | 5 | 60 | **$152,800** | $79,400 |
-| 1,000 | 777 | 776 | 10 | 120 | **$310,400** | $161,200 |
+| 18 | 13 | 1 | 1 | 12 | **$6,900** | $4,500 |
+| 100 | 76 | 2 | 4 | 24 | **$38,400** | $23,600 |
+| 500 | 387 | 5 | 20 | 60 | **$192,500** | $116,100 |
+| 1,000 | 776 | 10 | 40 | 120 | **$386,000** | $232,800 |
 
-Platform costs grow: the first-year setup-plus-upkeep budgets are 48, 56, 80
-and 120 hours, respectively. The recurring upkeep budgets are 24, 28, 40 and
-60 hours. No growth, new-service onboarding, unpriced downtime, queue reduction,
-saved revenue, or blanket productivity multiplier is added. At larger scale,
-replace the simple domain and residual-effort assumptions with the actual
-platform architecture, runtime mix and exception distribution.
+Shared annual upkeep including exceptions is 6, 16, 60 and 120 hours,
+respectively. Baseline annual upkeep is 39, 228, 1,161 and 2,328 hours. Its
+reduction is 33, 212, 1,101 and 2,208 hours. This explicitly shows the value of
+centralized upkeep instead of charging shared maintenance to every service.
+First-year setup savings are 24, 148, 764 and 1,532 hours. Recurring values
+include no new-service growth or repeated credit for initial setup.
 
-### Sensitivity and break-even
+### Sensitivity and fair comparison
 
-At $100/hour, holding all other demo inputs constant, suppose avoided initial
-plus four lifecycle changes total one, four or eight hours per remaining
-eligible service across the first year:
+Holding other demo inputs fixed:
 
-| Avoided hours per remaining service/year | Demo first-year capacity after platform labor |
-| ---: | ---: |
-| 1 hour | **−$2,300** |
-| 4 hours — base scenario | **$1,600** |
-| 8 hours | **$6,800** |
+| Alternative assumption | First-year capacity value |
+| --- | ---: |
+| No qualifying missing-visibility investigations | $5,700 |
+| Two hours shared upkeep per domain per change, rather than one | $6,500 |
+| Every one of the 13 remaining services needs a half-hour exception at each update | $4,500 |
+| Baseline initial setup takes 1 hour/service and each update 0.25 hours/service | $2,350 |
+| Additional 80 hours of initial prototype development | −$1,100 |
+| Additional $2,000/year telemetry or support spending | $4,900 after that spending |
 
-These are alternative scenarios, not confidence bounds. If existing namespace
-templates remove all of the modeled per-service work, set its incremental
-savings to zero. With the default investigation credit the demo then returns
-**−$3,600**, and with equally useful existing traces as well it returns
-**−$4,800**. Centralizing work is not automatically cheaper.
+These are alternative assumptions, not statistical confidence bounds. To compare
+against an **already centralized** baseline, set its per-service initial effort
+to 0.5 hours, its shared initial effort to 2 hours/domain, its repeated per-service
+update effort to zero and its shared update effort to match the new workflow's
+shared updates plus exceptions. Set qualifying investigations to zero if its
+traces are equally useful. Identical effort ledgers yield **zero** value. This
+is essential: moving an existing shared process into a different controller is
+not automatically an additional saving.
 
-Under the base demo assumptions, first-year break-even requires at least **nine
-remaining compatible services**: `ceil((48 − 12) / 4) = 9`. At no investigation
-credit it requires 12. An extra 40 hours of adoption or prototype hardening
-deducts **$4,000**, turning the base demo value into **−$2,400**. The editable
-calculator accepts extra initial work, extra annual platform work and additional
-annual non-labor costs. For example, $2,000/year of incremental telemetry or
-support would make the base demo's combined first-year economic value **−$400**.
+Benefits such as fewer meetings and handoffs are already inside active setup
+and update work; they are not separate dollar multipliers. Calendar waiting,
+outage revenue, application speed improvements, telemetry-bill reductions and
+hypothetical productivity multipliers receive no credit. Released capacity is
+useful engineering time; it becomes cash saving only when spending actually
+falls or necessary expenditure is avoided. No measured standalone OBI-versus-
+injector ROI or average-user saving is claimed.
 
-Reduced hands-on work is released capacity; it becomes cash saving only if
-actual spending falls or an otherwise necessary expenditure is avoided.
-Dollar figures do not value delay reduction or establish lower observability
-bills. Compare matched load, sampling, retention and coverage before pricing
-infrastructure or telemetry changes. No measured standalone OBI-versus-injector
-ROI is claimed: the headline subtracts their joint incremental platform labor.
-
-The presentation recommendation is to show the small worked example first,
-then the fleet table, and invite the audience to replace the inputs with their
-own baseline. A statement suitable for the talk is: “In this hypothetical year,
-the demo frees $1,600 of engineering capacity after platform labor. With these
-assumptions, 1,000 services reach about $310,000. Those are inputs to test, not
-customer savings we measured.”
+The talk should show the two ledgers, explain centralized upkeep, then scale
+with transparent inputs. Suggested wording: “In this hypothetical year, we go
+from 89.5 to 20.5 person-hours. That frees $6,900 of engineering capacity,
+including $3,300 from centralized upkeep. At 1,000 services under these explicit
+assumptions, it is about $386,000 in year one. Replace these inputs with your
+own workflow; these are not customer results we measured.”

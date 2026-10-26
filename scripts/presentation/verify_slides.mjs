@@ -85,8 +85,8 @@ try{
    if(n===16&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
    if(n===20||n===21){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] .slidev-layout').innerText`);
-    if(!text.includes('$1,600')||!text.includes('capacity'))errors.push({slide:n,issue:'Dollar model missing or not identified as capacity'});
-    if(n===21&&!text.includes('$310,400'))errors.push({slide:n,issue:'Fleet extrapolation missing'});
+    if(!text.includes('$6,900')||!text.includes('capacity'))errors.push({slide:n,issue:'Dollar model missing or not identified as capacity'});
+    if(n===21&&!text.includes('$386,000'))errors.push({slide:n,issue:'Fleet extrapolation missing'});
    }
    const png=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
    await writeFile(path.join(work,'renders',`${String(n).padStart(2,'0')}-${clicks}.png`),Buffer.from(png.data,'base64'));slides.push(result);
@@ -108,16 +108,16 @@ try{
  const presenter=await evaluate(`({notes:document.body.innerText.includes('Shared defaults and exclusions'),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
  await cdp.call('Page.navigate',{url:origin+'/presentation/savings.html'},sessionId);
- for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$1,600'"))break;await wait(100);}
+ for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$6,900'"))break;await wait(100);}
  const calculator=await evaluate(`(()=>{
    const get=id=>document.getElementById(id), issues=[];
-   if(get('firstYear').textContent!=='$1,600')issues.push('Base scenario');
+   if(get('firstYear').textContent!=='$6,900')issues.push('Base scenario');
    const input=(id,value)=>{get(id).value=value;get(id).dispatchEvent(new Event('input',{bubbles:true}))};
-   input('rate',200);if(get('firstYear').textContent!=='$3,200')issues.push('Rate change');
-   get('reset').click();input('extraSetup',40);if(get('firstYear').textContent!=='-$2,400')issues.push('Negative result');
-   get('reset').click();input('cases',0);if(get('firstYear').textContent!=='$400')issues.push('No OBI credit');
-   input('eligible',19);if(!document.querySelector('.results').hidden||!get('error').textContent)issues.push('Invalid eligible count');
-   get('scenario').value=3;get('scenario').dispatchEvent(new Event('change'));if(get('firstYear').textContent!=='$310,400')issues.push('Fleet selection');
+   input('rate',200);if(get('firstYear').textContent!=='$13,800')issues.push('Rate change');
+   get('reset').click();input('extraSetup',80);if(get('firstYear').textContent!=='-$1,100')issues.push('Negative result');
+   get('reset').click();input('cases',0);if(get('firstYear').textContent!=='$5,700')issues.push('No OBI credit');
+   get('reset').click();input('exceptions',13);if(get('firstYear').textContent!=='$4,500')issues.push('Service exceptions');input('exceptions',14);if(!document.querySelector('.results').hidden)issues.push('Invalid exceptions');get('reset').click();input('eligible',19);if(!document.querySelector('.results').hidden||!get('error').textContent)issues.push('Invalid eligible count');
+   get('scenario').value=3;get('scenario').dispatchEvent(new Event('change'));if(get('firstYear').textContent!=='$386,000')issues.push('Fleet selection');
    get('scenario').value=0;get('scenario').dispatchEvent(new Event('change'));return {issues};
  })()`);
  if(calculator.issues.length)errors.push({calculator});

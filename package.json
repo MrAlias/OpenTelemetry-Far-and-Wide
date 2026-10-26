@@ -14,7 +14,8 @@
     "present": "slidev slides.md --open",
     "slides:verify": "node scripts/presentation/verify_slides.mjs",
     "slides:assets": "python3 scripts/presentation/sync_assets.py",
-    "savings:build": "node scripts/presentation/build_savings.mjs"
+    "savings:build": "node scripts/presentation/build_savings.mjs",
+    "savings:verify": "node scripts/presentation/verify_savings.mjs"
   },
   "engines": {
     "node": ">=20"

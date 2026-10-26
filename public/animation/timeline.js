@@ -1040,22 +1040,30 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour."
+          "text": "Let us compare the actual work in each approach. This is a hypothetical year for our eighteen-service system, at a hundred dollars per person-hour."
         },
         {
           "speaker": "Nikola",
-          "text": "Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours."
+          "text": "Thirteen compatible services remain after our pilot. Initial setup takes thirty-two and a half person-hours across those teams. With the shared tools, we allow two hours for deployment and policy, plus half an hour per service. Eight and a half hours altogether."
         },
         {
           "speaker": "Tyler",
-          "text": "Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero."
+          "text": "Upkeep is where centralization keeps paying back. Four updates take thirty-nine hours when repeated across those services. Four shared updates take four hours. Allow another two hours for service exceptions: six hours instead of thirty-nine. That saves thirty-three hours every year."
         },
         {
           "speaker": "Nikola",
-          "text": "Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs."
+          "text": "Then twelve investigations where OBI adds missing visibility: eighteen person-hours becomes six. Twelve more hours saved. Already have equally useful traces? That part is zero."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Add the three rows: eighty-nine and a half hours before, twenty and a half with the tools. Sixty-nine hours saved, worth sixty-nine hundred dollars of engineering capacity. Central setup and upkeep are already included."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Every time estimate is an assumption to replace with your own. Prototype development, extra telemetry, and support need separate estimates."
         }
       ],
-      "purpose": "Work through one explicitly hypothetical first-year labor-capacity calculation, including platform costs and a conditional OBI credit.",
+      "purpose": "Compare baseline and shared work directly; show centralized updates once per rollout domain, service exceptions separately, and conditional OBI investigation savings.",
       "sources": [
         "docs/instrumentation-savings.md",
         "presentation/data/savings-assumptions.json",
@@ -1065,41 +1073,57 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 8.17,
+          "end": 8.33,
           "sampleStart": 15600,
-          "sampleEnd": 196080,
+          "sampleEnd": 199920,
           "speaker": "Tyler",
-          "text": "Let us put dollars on the repetition. This is a hypothetical first year for our eighteen-service system, at a hundred dollars per person-hour."
+          "text": "Let us compare the actual work in each approach. This is a hypothetical year for our eighteen-service system, at a hundred dollars per person-hour."
         },
         {
-          "start": 8.49,
-          "end": 20.53,
-          "sampleStart": 203760,
-          "sampleEnd": 492720,
+          "start": 8.65,
+          "end": 25.55,
+          "sampleStart": 207600,
+          "sampleEnd": 613200,
           "speaker": "Nikola",
-          "text": "Thirteen compatible services remain after the Checkout pilot. Assume two hours saved setting up each, then half an hour on each of four later changes. That is fifty-two person-hours."
+          "text": "Thirteen compatible services remain after our pilot. Initial setup takes thirty-two and a half person-hours across those teams. With the shared tools, we allow two hours for deployment and policy, plus half an hour per service. Eight and a half hours altogether."
         },
         {
-          "start": 20.85,
-          "end": 32.09,
-          "sampleStart": 500400,
-          "sampleEnd": 770160,
+          "start": 25.87,
+          "end": 41.73,
+          "sampleStart": 620880,
+          "sampleEnd": 1001520,
           "speaker": "Tyler",
-          "text": "Add twelve investigations where OBI fills a gap in our tracing. Three people spending thirty minutes becomes one person: an hour saved per case. Already have equally useful traces? Set that credit to zero."
+          "text": "Upkeep is where centralization keeps paying back. Four updates take thirty-nine hours when repeated across those services. Four shared updates take four hours. Allow another two hours for service exceptions: six hours instead of thirty-nine. That saves thirty-three hours every year."
         },
         {
-          "start": 32.41,
-          "end": 45.69,
-          "sampleStart": 777840,
-          "sampleEnd": 1096560,
+          "start": 42.05,
+          "end": 53.37,
+          "sampleStart": 1009200,
+          "sampleEnd": 1280880,
           "speaker": "Nikola",
-          "text": "Then subtract twenty-four hours adopting the shared tools and twenty-four for annual upkeep. Sixteen hours remain: sixteen hundred dollars of engineering capacity, before extra telemetry, support, or prototype-hardening costs."
+          "text": "Then twelve investigations where OBI adds missing visibility: eighteen person-hours becomes six. Twelve more hours saved. Already have equally useful traces? That part is zero."
+        },
+        {
+          "start": 53.69,
+          "end": 66.37,
+          "sampleStart": 1288560,
+          "sampleEnd": 1592880,
+          "speaker": "Tyler",
+          "text": "Add the three rows: eighty-nine and a half hours before, twenty and a half with the tools. Sixty-nine hours saved, worth sixty-nine hundred dollars of engineering capacity. Central setup and upkeep are already included."
+        },
+        {
+          "start": 66.69,
+          "end": 74.69,
+          "sampleStart": 1600560,
+          "sampleEnd": 1792560,
+          "speaker": "Nikola",
+          "text": "Every time estimate is an assumption to replace with your own. Prototype development, extra telemetry, and support need separate estimates."
         }
       ],
       "visualCues": [],
-      "duration": 46.36,
+      "duration": 75.36,
       "start": 452.36,
-      "end": 498.72,
+      "end": 527.72,
       "audio": "narration/15-measure.mp3"
     },
     {
@@ -1111,22 +1135,22 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars."
+          "text": "Keep the same runtime mix, and allow more rollout groups and service exceptions as the fleet grows. At a hundred services, the first-year value is about thirty-eight thousand dollars. At five hundred services, about a hundred and ninety-three thousand dollars. At a thousand services, about three hundred and eighty-six thousand dollars."
         },
         {
           "speaker": "Nikola",
-          "text": "The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill."
+          "text": "The following-year figures are lower because initial setup savings happen once. Centralized upkeep keeps saving work: updates happen per rollout group, plus the service exceptions we explicitly allow for."
         },
         {
           "speaker": "Tyler",
-          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return."
+          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already centralize your updates, compare against that workflow. There may be little extra work left to save."
         },
         {
           "speaker": "Nikola",
           "text": "And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill."
         }
       ],
-      "purpose": "Extrapolate with explicit runtime eligibility, qualifying investigation counts and growing platform costs; distinguish first-year and recurring capacity value.",
+      "purpose": "Scale the explicit before/with-tools ledgers using declared rollout groups, exceptions and qualifying investigations; distinguish first-year and recurring capacity.",
       "sources": [
         "docs/instrumentation-savings.md",
         "presentation/data/savings-assumptions.json",
@@ -1135,41 +1159,41 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 15.59,
+          "end": 17.63,
           "sampleStart": 15600,
-          "sampleEnd": 374160,
+          "sampleEnd": 423120,
           "speaker": "Tyler",
-          "text": "Keep the same runtime mix, and allow more rollout domains and upkeep as the fleet grows. At a hundred services, the first-year value is about twenty-seven thousand dollars. At five hundred services, about a hundred and fifty-three thousand dollars. At a thousand services, about three hundred and ten thousand dollars."
+          "text": "Keep the same runtime mix, and allow more rollout groups and service exceptions as the fleet grows. At a hundred services, the first-year value is about thirty-eight thousand dollars. At five hundred services, about a hundred and ninety-three thousand dollars. At a thousand services, about three hundred and eighty-six thousand dollars."
         },
         {
-          "start": 15.91,
-          "end": 26.71,
-          "sampleStart": 381840,
-          "sampleEnd": 641040,
+          "start": 17.95,
+          "end": 29.95,
+          "sampleStart": 430800,
+          "sampleEnd": 718800,
           "speaker": "Nikola",
-          "text": "The following-year figures are lower. Initial setup savings happen once. Ongoing changes and qualifying investigations still save time, and platform upkeep stays in the bill."
+          "text": "The following-year figures are lower because initial setup savings happen once. Centralized upkeep keeps saving work: updates happen per rollout group, plus the service exceptions we explicitly allow for."
         },
         {
-          "start": 27.03,
-          "end": 37.39,
-          "sampleStart": 648720,
-          "sampleEnd": 897360,
+          "start": 30.27,
+          "end": 40.31,
+          "sampleStart": 726480,
+          "sampleEnd": 967440,
           "speaker": "Tyler",
-          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already remove this work, lower the per-service saving. Less repetition means a smaller return."
+          "text": "These are replaceable assumptions, not average customer results. If existing namespace templates already centralize your updates, compare against that workflow. There may be little extra work left to save."
         },
         {
-          "start": 37.71,
-          "end": 45.11,
-          "sampleStart": 905040,
-          "sampleEnd": 1082640,
+          "start": 40.63,
+          "end": 48.03,
+          "sampleStart": 975120,
+          "sampleEnd": 1152720,
           "speaker": "Nikola",
           "text": "And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill."
         }
       ],
       "visualCues": [],
-      "duration": 45.76,
-      "start": 498.72,
-      "end": 544.48,
+      "duration": 48.68,
+      "start": 527.72,
+      "end": 576.4,
       "audio": "narration/15-scale.mp3"
     },
     {
@@ -1233,8 +1257,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 28.88,
-      "start": 544.48,
-      "end": 573.36,
+      "start": 576.4,
+      "end": 605.28,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1304,10 +1328,10 @@ window.TALK = {
     }
   },
   "bigIdea": "Use OBI to find the work worth investigating, add zero-code language detail, then select one namespace to carry instrumentation across supported services.",
-  "scriptRevision": "Add an assumption-driven first-year and recurring dollar model, with shared platform labor and conditional OBI investigation credit.",
+  "scriptRevision": "Compare full work ledgers; count centralized upkeep per rollout group, separate exceptions, and remove the unsupported adoption/maintenance surcharge.",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "illustrative-economics-2026-10-26",
-  "duration": 573.36
+  "storyRevision": "centralized-upkeep-ledgers-2026-10-26",
+  "duration": 605.28
 };

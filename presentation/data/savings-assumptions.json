@@ -1,34 +1,76 @@
 {
-  "version": "2026-10-26",
+  "version": "2026-10-26-centralized-upkeep",
   "currency": "USD",
   "label": "Illustrative labor-capacity model; not measured savings or an industry average",
   "hourlyRate": 100,
-  "runtimeMix": { "eligible": 14, "total": 18 },
+  "runtimeMix": {
+    "eligible": 14,
+    "total": 18
+  },
   "pilotServices": 1,
   "perService": {
     "initialBaselineHours": 2.5,
-    "initialAssistedHours": 0.5,
+    "initialSharedHours": 0.5,
     "changesPerYear": 4,
     "changeBaselineHours": 0.75,
-    "changeAssistedHours": 0.25
+    "exceptionHours": 0.5
   },
-  "investigation": { "peopleBefore": 3, "peopleAfter": 1, "minutes": 30 },
-  "platform": {
-    "setupHours": 24,
-    "annualMaintenanceHours": 24,
-    "setupPerExtraDomainHours": 4,
-    "annualPerExtraDomainHours": 4
+  "investigation": {
+    "peopleBefore": 3,
+    "peopleAfter": 1,
+    "minutes": 30
   },
   "scenarios": [
-    { "label": "Demo", "services": 18, "domains": 1, "qualifyingInvestigations": 12 },
-    { "label": "100 services", "services": 100, "domains": 2, "qualifyingInvestigations": 24 },
-    { "label": "500 services", "services": 500, "domains": 5, "qualifyingInvestigations": 60 },
-    { "label": "1,000 services", "services": 1000, "domains": 10, "qualifyingInvestigations": 120 }
+    {
+      "label": "Demo",
+      "services": 18,
+      "domains": 1,
+      "qualifyingInvestigations": 12,
+      "exceptionsPerChange": 1
+    },
+    {
+      "label": "100 services",
+      "services": 100,
+      "domains": 2,
+      "qualifyingInvestigations": 24,
+      "exceptionsPerChange": 4
+    },
+    {
+      "label": "500 services",
+      "services": 500,
+      "domains": 5,
+      "qualifyingInvestigations": 60,
+      "exceptionsPerChange": 20
+    },
+    {
+      "label": "1,000 services",
+      "services": 1000,
+      "domains": 10,
+      "qualifyingInvestigations": 120,
+      "exceptionsPerChange": 40
+    }
   ],
   "sources": [
-    { "url": "https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm", "fact": "May 2025 U.S. software-developer median wage: $135,980 per year. Checked October 26, 2026." },
-    { "url": "https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm", "fact": "June 2026 private-industry wages were 70.0% of total employer compensation; this is a broad workforce ratio, not a developer-specific estimate." },
-    { "url": "https://sre.google/workbook/eliminating-toil/", "fact": "Compare automation's implementation and maintenance effort with the repetitive work it removes." }
+    {
+      "url": "https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm",
+      "fact": "May 2025 U.S. software-developer median wage: $135,980 per year. Checked October 26, 2026."
+    },
+    {
+      "url": "https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm",
+      "fact": "June 2026 private-industry wages were 70.0% of total employer compensation; this is a broad workforce ratio, not a developer-specific estimate."
+    },
+    {
+      "url": "https://sre.google/workbook/eliminating-toil/",
+      "fact": "Compare automation's implementation and maintenance effort with the repetitive work it removes."
+    }
   ],
-  "scope": "One year; 14/18 demo runtime mix rounded down for larger fleets; the first directly configured pilot is common to both paths and excluded. Qualifying investigations count only cases where OBI supplies useful visibility the baseline lacks. Existing equally useful traces imply zero triage credit. Direct/upstream templates and namespace opt-in belong in the baseline. All workflow hours, frequencies and domain counts are authored assumptions. Values are capacity after platform labor, before additional telemetry, support and prototype-hardening costs. No waiting-time, outage-revenue or cash-reduction claim."
+  "scope": "One year; 14/18 demo runtime mix rounded down for larger fleets; one common direct pilot excluded. Compare full work ledgers for equal useful outcomes. Routine shared updates are counted per rollout domain, not per service; exception services are counted separately per update. Shared deployment/policy setup is counted once per domain, not again as a generic adoption fee. Workflow hours, update frequency, exceptions, domain counts and qualifying investigations are authored assumptions, not measured or industry averages. OBI investigation credit applies only where baseline visibility is missing. Existing equally useful traces imply zero investigation credit. Existing templates and upstream namespace opt-in belong in the baseline. Prototype development/hardening and additional telemetry/support are excluded unless explicitly entered. No waiting-time, outage-revenue or cash-reduction claim.",
+  "baseline": {
+    "initialPerDomainHours": 0,
+    "changePerDomainHours": 0
+  },
+  "shared": {
+    "initialPerDomainHours": 2,
+    "changePerDomainHours": 1
+  }
 }
