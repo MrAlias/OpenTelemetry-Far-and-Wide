@@ -1,5 +1,7 @@
 # Demo OpenTelemetry injection operator
 
+For standalone installation and ongoing development, use **[RIO](https://github.com/otelx/rio)** and its [quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). This directory preserves the presentation’s demo snapshot; its `demo.opentelemetry.io` API differs from RIO’s `rio.otelx.github.io` API.
+
 A small, single-process Go operator for the Far and Wide demo. It uses one
 cluster-scoped `Instrumentation` CR named `cluster`, a Pod admission webhook,
 and Kubernetes rolling updates. OBI is installed and configured separately.

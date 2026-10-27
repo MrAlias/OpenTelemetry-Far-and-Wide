@@ -1,5 +1,7 @@
 # Demo Injector payload image
 
+For standalone installation and ongoing development, use **[RIO](https://github.com/otelx/rio)** and its [quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). This directory preserves the presentation’s demo snapshot; its `demo.opentelemetry.io` API differs from RIO’s `rio.otelx.github.io` API.
+
 This component builds the image consumed by
 [the demo operator](../otel-injector-operator/README.md). It bundles the upstream
 OpenTelemetry Injector and agents for Java, Node.js, .NET, Python, and Ruby.

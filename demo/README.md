@@ -214,6 +214,8 @@ do not yet produce OTLP logs, and the stack does not collect container stdout.
 
 ## 5. Build and deploy the operator and Injector
 
+For a standalone evaluation, use [RIO](https://github.com/otelx/rio) and its [quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
+
 Build the operator and the payload containing the Injector and language agents:
 
 ```bash

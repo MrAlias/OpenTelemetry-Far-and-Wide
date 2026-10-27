@@ -55,6 +55,8 @@ media behavior, checks, exports and deployment under a URL prefix.
 
 ## Live demo and evidence
 
+The standalone controller and payload project is **[RIO — Runtime Instrumentation Operator](https://github.com/otelx/rio)**. For a fresh installation of OpenTelemetry Zero-Code instrumentation, start with [RIO’s quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). This repository contains the presentation and its recorded demo snapshot.
+
 The [demo walkthrough](demo/README.md) runs eighteen services, PostgreSQL and
 Redis. OBI supplies the baseline. The opening 350 ms request contains a failed
 Checkout connection around 150 ms. Java-agent detail ties the failed HTTP call

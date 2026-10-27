@@ -94,12 +94,7 @@ inherit selection on admission. Shared agent versions and export settings reduce
 drift; a central scope also provides a place to change or remove enrollment.
 Compatibility, platform maintenance and telemetry costs still need management.
 
-The [earlier prototype review](technical-findings.md#identified-implementation)
-credits Jack Berg and Nikola Grcevski. The bundled namespace-driven implementation
-is the precursor to [RIO](https://github.com/otelx/rio), the independent OTelX
-Runtime Instrumentation Operator. This recording uses the historical
-`demo.opentelemetry.io` API; current RIO uses `rio.otelx.github.io` and has its own
-release and compatibility contract.
+The [earlier prototype review](technical-findings.md#identified-implementation) records Jack Berg’s implementation work and Nikola’s participation. The standalone project is now [RIO — Runtime Instrumentation Operator](https://github.com/otelx/rio), an independent otelx project using OpenTelemetry components. This recorded demo uses the bundled snapshot and its `demo.opentelemetry.io` API; RIO uses `rio.otelx.github.io`. Direct audience members to RIO’s quickstart for a fresh evaluation.
 
 
 Capture runtime: the disposable `far-wide-recording-control-plane` container was
