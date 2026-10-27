@@ -11,5 +11,9 @@ public class Product {
   private Long id;
   private String name;
 
+  private int price;
+
+  int price() { return price; }
+
   protected Product() {}
 }

@@ -27,7 +27,7 @@ exportFilename: opentelemetry-far-and-wide
 # OpenTelemetry<br>Far and Wide
 
 <!--
-Tyler · 10 seconds. Hold the complete title for four seconds; no reveal.
+Tyler · 10 seconds. Begin naturally: “Welcome everyone. I’m Tyler Yahn.” Nikola: “And I’m Nikola Grcevski.” No authored dramatic hold; allow a short breath between speakers.
 The 25-minute slot has 21 minutes of live content, one minute flex and three minutes questions. Use the actual demo live; recordings are manual-play fallbacks. Presenter notes carry handoffs, commands, timing and source references.
 -->
 

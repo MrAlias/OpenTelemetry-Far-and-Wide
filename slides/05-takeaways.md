@@ -58,15 +58,14 @@ kicker: An illustrative first year · 18 services
 <SavingsExample mode="demo" />
 
 <p class="savings-context">13 remaining eligible services · $100 per person-hour · hypothetical inputs</p>
-<p class="savings-context">Shared setup, upkeep and exceptions included. Extra costs estimated separately.</p>
+<p class="savings-context">One namespace setup · 13 updates/month → 1 · no investigation-time credit</p>
 
 <!--
-Tyler · 80 seconds. Compare complete work ledgers for equivalent outcomes. These are authored estimates, not measured demo results, industry averages or guaranteed cash savings. The best existing templates and upstream namespace opt-in belong in the baseline.
-Nikola: 14 compatible services minus the common pilot leaves 13. Initial setup: baseline 13 × 2.5 = 32.5 hours; shared 13 × 0.5 + 2 hours deploying/configuring the shared tools = 8.5. Initial saving 24 hours. The two shared hours are a declared work estimate, not an extra adoption surcharge; production prototype development is outside this adoption scenario.
-Tyler: Four updates per year: baseline 13 × 4 × 0.75 = 39 hours. Shared rollout/compatibility work 1 domain × 4 × 1 = 4 hours, plus one exception service per update × 4 × 0.5 = 2 hours. Shared annual upkeep totals 6 hours; centralizing it saves 33 hours. Do not also charge every routine service for these same shared updates.
-Nikola: Twelve qualifying investigations: 3 people × 0.5 hours × 12 = 18 baseline hours, versus 1 × 0.5 × 12 = 6 with OBI. Count only missing-visibility cases; equally useful existing traces imply zero credit. Investigation work excludes setup coordination and repair time.
-Tyler: Total baseline 32.5 + 39 + 18 = 89.5; shared 8.5 + 6 + 6 = 20.5. Difference 69 hours × $100 = $6,900 first year. Recurring upkeep plus investigation saving is 33 + 12 = 45 hours, or $4,500. Shared work and exceptions have already been counted once; there is no additional generic surcharge.
-Rate context: BLS May 2025 median developer wage $135,980 ÷ 2,080 ÷ broad private-industry wage share 0.70 ≈ $93.39; $100 is a rounded planning input, not a BLS rate. All workflow times/frequencies are assumptions. Additional prototype development, support and telemetry require their own estimates. Capacity becomes cash savings only if spending falls. Calendar waiting and outage revenue are unpriced.
+Tyler · 80 seconds. Explicit hypothetical annual labor model. Compare distributed responsibility for instrumentation with centralized RIO + Injector, not “Before” versus “With tools.” One common pilot is excluded, leaving 13 compatible services.
+Nikola: Distributed initial setup = 13 × 2.5 = 32.5 hours. Centralized setup = 1 hour controller/policy + 0.5 hour OBI deployment = 1.5 hours once for the namespace. No residual per-service setup charge. The 30-minute OBI budget is presenter-supplied; other durations are authored assumptions.
+Tyler: One agent release each month. Distributed 13 × 12 = 156 update operations; centralized 1 × 12 = 12. At an assumed 0.75 person-hour each, distributed annual upkeep is 117 hours and centralized upkeep is 9. Recurring saving 108 hours = $10,800.
+Nikola: Equivalent installed telemetry implies equal investigation capability; no investigation credit. Initial OBI coverage is counted once, not per incident. No claim of telemetry-bill savings from enabling/disabling collection.
+Tyler: Initial saving 31 hours plus upkeep saving 108 = 139 hours × $100 = $13,900 in year one. These are capacity values, not measured results or guaranteed spending reductions. Additional compatibility, service exceptions, development/hardening and support must be estimated explicitly. Shared qualification common to both workflows cancels. Already centralized? Use that capable baseline, which can yield zero saving.
 
 [Sources]
 - presentation/data/savings-assumptions.json
@@ -87,14 +86,12 @@ kicker: The same assumptions · larger fleets
 <SavingsExample mode="fleet" />
 
 <p class="savings-context">Illustrative USD capacity saved · $100 per person-hour</p>
-<p class="savings-context">Shared updates per rollout group; exceptions counted separately. Setup savings happen once.</p>
+<p class="savings-context">12 agent releases/year · shared setup and updates once per rollout domain</p>
 
 <!--
-Tyler · 60 seconds. Read rounded figures naturally: about $38,000 for 100 services, $193,000 for 500 and $386,000 for 1,000 in the hypothetical first year.
-Nikola: Preserve the demo's 14/18 runtime mix, rounded down, and exclude one common pilot per fleet. Rollout domains are 1/2/5/10; exception services per update are 1/4/20/40; qualifying investigations per year are 12/24/60/120. These are explicit independent scenario inputs, not averages or an observed scaling law.
-Shared initial deployment/policy is two hours per domain plus half an hour residual per service. Upkeep is four annual changes × (one shared hour per domain + half an hour per exception service). Baseline initial setup is 2.5 hours per service; each update 0.75 hours per service. This directly captures centralization rather than multiplying shared routine maintenance across services.
-Recurring values are $4,500 / $23,600 / $116,100 / $232,800 with a stable fleet. Initial work disappears from both sides; upkeep remains in both ledgers. Already centralized? Enter that capable baseline, including its shared work. Identical ledgers and useful visibility must produce zero benefit.
-Tyler: With no qualifying OBI investigations, the demo still saves $5,700 from setup and upkeep. Another 80 hours of initial prototype development would turn its $6,900 into −$1,100; the model accepts real additional work without inventing a universal surcharge. Extra non-labor costs are separate. These are capacity values, not guaranteed spending reductions.
+Tyler · 45 seconds. The same hypothetical inputs produce first-year values of $85,300 / $439,800 / $881,900 for 100 / 500 / 1,000 services. Recurring values $66,600 / $343,800 / $689,400. The demo is $13,900 first year, $10,800 recurring.
+Nikola: Preserve the 14/18 supported-runtime mix, rounded down, and exclude one pilot per fleet. Independent rollout domains are explicit scenario inputs: 1 / 2 / 5 / 10. Each receives one shared setup and twelve shared update operations. No central work is charged per routine service. Default service exceptions are zero; add known extra compatibility/exception work rather than inventing a blanket charge.
+Tyler: These are scenarios, not observed scaling laws. Lower distributed effort, existing centralization or extra platform work can shrink or reverse the result. The editable calculator includes those cases. No incident-response, waiting-time, revenue or telemetry-bill saving is priced.
 
 [Sources]
 - presentation/data/savings-assumptions.json
@@ -115,11 +112,11 @@ kicker: Make the next investigation easier
 <div class="closing-link">Demo and source · github.com/MrAlias/OpenTelemetry-Far-and-Wide</div>
 
 <!--
-Tyler · 55 seconds. We began with a customer waiting. OBI located the local interval; the Java agent named the pricing method; removing the deliberate wait improved the matched request from roughly 360 to 226 ms. Point back to the opening customer problem.
+Tyler · 55 seconds. We began with a customer waiting. OBI located the local interval; the Java agent named the pricing method; removing the obsolete backend attempt improved the measured request; use the current medians shown on the slide. Point back to the opening customer problem.
 Nikola: One namespace choice carried setup across supported services using the custom controller and Injector.
 Tyler: The customer gets a faster checkout; the next team gets useful diagnostic detail without repeating the setup project. The dollar figures describe hypothetical engineering capacity, distinct from the measured request result. Invite questions with both outcomes visible.
 
-Live content totals 21 minutes, with one minute flex and three minutes questions in the 25-minute slot. The source URL is this talk repository, not an invented official release of the custom component.
+Live content totals 21 minutes, with one minute flex and three minutes questions in the 25-minute slot. RIO is available at github.com/otelx/rio; the talk repository retains the tested bundled prototype and demo.
 
 [Sources]
 - presentation/data/resolution.json

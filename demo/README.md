@@ -429,12 +429,22 @@ is `k8s/checkout-direct-agent.patch.yaml`; shared enrollment uses
 operator walkthrough above; begin from a clean, isolated demo installation.
 
 
-## Resolve the seeded pricing wait
+## Resolve the retired-backend timeout
 
-After the Java agent identifies the pricing method, complete the customer story:
-remove the demo's deliberate 150 ms wait, deploy a separately tagged fixed image,
-and remeasure the request. The default slow image and historical proof remain
-unchanged. The fixed source still returns 42 and retains the full checkout flow.
+The standard demo now attempts an absent legacy pricing backend with a real
+150 ms HTTP connection timeout, then reads the product price from PostgreSQL.
+The fixed image removes that obsolete attempt and retains the same store lookup.
+The original historical proof fixture is unchanged.
+
+Existing disposable database volumes need the new price column once:
+
+```sh
+kubectl exec -i -n demo-apps deployment/postgres -- \
+  psql -U checkout -d checkout < demo/k8s/upgrade-product-price.sql
+```
+
+Fresh databases seed it automatically. From the repository root, prepare the
+fixed image before presenting:
 
 ```sh
 make -C demo pricing-fixed-image pricing-fixed-load CLUSTER=<demo-cluster>
@@ -443,14 +453,14 @@ kubectl patch deployment/checkout -n demo-apps --type=strategic \
 kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
 ```
 
-Run the build from the repository root; omit `-C demo` when already in demo/.
-Prepare the image before the presentation. Show the code change and deployment
-live, then return to fresh requests. The matched recorded example uses 30 warmed
-successful requests per version and unchanged agent/exporter settings: 359.9 ms
-median before, 226.2 ms after. This is a local seeded-fault result, not an
-instrumentation speedup or production benchmark. See the
-[measurement protocol and evidence](../docs/customer-resolution.md).
+Show the actual fresh waterfall immediately after deployment: the successful
+price query remains and the failed legacy call is absent. Then show the separate
+matched warmed comparison: 361.6 → 214.1 ms median request duration and
+157.0 → 4.0 ms median pricing duration, with identical instrumentation. This is a
+local seeded-failure result, not an instrumentation speedup or a production
+benchmark. See [the full protocol](../docs/customer-resolution.md), including how
+to check that the absent address actually times out in your disposable network.
 
-Next, perform namespace enrollment as described above; retain the fixed Checkout
-image. To rehearse from the slow state again, restore
-`far-wide-demo-checkout:local` on deployment/checkout in your demo namespace.
+Next enroll the namespace, retaining the fixed Checkout image. Reset to a newly
+built `far-wide-demo-checkout:local` for the timeout example. Keep all assets and
+working files in this repository; synthetic media remains local and ignored.

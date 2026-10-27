@@ -46,7 +46,7 @@ kicker: The observed request
 
 <TraceEvidence image="connected-trace.png" label="Actual OBI trace: Gateway, Checkout, Inventory and the Cart branch" />
 
-<p class="caption">306.26 ms · service calls and database work in one waterfall</p>
+<p class="caption">350 ms · service calls and database work in one waterfall</p>
 
 <!--
 Nikola · 55 seconds. “The useful result is a connected trace. This is the request behind the duration we started with.”
@@ -84,19 +84,19 @@ kicker: Choose the investigation
 clicks: 1
 ---
 
-# Find the time before downstream calls
+# Find the failed connection on the request path
 
-<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual Checkout trace; 151.8 milliseconds before its first outbound call" />
+<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI waterfall with a failed Checkout CONNECT span near 150 milliseconds" />
 
-<p class="caption">A long parent bar includes time in its children.</p>
+<p class="caption">Follow the slow failed attempt, rather than the longest parent bar.</p>
 
 <!--
-Tyler · 80 seconds. Gateway is long because it waits for Checkout; Checkout includes its own downstream work. Do not select the longest inclusive span.
-Nikola: “Look instead at the gap before Checkout makes its first downstream call.” Pause four seconds, then advance once to highlight the actual interval.
-Tyler: About 151.8 ms happens before any child call begins. Downstream services cannot explain that interval. Nearly half the opening request happens before the first outbound call. This is our first discovery: investigate local Checkout work instead of blaming a dependency.
+Tyler · 70 seconds. Gateway’s long parent includes waiting on Checkout; Checkout includes its downstream work. The longest parent is not a root-cause argument.
+Nikola: Point to the actual red CONNECT span: roughly 150 ms on a failed outbound connection before the successful price query and service calls. Advance the highlight once while naming it.
+Tyler: OBI has already exposed a failed dependency attempt. The next question is which method makes it, why it is still attempted and what happens afterward. The Java agent gives the calling pricing method, HTTP endpoint, SocketTimeoutException and current-store fallback. Do not reuse the old no-I/O gap explanation.
 
 [Sources]
-- public/demo-capture/baseline-timing.json
-- public/demo-capture/capture-summary.json
+- public/demo-capture/obi-trace-evidence.json
+- presentation/data/request.json
 [/Sources]
 -->

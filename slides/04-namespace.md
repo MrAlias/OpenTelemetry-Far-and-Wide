@@ -19,46 +19,46 @@ Tyler: Fourteen runtimes in this demo are supported by the payload. Checkout has
 -->
 
 ---
-kicker: The upstream Operator
+kicker: Configuration context · upstream comparison
 ---
 
-# Injection still needs a selection
+# Choose languages—or share one runtime policy
 
 <div class="code-focus">
 
 ```yaml
-annotations:
-  instrumentation.opentelemetry.io/inject-java: "true"
+# Upstream Operator: Java workload opt-in
+instrumentation.opentelemetry.io/inject-java: "true"
+# Upstream Operator: Python workload opt-in
+instrumentation.opentelemetry.io/inject-python: "true"
 ```
 
 </div>
 
-<p class="lead">Language-specific opt-in.<br>On a workload <em>or a namespace</em>.</p>
-
-<p class="caption">Can one shared choice also carry runtime selection and rollout?</p>
+<p class="lead">RIO: select the namespace.<br>The Injector detects supported runtimes.</p>
+<p class="caption">Upstream also supports namespace annotations. RIO adds its own selection and rollout workflow.</p>
 
 <!--
-Tyler · 45 seconds. Upstream already supplies language-agent injection and supports namespace annotations. Do not claim every service must always be annotated individually.
-Nikola: For this mixed-language application, we want one shared namespace choice, with runtime handling and managed rollout. This creates the need for the custom integration; do not present it as the first implementation of namespace opt-in.
-
-This is an illustrative upstream configuration excerpt, not a claim that we installed the upstream Operator during this recorded sequence.
+Tyler · 45 seconds. These are upstream configuration examples for different runtime owners, alongside an Instrumentation resource specifying agent/export settings. Upstream supports workload OR namespace annotation opt-in; don’t imply 13 edits are inevitable for an already-centralized upstream deployment.
+Nikola: RIO means Runtime Instrumentation Operator, an independent OTelX project using the upstream OpenTelemetry Injector and agents. It is not the upstream Operator or a distribution of it. This recording uses the bundled prototype that led to RIO. The value is central namespace policy, runtime detection and managed rollout together: application teams don’t each choose and maintain language injection settings or arrange the instrumentation release. Compatible new workloads inherit the selection.
 
 [Sources]
 - https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
+- https://github.com/otelx/rio
 - docs/technical-findings.md#identified-implementation
 [/Sources]
 -->
 
 ---
-kicker: Live demo · custom Injector integration
+kicker: Live demo · RIO’s namespace-driven approach
 ---
 
-# Move the choice to the namespace
+# Install the namespace-driven controller
 
 <DemoClip src="install-operator-edited.mp4" poster="install-operator-edited-poster.png" label="Actual installation of the custom Injector controller" />
 
 <!--
-Tyler · 60 seconds. Install the repository's merged component once with make -C components/otel-injector-operator install. The controller selects Kubernetes workloads and manages rolling replacement; the OpenTelemetry Injector detects supported runtimes and loads their agents.
+Tyler · 60 seconds. Install the repository’s bundled RIO precursor once with make -C components/otel-injector-operator install. The controller selects Kubernetes workloads and manages rolling replacement; the OpenTelemetry Injector detects supported runtimes and loads their agents.
 Nikola: Payload, exporter and exclusions are shared settings. Prepare demo/k8s/fleet-instrumentation-base.yaml before the next action. The actual application choice comes next.
 
 Credit Jack Berg's prototype implementation and Nikola's participation. The merged demo uses demo.opentelemetry.io, independently from upstream APIs. Describe the bundled recording snapshot accurately; do not present it as an upstream Operator release.
@@ -91,7 +91,7 @@ action: Inject
 <p class="caption">Shared payload, exporter and exclusions are configured once.</p>
 
 <!--
-Nikola · 30 seconds. “Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.”
+Nikola · 30 seconds. “Here is the whole selection rule: instrument demo-apps. No list of service names. The Injector chooses the runtime; application owners do not choose and maintain separate language injection settings.”
 
 This is the actual rule appended by demo/k8s/instrument-demo-namespace.patch.yaml. Shared defaults and exclusions are prerequisites, not magically absent configuration. Retain direct Checkout, the four Go baselines and database deployments. This selection enrolls thirteen more supported services.
 
@@ -160,7 +160,7 @@ Tyler · 60 seconds. Open the fresh namespace-enrolled request in the live backe
 Nikola: Follow Catalog and its Java-agent database spans. The same enrollment covers supported Node, Python, Ruby and .NET services. The fixed-fleet-detail.mp4 fallback shows the native Grafana navigation.
 Tyler: No separate instrumentation change from each application team. The platform carries shared setup; application teams retain their services.
 
-The earlier application change removed the seeded pricing wait; this enrollment adds readiness for future investigations. Do not attribute the fix to instrumentation or promise support for every framework/version.
+The earlier application change removed the retired backend attempt; this enrollment adds readiness for future investigations. Do not attribute the fix to instrumentation or promise support for every framework/version.
 
 [Sources]
 - presentation/data/resolution.json

@@ -2,7 +2,7 @@
 from pathlib import Path
 import argparse, importlib.util, json, os, statistics, subprocess, time, urllib.request, uuid
 ROOT=Path(__file__).resolve().parents[2]
-WORK=ROOT/'.artifacts/story-resolution'
+WORK=ROOT/'.artifacts/story-refinement'
 WORK.mkdir(parents=True,exist_ok=True)
 spec=importlib.util.spec_from_file_location('flow',ROOT/'demo/scripts/check-flow.py');flow=importlib.util.module_from_spec(spec);spec.loader.exec_module(flow)
 def get(url):

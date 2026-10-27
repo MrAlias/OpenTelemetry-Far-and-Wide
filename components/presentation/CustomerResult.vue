@@ -17,7 +17,7 @@ const rows = [{label:'Before the fix', value:before, kind:'before'}, {label:'Aft
       <span>{{ row.label }}</span><div class="duration-track"><div :style="{width: `${row.value / maximum * 100}%`}" /></div><strong>{{ row.value }} <small>ms</small></strong>
     </div>
     <p class="pricing-payoff"><code>PricingEngine.calculate</code><br><span>{{ evidence.before.pricingMedianMs.toFixed(1) }} ms → {{ evidence.after.pricingMedianMs.toFixed(2) }} ms</span></p>
-    <p class="result-method">30 successful requests per version after warmup · same instrumentation</p>
-    <p class="result-method">Same price. Orders created. Full request path.</p>
+    <p class="result-method">Matched warmed requests · same instrumentation · local demo</p>
+    <p class="result-method">The successful price lookup and checkout path remain.</p>
   </div>
 </template>

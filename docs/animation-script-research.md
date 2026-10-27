@@ -148,3 +148,26 @@ default selection for new compatible workloads. Preserve separate shared default
 and exclusions in preparation. Do not suggest restarts, compatibility work or
 central ownership costs disappear. A future standalone repository is not a
 current release or an audience download link.
+
+
+## October 27 timeout, collaboration and actual-trace iteration
+
+The current opening starts “Welcome everyone” and introduces Tyler Yahn and
+Nikola Grcevski by full name, with natural handoffs. It supersedes the authored
+intro holds described in earlier iterations. The new fault is a real missing
+legacy-backend connection with a 150 ms timeout, followed by a successful
+PostgreSQL fallback. OBI sees CONNECT; Java detail names the caller and error.
+The old no-I/O gap narrative is retired for this version.
+
+After deploying the fix, show the authentic waterfall first, then the matched
+request-duration aggregate. Literal code excerpts and actual exported spans
+replace abstract payoff timing graphics. The narration explains collaborating
+with the owning team through a PR carrying customer impact, trace and fix.
+
+The standalone project now exists: [RIO](https://github.com/otelx/rio). Its
+README identifies an independent OTelX controller using upstream components,
+not a distribution of the upstream Operator. The recorded demo uses its bundled
+precursor. Upstream language annotations are shown for context, with namespace
+opt-in acknowledged. A new cost ledger compares distributed instrumentation
+ownership with central setup and twelve monthly updates, without an
+unsubstantiated investigation-time or telemetry-bill credit.

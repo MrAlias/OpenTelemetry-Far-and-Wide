@@ -3,8 +3,8 @@
 Use the [current storyboard](talk-storyboard.md): brief introduction → actual
 18-service topology with PostgreSQL and Redis → OBI connected view and timing
 comparison → direct language-agent setup on Checkout after evidence selects it →
-reveal and remove the seeded pricing wait → measured customer payoff →
-13 additional payload-supported services → upstream Operator opt-in → custom namespace selection and rollout →
+expose the retired-backend timeout and working fallback → remove the stale call → actual post-fix waterfall → measured customer payoff →
+13 additional payload-supported services → upstream configuration comparison → RIO precursor / namespace selection and rollout →
 verified wider picture → coordination, engineering and lifecycle savings.
 Four Go services retain OBI coverage; the payload has no Go language agent.
 
@@ -17,7 +17,7 @@ a matched latency recheck and broader enrollment;
 rehearse the same sequence live. Savings are hypotheses until measured;
 adding agent detail does not automatically reduce a backend bill. The closing
 slides and review video include an explicitly hypothetical dollar-capacity model
-for the demo and larger fleets; see [the inputs and scope](instrumentation-savings.md#illustrative-dollar-model--october-26-2026).
+for the demo and larger fleets; see [the inputs and scope](instrumentation-savings.md#worked-result-and-scale).
 
 The submitted proposal below is retained as the original event abstract. It is
 historical context; the current storyboard supersedes its proposed live sequence.

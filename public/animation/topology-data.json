@@ -1,6 +1,6 @@
 {
   "source": "demo/k8s/applications.yaml",
-  "manifestSha256": "2810ec469b34352c05e271f57708a9a64a1ca20267f3e141bf02ccc33bffd343",
+  "manifestSha256": "d033199e73f0e240e6cde34c45e742fa0045f31d7a023383710705a276086708",
   "applications": 18,
   "eligible": 14,
   "nodes": [

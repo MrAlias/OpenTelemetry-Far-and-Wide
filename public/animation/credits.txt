@@ -77,10 +77,24 @@ or prototype hardening. Released capacity is not automatically cash savings.
 https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm
 https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm
 
-Customer resolution (October 26, 2026):
-The deliberate pricing wait is removed in the application, then remeasured.
-Matched 30-request median Gateway durations: 359.9 ms before, 226.2 ms after.
-Pricing method medians: 150.2 ms before, 0.06 ms after.
-Same instrumentation and full response flow; local demo, not a production benchmark.
-Evidence and limits: presentation/data/resolution.json; docs/customer-resolution.md.
-Later fleet captures use the fixed application. Dollar savings remain hypothetical.
+Customer resolution (October 27, 2026):
+The pricing baseline makes a real HTTP connection attempt to a missing legacy
+backend with a 150 ms timeout, then reads the current price from PostgreSQL.
+The fix removes the stale attempt and retains the same successful store lookup.
+Actual Grafana waterfalls precede the repeated-request summary. See canonical
+presentation/data/resolution.json and docs/customer-resolution.md for current
+measurements; these are local demo observations, not production benchmarks.
+
+RIO is an independent experimental OTelX project using the upstream OpenTelemetry
+Injector and language agents, not a distribution of the upstream Operator.
+The recording uses the bundled demo precursor that led to RIO:
+https://github.com/otelx/rio
+The upstream Operator comparison includes its existing namespace opt-in support:
+https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
+
+Economic scenario (October 27, 2026):
+Distributed instrumentation ownership versus centralized RIO + Injector.
+One namespace setup, twelve monthly agent releases, thirteen update owners versus
+one central owner. No per-investigation or telemetry-bill credit. $13,900 of
+first-year capacity and $10,800 recurring for the demo under explicit hypothetical
+labor inputs. See docs/instrumentation-savings.md and the editable calculator.

@@ -1,12 +1,12 @@
 {
-  "source": "Recorded isolated local demo, October 23 2026",
+  "source": "Actual isolated local demo, timeout/fallback revision recorded October 27, 2026",
   "baseline": {
-    "traceId": "1fa60f9d3116c8aad6e17c1cfa9c6f1",
-    "rootDurationMs": 306,
-    "checkoutDurationMs": 304.684373,
-    "checkoutInitialLocalMs": 151.776476,
-    "checkoutSpanId": "FV6nx4Vdn70=",
-    "spanCount": 90,
+    "traceId": "e7f5bb95c0acdaf1996964a6489547a3",
+    "rootDurationMs": 350.341063,
+    "checkoutDurationMs": 349.402207,
+    "failedConnectionMs": 150.543582,
+    "checkoutSpanId": "AN0nY+PqDbI=",
+    "spanCount": 95,
     "services": [
       "cart",
       "catalog",
@@ -31,150 +31,42 @@
     ]
   },
   "fleetTrace": {
-    "traceID": "49401c2760df8762c7030f1276a89d42",
-    "rootServiceName": "gateway",
-    "rootTraceName": "GET /checkout",
-    "startTimeUnixNano": "1792793639441957686",
-    "durationMs": 522,
-    "spanSet": {
-      "spans": [
-        {
-          "spanID": "e2c2bc5fe0afde37",
-          "name": "GET /checkout",
-          "startTimeUnixNano": "1792793639442101418",
-          "durationNanos": "522076194",
-          "attributes": [
-            {
-              "key": "service.name",
-              "value": {
-                "stringValue": "gateway"
-              }
-            }
-          ]
-        },
-        {
-          "spanID": "124de2e5aa67b7d0",
-          "name": "GET /checkout",
-          "startTimeUnixNano": "1792793639441957686",
-          "durationNanos": "522651843",
-          "attributes": [
-            {
-              "key": "service.name",
-              "value": {
-                "stringValue": "gateway"
-              }
-            }
-          ]
-        }
-      ],
-      "matched": 2
-    },
-    "spanSets": [
-      {
-        "spans": [
-          {
-            "spanID": "e2c2bc5fe0afde37",
-            "name": "GET /checkout",
-            "startTimeUnixNano": "1792793639442101418",
-            "durationNanos": "522076194",
-            "attributes": [
-              {
-                "key": "service.name",
-                "value": {
-                  "stringValue": "gateway"
-                }
-              }
-            ]
-          },
-          {
-            "spanID": "124de2e5aa67b7d0",
-            "name": "GET /checkout",
-            "startTimeUnixNano": "1792793639441957686",
-            "durationNanos": "522651843",
-            "attributes": [
-              {
-                "key": "service.name",
-                "value": {
-                  "stringValue": "gateway"
-                }
-              }
-            ]
-          }
-        ],
-        "matched": 2
-      }
+    "traceID": "05fed0b791c2427f83c14ed3c0c9be8c",
+    "fixedCheckout": true,
+    "pricingMs": 2.072588,
+    "sdkServices": [
+      "cart",
+      "catalog",
+      "checkout",
+      "customer-profile",
+      "fraud",
+      "inventory",
+      "loyalty",
+      "notifications",
+      "payments",
+      "promotions",
+      "receipts",
+      "recommendations",
+      "stock-planner",
+      "tax"
     ],
-    "serviceStats": {
-      "cart": {
-        "spanCount": 7
-      },
-      "catalog": {
-        "spanCount": 3
-      },
-      "checkout": {
-        "spanCount": 13
-      },
-      "currency": {
-        "spanCount": 3
-      },
-      "customer-profile": {
-        "spanCount": 2
-      },
-      "fraud": {
-        "spanCount": 2
-      },
-      "gateway": {
-        "spanCount": 4
-      },
-      "inventory": {
-        "spanCount": 1
-      },
-      "loyalty": {
-        "spanCount": 2
-      },
-      "notifications": {
-        "spanCount": 2
-      },
-      "payments": {
-        "spanCount": 2
-      },
-      "postgres": {
-        "spanCount": 3
-      },
-      "promotions": {
-        "spanCount": 4
-      },
-      "receipts": {
-        "spanCount": 2
-      },
-      "recommendations": {
-        "spanCount": 4
-      },
-      "redis": {
-        "spanCount": 15
-      },
-      "shipping": {
-        "spanCount": 4
-      },
-      "stock-planner": {
-        "spanCount": 2
-      },
-      "tax": {
-        "spanCount": 2
-      },
-      "warehouse": {
-        "spanCount": 4
-      }
-    }
+    "obiOnlyServices": [
+      "gateway",
+      "shipping",
+      "warehouse",
+      "currency"
+    ]
   },
   "languageSdkServices": {
-    "stock-planner": [
-      "opentelemetry.instrumentation.flask",
-      "opentelemetry.instrumentation.psycopg"
-    ],
-    "promotions": [
+    "cart": [
+      "OpenTelemetry::Instrumentation::Net::HTTP",
       "OpenTelemetry::Instrumentation::Rack",
       "OpenTelemetry::Instrumentation::Redis"
+    ],
+    "catalog": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server",
+      "io.opentelemetry.jdbc"
     ],
     "checkout": [
       "io.opentelemetry.hibernate-6.0",
@@ -183,51 +75,49 @@
       "io.opentelemetry.jdbc",
       "io.opentelemetry.methods"
     ],
-    "notifications": [
-      "Microsoft.AspNetCore",
-      "System.Net.Http"
-    ],
     "customer-profile": [
       "Microsoft.AspNetCore",
       "System.Net.Http"
     ],
-    "tax": [
+    "fraud": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server"
+    ],
+    "inventory": [
+      "@opentelemetry/instrumentation-http"
+    ],
+    "loyalty": [
+      "OpenTelemetry::Instrumentation::PG",
+      "OpenTelemetry::Instrumentation::Rack"
+    ],
+    "notifications": [
       "Microsoft.AspNetCore",
       "System.Net.Http"
+    ],
+    "payments": [
+      "io.opentelemetry.java-http-client",
+      "io.opentelemetry.java-http-server"
+    ],
+    "promotions": [
+      "OpenTelemetry::Instrumentation::Rack",
+      "OpenTelemetry::Instrumentation::Redis"
+    ],
+    "receipts": [
+      "opentelemetry.instrumentation.flask",
+      "opentelemetry.instrumentation.psycopg"
     ],
     "recommendations": [
       "opentelemetry.instrumentation.flask",
       "opentelemetry.instrumentation.redis",
       "opentelemetry.instrumentation.requests"
     ],
-    "catalog": [
-      "io.opentelemetry.java-http-client",
-      "io.opentelemetry.java-http-server",
-      "io.opentelemetry.jdbc"
-    ],
-    "fraud": [
-      "io.opentelemetry.java-http-client",
-      "io.opentelemetry.java-http-server"
-    ],
-    "loyalty": [
-      "OpenTelemetry::Instrumentation::PG",
-      "OpenTelemetry::Instrumentation::Rack"
-    ],
-    "payments": [
-      "io.opentelemetry.java-http-client",
-      "io.opentelemetry.java-http-server"
-    ],
-    "cart": [
-      "OpenTelemetry::Instrumentation::Net::HTTP",
-      "OpenTelemetry::Instrumentation::Rack",
-      "OpenTelemetry::Instrumentation::Redis"
-    ],
-    "inventory": [
-      "@opentelemetry/instrumentation-http"
-    ],
-    "receipts": [
+    "stock-planner": [
       "opentelemetry.instrumentation.flask",
       "opentelemetry.instrumentation.psycopg"
+    ],
+    "tax": [
+      "Microsoft.AspNetCore",
+      "System.Net.Http"
     ]
   },
   "terminalSpeed": 1,
@@ -275,7 +165,7 @@
           ]
         }
       },
-      "fullPolicyGeneration": 2,
+      "fullPolicyGeneration": 6,
       "obiServices": [
         "currency",
         "gateway",
@@ -304,6 +194,19 @@
         "tax",
         "warehouse"
       ]
-    }
+    },
+    "recorded": "2026-10-27",
+    "observedGeneration": 6
+  },
+  "javaDetail": {
+    "traceId": "09007e84d580263d160932d7e72f772b",
+    "pricingMs": 154.969743,
+    "fault": "Real HTTP connection timeout to missing legacy endpoint; successful PostgreSQL fallback",
+    "evidence": "public/demo-capture/java-trace-evidence.json"
+  },
+  "operatorIdentity": {
+    "project": "RIO \u2014 Runtime Instrumentation Operator",
+    "url": "https://github.com/otelx/rio",
+    "recording": "Bundled prototype precursor using demo.opentelemetry.io; independent from the upstream OpenTelemetry Operator"
   }
 }

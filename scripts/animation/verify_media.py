@@ -52,10 +52,12 @@ resolution=json.loads((ROOT/'presentation/data/resolution.json').read_text())
 assert resolution['version']==source['storyRevision']
 assert json.loads((ROOT/'public/presentation/resolution.json').read_text())==resolution
 scene_by_id={c['id']:c for c in timeline['chapters']}
-assert scene_by_id['08-customer-result']['kind']=='latency-result'
+assert scene_by_id['08-customer-result']['kind']=='screen'
+assert scene_by_id['08-customer-result']['visualCues'][0]['src']=='demo-capture/fixed-request-trace.png'
+assert scene_by_id['08-result-summary']['kind']=='latency-result'
 assert scene_by_id['12-wider-result']['visualCues'][0]['src']=='demo-capture/fixed-fleet-overview.png', 'Fleet scene returns to the pre-fix application'
 assert any(v['src']=='demo-capture/fixed-fleet-detail.mp4' for v in scene_by_id['12-wider-result']['visualCues']), 'Fixed fleet recording missing'
-assert resolution['fleetAfterFix']['pricingMs']<1
+assert resolution['fleetAfterFix']['pricingMs']<30
 
 topology=json.loads((OUT/'topology-data.json').read_text())
 assert topology['manifestSha256']==hashlib.sha256((ROOT/topology['source']).read_bytes()).hexdigest(), 'Topology is stale'
@@ -64,10 +66,13 @@ assert len(topology['edges'])==17
 assert sum(n['eligible'] for n in topology['nodes'])==topology['eligible']==14
 assert {n['id'] for n in topology['nodes'] if not n['eligible']}=={'gateway','shipping','warehouse','currency'}
 opening=timeline['chapters'][0]
-assert opening['cues'][0]['start']==source['chapters'][0]['leadInSeconds']==4
-assert opening['cues'][1]['start']-opening['cues'][0]['end']>=2.5
+assert opening['cues'][0]['start']==source['chapters'][0]['leadInSeconds']==.6
+assert opening['cues'][1]['start']-opening['cues'][0]['end']<1.2
+assert opening['turns'][0]['text'].startswith('Welcome everyone.')
+assert 'Tyler Yahn' in opening['turns'][0]['text']
+assert 'Nikola Grcevski' in opening['turns'][1]['text']
 with wave.open(str(WORK/'speech'/f'{opening["id"]}.wav')) as f:
-    assert not any(f.readframes(round(4*f.getframerate()))), 'Opening title hold is not silent'
+    assert not any(f.readframes(round(.6*f.getframerate()))), 'Opening title hold is not silent'
 assert len(source['chapters'])==len(timeline['chapters'])
 for authored,timed in zip(source['chapters'],timeline['chapters']):
     assert authored['turns']==timed['turns'], 'Exported dialogue is stale'
@@ -104,7 +109,7 @@ if namespace:
     assert len(check_namespace['sdkServices'])==14
     assert set(check_namespace['obiServices'])=={'gateway','shipping','warehouse','currency'}
     assert check_namespace['namespaceRule']['selector']=={'namespaces':['demo-apps']}
-    assert summary['fleetTrace']['traceID'] in (ROOT/'public/demo-capture/fleet-detail.png.json').read_text(), 'Fleet capture is stale'
+    assert summary['fleetTrace']['traceID'] in (ROOT/'public/demo-capture/fixed-fleet-detail.png.json').read_text(), 'Fleet capture is stale'
 voices=json.loads((WORK/'voice-report.json').read_text())
 assert set(voices)=={'Tyler','Nikola'}
 assert len({v['sha256'] for v in voices.values()})==2

@@ -1,112 +1,122 @@
-# Resolve the customer's waiting time
+# Resolve the customer’s waiting time
 
-The talk follows one customer problem through an actual action and a measured
-result. Finding a trace or naming a method is an intermediate step. The two
-outcomes are a faster checkout now and a shared way to investigate the next slow
-service without repeating the instrumentation setup.
+The talk begins “Welcome everyone” and introduces Tyler Yahn and Nikola
+Grcevski by full name. Short natural speaker handoffs replace the authored
+intro holds. The live plan remains 21 minutes plus one minute flex and three
+minutes of questions. Synthetic narration stays at native speech pace.
 
-## The story and its evidence
+## Follow evidence to a change
 
-1. **The customer waits.** The historical opening exemplar is a real 306.26 ms
-   request. Do not invent a production complaint, revenue loss or service target.
-2. **The broad view earns the service choice.** OBI shows that Checkout spends
-   its first 151.78 ms before its first outbound call. Neither a long parent bar
-   nor a dependency's inclusive time is the reason to select a service.
-3. **The local wait has a name.** Explicit Java-agent method inclusion exposes
-   `PricingEngine.calculate` at about 150 ms. The agent also supplies the useful
-   Hibernate/JDBC detail already in the talk. The customer is still waiting.
-4. **The cause is actionable.** The demo deliberately seeds `Thread.sleep(150)`
-   in that method. Reveal this plainly. Remove the wait in the separate fixed
-   application source while retaining the price. Installing instrumentation
-   does not optimize the application.
-5. **Return to the customer request.** A fresh matched comparison measures a
-   359.9 ms median before the application fix and 226.2 ms after it. Pricing
-   falls from 150.2 ms to 0.06 ms. Let the visual result land before continuing.
-6. **The next team needs the same capability.** Direct setup required runtime
-   knowledge, access, configuration and a deployment. Equip thirteen more
-   supported services through one namespace rule, retaining four Go OBI paths.
-   Existing upstream namespace opt-in is acknowledged. The fresh fleet trace
-   comes from the fixed application, so the story does not silently restore the
-   slow pricing method after claiming to resolve it.
-7. **Close both loops.** The customer waits less; the other teams start with
-   useful diagnostic detail. Coordination, centralized upkeep and hypothetical
-   dollars explain the operational value without turning the measured latency
-   result into an unsupported financial claim.
+1. Start with an actual opaque single-request duration in Grafana.
+2. Use OBI’s connected waterfall to locate the failed Checkout **CONNECT** span
+   around 150 ms, before the successful product lookup and service calls. A
+   parent bar includes child time; don’t choose the longest bar. The current
+   OBI capture sees the failed TCP attempt, so the old no-I/O gap explanation
+   is no longer used.
+3. Add the Java zero-code agent. The actual fresh trace shows
+   `PricingEngine.calculate`, a failed HTTP client span, its
+   `java.net.SocketTimeoutException: Connect timed out`, and a successful
+   Hibernate/JDBC query for the product price.
+4. Open the code: a stale legacy backend is attempted on every checkout.
+   Connection/read timeouts are 150 ms. The backend is absent at the demo’s
+   TEST-NET-1 address, `192.0.2.42:8080`. No sleep simulates the delay. The
+   application falls back to the current PostgreSQL product-price store.
+5. Remove the whole obsolete HTTP attempt and retain `orders.currentPrice()`.
+   This is a code fix, not a claim that installing instrumentation speeds up
+   the application. Where cross-team access permits, offer the owning team a
+   PR containing customer impact, trace evidence and the proposed fix.
+6. Deploy the fixed image. **Immediately show the actual new request’s Grafana
+   waterfall**, before any aggregate chart. The price query remains, the failed
+   legacy call is absent, and the successful downstream checkout work follows.
+7. Only then show matched repeated-request medians. The trace proves what
+   changed; the summary shows how the observed timings behaved across samples.
+8. Share diagnostic detail with thirteen more services through the bundled
+   namespace-driven prototype that led to [RIO](https://github.com/otelx/rio).
+   The fresh fleet trace uses the fixed application and shows Catalog JDBC work.
 
-The source reveal, real deployment and measured customer payoff are three new
-native slides, represented by two added animation scenes. All previous OBI,
-agent, upstream Operator, custom injector, fleet, lifecycle and dollar content
-is retained. Shorter orientation and transition budgets keep live content at
-21 minutes, plus one minute flex and three minutes questions. Narration remains
-at the original voice performances' natural pace.
+## Measured evidence and limits
 
-## What was measured
+Canonical timings, all 60 measured request rows and trace IDs are in
+[presentation/data/resolution.json](../presentation/data/resolution.json).
+The opening OBI request, Java-detail request, post-fix waterfall and full-fleet
+request are separate authentic requests, identified in their public evidence
+JSON. They are not edited versions of one trace. The aggregate comparison has
+its own matched samples; don’t substitute selected screenshot values for it.
 
-The canonical evidence is [resolution.json](../presentation/data/resolution.json).
-The historical opening request and the fresh matched comparison are different
-observations. Do not compare the old 306.26 ms example directly with a selected
-new request and call that a controlled performance result.
+For each version: 20 successful warmups, then 30 sequential successful requests,
+100 ms apart, concurrency one. Measure Gateway server-span duration. Both
+batches have the same direct Checkout agent, method setting, exporter and
+Pod template except the application image. The full-flow checker validates
+price 42, Inventory success, a new order, all 18 application services, product
+reads/order writes in PostgreSQL and Redis work. No failed measured request is
+discarded. Build, recording and narration processes stop during measurement.
 
-For each version, first perform 20 consecutive successful warmup requests, then
-30 sequential successful requests with a 100 ms pause between them. Measure
-Gateway server-span duration, rather than browser/client overhead. Use medians
-from all 30 requests. Both batches have the same direct Checkout Java agent,
-method inclusion, exporter configuration and application dependencies. The
-Kubernetes Pod template matches exactly after removing the image field. The
-only deployment change is the application image carrying the pricing fix.
+Matched raw exemplars are versioned as `timeout-before-trace.json` and
+`timeout-after-trace.json` in `public/demo-capture/`. Raw capture sessions and
+private deployment snapshots stay in `.artifacts/story-refinement/`; no
+kubeconfig, voice profile or synthetic media is versioned.
 
-Every request passes the existing full-flow checker: price 42, inventory success,
-new order ID, all 15 commerce services plus Gateway/Checkout/Inventory, PostgreSQL
-reads/writes and Redis work. Every exported trace includes all 18 application
-services, both database dependencies and exactly the Checkout SDK at this stage.
-The pricing span is correlated to its own request, not selected from another
-trace. Builds, recording and narration synthesis are stopped during measurement.
-No failed measured requests are discarded. Warmup observations remain in the
-private capture evidence.
+This is a local seeded missing-dependency demonstration, not a production
+benchmark. JVM, database and scheduling variation remain: the change in total
+request medians need not equal the configured 150 ms timeout. Pricing after the
+fix still performs real PostgreSQL work; do not describe it as zero work or
+promise a sub-millisecond span. No outage, revenue or engineering savings are
+inferred from these timings. The separate
+[labor-capacity model](instrumentation-savings.md) credits no investigation-time
+saving once both instrumentation approaches provide equivalent visibility.
 
-This is a local demonstration of a deliberately seeded wait, not a production
-benchmark, general latency prediction, throughput test or claim that all
-remaining checkout work has disappeared. The approximately 134 ms difference
-between request medians need not equal the approximately 150 ms removed method
-wait: other request work varies. No outage, revenue or engineering-effort value
-is inferred from these measured timings. Dollar assumptions remain separate in
-[instrumentation-savings.md](instrumentation-savings.md).
+## Reproduce
 
-Raw request rows, traces, deployment snapshots, command events and captures stay
-inside ignored `.artifacts/story-resolution/` and `.artifacts/demo-capture/`.
-The public JSON retains the per-request timing values and trace IDs needed to
-inspect the arithmetic without exporting a kubeconfig or cluster credentials.
+The standard demo image now builds the real timeout baseline from
+`demo/apps/checkout/baseline/PricingEngine.java`. The original historical proof
+fixture remains in `demo/proof/` for those earlier reports.
 
-## Reproduce the resolution live
-
-The default image and historical proof keep their original slow pricing source.
-A build argument selects the fixed source only for the separately tagged image:
+For an existing disposable database volume, first add the price column:
 
 ```sh
+kubectl exec -i -n demo-apps deployment/postgres -- \
+  psql -U checkout -d checkout < demo/k8s/upgrade-product-price.sql
+```
+
+Fresh deployments seed the column automatically. Verify that the reserved absent
+endpoint really times out in your demo network; some networks reject missing
+addresses immediately. `LEGACY_PRICING_URL` can point at another known unavailable
+endpoint in the disposable environment. It must never point to a real third
+party merely to manufacture latency. The recorded cluster produced genuine
+`SocketTimeoutException` events at roughly 150 ms.
+
+Prebuild both images; reveal the code, deploy, send a new request, then open it:
+
+```sh
+make -C demo images load CLUSTER=<demo-cluster>
 make -C demo pricing-fixed-image pricing-fixed-load CLUSTER=<demo-cluster>
 kubectl patch deployment/checkout -n demo-apps --type=strategic \
   --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
 kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
 ```
 
-Prepare the image before the talk. On stage, reveal the code change, deploy the
-image, send fresh requests and revisit the trace/latency result. For the complete
-local matched capture, use the isolated recording kubeconfig:
+Recording comparison (private kubeconfig, Gateway 18080, Tempo 13200):
 
 ```sh
 python3 scripts/presentation/measure_resolution.py before
-# Apply the fixed image and wait for readiness; stop recording before sampling.
+# Apply fixed image, await readiness, stop recording before measuring.
 python3 scripts/presentation/measure_resolution.py after
 ```
 
-These capture commands assume localhost Gateway 18080 and Tempo 13200, and the
-direct-agent-only stage of the story. They validate the full response and trace
-before producing a result. They do not change the user's default kubeconfig.
-Afterward, perform the existing namespace enrollment and open the fixed fleet's
-Catalog detail. To repeat the slow example, restore
-`far-wide-demo-checkout:local` on the isolated demo's Checkout deployment.
+Keep the Java agent identical across these batches. Then enroll the namespace,
+wait for the controller’s **current generation** to be Ready, and capture a
+fresh fixed-fleet trace. Reset to a newly built `far-wide-demo-checkout:local`
+for the slow example. `npm run resolution:build` publishes canonical values;
+`npm run resolution:verify` independently checks arithmetic, real timeout/error
+spans, successful fallback, post-fix waterfall ordering and unchanged settings.
 
-Run `npm run resolution:build` after changing the captured evidence and
-`npm run resolution:verify` before delivery. The native slides and review movie
-consume the same data. Only silent curated demo clips may be versioned;
-synthetic Tyler/Nikola narration and movies stay ignored and local.
+## Capture boundary
+
+The exported OBI trace groups the complete exercised application request, but
+some .NET observations appear as additional roots; database-protocol spans can
+also have unexported parents. The public raw evidence retains those details.
+This is not a claim of a perfectly nested parent tree for every runtime and
+protocol. The demonstrated Checkout connection, Java pricing method/fallback,
+and Catalog SDK database spans are the observations used in the story. Keep
+correlation diagnostics in preparation rather than turning delivery into a
+trace-validation exercise.

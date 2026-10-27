@@ -6,17 +6,14 @@ kicker: The investigation
 
 <div class="hook-grid">
   <p>A customer is waiting.<br>Where do we act?</p>
-  <img src="/presentation/images/request-latency.png" alt="Grafana: one checkout request took 306 milliseconds" />
+  <img src="/presentation/images/request-latency.png" alt="Grafana: one checkout request took 350 milliseconds" />
 </div>
 
 <p class="caption">Find the wait. Fix the cause. Check the customer request.</p>
 
 <!--
-Tyler · 50 seconds. “You know the application is slow. The hard part is knowing where to look.” Pause 2.5 seconds; let people see the measurement.
-
-Promise: follow the slow customer request with OBI, find its cause, fix the wait and come back to measure the result. Then share the investigation capability with the other teams through the Injector and its Kubernetes controller. A trace is a means to improve the customer request.
-Nikola: “I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.”
-Tyler: “I'm Tyler. That sounds suspiciously like you've given me the homework.”
+Tyler · 50 seconds. “The application completes the request, but the customer is waiting.” Introduce the symptom while the actual request-duration panel is visible. Both speakers have already introduced themselves by full name on the title slide.
+Promise: follow the customer request with OBI, expose the cause with language instrumentation, fix it, and return to the actual waterfall. Then share instrumentation through the Injector and RIO’s centralized namespace approach. Speak conversationally; no inserted dramatic pauses.
 
 This is an actual single-request Grafana stat. Do not name Checkout as the culprit yet. Transition into the live application.
 

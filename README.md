@@ -5,7 +5,7 @@ North America 2026.
 
 A 25-minute talk: use OBI to find where a request spends time, add Java zero-code
 detail on one service, then select a namespace to carry instrumentation across
-supported services. A real pricing change resolves the deliberately seeded wait,
+supported services. A real pricing change resolves the obsolete backend attempt,
 and matched requests measure the customer result. The closing slides explain coordination and lifecycle savings
 and how to measure them.
 
@@ -20,7 +20,7 @@ Open the URL printed by Slidev. Use `/presenter/` for notes and handoffs.
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-The **25-slide deck is editable Slidev source** in [slides.md](slides.md) and
+The **26-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
@@ -56,14 +56,17 @@ media behavior, checks, exports and deployment under a URL prefix.
 ## Live demo and evidence
 
 The [demo walkthrough](demo/README.md) runs eighteen services, PostgreSQL and
-Redis. OBI supplies the baseline. A captured 306.26 ms request contains a
-151.78 ms initial Checkout interval; a fresh Java-agent request names its
-150.38 ms pricing method. These are exemplars, not performance benchmarks.
+Redis. OBI supplies the baseline. The opening 350 ms request contains a failed
+Checkout connection around 150 ms. Java-agent detail ties the failed HTTP call
+to pricing and its successful PostgreSQL fallback. These are actual local
+exemplars, not performance benchmarks.
 
-The [customer resolution](docs/customer-resolution.md) then removes the deliberate
-pricing wait. In a separate matched local run, median request duration falls
-from 359.9 to 226.2 ms, with the same instrumentation and complete request flow.
-The default slow image remains available for rehearsal.
+The [customer resolution](docs/customer-resolution.md) removes the obsolete
+backend attempt while retaining the current product-price lookup. The actual
+post-fix waterfall comes first; an aggregate comparison follows. Matched warmed
+request medians are 361.6 → 214.1 ms with identical instrumentation. Pricing
+medians are 157.0 → 4.0 ms. The newly built default image retains the timeout
+baseline for rehearsal; the historical proof keeps its older fixture.
 
 The custom controller and OpenTelemetry Injector then enroll thirteen additional
 supported workloads using one namespace rule. Fourteen language-agent services
@@ -80,7 +83,7 @@ and comparison; open `/presentation/savings.html` for the editable calculator.
 
 ## Storyboard and narrated review
 
-The [visual storyboard](public/storyboard.html) retains the 20-scene customer-to-resolution arc.
+The [visual storyboard](public/storyboard.html) retains the 21-scene customer-to-resolution arc.
 Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
 use the serving computer's address. Its stills work offline; recorded video
 links use local generated capture files.

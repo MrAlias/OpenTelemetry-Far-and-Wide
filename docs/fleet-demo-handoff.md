@@ -52,8 +52,8 @@ Keep all generated files and browser profiles inside this repository.
 ## Live preparation
 
 Run the same sequence from a clean demo: deploy OBI, open the request, explain
-the local interval, apply the direct agent patch, inspect its useful detail,
-remove the seeded pricing wait and remeasure the customer request, then install
+the failed connection, apply the direct agent patch, inspect its timeout and fallback,
+remove the obsolete backend attempt and revisit the real customer waterfall, then install
 the custom operator and apply the fleet configuration. Prebuild/load
 the payload and application images. The operator and Injector are a custom
 prototype integration; upstream already provides Kubernetes zero-code injection.
@@ -95,10 +95,11 @@ drift; a central scope also provides a place to change or remove enrollment.
 Compatibility, platform maintenance and telemetry costs still need management.
 
 The [earlier prototype review](technical-findings.md#identified-implementation)
-records Jack Berg's implementation work and Nikola's participation. This demo
-uses the merged repository component and its `demo.opentelemetry.io` API, not
-a claim that the historical branch or an upstream release is identical. A
-standalone official repository is future work; do not invent a release URL.
+credits Jack Berg and Nikola Grcevski. The bundled namespace-driven implementation
+is the precursor to [RIO](https://github.com/otelx/rio), the independent OTelX
+Runtime Instrumentation Operator. This recording uses the historical
+`demo.opentelemetry.io` API; current RIO uses `rio.otelx.github.io` and has its own
+release and compatibility contract.
 
 
 Capture runtime: the disposable `far-wide-recording-control-plane` container was
@@ -108,26 +109,35 @@ private kubeconfig are retained. Restart with
 using `.artifacts/demo-capture/kubeconfig`. Other local clusters are untouched.
 
 
-## Customer resolution and fresh fleet evidence (October 26)
+## Customer resolution and fresh fleet evidence (October 27)
 
-Keep the existing investigation, direct-agent detail, namespace enrollment and
-savings content. Between method detail and the fleet challenge, reveal the
-seeded `Thread.sleep(150)`, deploy `checkout-pricing-fixed.patch.yaml`, and return
-to the customer request. The fixed image changes application code; it preserves
-agent, exporter and full-flow behavior. A matched 30-request warmed comparison
-measures 359.9 → 226.2 ms median Gateway duration and 150.2 → 0.06 ms median
-pricing duration. This fresh comparison is separate from the historical
-306.26 ms opening request. It is not a production performance benchmark.
+OBI shows a failed CONNECT near 150 ms. The Java agent adds the pricing method,
+HTTP connection timeout and successful PostgreSQL fallback. Remove the stale
+legacy call, deploy `checkout-pricing-fixed.patch.yaml`, and **show the actual
+post-fix waterfall first**. Follow with the aggregate request-duration summary.
+Instrumentation settings and the successful price/order/commerce flow remain.
 
-`presentation/data/resolution.json` holds the measurements and the post-fix
-fleet trace identity. New fixed-fleet dashboard captures show the fixed Checkout
-alongside all fourteen SDK services and four OBI-only application services.
-Use them after namespace enrollment; do not silently return to the old pricing
-wait. Catalog's JDBC detail remains part of the story. The default slow image
-and historical proof still reproduce the original investigation.
+The matched 30-request warmed comparison is 361.6 → 214.1 ms median Gateway
+duration and 157.0 → 4.0 ms median pricing duration. The opening 350 ms request
+is a separate OBI exemplar, not one side of that controlled comparison. The
+seeded failure is a real missing-backend request, not Thread.sleep. Native
+screen captures and raw public trace evidence preserve what was observed.
 
-Prebuild the separately tagged image with `make -C demo pricing-fixed-image
-pricing-fixed-load CLUSTER=<demo-cluster>`. Apply only the image patch live and
-wait for readiness before generating new requests. Reset to
-`far-wide-demo-checkout:local` for another rehearsal. All local capture artifacts
-remain in the repository; synthetic voices and narrated movies stay untracked.
+`presentation/data/resolution.json` contains measurements and the fresh fixed
+fleet trace. After namespace enrollment, use the new fixed-fleet captures:
+14 SDK services, four Go OBI baselines, Catalog JDBC detail and the retained
+Checkout fix. Wait for both the controller’s current observed generation and
+Ready phase before generating traffic; stale Ready status is insufficient.
+
+This recorded component is the bundled namespace-driven prototype that led to
+RIO. It uses the historical `demo.opentelemetry.io` API. Current standalone RIO
+is an independent OTelX project using upstream Injector/agents, not the upstream
+Operator or a distribution of it. The comparison slide explicitly shows
+upstream language opt-in and acknowledges its namespace support.
+
+Prebuild/load the fixed image with `make -C demo pricing-fixed-image
+pricing-fixed-load CLUSTER=<demo-cluster>`. Existing disposable database volumes
+need `demo/k8s/upgrade-product-price.sql` once. Reset to a newly built
+`far-wide-demo-checkout:local` for another rehearsal. The old proof reports
+retain their original fixture. Synthetic voices and narrated movies remain
+untracked; all capture working files stay inside this repository.

@@ -1,8 +1,14 @@
 package demo.checkout;
 
+/** Use the current product store directly; remove the stale legacy attempt. */
 public final class PricingEngine {
-  // Resolution of the demo fault: preserve the price without the deliberate wait.
+  private final OrderStore orders;
+
+  PricingEngine(OrderStore orders) {
+    this.orders = orders;
+  }
+
   public int calculate() {
-    return 42;
+    return orders.currentPrice();
   }
 }

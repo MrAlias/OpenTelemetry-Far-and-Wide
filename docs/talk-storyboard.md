@@ -1,10 +1,20 @@
 # Presentation scene plan
 
-The editable visual review is [storyboard.html](../public/storyboard.html). The 25-minute live slot allocates 21 minutes to content, one minute to flex and three minutes to questions. The synthetic narrated review follows natural speech pace and may be shorter.
+The editable visual review is [storyboard.html](../public/storyboard.html).
+Live content is 21 minutes, plus one minute flex and three minutes Q&A.
+The narrated review uses natural speech pace and can run shorter.
 
-Follow the customer's wait through a justified service choice, a named local method, an actual application fix and a measured return to the request. Then resolve the repetition problem: give the other teams the same investigative detail through one namespace selection. Keep the upstream opt-in comparison, custom controller/Injector, fleet detail, lifecycle and dollar content. Close with both the customer outcome and readiness for the next service.
+Begin with a customer waiting. OBI reveals a failed connection; Java detail
+identifies the pricing method, timeout and working fallback. Remove the obsolete
+backend attempt, deploy the fix, and immediately return to an actual waterfall.
+Show aggregate timings afterward. Then equip the remaining teams through the
+central namespace policy of the RIO precursor and Injector. Close with customer
+impact, collaborative fixes and less repeated setup/monthly upkeep.
 
-The historical opening request and the fresh matched before/after experiment are different observations. The local seeded-fault latency result is measured; the engineering-capacity dollar model remains hypothetical. Details and evidence: [customer-resolution.md](customer-resolution.md).
+The recorded component is the bundled prototype that led to the independent
+OTelX RIO project, not an upstream Operator release. The upstream configuration
+comparison acknowledges workload and namespace opt-in. The measured request
+result and hypothetical labor-capacity scenarios are separate evidence.
 
 ## 01 · OpenTelemetry Far and Wide
 
@@ -12,13 +22,13 @@ Open a customer problem and promise a measured resolution, then make that invest
 
 Live budget: 60 seconds.
 
-**Tyler:** You know the application is slow. The hard part is knowing where to look.
+**Tyler:** Welcome everyone. I'm Tyler Yahn.
 
-**Tyler:** Today we'll follow this request with OBI, find the work behind the wait, and fix it. Then we'll come back to the customer's request and check the result. We'll also stop repeating the instrumentation setup across the other services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
+**Nikola:** And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-**Nikola:** I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.
+**Tyler:** The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
 
-**Tyler:** I'm Tyler. That sounds suspiciously like you've given me the homework. Let's get straight to the system.
+**Nikola:** One customer problem, then a way for the other teams to investigate theirs. Let's open the system.
 
 ## 02 · One application, many places to look
 
@@ -62,19 +72,19 @@ Live budget: 35 seconds.
 
 **Nikola:** Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
 
-## 06 · Find the time before the downstream calls
+## 06 · Find the failed connection on the request path
 
-Earn Checkout selection from the measured 151.8 ms local interval, not inclusive duration.
+Select Checkout from the actual failed CONNECT span; use language detail to identify the calling method, timeout exception and working fallback.
 
-Live budget: 80 seconds.
+Live budget: 70 seconds.
 
-**Tyler:** Start with the waterfall. The Gateway span is long, but almost all of that time is spent waiting for Checkout. Checkout's total also contains its downstream calls.
+**Tyler:** Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix.
 
-**Nikola:** So choosing the longest bar would send us back to the beginning. Look instead at the gap before Checkout makes its first downstream call.
+**Nikola:** Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls.
 
-**Tyler:** That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. Nearly half of this request is spent before that first call. That is our first useful discovery: look inside Checkout, not at its dependencies.
+**Tyler:** Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code.
 
-**Nikola:** Now we have a specific question for language-level detail: what is Checkout doing during that wait?
+**Nikola:** Let's open Checkout and follow that connection.
 
 ## 07 · Add Java zero-code instrumentation
 
@@ -82,7 +92,7 @@ Show actual source-informed configuration and the real direct-agent installation
 
 Live budget: 120 seconds.
 
-**Tyler:** We have source access here. The pricing calculation happens before the Inventory call. We'll use the Java agent to time that method and expose the library work around it.
+**Tyler:** We have source access here. Pricing runs before Inventory. We'll use the Java agent to time that method and expose the library calls inside it.
 
 **Nikola:** This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes.
 
@@ -90,47 +100,55 @@ Live budget: 120 seconds.
 
 **Nikola:** Zero code is useful. It hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
 
-## 08 · The missing interval has a name
+## 08 · A failed attempt before a working fallback
 
-Show the actual 150.4 ms method span and Hibernate/JDBC observations.
+Show the actual failed HTTP client span, timeout exception and successful PostgreSQL fallback; keep the trace visible.
 
 Live budget: 60 seconds.
 
-**Tyler:** Here's a fresh request with the Java agent running. The missing interval now has a name: PricingEngine.calculate.
+**Tyler:** Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup.
 
-**Nikola:** There it is: about a hundred and fifty milliseconds. Below it, Hibernate and JDBC show the product lookup, the order insert, and the transaction commit.
+**Nikola:** That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete.
 
-**Tyler:** OBI got us to the right service. The language agent named the work inside it. But naming the wait does not remove it. Let's open that pricing method.
+**Tyler:** OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate.
 
-## 09 · There's our 150 milliseconds
+## 09 · Stop calling the retired backend
 
-Reveal the exact seeded wait, show its removal without changing the price, and record deployment of the real application fix.
+Show the real obsolete-backend attempt and current-store fallback, offer an evidence-backed PR, then deploy the code change.
 
 Live budget: 90 seconds.
 
-**Tyler:** There is our hundred and fifty milliseconds. This demo deliberately puts a wait inside the pricing method. It is local work, before the first downstream call, exactly where the trace sent us.
+**Tyler:** There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly.
 
-**Nikola:** So the fix is small: remove that wait and keep the same price. The instrumentation did not make the application faster. It showed us where to act.
+**Nikola:** Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup.
 
-**Tyler:** Here we deploy the fixed application image. The Java agent, its settings, and the rest of the request path stay the same.
+**Tyler:** We're deploying that application change now. The Java agent and exporter settings stay the same.
 
-**Nikola:** The deployment is ready. A completed rollout is not the customer result. Let's send the request again.
+**Nikola:** The rollout is ready. Let's send another customer request and look at its trace.
 
-## 10 · The customer gets the time back
+## 10 · The next checkout skips the failed call
 
-Deliver the measured customer payoff before raising the fleet-scale setup challenge; distinguish fresh matched samples from the historical opening exemplar.
+Return directly to a real Grafana waterfall after deployment; show the missing failed attempt and retained successful backend path before aggregate metrics.
 
-Live budget: 60 seconds.
+Live budget: 50 seconds.
 
-**Tyler:** Back to the customer request. In a fresh matched run, the median goes from about three hundred and sixty milliseconds to two hundred and twenty-six. The pricing method goes from a hundred and fifty milliseconds to less than one.
+**Tyler:** Here is the new request's waterfall. Expand Checkout and PricingEngine.calculate. The product-price query is still here. The failed legacy call is gone, and the rest of the request starts sooner.
 
-**Nikola:** Same price. An order still gets created, and the request still visits all eighteen services. We removed the deliberate wait, not the work needed to finish checkout.
+**Nikola:** Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there.
 
-**Tyler:** These are medians of thirty warmed requests on each version, with the same instrumentation. It is a measured demo result, not a production benchmark.
+**Tyler:** This is the payoff: a customer symptom, an observed cause, a code change, and a fresh trace showing what changed.
 
-**Nikola:** Now that is a useful trace. It helped us change the customer experience. The next question is how to make this kind of investigation available to the rest of the teams.
+## 11 · The improvement across repeated requests
 
-## 11 · One fixed. Thirteen to equip.
+Summarize matched measured request durations only after the audience has seen the actual post-fix waterfall.
+
+Live budget: 35 seconds.
+
+**Tyler:** In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall.
+
+**Nikola:** That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
+
+## 12 · One fixed. Thirteen to equip.
 
 Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.
 
@@ -142,39 +160,39 @@ Live budget: 45 seconds.
 
 **Nikola:** And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
-## 12 · Injection still needs a selection
+## 13 · From language opt-in to a shared namespace policy
 
-Credit upstream injection and namespace opt-in, then set up the custom component’s combined namespace selection, runtime handling and rollout value.
+Show real upstream configuration for context, credit namespace opt-in, and name the independent RIO project and bundled prototype accurately.
 
 Live budget: 45 seconds.
 
-**Tyler:** The upstream OpenTelemetry Operator can supply the agent. You opt in using language-specific annotations, on workloads or namespaces. That already removes much of the agent setup.
+**Tyler:** To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
 
-**Nikola:** For this mixed-language application, we want one shared choice: instrument the namespace. Then let the system choose the agents and manage the rollout.
+**Nikola:** That already saves work. RIO, the Runtime Instrumentation Operator from OTelX, takes a different route: select the namespace centrally, let the Injector detect supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation.
 
-## 13 · Let the namespace be the selection
+## 14 · Install the namespace-driven controller
 
 Install the merged custom component as a distinct step after upstream opt-in; earn the namespace-wide payoff.
 
 Live budget: 60 seconds.
 
-**Tyler:** This demo uses the custom namespace-driven controller and the OpenTelemetry Injector. The controller selects workloads and manages their rollout. The Injector detects the supported runtime and loads its language agent.
+**Tyler:** Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector detects supported runtimes and loads their agents.
 
-**Nikola:** Here we install the controller once. The agent payload, exporter, and exclusions are shared settings. Next comes the application choice: instrument this namespace.
+**Nikola:** The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
 
-## 14 · Instrument this namespace
+## 15 · Instrument this namespace
 
 Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.
 
 Live budget: 105 seconds.
 
-**Nikola:** Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.
+**Nikola:** Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
 
-**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. The shared rule replaces thirteen deployment edits and manual restarts.
+**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector detects their runtimes and supplies the agents. Compatible services deployed into the namespace later inherit the same policy.
 
-**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. One namespace choice carries the setup across the application.
+**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it.
 
-## 15 · Open language detail in more services
+## 16 · Open language detail in more services
 
 Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.
 
@@ -186,7 +204,7 @@ Live budget: 60 seconds.
 
 **Tyler:** The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
 
-## 16 · The work around a deployment adds up
+## 17 · The work around a deployment adds up
 
 Connect the demonstrated workflow to people, coordination and waiting.
 
@@ -200,7 +218,7 @@ Live budget: 55 seconds.
 
 **Nikola:** It is fewer people arranging the same work. Count their active effort separately from the time spent waiting.
 
-## 17 · Reuse the workflow after day one
+## 18 · Reuse the workflow after day one
 
 Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
@@ -214,45 +232,41 @@ Live budget: 50 seconds.
 
 **Nikola:** Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
 
-## 18 · Put a price on the repetition
+## 19 · Put a price on the repetition
 
-Compare baseline and shared work directly; show centralized updates once per rollout domain, service exceptions separately, and conditional OBI investigation savings.
+Compare distributed ownership against one centralized namespace setup and twelve monthly shared agent updates; show operations before dollars, with zero investigation-time credit.
 
 Live budget: 80 seconds.
 
-**Tyler:** Let us compare the actual work in each approach. This is a hypothetical year for our eighteen-service system, at a hundred dollars per person-hour.
+**Tyler:** Let's price that difference in ownership. This is a hypothetical year, at a hundred dollars per person-hour. Thirteen compatible services remain after our common pilot.
 
-**Nikola:** Thirteen compatible services remain after our pilot. Initial setup takes thirty-two and a half person-hours across those teams. With the shared tools, we allow two hours for deployment and policy, plus half an hour per service. Eight and a half hours altogether.
+**Nikola:** With distributed ownership, allow two and a half hours per team to arrange and deploy its instrumentation. Thirteen teams means thirty-two and a half hours. RIO centralizes the setup. Allow one hour for the controller and namespace policy, plus thirty minutes to deploy OBI. Once for the namespace. There is no additional setup allowance for each service.
 
-**Tyler:** Upkeep is where centralization keeps paying back. Four updates take thirty-nine hours when repeated across those services. Four shared updates take four hours. Allow another two hours for service exceptions: six hours instead of thirty-nine. That saves thirty-three hours every year.
+**Tyler:** Now assume an agent release every month. Thirteen separately owned updates versus one shared update: a hundred and fifty-six operations versus twelve in a year. At an assumed forty-five minutes each, that's a hundred and seventeen hours versus nine. A hundred and eight hours saved every year.
 
-**Nikola:** Then twelve investigations where OBI adds missing visibility: eighteen person-hours becomes six. Twelve more hours saved. Already have equally useful traces? That part is zero.
+**Nikola:** We give neither side a faster-investigation credit once both have equivalent telemetry. OBI gives us broad initial visibility; we count its deployment once, not once per incident.
 
-**Tyler:** Add the three rows: eighty-nine and a half hours before, twenty and a half with the tools. Sixty-nine hours saved, worth sixty-nine hundred dollars of engineering capacity. Central setup and upkeep are already included.
+**Tyler:** Setup plus monthly upkeep saves a hundred and thirty-nine person-hours in this scenario: thirteen thousand nine hundred dollars of engineering capacity in year one. Ten thousand eight hundred in following years. Replace the assumed hours with your own; this is not a measured customer saving.
 
-**Nikola:** Every time estimate is an assumption to replace with your own. Prototype development, extra telemetry, and support need separate estimates.
+## 20 · Repetition changes the economics
 
-## 19 · Repetition changes the economics
+Extrapolate explicit ownership and monthly-update assumptions, with no invented per-investigation or telemetry-bill saving.
 
-Scale the explicit before/with-tools ledgers using declared rollout groups, exceptions and qualifying investigations; distinguish first-year and recurring capacity.
+Live budget: 45 seconds.
 
-Live budget: 60 seconds.
+**Tyler:** The same assumptions give about eighty-five thousand dollars of capacity for a hundred services in year one, four hundred and forty thousand for five hundred, and eight hundred and eighty-two thousand for a thousand.
 
-**Tyler:** Keep the same runtime mix, and allow more rollout groups and service exceptions as the fleet grows. At a hundred services, the first-year value is about thirty-eight thousand dollars. At five hundred services, about a hundred and ninety-three thousand dollars. At a thousand services, about three hundred and eighty-six thousand dollars.
+**Nikola:** These are scenarios, not a scaling law. We retain the demo's supported-runtime mix and allow more independent rollout domains as the fleet grows. Each domain pays for its shared setup and monthly updates once.
 
-**Nikola:** The following-year figures are lower because initial setup savings happen once. Centralized upkeep keeps saving work: updates happen per rollout group, plus the service exceptions we explicitly allow for.
+**Tyler:** Already centralized? Compare against that workflow. Equivalent work should give zero saving. Extra compatibility testing, exceptions, hardening, and support need their own estimates. We haven't priced incident response, waiting time, or a smaller telemetry bill.
 
-**Tyler:** These are replaceable assumptions, not average customer results. If existing namespace templates already centralize your updates, compare against that workflow. There may be little extra work left to save.
-
-**Nikola:** And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill.
-
-## 20 · Less waiting. More services ready.
+## 21 · Less waiting. More services ready.
 
 Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions.
 
 Live budget: 55 seconds.
 
-**Tyler:** We started with a customer waiting for checkout. OBI showed where the time went. The Java agent named the pricing method. We removed the deliberate wait and came back to measure the request.
+**Tyler:** We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change.
 
 **Nikola:** Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project.
 

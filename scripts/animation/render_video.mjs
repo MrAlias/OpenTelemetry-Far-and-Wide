@@ -112,9 +112,9 @@ try {
       const end=events[index+1]?.start??chapter.duration, duration=end-event.start;
       const file=path.join(dir,`segment-${index}.mp4`);let args=[];
       if(event.type==='video'){
-        args=['-i',path.join(root,'public',event.src),'-vf',`fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,tpad=stop_mode=clone:stop_duration=${duration}`];
+        args=['-i',path.join(root,'public',event.src),'-vf',`${event.focus==='waterfall'?'crop=1280:470:0:230,':''}fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,tpad=stop_mode=clone:stop_duration=${duration}`];
       }else if(event.type==='image'){
-        args=['-loop','1','-i',path.join(root,'public',event.src),'-vf','fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2'];
+        args=['-loop','1','-i',path.join(root,'public',event.src),'-vf',`${event.focus==='waterfall'?'crop=1280:470:0:230,':''}fps=25,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2`];
       }else{
         const times=[event.start];
         if(Number.isFinite(chapter.buildTime)&&chapter.buildTime>=event.start&&chapter.buildTime<end){for(let i=0;i<=40;i++){const t=chapter.buildTime+i*.04;if(t<end)times.push(t);}}

@@ -3,7 +3,7 @@ FROM gradle:8.14.4-jdk21-noble AS build
 WORKDIR /src
 COPY apps/checkout/build.gradle apps/checkout/settings.gradle ./
 COPY apps/checkout/src ./src
-ARG PRICING_SOURCE=proof/apps/checkout/PricingEngine.java
+ARG PRICING_SOURCE=apps/checkout/baseline/PricingEngine.java
 COPY ${PRICING_SOURCE} ./src/main/java/demo/checkout/PricingEngine.java
 RUN gradle --no-daemon installDist
 

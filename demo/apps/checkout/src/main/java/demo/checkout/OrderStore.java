@@ -22,6 +22,14 @@ final class OrderStore implements AutoCloseable {
         .buildSessionFactory();
   }
 
+  int currentPrice() {
+    try (var session = sessions.openSession()) {
+      Product product = session.get(Product.class, 1L);
+      if (product == null) throw new IllegalStateException("Demo product is missing");
+      return product.price();
+    }
+  }
+
   long createOrder(int price) {
     try (var session = sessions.openSession()) {
       Transaction transaction = session.beginTransaction();

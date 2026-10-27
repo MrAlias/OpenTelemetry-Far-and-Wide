@@ -7,8 +7,9 @@ language runtimes; four Go services retain OBI coverage.
 OBI establishes the system view and guides the service selection; direct language-agent setup proves
 useful detail on one; a custom operator/injector addresses the remaining fleet;
 then the speakers examine coordination, engineering and lifecycle savings.
-Trace and terminal views were recorded from the running demo. Savings remain
-qualitative; request timings are single exemplars, not benchmarks.
+Trace and terminal views were recorded from the running demo. The actual missing-backend timeout and fallback are resolved with a code change;
+show the post-fix waterfall before the matched-duration summary. Dollars use a
+separate hypothetical ownership/monthly-upkeep model, not measured savings.
 
 The narration uses Tyler Yahn's and Nikola Grcevski's separate authorized
 synthetic voice profiles. These are scripted synthetic performances, not a
@@ -40,14 +41,14 @@ scripts/animation/verify_media.py     Media, timing, profiles and reuse verifica
 The generated timeline records measured speech duration plus authored pauses.
 The live rehearsal budget is 21 minutes, one minute flex and three for questions.
 A shorter natural read is fine. If the read exceeds 22 minutes, edit the script;
-never stretch, accelerate or slow speech to hit a duration. The opening has a
-four-second silent title and a 2.5-second inspection pause after its first line.
+never stretch, accelerate or slow speech to hit a duration. The opening starts “Welcome everyone,” introduces both full names and uses a
+0.6-second visual lead-in with natural handoffs; no authored dramatic pauses.
 
 Generated deliverables, inside public/animation/
 ------------------------------------------------
 opentelemetry-far-and-wide-tyler-voice.mp4  Two-profile H.264/AAC film with chapters
 opentelemetry-far-and-wide-silent.mp4       Silent full film
-clips/*-silent.mp4                        Seventeen silent chapters
+clips/*-silent.mp4                        Twenty-one silent chapters
 explainers/*-20s.mp4                      Three silent live explainers
 draft-narration.m4a                       Mixed two-speaker narration
 nikola-voice-preview.m4a                  Sample used for likeness assessment

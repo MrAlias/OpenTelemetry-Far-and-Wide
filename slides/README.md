@@ -7,14 +7,14 @@ hand-authored sections; the animation exporter does not generate them.
 | --- | --- | --- |
 | `01-opening.md` | 2 | The visible slow request and the promise |
 | `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
-| `03-language-detail.md` | 8–13 | Explicit Java configuration, rollout and useful method detail |
-| `04-namespace.md` | 14–20 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 21–25 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
+| `03-language-detail.md` | 8–14 | Explicit Java configuration, rollout and useful method detail |
+| `04-namespace.md` | 15–21 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 22–26 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
 
 The live budget is 21 minutes, one minute flex and three minutes questions.
 Speaker notes include handoffs, time budgets, commands, source references and
 places to switch into the running demo. Use Slidev's presenter view (`/presenter/`)
-and press `F` for fullscreen. Only slides 6, 7 and 19 have click builds; each
+and press `F` for fullscreen. Only slides 6, 7 and 20 have click builds; each
 adds evidence or changes the enrollment state.
 
 Terminal recordings play manually using their native controls. They are muted,
@@ -74,11 +74,12 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slides 23–24 and the review video's final cost scenes share the calculator in
+Slides 24–25 and the review video's final cost scenes share the calculator in
 `../presentation/savings-model.js`, with inputs in
 `../presentation/data/savings-assumptions.json`. These are theoretical capacity
 values, not measured customer savings. They compare complete work ledgers;
-shared upkeep is counted per rollout group with service exceptions separately.
+central setup is counted once per rollout group and upkeep uses twelve monthly
+agent releases, with optional exceptions separately. No investigation-time credit.
 The scope and sensitivity examples are
 in `../docs/instrumentation-savings.md`.
 
@@ -93,9 +94,9 @@ the existing coordination and lifecycle sections were shortened to make room.
 
 ## Customer payoff
 
-Slides 11–13 resolve the opening customer problem: reveal the deliberate pricing
-wait, show the actual application deployment, then compare matched request
-medians. `../presentation/data/resolution.json` holds all 60 request timings and
+Slides 11–14 resolve the customer problem: remove the retired-backend attempt,
+deploy the application change, show the actual post-fix waterfall, then compare
+matched request medians. `../presentation/data/resolution.json` holds all 60 request timings and
 controls. `CustomerResult.vue` uses the same evidence as the animation. The
 closing slide recalls both the faster request and namespace-wide readiness.
 

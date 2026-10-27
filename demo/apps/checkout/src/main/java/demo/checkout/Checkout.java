@@ -15,7 +15,7 @@ public final class Checkout {
     server.createContext("/checkout", exchange -> {
       HttpURLConnection connection = null;
       try {
-        int price = new PricingEngine().calculate();
+        int price = new PricingEngine(orders).calculate();
         connection = (HttpURLConnection)
             URI.create("http://inventory:8080/inventory").toURL().openConnection();
         connection.setConnectTimeout(3000);

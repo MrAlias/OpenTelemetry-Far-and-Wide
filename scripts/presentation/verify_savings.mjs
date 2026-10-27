@@ -1,53 +1,31 @@
-// Independent worked examples and accounting invariants for the economic model.
+// Independently check ownership, monthly update frequency and accounting.
 import assert from 'node:assert/strict'
-import { readFile } from 'node:fs/promises'
-import { calculateSavings } from '../../presentation/savings-model.js'
-const original = JSON.parse(await readFile(new URL('../../presentation/data/savings-assumptions.json', import.meta.url)))
-const calculate = (mutate = () => {}, scenario = {}) => {
-  const model = structuredClone(original)
-  mutate(model)
-  return calculateSavings(model, {...model.scenarios[0], ...scenario})
-}
-const demo = calculate()
-assert.deepEqual([demo.initialBaselineHours, demo.initialSharedHours, demo.lifecycleBaselineHours, demo.lifecycleSharedHours, demo.investigationBaselineHours, demo.investigationSharedHours], [32.5, 8.5, 39, 6, 18, 6])
-assert.deepEqual([demo.baselineHours, demo.sharedHours, demo.firstYearHours, demo.recurringHours], [89.5, 20.5, 69, 45])
-assert.deepEqual(original.scenarios.map(s => {
-  const r = calculateSavings(original, s)
-  return [r.firstYearValue, r.recurringValue]
-}), [[6900, 4500], [38400, 23600], [192500, 116100], [386000, 232800]])
-assert.equal(calculate(() => {}, {qualifyingInvestigations: 0}).firstYearValue, 5700)
-assert.equal(calculate(m => {m.shared.changePerDomainHours = 2}).firstYearValue, 6500)
-assert.equal(calculate(() => {}, {exceptionsPerChange: 13}).firstYearValue, 4500)
-assert.equal(calculate(m => {m.perService.initialBaselineHours = 1; m.perService.changeBaselineHours = .25}).firstYearValue, 2350)
-assert.equal(calculate(() => {}, {extraSetupHours: 80}).firstYearValue, -1100)
-assert.equal(calculate(() => {}, {extraSetupHours: 80}).recurringValue, 4500)
-assert.equal(calculate(() => {}, {extraAnnualHours: 10}).firstYearValue, 5900)
-assert.equal(calculate(() => {}, {extraAnnualHours: 10}).recurringValue, 3500)
-assert.equal(calculate(() => {}, {additionalAnnualCost: 2000}).firstYearAfterAdditionalCosts, 4900)
-assert.equal(calculate(m => {m.hourlyRate = 200}).firstYearValue, 13800)
-// A capable, already centralized baseline with equally useful traces saves zero.
-const equal = calculate(m => {
-  m.perService.initialBaselineHours = m.perService.initialSharedHours
-  m.baseline.initialPerDomainHours = m.shared.initialPerDomainHours
-  m.perService.changeBaselineHours = 0
-  m.baseline.changePerDomainHours = 1.5 // Same one shared hour + half-hour exception.
-}, {qualifyingInvestigations: 0})
-assert.equal(equal.firstYearValue, 0)
-assert.equal(equal.recurringValue, 0)
-// Moving routine work to another service does not duplicate the shared update.
-const larger = calculate(() => {}, {services: 19, eligibleServices: 15})
-assert.equal(larger.sharedUpdateHours, demo.sharedUpdateHours)
-assert.equal(larger.exceptionHours, demo.exceptionHours)
-assert.equal(larger.firstYearHours - demo.firstYearHours, 5) // 2 initial + 3 distributed upkeep.
-for (const s of original.scenarios) {
-  const r = calculateSavings(original, s)
-  assert.equal(r.firstYearHours, r.baselineHours - r.sharedHours)
-  assert.equal(r.firstYearHours - r.recurringHours, r.initialHours)
-  assert.equal(r.lifecycleSharedHours, r.sharedUpdateHours + r.exceptionHours)
-}
-assert.throws(() => calculate(() => {}, {eligibleServices: 19}), /exceed/)
-assert.throws(() => calculate(() => {}, {exceptionsPerChange: 14}), /Exception/)
-assert.throws(() => calculate(() => {}, {exceptionsPerChange: .5}), /whole/)
-assert.throws(() => calculate(m => {m.shared.changePerDomainHours = -1}), /nonnegative/)
-assert.throws(() => calculate(m => {m.hourlyRate = NaN}), /nonnegative/)
-console.log('Savings verified: ledgers, scale, centralized baseline, exceptions, sensitivity and cost accounting.')
+import {readFile} from 'node:fs/promises'
+import {calculateSavings} from '../../presentation/savings-model.js'
+const original=JSON.parse(await readFile(new URL('../../presentation/data/savings-assumptions.json',import.meta.url)))
+const calc=(edit=()=>{},scenario={})=>{const m=structuredClone(original);edit(m);return calculateSavings(m,{...m.scenarios[0],...scenario})}
+const d=calc()
+assert.deepEqual([d.initialBaselineHours,d.initialSharedHours,d.lifecycleBaselineHours,d.lifecycleSharedHours],[32.5,1.5,117,9])
+assert.deepEqual([d.distributedUpdatesPerMonth,d.centralizedUpdatesPerMonth,d.distributedAnnualUpdates,d.centralizedAnnualUpdates],[13,1,156,12])
+assert.deepEqual([d.firstYearHours,d.recurringHours,d.firstYearValue,d.recurringValue],[139,108,13900,10800])
+assert(!Object.keys(d).some(key=>key.startsWith('investigation')))
+assert.deepEqual(original.scenarios.map(s=>{const r=calculateSavings(original,s);return[r.firstYearValue,r.recurringValue]}),[[13900,10800],[85300,66600],[439800,343800],[881900,689400]])
+// Central setup and updates do not grow when another compatible service arrives.
+const more=calc(()=>{},{services:19,eligibleServices:15})
+assert.equal(more.initialSharedHours,d.initialSharedHours);assert.equal(more.lifecycleSharedHours,d.lifecycleSharedHours)
+assert.equal(more.firstYearHours-d.firstYearHours,11.5)
+// A quarterly cadence changes both workflows to four releases, once each.
+assert.equal(calc(m=>{m.perService.changesPerYear=4}).recurringHours,36)
+// An equivalent already-centralized baseline saves zero.
+const equal=calc(m=>{m.perService.initialBaselineHours=0;m.perService.changeBaselineHours=0;m.baseline.initialPerDomainHours=1.5;m.baseline.changePerDomainHours=.75})
+assert.equal(equal.firstYearValue,0);assert.equal(equal.recurringValue,0)
+assert.equal(calc(m=>{m.hourlyRate=200}).firstYearValue,27800)
+assert.equal(calc(()=>{},{extraSetupHours:160}).firstYearValue,-2100)
+assert.equal(calc(()=>{},{extraAnnualHours:10}).recurringValue,9800)
+assert.equal(calc(()=>{},{additionalAnnualCost:2000}).firstYearAfterAdditionalCosts,11900)
+assert.equal(calc(()=>{},{exceptionsPerChange:1}).recurringValue,10200)
+for(const scenario of original.scenarios){const r=calculateSavings(original,scenario);assert.equal(r.firstYearHours,r.baselineHours-r.sharedHours);assert.equal(r.firstYearHours-r.recurringHours,r.initialHours)}
+assert.throws(()=>calc(()=>{},{eligibleServices:19}),/exceed/)
+assert.throws(()=>calc(()=>{},{exceptionsPerChange:14}),/Exception/)
+assert.throws(()=>calc(m=>{m.shared.changePerDomainHours=-1}),/nonnegative/)
+console.log('Savings verified: one central setup, 12 monthly releases, 156 versus 12 update operations, no investigation credit, centralized baseline and negative outcomes.')

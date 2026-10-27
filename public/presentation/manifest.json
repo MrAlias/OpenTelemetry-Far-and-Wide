@@ -1,24 +1,24 @@
 {
-  "recorded": "2026-10-26",
-  "provenance": "Original investigation captured October 23; application fix and fresh fleet captured October 26. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
+  "recorded": "2026-10-27",
+  "provenance": "Timeout/fallback investigation, application fix and fresh fleet recaptured October 27; unchanged install clips retain their original capture dates. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
   "assets": [
     {
       "asset": "public/presentation/images/request-latency.png",
       "source": "public/demo-capture/request-latency.png",
-      "sha256": "05836e4ce71b31f13314c60b917592a4601fa8e07229373bc1cea9a92851a4be",
-      "bytes": 34477
+      "sha256": "c3350be0bf7bbab0aa423caffed755f0d261fb72f92aab9b8866d8ac54c46f76",
+      "bytes": 32637
     },
     {
       "asset": "public/presentation/images/connected-trace.png",
       "source": "public/demo-capture/connected-trace.png",
-      "sha256": "9200ad2e098b8d9c2ed5b3285d7a4161f338c76b3c2acfecd60582287f83636f",
-      "bytes": 88306
+      "sha256": "7f41e5e51816493b526231884510cfc4df32bf277e464f62b9475840a40f86c8",
+      "bytes": 92700
     },
     {
       "asset": "public/presentation/images/java-detail-poster.png",
       "source": "public/demo-capture/java-detail-poster.png",
-      "sha256": "8b31e4ee6f367c96bb5ab6cafc786f1f8d11100cb50b5f71a6c319260271a67a",
-      "bytes": 85347
+      "sha256": "b0d6ddfb519bae3a1de9187b5851fdd8cfbef67bd43b80479391381ec261619c",
+      "bytes": 83020
     },
     {
       "asset": "public/presentation/images/fleet-catalog.png",
@@ -41,8 +41,8 @@
     {
       "asset": "public/presentation/images/install-java-agent-edited-poster.png",
       "source": "public/demo-capture/install-java-agent-edited-poster.png",
-      "sha256": "6dd9ac4e3c78158d8a5e096e8610db8da014c9d9086f55e6e3bfc0b38292f1f8",
-      "bytes": 229984
+      "sha256": "790644a2d7175cceaee4209d9940473f4b18daa0f45b7b969da5004a973cb6b7",
+      "bytes": 274651
     },
     {
       "asset": "public/presentation/images/install-operator-edited-poster.png",
@@ -53,32 +53,32 @@
     {
       "asset": "public/presentation/images/instrument-namespace-edited-poster.png",
       "source": "public/demo-capture/instrument-namespace-edited-poster.png",
-      "sha256": "61079a37e4e9c8568e5c861452e3ebbe19e3e33bc4adb6dec1b9edcdf9e762d1",
-      "bytes": 206845
+      "sha256": "77fc7bee334b49b9068839c55160bb3297d6a77a36e82fe82dd47d9262fa21eb",
+      "bytes": 233292
     },
     {
       "asset": "public/presentation/images/fix-pricing-edited-poster.png",
       "source": "public/demo-capture/fix-pricing-edited-poster.png",
-      "sha256": "288880e537de7d7d13eed5e1c52ef2e4bc3481af85833029240cff7e905c8eff",
-      "bytes": 272059
+      "sha256": "eeb69fcfb47058f00b7b2f480e189544cd0a73ab939bf34b1b33d12a55b3c266",
+      "bytes": 273561
     },
     {
       "asset": "public/presentation/images/fixed-request-trace.png",
       "source": "public/demo-capture/fixed-request-trace.png",
-      "sha256": "a389d61fbd72eadd6bf996571013f1ddc11f1398dcc0c9d653c8a0837f84fb6d",
-      "bytes": 84938
+      "sha256": "cfc9886d59b9c87b64d1f755f9140144b9b4fd3a291ef983c2a8af6a738937c5",
+      "bytes": 84540
     },
     {
       "asset": "public/presentation/images/fixed-fleet-catalog.png",
       "source": "public/demo-capture/fixed-fleet-catalog.png",
-      "sha256": "c23973726b10f9c09ab6922815cb323f64857c0cbbe95e13d07087d9a23e87a5",
-      "bytes": 80149
+      "sha256": "73f5439e61981ccd8bafa64c8985d22a87cdab79cb5bccf866da91f87bba9028",
+      "bytes": 78908
     },
     {
       "asset": "public/presentation/images/fixed-fleet-overview.png",
       "source": "public/demo-capture/fixed-fleet-overview.png",
-      "sha256": "a64e61e96b975e366e946d14cc08cbbec666a07d8805063d31ae38df1e7c1e45",
-      "bytes": 83941
+      "sha256": "de0c96591925ed6a5248d1a660b8ba6279fcd0b923b8122ddd9f2a68fa5062fb",
+      "bytes": 86552
     },
     {
       "asset": "public/presentation/clips/install-obi-edited.mp4",
@@ -89,8 +89,8 @@
     {
       "asset": "public/presentation/clips/install-java-agent-edited.mp4",
       "source": "public/demo-capture/install-java-agent-edited.mp4",
-      "sha256": "cb62c44d427e967c0f1d0e3d305130aea219a8229252ec2127298ca459205035",
-      "bytes": 260952
+      "sha256": "7f7acf2616effc6b28872a1c56f4756ed6ac3523d14a5fd1e8c256ef849818ca",
+      "bytes": 186724
     },
     {
       "asset": "public/presentation/clips/install-operator-edited.mp4",
@@ -101,14 +101,14 @@
     {
       "asset": "public/presentation/clips/instrument-namespace-edited.mp4",
       "source": "public/demo-capture/instrument-namespace-edited.mp4",
-      "sha256": "d0917af8da034d8c5cf1417024b0972411e02a71afc0e6db1c253cd0552eaebc",
-      "bytes": 581379
+      "sha256": "237dafd98091ac2bb648af365e7398e2356bcd91d94da2f17bf4809fd70ae691",
+      "bytes": 764147
     },
     {
       "asset": "public/presentation/clips/java-detail.mp4",
       "source": "public/demo-capture/java-detail.mp4",
-      "sha256": "c774196901bc1d88265e87b562cd4e9e44f51c6308b3516e28517b56cd0b03d8",
-      "bytes": 184911
+      "sha256": "97eb4bd41639c584ce1ba9ae0930115284b4c8a3ec79680555bd50259a90cbd3",
+      "bytes": 121761
     },
     {
       "asset": "public/presentation/clips/fleet-detail.mp4",
@@ -119,14 +119,20 @@
     {
       "asset": "public/presentation/clips/fix-pricing-edited.mp4",
       "source": "public/demo-capture/fix-pricing-edited.mp4",
-      "sha256": "0d680a4b55ce1e54e9cc4229cccca6e9416247ede81711865714607b48a235e4",
-      "bytes": 198953
+      "sha256": "96ec7417849dda4430bcb109f425229a8d659790b37fef71038b0a77c24dde38",
+      "bytes": 185093
     },
     {
       "asset": "public/presentation/clips/fixed-fleet-detail.mp4",
       "source": "public/demo-capture/fixed-fleet-detail.mp4",
-      "sha256": "25d41cec9f99c7edeae4d3c52bc8e2f81f45d25a6f5e212e339a8dd74286dd09",
-      "bytes": 190171
+      "sha256": "53196cac6f52cf09ae9608b4e461101ad96ea820f409488c4f95b918030b282a",
+      "bytes": 175541
+    },
+    {
+      "asset": "public/presentation/clips/fixed-request-detail.mp4",
+      "source": "public/demo-capture/fixed-request-detail.mp4",
+      "sha256": "82029fc7e9c9ec4ee4981c8070d9b219a93d3feb6a71c7f8e4559928a76d6f53",
+      "bytes": 132540
     },
     {
       "asset": "public/presentation/clips/install-obi-edited.webm",
@@ -138,8 +144,8 @@
     {
       "asset": "public/presentation/clips/install-java-agent-edited.webm",
       "source": "public/presentation/clips/install-java-agent-edited.mp4",
-      "sha256": "d6ad18bf84d6489e3bf8515de98bbd63fdfb84b923b867b8c3c279465f8581e1",
-      "bytes": 379646,
+      "sha256": "7e65e548be6d8dbc6695fb9b17a7f44612598aed96b9f49cff2e2a42860e3505",
+      "bytes": 238338,
       "encoding": "VP9; native playback duration"
     },
     {
@@ -152,15 +158,15 @@
     {
       "asset": "public/presentation/clips/instrument-namespace-edited.webm",
       "source": "public/presentation/clips/instrument-namespace-edited.mp4",
-      "sha256": "f1787a23819e79e02549c6135b9878b7de54a11f51027d73cfa7582c9b5573a3",
-      "bytes": 677301,
+      "sha256": "26a22f830b4874c54987d549e00e9bc7097e30d6707891292ae580f5db3415b7",
+      "bytes": 755567,
       "encoding": "VP9; native playback duration"
     },
     {
       "asset": "public/presentation/clips/java-detail.webm",
       "source": "public/presentation/clips/java-detail.mp4",
-      "sha256": "72596d91db5344ed046e46cfab08ebe3c5ea1aeb2b9bbb8e9f7470ed17afa4dc",
-      "bytes": 170286,
+      "sha256": "8cd1bede8d2b13f133431dc392da5da7c3457610145fc33c876aaa164448ebff",
+      "bytes": 169737,
       "encoding": "VP9; native playback duration"
     },
     {
@@ -173,15 +179,22 @@
     {
       "asset": "public/presentation/clips/fix-pricing-edited.webm",
       "source": "public/presentation/clips/fix-pricing-edited.mp4",
-      "sha256": "0863a077071f606d240061a43c400c6792511cabc185061ed2481cdb50db9b53",
-      "bytes": 221152,
+      "sha256": "b2affb4cc889902dd87c7b302d1edf7f88783f66eef8b75d79e5409b07a2949e",
+      "bytes": 239150,
       "encoding": "VP9; native playback duration"
     },
     {
       "asset": "public/presentation/clips/fixed-fleet-detail.webm",
       "source": "public/presentation/clips/fixed-fleet-detail.mp4",
-      "sha256": "fdb74a12d5269258923bf88e126bdfd1c9862af37469bea57aa738a986a4a302",
-      "bytes": 224094,
+      "sha256": "531bee28311b2bbbda43e4285c0dc2414a6833f1878f95ac9aafde54067bdaee",
+      "bytes": 171136,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/fixed-request-detail.webm",
+      "source": "public/presentation/clips/fixed-request-detail.mp4",
+      "sha256": "ceae486f7336d0aab085562ab776cd26ae58a88ad809d3a3cbc0d48d03edf955",
+      "bytes": 163024,
       "encoding": "VP9; native playback duration"
     }
   ]

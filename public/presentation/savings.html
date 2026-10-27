@@ -26,53 +26,51 @@
   <p>This is a theoretical <strong>labor-capacity model</strong>, not an average customer result or a measured saving. Replace the inputs with your best existing workflow, including deployment templates and upstream namespace opt-in.</p>
   <p><label style="display:inline">Load a scenario <select id="scenario" aria-label="Load a scenario"></select></label><button id="reset" type="button">Reset this scenario</button></p>
   <form id="inputs" novalidate>
-    <h2>Fleet and useful investigations</h2>
+    <h2>Fleet and ownership</h2>
     <div class="inputs">
       <label>Total services<input id="services" type="number" min="1" step="1"></label>
       <label>Agent-compatible services<input id="eligible" type="number" min="0" step="1"></label>
-      <label>Rollout domains<input id="domains" type="number" min="1" step="1"></label>
-      <label>Qualifying investigations / year<input id="cases" type="number" min="0" step="1"></label>
-      <label>Loaded USD / person-hour<input id="rate" type="number" min="0" step="1"></label>
-      <label>People in the baseline investigation<input id="peopleBefore" type="number" min="0" step="1"></label>
-      <label>People with OBI visibility<input id="peopleAfter" type="number" min="0" step="1"></label>
-      <label>Minutes per investigation<input id="minutes" type="number" min="0" step="1"></label>
+      <label>Independent rollout domains<input id="domains" type="number" min="1" step="1"></label>
+      <label>USD / person-hour<input id="rate" type="number" min="0" step="1"></label>
     </div>
-    <p class="muted">One pilot service is common to both paths and excluded. Count only investigations where OBI supplies useful visibility the baseline lacks; use zero if existing traces already provide it. These investigations are separate from enrollment work.</p>
-    <h2>Active person-hours per remaining eligible service</h2>
+    <p class="muted">One common pilot is excluded. Compare distributed service-team responsibility with centralized RIO + Injector. Compatible future workloads inherit the namespace policy; they do not each incur another central setup charge.</p>
+    <h2>One-time coverage and enrollment</h2>
     <div class="inputs">
-      <label>Baseline initial setup<input id="directSetup" type="number" min="0" step="0.25"></label>
-      <label>Assisted initial setup<input id="sharedSetup" type="number" min="0" step="0.25"></label>
-      <label>Changes per year<input id="changes" type="number" min="0" step="1"></label>
-      <label>Baseline per-service hours per change<input id="directChange" type="number" min="0" step="0.25"></label>
-      <label>Hours per exception service<input id="exceptionHours" type="number" min="0" step="0.25"></label>
+      <label>Distributed setup hours / service<input id="directSetup" type="number" min="0" step="0.25"></label>
+      <label>Central OBI deployment hours / domain<input id="obiSetup" type="number" min="0" step="0.25"></label>
+      <label>Central controller + policy hours / domain<input id="centralSetup" type="number" min="0" step="0.25"></label>
+      <label>Distributed shared setup hours / domain<input id="baselineSetup" type="number" min="0" step="0.25"></label>
     </div>
-    <h2>Shared work and service exceptions</h2>
+    <p class="muted">30 minutes for OBI is a presenter-supplied planning assumption. One hour for controller/policy and 2.5 hours per distributed setup are hypothetical labor budgets, not measured install times.</p>
+    <h2>Recurring agent releases</h2>
     <div class="inputs">
-      <label>Baseline shared initial hours / domain<input id="baselineSetup" type="number" min="0" step="0.25"></label>
-      <label>Baseline shared hours / change / domain<input id="baselineChange" type="number" min="0" step="0.25"></label>
-      <label>Tools deployment + policy hours / domain<input id="centralSetup" type="number" min="0" step="0.25"></label>
-      <label>Shared hours / change / domain<input id="centralChange" type="number" min="0" step="0.25"></label>
-      <label>Exception services per change<input id="exceptions" type="number" min="0" step="1"></label>
+      <label>Agent releases / year<input id="changes" type="number" min="0" step="1"></label>
+      <label>Distributed update hours / service / release<input id="directChange" type="number" min="0" step="0.25"></label>
+      <label>Central update hours / domain / release<input id="centralChange" type="number" min="0" step="0.25"></label>
+      <label>Distributed shared hours / domain / release<input id="baselineChange" type="number" min="0" step="0.25"></label>
+      <label>Exception services / release<input id="exceptions" type="number" min="0" step="1"></label>
+      <label>Hours / exception<input id="exceptionHours" type="number" min="0" step="0.25"></label>
       <label>Additional initial work, hours<input id="extraSetup" type="number" min="0" step="1" value="0"></label>
       <label>Additional annual work, hours<input id="extraAnnual" type="number" min="0" step="1" value="0"></label>
       <label>Extra telemetry / support USD / year<input id="extraCost" type="number" min="0" step="100" value="0"></label>
     </div>
-    <p class="muted">Count routine compatibility checks, configuration and rollout once per rollout domain, then add only service-specific exceptions. A domain is an independently maintained rollout group. Shared deployment/policy work is already included; there is no separate generic adoption or maintenance surcharge. The example assumes adoption of maintained tooling, not development of this prototype. Enter any additional development, security review or support effort above, once. If your baseline is already centralized, enter its shared work and lower its repeated per-service work.</p>
+    <p class="muted">Default: 12 monthly releases, 45 minutes per owned rollout operation, zero service exceptions. Shared release qualification common to both paths cancels. Enter any additional compatibility testing, hardening or support effort once. Existing centralized workflows belong in the baseline.</p>
+    <p><strong>No investigation-time credit.</strong> Once both paths have equivalent telemetry, this model assumes equal investigation capability. OBI accelerates initial coverage; its deployment is counted once. Dynamic activation and telemetry-bill reductions are unpriced.</p>
   </form>
   <div id="error" role="alert"></div>
   <section class="results" aria-live="polite" aria-label="Calculated capacity value">
     <h2>First-year capacity saved</h2>
     <div id="firstYear" class="money"></div>
-    <div class="table-scroll"><table aria-label="Before and with-tools work comparison"><thead><tr><th>Person-hours</th><th>Before</th><th>With tools</th><th>Saved</th></tr></thead><tbody id="ledger"></tbody></table></div>
+    <div class="table-scroll"><table aria-label="Distributed and centralized responsibility comparison"><thead><tr><th>Person-hours</th><th>Distributed ownership</th><th>Centralized RIO + Injector</th><th>Saved</th></tr></thead><tbody id="ledger"></tbody></table></div>
     <p id="equation"></p>
     <p id="recurring"></p>
     <p id="adjusted"></p>
   </section>
   <h2>Talk scenarios, using the original assumptions</h2>
-  <div class="table-scroll"><table><thead><tr><th>Services</th><th>Remaining eligible</th><th>First year</th><th>Then / year</th></tr></thead><tbody id="comparison"></tbody></table></div>
+  <div class="table-scroll"><table><thead><tr><th>Services</th><th>Remaining eligible</th><th>Domains</th><th>First year</th><th>Then / year</th></tr></thead><tbody id="comparison"></tbody></table></div>
   <footer>
     <p>These figures value released engineering capacity. They become cash savings only if actual spending falls. Waiting time, outage revenue, new-service growth and telemetry-bill reductions are not credited. The recurring year excludes initial work from both ledgers. Ongoing shared upkeep and exceptions are already included. No general annual allowance is subtracted a second time.</p>
-    <p>The $100 rate is a rounded planning input, informed by <a href="https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm">BLS developer wages</a> and <a href="https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm">broad employer benefit costs</a>. Every workflow hour, investigation frequency and rollout-domain count is an authored assumption, not a benchmark from those sources.</p>
+    <p>The $100 rate is a rounded planning input, informed by <a href="https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm">BLS developer wages</a> and <a href="https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm">broad employer benefit costs</a>. Every workflow hour, release frequency and rollout-domain count is an authored assumption, not a benchmark from those sources.</p>
     <p><a href="savings-assumptions.json">Original inputs and source notes</a> · <a href="savings-results.json">Reproducible results</a></p>
   </footer>
 </main>
@@ -83,7 +81,7 @@
   const money = v => new Intl.NumberFormat('en-US', {style:'currency',currency:'USD',maximumFractionDigits:0}).format(v)
   const picker = $('scenario')
   original.scenarios.forEach((s,i) => picker.add(new Option(s.label,i)))
-  const mapping = {rate:['hourlyRate'],directSetup:['perService','initialBaselineHours'],sharedSetup:['perService','initialSharedHours'],changes:['perService','changesPerYear'],directChange:['perService','changeBaselineHours'],exceptionHours:['perService','exceptionHours'],baselineSetup:['baseline','initialPerDomainHours'],baselineChange:['baseline','changePerDomainHours'],centralSetup:['shared','initialPerDomainHours'],centralChange:['shared','changePerDomainHours'],peopleBefore:['investigation','peopleBefore'],peopleAfter:['investigation','peopleAfter'],minutes:['investigation','minutes']}
+  const mapping = {rate:['hourlyRate'],directSetup:['perService','initialBaselineHours'],obiSetup:['shared','obiSetupPerDomainHours'],changes:['perService','changesPerYear'],directChange:['perService','changeBaselineHours'],exceptionHours:['perService','exceptionHours'],baselineSetup:['baseline','initialPerDomainHours'],baselineChange:['baseline','changePerDomainHours'],centralSetup:['shared','initialPerDomainHours'],centralChange:['shared','changePerDomainHours']}
   const number = id => { if ($(id).value.trim()==='') throw Error('Please fill in every input.'); return Number($(id).value) }
   function render() {
     try {
@@ -91,12 +89,12 @@
       for (const [id, keys] of Object.entries(mapping)) {
         const target=keys.length===1?model:model[keys[0]]; target[keys.at(-1)]=number(id)
       }
-      const row=calculateSavings(model,{services:number('services'),eligibleServices:number('eligible'),domains:number('domains'),exceptionsPerChange:number('exceptions'),qualifyingInvestigations:number('cases'),extraSetupHours:number('extraSetup'),extraAnnualHours:number('extraAnnual'),additionalAnnualCost:number('extraCost')})
+      const row=calculateSavings(model,{services:number('services'),eligibleServices:number('eligible'),domains:number('domains'),exceptionsPerChange:number('exceptions'),extraSetupHours:number('extraSetup'),extraAnnualHours:number('extraAnnual'),additionalAnnualCost:number('extraCost')})
       $('error').textContent=''
       $('firstYear').textContent=money(row.firstYearValue);$('firstYear').classList.toggle('negative',row.firstYearValue<0)
       const fmt=v=>Number(v.toFixed(3)).toLocaleString('en-US')
-      $('ledger').innerHTML=[['Initial setup',row.initialBaselineHours,row.initialSharedHours,row.initialHours],['Annual upkeep',row.lifecycleBaselineHours,row.lifecycleSharedHours,row.lifecycleHours],['Qualifying investigations',row.investigationBaselineHours,row.investigationSharedHours,row.investigationHours],['Total',row.baselineHours,row.sharedHours,row.firstYearHours]].map(([label,...values])=>`<tr><td>${label}</td>${values.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')
-      $('equation').textContent=`${fmt(row.baselineHours)} baseline hours − ${fmt(row.sharedHours)} with-tools hours = ${fmt(row.firstYearHours)} saved × ${money(model.hourlyRate)}. Shared deployment: ${fmt(row.sharedSetupHours)} hours. Annual shared updates: ${fmt(row.sharedUpdateHours)} hours; service exceptions: ${fmt(row.exceptionHours)} hours. These are already included above.`
+      $('ledger').innerHTML=[['One-time setup',row.initialBaselineHours,row.initialSharedHours,row.initialHours],['Annual agent upkeep',row.lifecycleBaselineHours,row.lifecycleSharedHours,row.lifecycleHours],['Total',row.baselineHours,row.sharedHours,row.firstYearHours]].map(([label,...values])=>`<tr><td>${label}</td>${values.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')
+      $('equation').textContent=`${fmt(row.baselineHours)} distributed ownership hours − ${fmt(row.sharedHours)} centralized RIO + Injector hours = ${fmt(row.firstYearHours)} saved × ${money(model.hourlyRate)}. Shared deployment: ${fmt(row.sharedSetupHours)} hours. Annual shared updates: ${fmt(row.sharedUpdateHours)} hours; service exceptions: ${fmt(row.exceptionHours)} hours. These are already included above.`
       $('recurring').textContent=`Following year, with no new-service growth: ${money(row.recurringValue)} (${row.recurringHours} hours).`
       $('adjusted').textContent=`After the extra annual telemetry/support costs you entered: ${money(row.firstYearAfterAdditionalCosts)} in year one; ${money(row.recurringAfterAdditionalCosts)} in the following year. This is an economic value comparison, not a prediction of cash savings.`
       document.querySelector('.results').hidden=false
@@ -104,12 +102,12 @@
   }
   function load() {
     const s=original.scenarios[Number(picker.value)]
-    $('services').value=s.services;$('eligible').value=Math.floor(s.services*original.runtimeMix.eligible/original.runtimeMix.total);$('domains').value=s.domains;$('exceptions').value=s.exceptionsPerChange;$('cases').value=s.qualifyingInvestigations
+    $('services').value=s.services;$('eligible').value=Math.floor(s.services*original.runtimeMix.eligible/original.runtimeMix.total);$('domains').value=s.domains;$('exceptions').value=s.exceptionsPerChange
     for (const [id,keys] of Object.entries(mapping)) $(id).value=keys.reduce((v,k)=>v[k],original)
     for (const id of ['extraSetup','extraAnnual','extraCost']) $(id).value=0
     render()
   }
-  $('comparison').innerHTML=original.scenarios.map(s=>{const r=calculateSavings(original,s);return `<tr><td>${r.services.toLocaleString('en-US')}</td><td>${r.remaining}</td><td>${money(r.firstYearValue)}</td><td>${money(r.recurringValue)}</td></tr>`}).join('')
+  $('comparison').innerHTML=original.scenarios.map(s=>{const r=calculateSavings(original,s);return `<tr><td>${r.services.toLocaleString('en-US')}</td><td>${r.remaining}</td><td>${r.domains}</td><td>${money(r.firstYearValue)}</td><td>${money(r.recurringValue)}</td></tr>`}).join('')
   $('inputs').addEventListener('input',render);$('inputs').addEventListener('submit',e=>e.preventDefault());picker.addEventListener('change',load);$('reset').addEventListener('click',load);load()
 </script>
 </html>

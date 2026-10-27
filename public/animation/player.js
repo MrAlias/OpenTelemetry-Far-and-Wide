@@ -20,7 +20,7 @@
     const event=[...(chapter.visualCues||[])].reverse().find(v=>v.start<=local);
     if(event?.type==='video'){
       const key=chapter.id+event.src;
-      if(activeVisualKey!==key){stage.innerHTML='';activeMedia=document.createElement('video');activeMedia.muted=true;activeMedia.playsInline=true;activeMedia.preload='auto';activeMedia.src=new URL(event.src,location.href).href;activeMedia.style.cssText='width:100%;height:100%;object-fit:contain';stage.append(activeMedia);activeVisualKey=key;}
+      if(activeVisualKey!==key){stage.innerHTML='';activeMedia=document.createElement('video');activeMedia.muted=true;activeMedia.playsInline=true;activeMedia.preload='auto';activeMedia.src=new URL(event.src,location.href).href;activeMedia.style.cssText='width:100%;height:100%;object-fit:contain';if(event.focus==='waterfall'){const frame=document.createElement('div');frame.style.cssText='position:relative;width:100%;height:65.27778%;top:17.36111%;overflow:hidden';activeMedia.style.cssText='position:absolute;width:100%;height:153.19149%;top:-48.93617%;object-fit:contain';frame.append(activeMedia);stage.append(frame);}else{stage.append(activeMedia);}activeVisualKey=key;}
       const target=Math.min(event.mediaDuration-.045,Math.max(0,local-event.start));
       if(Math.abs(activeMedia.currentTime-target)>.2)activeMedia.currentTime=target;
       activeMedia.playbackRate=Number(speed.value);
