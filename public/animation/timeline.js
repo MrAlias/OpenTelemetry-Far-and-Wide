@@ -59,17 +59,17 @@ window.TALK = {
         },
         {
           "start": 10.4,
-          "end": 26.42,
+          "end": 27.3,
           "sampleStart": 249600,
-          "sampleEnd": 634080,
+          "sampleEnd": 655200,
           "speaker": "Tyler",
           "text": "The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
         },
         {
-          "start": 26.74,
-          "end": 32.38,
-          "sampleStart": 641760,
-          "sampleEnd": 777120,
+          "start": 27.62,
+          "end": 33.26,
+          "sampleStart": 662880,
+          "sampleEnd": 798240,
           "speaker": "Nikola",
           "text": "One customer problem, then a way for the other teams to investigate theirs. Let's open the system."
         }
@@ -87,9 +87,9 @@ window.TALK = {
           "start": 10.4
         }
       ],
-      "duration": 33.04,
+      "duration": 33.92,
       "start": 0,
-      "end": 33.04,
+      "end": 33.92,
       "audio": "narration/01-promise.mp3"
     },
     {
@@ -129,8 +129,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 21.24,
-      "start": 33.04,
-      "end": 54.28,
+      "start": 33.92,
+      "end": 55.16,
       "audio": "narration/02-topology.mp3"
     },
     {
@@ -199,8 +199,8 @@ window.TALK = {
         }
       ],
       "duration": 24.04,
-      "start": 54.28,
-      "end": 78.32,
+      "start": 55.16,
+      "end": 79.2,
       "audio": "narration/03-install-obi.mp3"
     },
     {
@@ -259,8 +259,8 @@ window.TALK = {
         }
       ],
       "duration": 20.08,
-      "start": 78.32,
-      "end": 98.4,
+      "start": 79.2,
+      "end": 99.28,
       "audio": "narration/04-connected-trace.mp3"
     },
     {
@@ -304,8 +304,8 @@ window.TALK = {
       "buildTime": 3.15,
       "visualCues": [],
       "duration": 17.8,
-      "start": 98.4,
-      "end": 116.2,
+      "start": 99.28,
+      "end": 117.08,
       "audio": "narration/05-observed-path.mp3"
     },
     {
@@ -374,8 +374,8 @@ window.TALK = {
       "buildTime": 23.29,
       "visualCues": [],
       "duration": 37.92,
-      "start": 116.2,
-      "end": 154.12,
+      "start": 117.08,
+      "end": 155.0,
       "audio": "narration/06-local-time.mp3"
     },
     {
@@ -473,13 +473,13 @@ window.TALK = {
         }
       ],
       "duration": 43.24,
-      "start": 154.12,
-      "end": 197.36,
+      "start": 155.0,
+      "end": 198.24,
       "audio": "narration/07-direct-agent.mp3"
     },
     {
       "id": "08-new-detail",
-      "kind": "screen",
+      "kind": "timeout-evidence",
       "title": "A failed attempt before a working fallback",
       "plannedDuration": 60,
       "lead": "Tyler",
@@ -490,7 +490,7 @@ window.TALK = {
         },
         {
           "speaker": "Nikola",
-          "text": "That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete."
+          "text": "Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first."
         },
         {
           "speaker": "Tyler",
@@ -508,14 +508,23 @@ window.TALK = {
           "focus": "waterfall"
         },
         {
-          "type": "video",
-          "src": "demo-capture/java-detail.mp4",
-          "poster": "demo-capture/java-detail-poster.png",
-          "atCue": 1,
+          "type": "art",
+          "atCue": 1
+        },
+        {
+          "type": "image",
+          "src": "demo-capture/java-detail-poster.png",
+          "atCue": 2,
           "focus": "waterfall"
         }
       ],
-      "purpose": "Show the actual failed HTTP client span, timeout exception and successful PostgreSQL fallback; keep the trace visible.",
+      "purpose": "Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.",
+      "sources": [
+        "public/demo-capture/java-trace-evidence.json",
+        "https://opentelemetry.io/docs/specs/semconv/http/http-spans/",
+        "https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/"
+      ],
+      "previewVisualIndex": 1,
       "cues": [
         {
           "start": 0.65,
@@ -527,17 +536,17 @@ window.TALK = {
         },
         {
           "start": 10.69,
-          "end": 22.89,
+          "end": 27.11,
           "sampleStart": 256560,
-          "sampleEnd": 549360,
+          "sampleEnd": 650640,
           "speaker": "Nikola",
-          "text": "That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete."
+          "text": "Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first."
         },
         {
-          "start": 23.21,
-          "end": 30.01,
-          "sampleStart": 557040,
-          "sampleEnd": 720240,
+          "start": 27.43,
+          "end": 34.23,
+          "sampleStart": 658320,
+          "sampleEnd": 821520,
           "speaker": "Tyler",
           "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate."
         }
@@ -551,18 +560,21 @@ window.TALK = {
           "start": 0
         },
         {
-          "type": "video",
-          "src": "demo-capture/java-detail.mp4",
-          "poster": "demo-capture/java-detail-poster.png",
+          "type": "art",
           "atCue": 1,
+          "start": 10.69
+        },
+        {
+          "type": "image",
+          "src": "demo-capture/java-detail-poster.png",
+          "atCue": 2,
           "focus": "waterfall",
-          "start": 10.69,
-          "mediaDuration": 7.6
+          "start": 27.43
         }
       ],
-      "duration": 30.68,
-      "start": 197.36,
-      "end": 228.04,
+      "duration": 34.88,
+      "start": 198.24,
+      "end": 233.12,
       "audio": "narration/08-new-detail.mp3"
     },
     {
@@ -591,7 +603,9 @@ window.TALK = {
       ],
       "visuals": [
         {
-          "type": "art",
+          "type": "video",
+          "src": "demo-capture/edit-pricing-source.mp4",
+          "poster": "demo-capture/edit-pricing-before.png",
           "at": 0
         },
         {
@@ -604,7 +618,7 @@ window.TALK = {
       "alignTurnAfterVisual": {
         "3": 1
       },
-      "purpose": "Show the real obsolete-backend attempt and current-store fallback, offer an evidence-backed PR, then deploy the code change.",
+      "purpose": "Show the actual Java source edit in Vim, retaining the working price lookup; offer a PR backed by the trace, then deploy the same fix.",
       "sources": [
         "demo/apps/checkout/baseline/PricingEngine.java",
         "demo/apps/checkout/fixes/PricingEngine.java",
@@ -612,6 +626,7 @@ window.TALK = {
         "presentation/data/resolution.json"
       ],
       "pauseAfter": {},
+      "previewVisualIndex": 0,
       "cues": [
         {
           "start": 0.65,
@@ -648,9 +663,12 @@ window.TALK = {
       ],
       "visualCues": [
         {
-          "type": "art",
+          "type": "video",
+          "src": "demo-capture/edit-pricing-source.mp4",
+          "poster": "demo-capture/edit-pricing-before.png",
           "at": 0,
-          "start": 0
+          "start": 0,
+          "mediaDuration": 18.56
         },
         {
           "type": "video",
@@ -662,8 +680,8 @@ window.TALK = {
         }
       ],
       "duration": 55.76,
-      "start": 228.04,
-      "end": 283.8,
+      "start": 233.12,
+      "end": 288.88,
       "audio": "narration/08-fix-pricing.mp3"
     },
     {
@@ -753,8 +771,8 @@ window.TALK = {
         }
       ],
       "duration": 30.28,
-      "start": 283.8,
-      "end": 314.08,
+      "start": 288.88,
+      "end": 319.16,
       "audio": "narration/08-customer-result.mp3"
     },
     {
@@ -797,8 +815,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 25.28,
-      "start": 314.08,
-      "end": 339.36,
+      "start": 319.16,
+      "end": 344.44,
       "audio": "narration/08-result-summary.mp3"
     },
     {
@@ -850,8 +868,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 29.04,
-      "start": 339.36,
-      "end": 368.4,
+      "start": 344.44,
+      "end": 373.48,
       "audio": "narration/09-the-rest.mp3"
     },
     {
@@ -886,17 +904,17 @@ window.TALK = {
         },
         {
           "start": 13.55,
-          "end": 32.77,
+          "end": 33.57,
           "sampleStart": 325200,
-          "sampleEnd": 786480,
+          "sampleEnd": 805680,
           "speaker": "Nikola",
           "text": "That already saves work. RIO, the Runtime Instrumentation Operator from OTelX, takes a different route: select the namespace centrally, let the Injector detect supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation."
         }
       ],
       "visualCues": [],
-      "duration": 33.44,
-      "start": 368.4,
-      "end": 401.84,
+      "duration": 34.24,
+      "start": 373.48,
+      "end": 407.72,
       "audio": "narration/10-operator-opt-in.mp3"
     },
     {
@@ -933,17 +951,17 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 13.79,
+          "end": 13.71,
           "sampleStart": 15600,
-          "sampleEnd": 330960,
+          "sampleEnd": 329040,
           "speaker": "Tyler",
           "text": "Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector detects supported runtimes and loads their agents."
         },
         {
-          "start": 14.11,
-          "end": 27.07,
-          "sampleStart": 338640,
-          "sampleEnd": 649680,
+          "start": 14.03,
+          "end": 26.99,
+          "sampleStart": 336720,
+          "sampleEnd": 647760,
           "speaker": "Nikola",
           "text": "The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace."
         }
@@ -958,9 +976,9 @@ window.TALK = {
           "mediaDuration": 14.2
         }
       ],
-      "duration": 27.72,
-      "start": 401.84,
-      "end": 429.56,
+      "duration": 27.64,
+      "start": 407.72,
+      "end": 435.36,
       "audio": "narration/10-install-operator.mp3"
     },
     {
@@ -1053,8 +1071,8 @@ window.TALK = {
         }
       ],
       "duration": 56.24,
-      "start": 429.56,
-      "end": 485.8,
+      "start": 435.36,
+      "end": 491.6,
       "audio": "narration/11-enroll-services.mp3"
     },
     {
@@ -1143,8 +1161,8 @@ window.TALK = {
         }
       ],
       "duration": 34.76,
-      "start": 485.8,
-      "end": 520.56,
+      "start": 491.6,
+      "end": 526.36,
       "audio": "narration/12-wider-result.mp3"
     },
     {
@@ -1208,8 +1226,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 33.88,
-      "start": 520.56,
-      "end": 554.44,
+      "start": 526.36,
+      "end": 560.24,
       "audio": "narration/13-hidden-cost.mp3"
     },
     {
@@ -1273,8 +1291,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 31.48,
-      "start": 554.44,
-      "end": 585.92,
+      "start": 560.24,
+      "end": 591.72,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
@@ -1323,41 +1341,41 @@ window.TALK = {
         },
         {
           "start": 9.69,
-          "end": 32.19,
+          "end": 31.07,
           "sampleStart": 232560,
-          "sampleEnd": 772560,
+          "sampleEnd": 745680,
           "speaker": "Nikola",
           "text": "With distributed ownership, allow two and a half hours per team to arrange and deploy its instrumentation. Thirteen teams means thirty-two and a half hours. RIO centralizes the setup. Allow one hour for the controller and namespace policy, plus thirty minutes to deploy OBI. Once for the namespace. There is no additional setup allowance for each service."
         },
         {
-          "start": 32.51,
-          "end": 48.13,
-          "sampleStart": 780240,
-          "sampleEnd": 1155120,
+          "start": 31.39,
+          "end": 47.01,
+          "sampleStart": 753360,
+          "sampleEnd": 1128240,
           "speaker": "Tyler",
           "text": "Now assume an agent release every month. Thirteen separately owned updates versus one shared update: a hundred and fifty-six operations versus twelve in a year. At an assumed forty-five minutes each, that's a hundred and seventeen hours versus nine. A hundred and eight hours saved every year."
         },
         {
-          "start": 48.45,
-          "end": 59.53,
-          "sampleStart": 1162800,
-          "sampleEnd": 1428720,
+          "start": 47.33,
+          "end": 58.41,
+          "sampleStart": 1135920,
+          "sampleEnd": 1401840,
           "speaker": "Nikola",
           "text": "We give neither side a faster-investigation credit once both have equivalent telemetry. OBI gives us broad initial visibility; we count its deployment once, not once per incident."
         },
         {
-          "start": 59.85,
-          "end": 74.11,
-          "sampleStart": 1436400,
-          "sampleEnd": 1778640,
+          "start": 58.73,
+          "end": 72.99,
+          "sampleStart": 1409520,
+          "sampleEnd": 1751760,
           "speaker": "Tyler",
           "text": "Setup plus monthly upkeep saves a hundred and thirty-nine person-hours in this scenario: thirteen thousand nine hundred dollars of engineering capacity in year one. Ten thousand eight hundred in following years. Replace the assumed hours with your own; this is not a measured customer saving."
         }
       ],
       "visualCues": [],
-      "duration": 74.8,
-      "start": 585.92,
-      "end": 660.72,
+      "duration": 73.64,
+      "start": 591.72,
+      "end": 665.36,
       "audio": "narration/15-measure.mp3"
     },
     {
@@ -1414,8 +1432,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 39.0,
-      "start": 660.72,
-      "end": 699.72,
+      "start": 665.36,
+      "end": 704.36,
       "audio": "narration/15-scale.mp3"
     },
     {
@@ -1479,8 +1497,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 38.4,
-      "start": 699.72,
-      "end": 738.12,
+      "start": 704.36,
+      "end": 742.76,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1550,10 +1568,14 @@ window.TALK = {
     }
   },
   "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-27-natural-intro-rio-monthly-ownership",
+  "scriptRevision": "2026-10-27-timeout-evidence-code-editor-pronunciation",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
   "storyRevision": "2026-10-27-timeout-fallback-and-real-trace",
-  "duration": 738.12
+  "pronunciation": {
+    "RIO": "rhee-o (Spanish río)",
+    "OTelX": "oh-tell-X"
+  },
+  "duration": 742.76
 };

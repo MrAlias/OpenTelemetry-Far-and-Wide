@@ -120,8 +120,12 @@ try {
         if(Number.isFinite(chapter.buildTime)&&chapter.buildTime>=event.start&&chapter.buildTime<end){for(let i=0;i<=40;i++){const t=chapter.buildTime+i*.04;if(t<end)times.push(t);}}
         const unique=[...new Set(times)].sort((a,b)=>a-b),concat=[];
         for(const [i,t] of unique.entries()){
-          await evaluate(`window.renderAt(${chapter.start+t})`);
+          // Absolute-to-local subtraction can land a fraction below a cue.
+          // Sample inside this segment while preserving its authored duration.
+          await evaluate(`window.renderAt(${Math.min(chapter.end-.001,chapter.start+t+.001)})`);
           await cdp.call('Runtime.evaluate',{expression:'new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))',awaitPromise:true},sessionId);
+          const correctArtwork=await evaluate(`document.querySelector('#stage svg')?.getAttribute('aria-label')===${JSON.stringify(chapter.title)}`);
+          if(!correctArtwork)throw Error('Wrong visual at artwork cue: '+chapter.id+' '+t);
           const overflow=await evaluate(`(()=>{const s=document.querySelector('#stage svg');if(!s)return ['missing artwork'];const b=s.getBoundingClientRect();return [...s.querySelectorAll('text')].filter(t=>{const r=t.getBoundingClientRect();return r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom+1}).map(t=>t.textContent)})()`);
           if(overflow.length)errors.push({chapter:chapter.id,time:t,overflow});
           const shot=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);

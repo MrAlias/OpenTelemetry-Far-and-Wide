@@ -88,7 +88,7 @@
     if(event.code==='ArrowRight')go(position+5);
     if(event.code==='ArrowLeft')go(position-5);
   });
-  window.mediaReady=Promise.all([...new Set(chapters.flatMap(c=>(c.visualCues||[]).map(v=>v.type==='image'?v.src:v.poster)).filter(Boolean).concat(['demo-capture/connected-trace.png']))].map(src=>new Promise(resolve=>{const img=new Image();img.onload=img.onerror=resolve;img.src=new URL(src,location.href).href;})));
+  window.mediaReady=Promise.all([...new Set(chapters.flatMap(c=>(c.visualCues||[]).map(v=>v.type==='image'?v.src:v.poster)).filter(Boolean).concat(['demo-capture/connected-trace.png','demo-capture/java-timeout-span.png','demo-capture/edit-pricing-after.png']))].map(src=>new Promise(resolve=>{const img=new Image();img.onload=img.onerror=resolve;img.src=new URL(src,location.href).href;})));
   window.renderAt=at=>{pause();position=Math.max(0,Math.min(talk.duration,at));draw();return {chapter:current+1,time:position};};
   window.animationState=()=>({chapter:current+1,time:position,playing,narration:narration.checked});
   if(exportMode)document.body.classList.add('export');

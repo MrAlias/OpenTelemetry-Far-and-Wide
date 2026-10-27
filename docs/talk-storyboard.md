@@ -3,6 +3,7 @@
 The editable visual review is [storyboard.html](../public/storyboard.html).
 Live content is 21 minutes, plus one minute flex and three minutes Q&A.
 The narrated review uses natural speech pace and can run shorter.
+Say **RIO** “rhee-o,” as in Spanish río, and **OTelX** “oh-tell-X.”
 
 Begin with a customer waiting. OBI reveals a failed connection; Java detail
 identifies the pricing method, timeout and working fallback. Remove the obsolete
@@ -102,19 +103,19 @@ Live budget: 120 seconds.
 
 ## 08 · A failed attempt before a working fallback
 
-Show the actual failed HTTP client span, timeout exception and successful PostgreSQL fallback; keep the trace visible.
+Show the actual failed HTTP span with literal error.type and exception.message fields before calling it a timeout. The captured waterfall remains the context.
 
 Live budget: 60 seconds.
 
 **Tyler:** Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup.
 
-**Nikola:** That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete.
+**Nikola:** Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first.
 
 **Tyler:** OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate.
 
 ## 09 · Stop calling the retired backend
 
-Show the real obsolete-backend attempt and current-store fallback, offer an evidence-backed PR, then deploy the code change.
+Show the actual Java edit in Vim: remove the obsolete HTTP block and its unused imports, retain orders.currentPrice(), and save the same source used for deployment. Offer the owning team a PR grounded in the trace.
 
 Live budget: 90 seconds.
 

@@ -79,7 +79,7 @@ try{
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -92,6 +92,14 @@ try{
    if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});
    if(n===7&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
    if(n===20&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
+   if(n===10){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="10"] .timeout-evidence')?.textContent`);
+    if(!text?.includes('java.net.SocketTimeoutException')||!text?.includes('Connect timed out'))errors.push({slide:n,issue:'Timeout claim lacks visible captured error evidence'});
+   }
+   if(n===11){
+    const source=await evaluate(`document.querySelector('[data-slidev-no="11"] video source')?.getAttribute('src')`);
+    if(!source?.includes('edit-pricing-source'))errors.push({slide:n,issue:'Code fix lacks actual Java editor recording'});
+   }
    if(n===24||n===25){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] .slidev-layout').innerText`);
     if(!text.includes('$13,900')||!text.includes('capacity'))errors.push({slide:n,issue:'Dollar model missing or not identified as capacity'});

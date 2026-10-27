@@ -214,7 +214,7 @@
     },
     {
       "id": "08-new-detail",
-      "kind": "screen",
+      "kind": "timeout-evidence",
       "title": "A failed attempt before a working fallback",
       "plannedDuration": 60,
       "lead": "Tyler",
@@ -225,7 +225,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete."
+          "text": "Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first."
         },
         {
           "speaker": "Tyler",
@@ -243,14 +243,23 @@
           "focus": "waterfall"
         },
         {
-          "type": "video",
-          "src": "demo-capture/java-detail.mp4",
-          "poster": "demo-capture/java-detail-poster.png",
-          "atCue": 1,
+          "type": "art",
+          "atCue": 1
+        },
+        {
+          "type": "image",
+          "src": "demo-capture/java-detail-poster.png",
+          "atCue": 2,
           "focus": "waterfall"
         }
       ],
-      "purpose": "Show the actual failed HTTP client span, timeout exception and successful PostgreSQL fallback; keep the trace visible."
+      "purpose": "Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.",
+      "sources": [
+        "public/demo-capture/java-trace-evidence.json",
+        "https://opentelemetry.io/docs/specs/semconv/http/http-spans/",
+        "https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/"
+      ],
+      "previewVisualIndex": 1
     },
     {
       "id": "08-fix-pricing",
@@ -278,7 +287,9 @@
       ],
       "visuals": [
         {
-          "type": "art",
+          "type": "video",
+          "src": "demo-capture/edit-pricing-source.mp4",
+          "poster": "demo-capture/edit-pricing-before.png",
           "at": 0
         },
         {
@@ -291,14 +302,15 @@
       "alignTurnAfterVisual": {
         "3": 1
       },
-      "purpose": "Show the real obsolete-backend attempt and current-store fallback, offer an evidence-backed PR, then deploy the code change.",
+      "purpose": "Show the actual Java source edit in Vim, retaining the working price lookup; offer a PR backed by the trace, then deploy the same fix.",
       "sources": [
         "demo/apps/checkout/baseline/PricingEngine.java",
         "demo/apps/checkout/fixes/PricingEngine.java",
         "demo/k8s/checkout-pricing-fixed.patch.yaml",
         "presentation/data/resolution.json"
       ],
-      "pauseAfter": {}
+      "pauseAfter": {},
+      "previewVisualIndex": 0
     },
     {
       "id": "08-customer-result",
@@ -738,9 +750,13 @@
     }
   },
   "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-27-natural-intro-rio-monthly-ownership",
+  "scriptRevision": "2026-10-27-timeout-evidence-code-editor-pronunciation",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "2026-10-27-timeout-fallback-and-real-trace"
+  "storyRevision": "2026-10-27-timeout-fallback-and-real-trace",
+  "pronunciation": {
+    "RIO": "rhee-o (Spanish río)",
+    "OTelX": "oh-tell-X"
+  }
 }

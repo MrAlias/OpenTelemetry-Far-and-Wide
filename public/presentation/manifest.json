@@ -3,6 +3,18 @@
   "provenance": "Timeout/fallback investigation, application fix and fresh fleet recaptured October 27; unchanged install clips retain their original capture dates. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
   "assets": [
     {
+      "asset": "public/presentation/images/java-timeout-span.png",
+      "source": "public/demo-capture/java-timeout-span.png",
+      "sha256": "738c6865c89e4ddd976942e77bc7a6ec35ed3ad9bce8c0a655ffff3c289c02ed",
+      "bytes": 90569
+    },
+    {
+      "asset": "public/presentation/images/edit-pricing-before.png",
+      "source": "public/demo-capture/edit-pricing-before.png",
+      "sha256": "a0d3db7123ea019faed2cfd2c67280125aafeb2fe0ebcfeb8a8f1571347a0021",
+      "bytes": 373437
+    },
+    {
       "asset": "public/presentation/images/request-latency.png",
       "source": "public/demo-capture/request-latency.png",
       "sha256": "c3350be0bf7bbab0aa423caffed755f0d261fb72f92aab9b8866d8ac54c46f76",
@@ -81,6 +93,12 @@
       "bytes": 86552
     },
     {
+      "asset": "public/presentation/clips/edit-pricing-source.mp4",
+      "source": "public/demo-capture/edit-pricing-source.mp4",
+      "sha256": "521e3bfde8e16c060f42229b3faaf4295ee11d149c6e0341edd9ba528c127a05",
+      "bytes": 335385
+    },
+    {
       "asset": "public/presentation/clips/install-obi-edited.mp4",
       "source": "public/demo-capture/install-obi-edited.mp4",
       "sha256": "aaa7056db196fa5d3b88b252c6662ca4842a626241f7a5f0e7d2bcd62532d42d",
@@ -133,6 +151,13 @@
       "source": "public/demo-capture/fixed-request-detail.mp4",
       "sha256": "82029fc7e9c9ec4ee4981c8070d9b219a93d3feb6a71c7f8e4559928a76d6f53",
       "bytes": 132540
+    },
+    {
+      "asset": "public/presentation/clips/edit-pricing-source.webm",
+      "source": "public/presentation/clips/edit-pricing-source.mp4",
+      "sha256": "0c4c4441d69c1a12fff702e5024196bbdd31218bc12e088515b77ae906959827",
+      "bytes": 390212,
+      "encoding": "VP9; native playback duration"
     },
     {
       "asset": "public/presentation/clips/install-obi-edited.webm",

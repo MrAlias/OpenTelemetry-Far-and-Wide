@@ -15,13 +15,24 @@ minutes of questions. Synthetic narration stays at native speech pace.
    is no longer used.
 3. Add the Java zero-code agent. The actual fresh trace shows
    `PricingEngine.calculate`, a failed HTTP client span, its
-   `java.net.SocketTimeoutException: Connect timed out`, and a successful
+   `error.type = java.net.SocketTimeoutException`, an exception event with
+   `exception.message = Connect timed out`, and a successful
    Hibernate/JDBC query for the product price.
-4. Open the code: a stale legacy backend is attempted on every checkout.
+   Show those literal fields before saying the connection timed out; the bar
+   duration alone does not establish the cause. The deck reflows the captured
+   values for legibility; the original Grafana attribute/event screenshots and
+   raw span are retained under `public/demo-capture/`. These keys follow the
+   [HTTP span](https://opentelemetry.io/docs/specs/semconv/http/http-spans/) and
+   [exception event](https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/) conventions.
+4. Open the actual Java file in the recorded Vim editor: a stale legacy backend
+   is attempted on every checkout.
    Connection/read timeouts are 150 ms. The backend is absent at the demo’s
    TEST-NET-1 address, `192.0.2.42:8080`. No sleep simulates the delay. The
    application falls back to the current PostgreSQL product-price store.
-5. Remove the whole obsolete HTTP attempt and retain `orders.currentPrice()`.
+5. The editor recording removes the whole obsolete HTTP attempt and retains
+   `orders.currentPrice()`. Its saved working copy is checked byte-for-byte
+   against `demo/apps/checkout/fixes/PricingEngine.java`. The demo fixtures
+   themselves are preserved during this recording.
    This is a code fix, not a claim that installing instrumentation speeds up
    the application. Where cross-team access permits, offer the owning team a
    PR containing customer impact, trace evidence and the proposed fix.

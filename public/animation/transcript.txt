@@ -54,7 +54,7 @@ Nikola: Zero code is useful. It hasn't made the release calendar disappear. Some
 A failed attempt before a working fallback
 Tyler: Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup.
 
-Nikola: That connection is timing out. The fallback works, so Checkout succeeds, but every customer pays for the failed attempt first. Further down, the order insert and the rest of the checkout still complete.
+Nikola: Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first.
 
 Tyler: OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate.
 

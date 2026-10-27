@@ -54,6 +54,8 @@ def spoken(text):
     # Preserve visual spelling while making technical acronyms intelligible.
     for pattern, replacement in [
         (r'PricingEngine\.calculate', 'Pricing Engine calculate'),
+        (r'\bSocketTimeoutException\b', 'Socket Timeout Exception'),
+        (r'\bRIO\b', 'Rio'), (r'\bOTelX\b', 'Oh tell ex'),
         (r'\bNode\.js\b', 'Node J S'), (r'\bJVM\b', 'J V M'),
         (r'OpenTelemetry', 'Open Telemetry'), (r'\beBPF\b', 'E B P F'),
         (r'\bOBI\b', 'O bee'), (r'\bSDK\b', 'S D K'),

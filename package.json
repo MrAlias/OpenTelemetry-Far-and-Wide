@@ -6,7 +6,7 @@
   "description": "KubeCon NA 2026 Observability Day talk materials for OpenTelemetry Far and Wide",
   "scripts": {
     "dev": "slidev slides.md",
-    "prebuild": "node scripts/presentation/build_savings.mjs && node scripts/presentation/build_resolution.mjs",
+    "prebuild": "node scripts/presentation/build_savings.mjs && node scripts/presentation/build_resolution.mjs && node scripts/presentation/build_timeout_evidence.mjs",
     "build": "slidev build slides.md",
     "export": "slidev export slides.md --output .artifacts/slides/opentelemetry-far-and-wide.pdf",
     "storyboard:serve": "python3 -m http.server 8010 --bind 0.0.0.0 --directory public",

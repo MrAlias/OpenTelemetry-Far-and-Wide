@@ -9,6 +9,7 @@ kicker: The scaling question
 <p class="caption">How do the other teams get this detail without repeating the setup?</p>
 
 <!--
+Pronunciation: RIO is “rhee-o,” as in Spanish río. OTelX is “oh-tell-X.”
 Nikola · 45 seconds. “We fixed this checkout. How do the other teams get this detail without repeating the setup?”
 Tyler: Fourteen runtimes in this demo are supported by the payload. Checkout has the direct agent; thirteen remain. Four Go services keep OBI. The database dependencies are outside the language-agent target count.
 

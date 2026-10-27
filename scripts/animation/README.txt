@@ -78,6 +78,9 @@ and both installed personal voice skills with their verified runtimes/model cach
 The model and reference files remain in those installations; never copy them
 into the repository. Read their SKILL.md for installation and authorized scope.
 Routine narration needs no bootstrap or source-recording extraction.
+Pronunciation overrides preserve visible spellings: RIO is rhee-o (Spanish río);
+OTelX is oh-tell-X. The speech generator uses Rio and Oh tell ex, avoiding
+letter-by-letter delivery or an artificial break between Rio's syllables.
 
 mkdir -p .artifacts/animation/runtime/tmp
 export TMPDIR="$PWD/.artifacts/animation/runtime/tmp"
@@ -149,3 +152,13 @@ The measured pricing fix and matched latency recheck precede the fleet-scale
 setup challenge. See docs/customer-resolution.md and presentation/data/resolution.json.
 The live plan is 21 minutes; the natural recorded read may be shorter.
 Never substitute calculated or invented timings for actual captured requests.
+
+Timeout evidence and code edit
+------------------------------
+Run node scripts/presentation/build_timeout_evidence.mjs before exporting.
+The slide and animation reflow literal error.type and exception.message values
+from java-trace-evidence.json alongside the actual failed span. Original Grafana
+attribute/event screenshots remain reviewable under public/demo-capture/.
+Run python3 scripts/presentation/capture_pricing_edit.py on the isolated display
+to record Vim editing a working copy. The saved result must exactly match the
+fixed Java source. Narration and all generated movies remain local and ignored.

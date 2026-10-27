@@ -90,3 +90,11 @@
 .slidev-layout .customer-callback strong { width:480px; font-size:48px; font-weight:500; color:var(--agent); }
 .slidev-layout .customer-callback span { font-size:25px; color:var(--muted); }
 .slidev-layout .fix-caption { font-size:27px; color:var(--muted); margin-top:36px; }
+.slidev-layout .timeout-evidence { margin:0; }
+.slidev-layout .timeout-evidence svg { display:block; width:100%; height:185px; background:#171b20; border-radius:6px; }
+.slidev-layout .timeout-evidence .evidence-origin { margin:22px 0 12px; font-size:24px; color:var(--muted); }
+.slidev-layout .timeout-evidence dl { display:grid; grid-template-columns:310px 1fr; gap:15px 22px; font:26px/1.4 'DejaVu Sans Mono',monospace; }
+.slidev-layout .timeout-evidence dt { color:var(--muted); }
+.slidev-layout .timeout-evidence dd { margin:0; }
+.slidev-layout .timeout-evidence .timeout-value { color:#9d5410; }
+.slidev-layout .timeout-evidence figcaption { margin-top:20px; font-size:21px; color:var(--muted); }

@@ -202,11 +202,33 @@
     "traceId": "09007e84d580263d160932d7e72f772b",
     "pricingMs": 154.969743,
     "fault": "Real HTTP connection timeout to missing legacy endpoint; successful PostgreSQL fallback",
-    "evidence": "public/demo-capture/java-trace-evidence.json"
+    "evidence": "public/demo-capture/java-trace-evidence.json",
+    "timeoutEvidence": {
+      "spanId": "792eb17d6a12e0c2",
+      "durationMs": 150.911394,
+      "errorType": "java.net.SocketTimeoutException",
+      "exceptionMessage": "Connect timed out"
+    },
+    "screenshots": [
+      "public/demo-capture/java-timeout-span.png",
+      "public/demo-capture/java-timeout-attributes.png",
+      "public/demo-capture/java-timeout-event.png"
+    ]
   },
   "operatorIdentity": {
     "project": "RIO \u2014 Runtime Instrumentation Operator",
     "url": "https://github.com/otelx/rio",
     "recording": "Bundled prototype precursor using demo.opentelemetry.io; independent from the upstream OpenTelemetry Operator"
+  },
+  "sourceEdit": {
+    "method": "Actual X11 screen capture of Vim editing a copy of the demo source",
+    "baseline": "demo/apps/checkout/baseline/PricingEngine.java",
+    "fixed": "demo/apps/checkout/fixes/PricingEngine.java",
+    "beforeSha256": "91d9707829bf53fde56a766902c480f9251c1bcf6e257114212c953374d2886b",
+    "afterSha256": "17e5ff2736a49e26c631679e1bfda7d5e813af85355e33514c1797532eb053bc",
+    "savedFileMatchesFixedSource": true,
+    "playbackRate": 1,
+    "audio": false,
+    "video": "public/demo-capture/edit-pricing-source.mp4"
   }
 }
