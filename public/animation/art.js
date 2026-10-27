@@ -20,7 +20,7 @@
   }
   function list(items,{x=85,y=270,size=33,gap=70,color=C.ink}={}){return items.map((s,i)=>text(x,y+i*gap,s,size,color)).join('');}
   function content(scene,p){switch(scene.kind){
-    case 'title':return lines(70,270,['OpenTelemetry','Far and Wide'],88)+text(75,485,'Tyler Yahn · Nikola Grcevski',32,C.muted)+lines(75,565,['Find the slow services.','Stop repeating the instrumentation setup.'],33,C.blue);
+    case 'title':return lines(70,270,['OpenTelemetry','Far and Wide'],88)+text(75,485,'Tyler Yahn · Nikola Grcevski',32,C.muted)+lines(75,565,['Find the wait. Fix the cause.','Make the next investigation easier.'],33,C.blue);
     case 'observed':return fleet('observed',p)+center(655,p>0?'Cart branch · captured server durations · milliseconds':'A topology shows possible calls; the request shows observed calls',25,C.blue);
     case 'trace-focus':return `<image href="${window.EVIDENCE_IMAGES?.['demo-capture/connected-trace.png']||'demo-capture/connected-trace.png'}" x="0" y="0" width="1280" height="720"/>`+(p>0?`<rect x="513" y="404" width="372" height="30" fill="${C.depth}" opacity="${.35*p}"/><path d="M700 400 L700 355" stroke="${C.depth}" stroke-width="3"/><rect x="530" y="300" width="400" height="58" rx="8" fill="${C.bg}" stroke="${C.depth}"/>`+text(730,339,'151.8 ms before the first call',25,C.depth,'text-anchor="middle"'):'');
     case 'screen':case 'terminal':return '';
@@ -38,6 +38,11 @@
     case 'complete':return fleet('complete')+center(655,'14 language agents · 4 Go OBI baselines · latency still needs investigation',26,C.green);
     case 'savings':return text(80,245,'Request for visibility',30,C.blue)+text(1200,245,'Useful telemetry',30,C.green,'text-anchor="end"')+arrow(80,305,1195,305)+list(['Agree and coordinate','Configure and deploy','Wait and switch context','Validate and recover'],{x:95,y:380,size:33,gap:67})+text(680,400,'People doing the work',31,C.depth)+text(680,470,'Time waiting between steps',31,C.depth)+text(680,555,'Measure both clocks separately',26,C.muted);
     case 'lifecycle':return list(['New compatible service → inherit namespace selection','Agent update → reuse the rollout and checks','Configuration change → reduce drift and rework','Failure → reuse a tested recovery path'],{size:31,gap:78})+center(635,'Include platform maintenance, compatibility, and blast radius',27,C.depth);
+    case 'pricing-fix':return text(75,215,'PricingEngine.calculate',34,C.blue)+text(75,295,'public int calculate() {',31,C.ink,'font-family="monospace"')+text(90,355,'−  Thread.sleep(150);',31,'#ff9b89','font-family="monospace"')+text(110,415,'return 42;',31,C.ink,'font-family="monospace"')+text(75,470,'}',31,C.ink,'font-family="monospace"')+text(820,320,'150 ms',72,C.depth)+lines(820,375,['of deliberate','waiting'],29,C.muted)+text(75,585,'Remove the wait. Keep the price.',36,C.green)+text(75,640,'The application change removes the delay; instrumentation shows where to act.',24,C.muted);
+    case 'latency-result':{
+      const r=window.RESOLUTION,b=Math.round(r.before.requestMedianMs),a=Math.round(r.after.requestMedianMs),max=Math.max(b,a);
+      return text(75,200,'Customer request · median duration',28,C.muted)+[['Before the fix',b,C.depth],['After the fix',a,C.green]].map(([label,value,color],i)=>{const y=260+i*100;return text(75,y+29,label,31)+`<rect x="345" y="${y}" width="640" height="43" fill="${C.panel}"/><rect x="345" y="${y}" width="${640*value/max}" height="43" fill="${color}"/>`+text(1200,y+34,value+' ms',38,color,'text-anchor="end"')}).join('')+text(75,490,'PricingEngine.calculate',29,C.ink,'font-family="monospace"')+text(75,540,r.before.pricingMedianMs.toFixed(1)+' ms → '+r.after.pricingMedianMs.toFixed(2)+' ms',43,C.green)+lines(75,620,['30 successful requests per version after warmup · same instrumentation','Same price. Orders created. Full request path.'],24,C.muted);
+    }
     case 'cost-demo':{
       const r=window.SAVINGS.rows[0];
       const xs=[75,730,960,1195],headers=['Person-hours','Before','With tools','Saved'];
@@ -48,7 +53,7 @@
       const xs=[75,410,780,1195],headers=['Services','Remaining eligible','First year','Then / year'];
       return headers.map((v,i)=>text(xs[i],225,v,25,C.muted,i===3?'text-anchor="end"':'')).join('')+window.SAVINGS.rows.map((r,i)=>{const y=292+i*76;return `<line x1="75" y1="${y-40}" x2="1195" y2="${y-40}" stroke="${C.line}"/>`+[r.services.toLocaleString('en-US'),String(r.remaining),money(r.firstYearValue),money(r.recurringValue)].map((v,j)=>text(xs[j],y,v,33,j===2?C.green:C.ink,j===3?'text-anchor="end"':'')).join('')}).join('')+lines(75,615,['Illustrative USD capacity saved; $100 per person-hour.','Shared upkeep per rollout group; exceptions separate. Setup savings happen once.'],23,C.muted);
     }
-    case 'close':return lines(75,285,['Find the slow services.','Add detail on one.','Scale the workflow.'],60)+text(78,590,'Measure the work your next team can avoid.',33,C.blue);
+    case 'close':return text(75,265,Math.round(window.RESOLUTION.before.requestMedianMs)+' → '+Math.round(window.RESOLUTION.after.requestMedianMs)+' ms',76,C.green)+text(75,325,'Customer request · matched median',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
     default:throw new Error('Unknown artwork kind: '+scene.kind);
   }}
   window.renderArtwork=(scene,seconds,{final=false,reduceMotion=false}={})=>{

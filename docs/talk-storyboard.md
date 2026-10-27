@@ -2,17 +2,19 @@
 
 The editable visual review is [storyboard.html](../public/storyboard.html). The 25-minute live slot allocates 21 minutes to content, one minute to flex and three minutes to questions. The synthetic narrated review follows natural speech pace and may be shorter.
 
-The final arc distinguishes upstream language-specific opt-in, which also supports namespaces, from this custom controller/Injector integration: choose a namespace, detect supported runtimes and manage rollout. Exporter settings, payload and exclusions are prepared once; the captured selection adds no positive service list or per-service annotations.
+Follow the customer's wait through a justified service choice, a named local method, an actual application fix and a measured return to the request. Then resolve the repetition problem: give the other teams the same investigative detail through one namespace selection. Keep the upstream opt-in comparison, custom controller/Injector, fleet detail, lifecycle and dollar content. Close with both the customer outcome and readiness for the next service.
+
+The historical opening request and the fresh matched before/after experiment are different observations. The local seeded-fault latency result is measured; the engineering-capacity dollar model remains hypothetical. Details and evidence: [customer-resolution.md](customer-resolution.md).
 
 ## 01 · OpenTelemetry Far and Wide
 
-Make the slow request visible before introducing the investigation.
+Open a customer problem and promise a measured resolution, then make that investigation capability repeatable across the namespace.
 
 Live budget: 60 seconds.
 
 **Tyler:** You know the application is slow. The hard part is knowing where to look.
 
-**Tyler:** Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
+**Tyler:** Today we'll follow this request with OBI, find the work behind the wait, and fix it. Then we'll come back to the customer's request and check the result. We'll also stop repeating the instrumentation setup across the other services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
 
 **Nikola:** I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.
 
@@ -22,7 +24,7 @@ Live budget: 60 seconds.
 
 Orient in the actual application without selecting a culprit.
 
-Live budget: 50 seconds.
+Live budget: 40 seconds.
 
 **Tyler:** Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow.
 
@@ -32,7 +34,7 @@ Live budget: 50 seconds.
 
 Show the real OBI installation, then move to its result.
 
-Live budget: 60 seconds.
+Live budget: 45 seconds.
 
 **Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications.
 
@@ -48,13 +50,13 @@ Live budget: 55 seconds.
 
 **Nikola:** The useful result is a connected trace. This is the request behind the duration we started with.
 
-**Tyler:** Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating.
+**Tyler:** Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change.
 
 ## 05 · Follow the cart branch of this request
 
 Transform orientation into an observed path, using the captured request.
 
-Live budget: 45 seconds.
+Live budget: 35 seconds.
 
 **Tyler:** Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
 
@@ -64,21 +66,21 @@ Live budget: 45 seconds.
 
 Earn Checkout selection from the measured 151.8 ms local interval, not inclusive duration.
 
-Live budget: 95 seconds.
+Live budget: 80 seconds.
 
 **Tyler:** Start with the waterfall. The Gateway span is long, but almost all of that time is spent waiting for Checkout. Checkout's total also contains its downstream calls.
 
 **Nikola:** So choosing the longest bar would send us back to the beginning. Look instead at the gap before Checkout makes its first downstream call.
 
-**Tyler:** That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout.
+**Tyler:** That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. Nearly half of this request is spent before that first call. That is our first useful discovery: look inside Checkout, not at its dependencies.
 
-**Nikola:** Now we've got a reason to add language-level detail.
+**Nikola:** Now we have a specific question for language-level detail: what is Checkout doing during that wait?
 
 ## 07 · Add Java zero-code instrumentation
 
 Show actual source-informed configuration and the real direct-agent installation.
 
-Live budget: 150 seconds.
+Live budget: 120 seconds.
 
 **Tyler:** We have source access here. The pricing calculation happens before the Inventory call. We'll use the Java agent to time that method and expose the library work around it.
 
@@ -92,27 +94,55 @@ Live budget: 150 seconds.
 
 Show the actual 150.4 ms method span and Hibernate/JDBC observations.
 
-Live budget: 75 seconds.
+Live budget: 60 seconds.
 
 **Tyler:** Here's a fresh request with the Java agent running. The missing interval now has a name: PricingEngine.calculate.
 
 **Nikola:** There it is: about a hundred and fifty milliseconds. Below it, Hibernate and JDBC show the product lookup, the order insert, and the transaction commit.
 
-**Tyler:** OBI got us to the right service. The language agent gave us a way to describe the work inside it.
+**Tyler:** OBI got us to the right service. The language agent named the work inside it. But naming the wait does not remove it. Let's open that pricing method.
 
-## 09 · What about the rest of the application?
+## 09 · There's our 150 milliseconds
 
-Make the repeated workflow create the need for the operator.
+Reveal the exact seeded wait, show its removal without changing the price, and record deployment of the real application fix.
+
+Live budget: 90 seconds.
+
+**Tyler:** There is our hundred and fifty milliseconds. This demo deliberately puts a wait inside the pricing method. It is local work, before the first downstream call, exactly where the trace sent us.
+
+**Nikola:** So the fix is small: remove that wait and keep the same price. The instrumentation did not make the application faster. It showed us where to act.
+
+**Tyler:** Here we deploy the fixed application image. The Java agent, its settings, and the rest of the request path stay the same.
+
+**Nikola:** The deployment is ready. A completed rollout is not the customer result. Let's send the request again.
+
+## 10 · The customer gets the time back
+
+Deliver the measured customer payoff before raising the fleet-scale setup challenge; distinguish fresh matched samples from the historical opening exemplar.
+
+Live budget: 60 seconds.
+
+**Tyler:** Back to the customer request. In a fresh matched run, the median goes from about three hundred and sixty milliseconds to two hundred and twenty-six. The pricing method goes from a hundred and fifty milliseconds to less than one.
+
+**Nikola:** Same price. An order still gets created, and the request still visits all eighteen services. We removed the deliberate wait, not the work needed to finish checkout.
+
+**Tyler:** These are medians of thirty warmed requests on each version, with the same instrumentation. It is a measured demo result, not a production benchmark.
+
+**Nikola:** Now that is a useful trace. It helped us change the customer experience. The next question is how to make this kind of investigation available to the rest of the teams.
+
+## 11 · One fixed. Thirteen to equip.
+
+Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.
 
 Live budget: 45 seconds.
 
-**Nikola:** That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?
+**Nikola:** We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
 
 **Tyler:** In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen.
 
 **Nikola:** And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
-## 10 · Injection still needs a selection
+## 12 · Injection still needs a selection
 
 Credit upstream injection and namespace opt-in, then set up the custom component’s combined namespace selection, runtime handling and rollout value.
 
@@ -122,17 +152,17 @@ Live budget: 45 seconds.
 
 **Nikola:** For this mixed-language application, we want one shared choice: instrument the namespace. Then let the system choose the agents and manage the rollout.
 
-## 11 · Let the namespace be the selection
+## 13 · Let the namespace be the selection
 
 Install the merged custom component as a distinct step after upstream opt-in; earn the namespace-wide payoff.
 
-Live budget: 75 seconds.
+Live budget: 60 seconds.
 
 **Tyler:** This demo uses the custom namespace-driven controller and the OpenTelemetry Injector. The controller selects workloads and manages their rollout. The Injector detects the supported runtime and loads its language agent.
 
 **Nikola:** Here we install the controller once. The agent payload, exporter, and exclusions are shared settings. Next comes the application choice: instrument this namespace.
 
-## 12 · Instrument this namespace
+## 14 · Instrument this namespace
 
 Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.
 
@@ -140,27 +170,27 @@ Live budget: 105 seconds.
 
 **Nikola:** Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.
 
-**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand.
+**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. The shared rule replaces thirteen deployment edits and manual restarts.
 
 **Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. One namespace choice carries the setup across the application.
 
-## 13 · Open language detail in more services
+## 15 · Open language detail in more services
 
 Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.
 
-Live budget: 85 seconds.
+Live budget: 60 seconds.
 
 **Tyler:** Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
 
 **Nikola:** Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
 
-**Tyler:** The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup.
+**Tyler:** The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
 
-## 14 · The work around a deployment adds up
+## 16 · The work around a deployment adds up
 
 Connect the demonstrated workflow to people, coordination and waiting.
 
-Live budget: 60 seconds.
+Live budget: 55 seconds.
 
 **Tyler:** Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?
 
@@ -170,11 +200,11 @@ Live budget: 60 seconds.
 
 **Nikola:** It is fewer people arranging the same work. Count their active effort separately from the time spent waiting.
 
-## 15 · Reuse the workflow after day one
+## 17 · Reuse the workflow after day one
 
 Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
-Live budget: 60 seconds.
+Live budget: 50 seconds.
 
 **Tyler:** And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
 
@@ -184,7 +214,7 @@ Live budget: 60 seconds.
 
 **Nikola:** Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
 
-## 16 · Put a price on the repetition
+## 18 · Put a price on the repetition
 
 Compare baseline and shared work directly; show centralized updates once per rollout domain, service exceptions separately, and conditional OBI investigation savings.
 
@@ -202,7 +232,7 @@ Live budget: 80 seconds.
 
 **Nikola:** Every time estimate is an assumption to replace with your own. Prototype development, extra telemetry, and support need separate estimates.
 
-## 17 · Repetition changes the economics
+## 19 · Repetition changes the economics
 
 Scale the explicit before/with-tools ledgers using declared rollout groups, exceptions and qualifying investigations; distinguish first-year and recurring capacity.
 
@@ -216,16 +246,16 @@ Live budget: 60 seconds.
 
 **Nikola:** And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill.
 
-## 18 · Make the next investigation easier
+## 20 · Less waiting. More services ready.
 
-Resolve the opening and leave a practical next step.
+Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions.
 
 Live budget: 55 seconds.
 
-**Tyler:** We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand.
+**Tyler:** We started with a customer waiting for checkout. OBI showed where the time went. The Java agent named the pricing method. We removed the deliberate wait and came back to measure the request.
 
-**Nikola:** Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services.
+**Nikola:** Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project.
 
-**Tyler:** Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate.
+**Tyler:** The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for.
 
-**Nikola:** Keep the engineering. Lose the repetition. Let's take your questions.
+**Nikola:** Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions.

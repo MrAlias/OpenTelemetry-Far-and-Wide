@@ -48,6 +48,15 @@ for companion in [OUT/'opentelemetry-far-and-wide-silent.mp4',OUT/'draft-narrati
         assert abs(float(actual['end_time'])-expected['end'])<.1, companion.name
         assert actual['tags']['title']==expected['title'], companion.name
 assert timeline['storyRevision']==source['storyRevision']
+resolution=json.loads((ROOT/'presentation/data/resolution.json').read_text())
+assert resolution['version']==source['storyRevision']
+assert json.loads((ROOT/'public/presentation/resolution.json').read_text())==resolution
+scene_by_id={c['id']:c for c in timeline['chapters']}
+assert scene_by_id['08-customer-result']['kind']=='latency-result'
+assert scene_by_id['12-wider-result']['visualCues'][0]['src']=='demo-capture/fixed-fleet-overview.png', 'Fleet scene returns to the pre-fix application'
+assert any(v['src']=='demo-capture/fixed-fleet-detail.mp4' for v in scene_by_id['12-wider-result']['visualCues']), 'Fixed fleet recording missing'
+assert resolution['fleetAfterFix']['pricingMs']<1
+
 topology=json.loads((OUT/'topology-data.json').read_text())
 assert topology['manifestSha256']==hashlib.sha256((ROOT/topology['source']).read_bytes()).hexdigest(), 'Topology is stale'
 assert len(topology['nodes'])==topology['applications']==18

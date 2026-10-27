@@ -2,14 +2,14 @@
 kicker: The scaling question
 ---
 
-# One configured. Thirteen to go.
+# One fixed. Thirteen to equip.
 
 <ServiceTopology phase="one" />
 
-<p class="caption">Four Go services keep OBI. How do we share the remaining setup?</p>
+<p class="caption">How do the other teams get this detail without repeating the setup?</p>
 
 <!--
-Nikola · 45 seconds. “That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?”
+Nikola · 45 seconds. “We fixed this checkout. How do the other teams get this detail without repeating the setup?”
 Tyler: Fourteen runtimes in this demo are supported by the payload. Checkout has the direct agent; thirteen remain. Four Go services keep OBI. The database dependencies are outside the language-agent target count.
 
 [Sources]
@@ -58,10 +58,10 @@ kicker: Live demo · custom Injector integration
 <DemoClip src="install-operator-edited.mp4" poster="install-operator-edited-poster.png" label="Actual installation of the custom Injector controller" />
 
 <!--
-Tyler · 75 seconds. Install the repository's merged component once with make -C components/otel-injector-operator install. The controller selects Kubernetes workloads and manages rolling replacement; the OpenTelemetry Injector detects supported runtimes and loads their agents.
+Tyler · 60 seconds. Install the repository's merged component once with make -C components/otel-injector-operator install. The controller selects Kubernetes workloads and manages rolling replacement; the OpenTelemetry Injector detects supported runtimes and loads their agents.
 Nikola: Payload, exporter and exclusions are shared settings. Prepare demo/k8s/fleet-instrumentation-base.yaml before the next action. The actual application choice comes next.
 
-Credit Jack Berg's prototype implementation and Nikola's participation. The merged demo uses demo.opentelemetry.io, independently from upstream APIs. A standalone official repository is future work; do not invent a release URL.
+Credit Jack Berg's prototype implementation and Nikola's participation. The merged demo uses demo.opentelemetry.io, independently from upstream APIs. Describe the bundled recording snapshot accurately; do not present it as an upstream Operator release.
 
 [Sources]
 - components/otel-injector-operator/README.md
@@ -151,19 +151,20 @@ kicker: The useful fleet result
 
 # Open language detail in Catalog
 
-<TraceEvidence image="fleet-catalog.png" label="Actual namespace-enrolled request showing Catalog JDBC product lookup and downstream calls" />
+<TraceEvidence image="fixed-fleet-catalog.png" label="Actual fixed Checkout request after namespace enrollment, showing Catalog JDBC product lookup and downstream calls" />
 
-<p class="caption">Catalog's database work is visible too.</p>
+<p class="caption">Catalog's database work is visible too. Checkout keeps its fix.</p>
 
 <!--
-Tyler · 85 seconds. Open the fresh namespace-enrolled request in the live backend.
-Nikola: Follow Catalog and its Java-agent database spans. The same enrollment covers supported Node, Python, Ruby and .NET services. The checked-in fleet-detail.mp4 fallback shows the native Grafana navigation.
+Tyler · 60 seconds. Open the fresh namespace-enrolled request in the live backend.
+Nikola: Follow Catalog and its Java-agent database spans. The same enrollment covers supported Node, Python, Ruby and .NET services. The fixed-fleet-detail.mp4 fallback shows the native Grafana navigation.
 Tyler: No separate instrumentation change from each application team. The platform carries shared setup; application teams retain their services.
 
-Do not claim the latency was fixed, or that this demo promises support for every framework/version.
+The earlier application change removed the seeded pricing wait; this enrollment adds readiness for future investigations. Do not attribute the fix to instrumentation or promise support for every framework/version.
 
 [Sources]
-- public/demo-capture/capture-summary.json
+- presentation/data/resolution.json
+- docs/customer-resolution.md
 - components/otel-injector-images/versions.json
 [/Sources]
 -->

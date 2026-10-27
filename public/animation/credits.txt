@@ -76,3 +76,11 @@ assumptions. Values deduct platform labor, before additional telemetry, support
 or prototype hardening. Released capacity is not automatically cash savings.
 https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm
 https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm
+
+Customer resolution (October 26, 2026):
+The deliberate pricing wait is removed in the application, then remeasured.
+Matched 30-request median Gateway durations: 359.9 ms before, 226.2 ms after.
+Pricing method medians: 150.2 ms before, 0.06 ms after.
+Same instrumentation and full response flow; local demo, not a production benchmark.
+Evidence and limits: presentation/data/resolution.json; docs/customer-resolution.md.
+Later fleet captures use the fixed application. Dollar savings remain hypothetical.

@@ -5,7 +5,8 @@ North America 2026.
 
 A 25-minute talk: use OBI to find where a request spends time, add Java zero-code
 detail on one service, then select a namespace to carry instrumentation across
-supported services. The closing slides explain coordination and lifecycle savings
+supported services. A real pricing change resolves the deliberately seeded wait,
+and matched requests measure the customer result. The closing slides explain coordination and lifecycle savings
 and how to measure them.
 
 ## Run the Slidev presentation
@@ -19,7 +20,7 @@ Open the URL printed by Slidev. Use `/presenter/` for notes and handoffs.
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-The **22-slide deck is editable Slidev source** in [slides.md](slides.md) and
+The **25-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
@@ -59,6 +60,11 @@ Redis. OBI supplies the baseline. A captured 306.26 ms request contains a
 151.78 ms initial Checkout interval; a fresh Java-agent request names its
 150.38 ms pricing method. These are exemplars, not performance benchmarks.
 
+The [customer resolution](docs/customer-resolution.md) then removes the deliberate
+pricing wait. In a separate matched local run, median request duration falls
+from 359.9 to 226.2 ms, with the same instrumentation and complete request flow.
+The default slow image remains available for rehearsal.
+
 The custom controller and OpenTelemetry Injector then enroll thirteen additional
 supported workloads using one namespace rule. Fourteen language-agent services
 and four Go services with OBI appear in the fresh request. Upstream already
@@ -74,7 +80,7 @@ and comparison; open `/presentation/savings.html` for the editable calculator.
 
 ## Storyboard and narrated review
 
-The [visual storyboard](public/storyboard.html) retains the reviewed 18-scene arc.
+The [visual storyboard](public/storyboard.html) retains the 20-scene customer-to-resolution arc.
 Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
 use the serving computer's address. Its stills work offline; recorded video
 links use local generated capture files.

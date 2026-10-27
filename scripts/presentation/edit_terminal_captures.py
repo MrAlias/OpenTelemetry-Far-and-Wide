@@ -32,5 +32,5 @@ def assemble(name,takes):
  (work/'edit.json').write_text(json.dumps({'output':str(target.relative_to(ROOT)),'seconds':duration(target),'segments':ledger,'playbackRate':1.0},indent=2)+'\n');print(name,round(duration(target),2),'seconds',flush=True)
 if __name__=='__main__':
  import sys
- targets={'instrument-namespace':[('instrument-namespace',5)],'install-obi':[('install-obi',3)],'inspect-java-setup':[('inspect-java-setup',2)],'install-java-agent':[('install-java-agent',2),('java-agent-startup',1)],'install-operator':[('install-operator',2)],'enroll-fleet':[('enroll-fleet',4)]}
+ targets={'fix-pricing':[('fix-pricing',2)],'instrument-namespace':[('instrument-namespace',5)],'install-obi':[('install-obi',3)],'inspect-java-setup':[('inspect-java-setup',2)],'install-java-agent':[('install-java-agent',2),('java-agent-startup',1)],'install-operator':[('install-operator',2)],'enroll-fleet':[('enroll-fleet',4)]}
  for name in sys.argv[1:] or targets:assemble(name,targets[name])

@@ -1,11 +1,11 @@
-Recorded local demonstration on October 23, 2026: 18 application services, PostgreSQL and Redis. Captured request: 306.26 ms; Checkout initial local interval: 151.78 ms; a fresh Java-agent request shows PricingEngine.calculate at 150.38 ms. Direct Checkout plus 13 operator-enrolled services produce language SDK spans; four Go services retain OBI. Dollar figures are an explicitly hypothetical labor-capacity model, not measured savings or an average customer result; additional telemetry, support and prototype hardening are outside the headline amounts.
+Local demo captures from October 23 and October 26, 2026: 18 application services, PostgreSQL and Redis. The historical opening request is 306.26 ms, with a 151.78 ms initial Checkout interval; Java method detail names the deliberately seeded 150 ms pricing wait. Removing that wait in the application gives 359.9 ms before versus 226.2 ms after in a fresh matched 30-request median comparison with unchanged instrumentation. A later fixed request has 14 SDK services and four OBI-only application services. These are measured local seeded-fault observations, not a production benchmark or an instrumentation speedup. Dollar figures remain a hypothetical labor-capacity model, not measured savings or an average customer result; additional telemetry, support and prototype development need separate estimates.
 
 Tyler and Nikola use their separate authorized synthetic voice profiles.
 
 OpenTelemetry Far and Wide
 Tyler: You know the application is slow. The hard part is knowing where to look.
 
-Tyler: Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
+Tyler: Today we'll follow this request with OBI, find the work behind the wait, and fix it. Then we'll come back to the customer's request and check the result. We'll also stop repeating the instrumentation setup across the other services by leveraging the OpenTelemetry Injector and its Kubernetes Operator.
 
 Nikola: I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest.
 
@@ -26,7 +26,7 @@ Tyler: OBI is ready. Let's open a checkout request.
 One request across the application
 Nikola: The useful result is a connected trace. This is the request behind the duration we started with.
 
-Tyler: Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating.
+Tyler: Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change.
 
 Follow the cart branch of this request
 Tyler: Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
@@ -38,9 +38,9 @@ Tyler: Start with the waterfall. The Gateway span is long, but almost all of tha
 
 Nikola: So choosing the longest bar would send us back to the beginning. Look instead at the gap before Checkout makes its first downstream call.
 
-Tyler: That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout.
+Tyler: That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. Nearly half of this request is spent before that first call. That is our first useful discovery: look inside Checkout, not at its dependencies.
 
-Nikola: Now we've got a reason to add language-level detail.
+Nikola: Now we have a specific question for language-level detail: what is Checkout doing during that wait?
 
 Add Java zero-code instrumentation
 Tyler: We have source access here. The pricing calculation happens before the Inventory call. We'll use the Java agent to time that method and expose the library work around it.
@@ -56,10 +56,28 @@ Tyler: Here's a fresh request with the Java agent running. The missing interval 
 
 Nikola: There it is: about a hundred and fifty milliseconds. Below it, Hibernate and JDBC show the product lookup, the order insert, and the transaction commit.
 
-Tyler: OBI got us to the right service. The language agent gave us a way to describe the work inside it.
+Tyler: OBI got us to the right service. The language agent named the work inside it. But naming the wait does not remove it. Let's open that pricing method.
 
-What about the rest of the application?
-Nikola: That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?
+There's our 150 milliseconds
+Tyler: There is our hundred and fifty milliseconds. This demo deliberately puts a wait inside the pricing method. It is local work, before the first downstream call, exactly where the trace sent us.
+
+Nikola: So the fix is small: remove that wait and keep the same price. The instrumentation did not make the application faster. It showed us where to act.
+
+Tyler: Here we deploy the fixed application image. The Java agent, its settings, and the rest of the request path stay the same.
+
+Nikola: The deployment is ready. A completed rollout is not the customer result. Let's send the request again.
+
+The customer gets the time back
+Tyler: Back to the customer request. In a fresh matched run, the median goes from about three hundred and sixty milliseconds to two hundred and twenty-six. The pricing method goes from a hundred and fifty milliseconds to less than one.
+
+Nikola: Same price. An order still gets created, and the request still visits all eighteen services. We removed the deliberate wait, not the work needed to finish checkout.
+
+Tyler: These are medians of thirty warmed requests on each version, with the same instrumentation. It is a measured demo result, not a production benchmark.
+
+Nikola: Now that is a useful trace. It helped us change the customer experience. The next question is how to make this kind of investigation available to the rest of the teams.
+
+One fixed. Thirteen to equip.
+Nikola: We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
 
 Tyler: In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen.
 
@@ -78,7 +96,7 @@ Nikola: Here we install the controller once. The agent payload, exporter, and ex
 Instrument this namespace
 Nikola: Here is the whole selection rule: instrument demo-apps. No list of service names. No language-specific annotations on each application.
 
-Tyler: Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand.
+Tyler: Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. The shared rule replaces thirteen deployment edits and manual restarts.
 
 Nikola: Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. One namespace choice carries the setup across the application.
 
@@ -87,7 +105,7 @@ Tyler: Back in the application view, we're looking at a new request through the 
 
 Nikola: Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
 
-Tyler: The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup.
+Tyler: The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
 
 The work around a deployment adds up
 Tyler: Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?
@@ -129,11 +147,11 @@ Tyler: These are replaceable assumptions, not average customer results. If exist
 
 Nikola: And capacity is not automatically cash in the bank. We have not priced outages, waiting time, or a smaller telemetry bill.
 
-Make the next investigation easier
-Tyler: We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand.
+Less waiting. More services ready.
+Tyler: We started with a customer waiting for checkout. OBI showed where the time went. The Java agent named the pricing method. We removed the deliberate wait and came back to measure the request.
 
-Nikola: Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services.
+Nikola: Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project.
 
-Tyler: Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate.
+Tyler: The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for.
 
-Nikola: Keep the engineering. Lose the repetition. Let's take your questions.
+Nikola: Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions.

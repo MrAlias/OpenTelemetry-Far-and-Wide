@@ -30,7 +30,9 @@ The operator installs and enrolls the remaining supported services. Use the
 fresh fleet trace and Catalog’s JDBC spans for the result, retaining OBI for Go.
 Readiness, instrumentation scopes, exports and correlation are preparation
 checks; the audience does not need a lesson in trace identity verification.
-No measured engineering savings or latency improvement is claimed.
+No measured engineering-cost savings are claimed. The later customer-resolution
+addition measures an actual application change, separately from the hypothetical
+labor model; see [customer-resolution.md](customer-resolution.md).
 
 ## Capture and reproducibility
 
@@ -51,7 +53,8 @@ Keep all generated files and browser profiles inside this repository.
 
 Run the same sequence from a clean demo: deploy OBI, open the request, explain
 the local interval, apply the direct agent patch, inspect its useful detail,
-install the custom operator, then apply the fleet configuration. Prebuild/load
+remove the seeded pricing wait and remeasure the customer request, then install
+the custom operator and apply the fleet configuration. Prebuild/load
 the payload and application images. The operator and Injector are a custom
 prototype integration; upstream already provides Kubernetes zero-code injection.
 Do not imply an upstream release commitment or a performance fix from adding
@@ -103,3 +106,28 @@ stopped after recording to free resources for narration/rendering. Its data and
 private kubeconfig are retained. Restart with
 `docker start far-wide-recording-control-plane`, then recreate the port forwards
 using `.artifacts/demo-capture/kubeconfig`. Other local clusters are untouched.
+
+
+## Customer resolution and fresh fleet evidence (October 26)
+
+Keep the existing investigation, direct-agent detail, namespace enrollment and
+savings content. Between method detail and the fleet challenge, reveal the
+seeded `Thread.sleep(150)`, deploy `checkout-pricing-fixed.patch.yaml`, and return
+to the customer request. The fixed image changes application code; it preserves
+agent, exporter and full-flow behavior. A matched 30-request warmed comparison
+measures 359.9 → 226.2 ms median Gateway duration and 150.2 → 0.06 ms median
+pricing duration. This fresh comparison is separate from the historical
+306.26 ms opening request. It is not a production performance benchmark.
+
+`presentation/data/resolution.json` holds the measurements and the post-fix
+fleet trace identity. New fixed-fleet dashboard captures show the fixed Checkout
+alongside all fourteen SDK services and four OBI-only application services.
+Use them after namespace enrollment; do not silently return to the old pricing
+wait. Catalog's JDBC detail remains part of the story. The default slow image
+and historical proof still reproduce the original investigation.
+
+Prebuild the separately tagged image with `make -C demo pricing-fixed-image
+pricing-fixed-load CLUSTER=<demo-cluster>`. Apply only the image patch live and
+wait for readiness before generating new requests. Reset to
+`far-wide-demo-checkout:local` for another rehearsal. All local capture artifacts
+remain in the repository; synthetic voices and narrated movies stay untracked.

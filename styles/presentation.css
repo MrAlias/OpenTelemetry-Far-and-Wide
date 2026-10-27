@@ -72,3 +72,21 @@
 .slidev-layout.talk-cover footer span { color:var(--accent); padding:0 12px; }
 @keyframes evidence-in { from {opacity:0} to {opacity:1} }
 @media(prefers-reduced-motion:reduce) { .slidev-layout .trace-highlight {animation:none} }
+
+.slidev-layout .customer-result { margin-top:30px; }
+.slidev-layout .result-label { color:var(--muted); font-size:25px; margin-bottom:22px; }
+.slidev-layout .request-comparison { display:grid; grid-template-columns:230px 1fr 180px; gap:30px; align-items:center; margin:20px 0; font-size:29px; }
+.slidev-layout .duration-track { height:42px; background:#eef0f6; }
+.slidev-layout .duration-track > div { height:100%; background:#b57941; }
+.slidev-layout .after .duration-track > div { background:var(--agent); }
+.slidev-layout .request-comparison strong { text-align:right; font-size:48px; font-weight:500; }
+.slidev-layout .request-comparison small { font-size:26px; }
+.slidev-layout .after strong { color:var(--agent); }
+.slidev-layout .pricing-payoff { font-size:29px; line-height:1.5; margin:35px 0 22px; }
+.slidev-layout .pricing-payoff span { color:var(--agent); font-size:35px; }
+.slidev-layout .result-method { font-size:23px; color:var(--muted); margin:8px 0; }
+.slidev-layout .customer-callback { margin-top:60px; }
+.slidev-layout .customer-callback > div { display:flex; align-items:baseline; gap:48px; margin:32px 0; }
+.slidev-layout .customer-callback strong { width:480px; font-size:48px; font-weight:500; color:var(--agent); }
+.slidev-layout .customer-callback span { font-size:25px; color:var(--muted); }
+.slidev-layout .fix-caption { font-size:27px; color:var(--muted); margin-top:36px; }

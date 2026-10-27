@@ -427,3 +427,30 @@ prerequisites, source files and the live rehearsal sequence. The direct patch
 is `k8s/checkout-direct-agent.patch.yaml`; shared enrollment uses
 `k8s/fleet-instrumentation.yaml`. This is an alternative to the single-Checkout
 operator walkthrough above; begin from a clean, isolated demo installation.
+
+
+## Resolve the seeded pricing wait
+
+After the Java agent identifies the pricing method, complete the customer story:
+remove the demo's deliberate 150 ms wait, deploy a separately tagged fixed image,
+and remeasure the request. The default slow image and historical proof remain
+unchanged. The fixed source still returns 42 and retains the full checkout flow.
+
+```sh
+make -C demo pricing-fixed-image pricing-fixed-load CLUSTER=<demo-cluster>
+kubectl patch deployment/checkout -n demo-apps --type=strategic \
+  --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
+kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
+```
+
+Run the build from the repository root; omit `-C demo` when already in demo/.
+Prepare the image before the presentation. Show the code change and deployment
+live, then return to fresh requests. The matched recorded example uses 30 warmed
+successful requests per version and unchanged agent/exporter settings: 359.9 ms
+median before, 226.2 ms after. This is a local seeded-fault result, not an
+instrumentation speedup or production benchmark. See the
+[measurement protocol and evidence](../docs/customer-resolution.md).
+
+Next, perform namespace enrollment as described above; retain the fixed Checkout
+image. To rehearse from the slow state again, restore
+`far-wide-demo-checkout:local` on deployment/checkout in your demo namespace.

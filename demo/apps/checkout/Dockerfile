@@ -1,9 +1,10 @@
-# Build from the demo directory so the original pricing example is shared.
+# Build from demo/. The default retains the shared slow pricing example.
 FROM gradle:8.14.4-jdk21-noble AS build
 WORKDIR /src
 COPY apps/checkout/build.gradle apps/checkout/settings.gradle ./
 COPY apps/checkout/src ./src
-COPY proof/apps/checkout/PricingEngine.java ./src/main/java/demo/checkout/PricingEngine.java
+ARG PRICING_SOURCE=proof/apps/checkout/PricingEngine.java
+COPY ${PRICING_SOURCE} ./src/main/java/demo/checkout/PricingEngine.java
 RUN gradle --no-daemon installDist
 
 FROM eclipse-temurin:21-jre-noble

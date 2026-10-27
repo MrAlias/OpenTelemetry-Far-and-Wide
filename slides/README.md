@@ -7,14 +7,14 @@ hand-authored sections; the animation exporter does not generate them.
 | --- | --- | --- |
 | `01-opening.md` | 2 | The visible slow request and the promise |
 | `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
-| `03-language-detail.md` | 8–10 | Explicit Java configuration, rollout and useful method detail |
-| `04-namespace.md` | 11–17 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 18–22 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
+| `03-language-detail.md` | 8–13 | Explicit Java configuration, rollout and useful method detail |
+| `04-namespace.md` | 14–20 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 21–25 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
 
 The live budget is 21 minutes, one minute flex and three minutes questions.
 Speaker notes include handoffs, time budgets, commands, source references and
 places to switch into the running demo. Use Slidev's presenter view (`/presenter/`)
-and press `F` for fullscreen. Only slides 6, 7 and 16 have click builds; each
+and press `F` for fullscreen. Only slides 6, 7 and 19 have click builds; each
 adds evidence or changes the enrollment state.
 
 Terminal recordings play manually using their native controls. They are muted,
@@ -74,7 +74,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slides 20–21 and the review video's final cost scenes share the calculator in
+Slides 23–24 and the review video's final cost scenes share the calculator in
 `../presentation/savings-model.js`, with inputs in
 `../presentation/data/savings-assumptions.json`. These are theoretical capacity
 values, not measured customer savings. They compare complete work ledgers;
@@ -89,3 +89,18 @@ refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at
 `/presentation/savings.html`. The notes keep the live content at 21 minutes;
 the existing coordination and lifecycle sections were shortened to make room.
+
+
+## Customer payoff
+
+Slides 11–13 resolve the opening customer problem: reveal the deliberate pricing
+wait, show the actual application deployment, then compare matched request
+medians. `../presentation/data/resolution.json` holds all 60 request timings and
+controls. `CustomerResult.vue` uses the same evidence as the animation. The
+closing slide recalls both the faster request and namespace-wide readiness.
+
+Run `npm run resolution:verify` for the evidence, unchanged-instrumentation and
+story-order checks. `npm run resolution:build` refreshes public review data;
+normal production builds also do this. The full protocol and reset instructions
+are in `../docs/customer-resolution.md`. Keep the measured local latency result
+separate from the hypothetical labor-capacity dollar model.

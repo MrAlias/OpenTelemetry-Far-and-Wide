@@ -1,7 +1,7 @@
 window.TALK = {
   "title": "OpenTelemetry Far and Wide",
   "voice": "Tyler Yahn's and Nikola Grcevski's authorized synthetic voices; not a recording of the presenters",
-  "status": "Recorded local demonstration on October 23, 2026: 18 application services, PostgreSQL and Redis. Captured request: 306.26 ms; Checkout initial local interval: 151.78 ms; a fresh Java-agent request shows PricingEngine.calculate at 150.38 ms. Direct Checkout plus 13 operator-enrolled services produce language SDK spans; four Go services retain OBI. Dollar figures are an explicitly hypothetical labor-capacity model, not measured savings or an average customer result; additional telemetry, support and prototype hardening are outside the headline amounts.",
+  "status": "Local demo captures from October 23 and October 26, 2026: 18 application services, PostgreSQL and Redis. The historical opening request is 306.26 ms, with a 151.78 ms initial Checkout interval; Java method detail names the deliberately seeded 150 ms pricing wait. Removing that wait in the application gives 359.9 ms before versus 226.2 ms after in a fresh matched 30-request median comparison with unchanged instrumentation. A later fixed request has 14 SDK services and four OBI-only application services. These are measured local seeded-fault observations, not a production benchmark or an instrumentation speedup. Dollar figures remain a hypothetical labor-capacity model, not measured savings or an average customer result; additional telemetry, support and prototype development need separate estimates.",
   "chapters": [
     {
       "id": "01-promise",
@@ -17,7 +17,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator."
+          "text": "Today we'll follow this request with OBI, find the work behind the wait, and fix it. Then we'll come back to the customer's request and check the result. We'll also stop repeating the instrumentation setup across the other services by leveraging the OpenTelemetry Injector and its Kubernetes Operator."
         },
         {
           "speaker": "Nikola",
@@ -44,7 +44,7 @@ window.TALK = {
           "atCue": 0
         }
       ],
-      "purpose": "Make the slow request visible before introducing the investigation.",
+      "purpose": "Open a customer problem and promise a measured resolution, then make that investigation capability repeatable across the namespace.",
       "cues": [
         {
           "start": 4.0,
@@ -56,25 +56,25 @@ window.TALK = {
         },
         {
           "start": 10.16,
-          "end": 23.18,
+          "end": 27.18,
           "sampleStart": 243840,
-          "sampleEnd": 556320,
+          "sampleEnd": 652320,
           "speaker": "Tyler",
-          "text": "Today we'll follow a request across our application with OBI, find where the time goes, and add detail where we need it. Then we'll show how to stop repeating the setup for the rest of the services by leveraging the OpenTelemetry Injector and its Kubernetes Operator."
+          "text": "Today we'll follow this request with OBI, find the work behind the wait, and fix it. Then we'll come back to the customer's request and check the result. We'll also stop repeating the instrumentation setup across the other services by leveraging the OpenTelemetry Injector and its Kubernetes Operator."
         },
         {
-          "start": 24.5,
-          "end": 28.9,
-          "sampleStart": 588000,
-          "sampleEnd": 693600,
+          "start": 28.5,
+          "end": 32.9,
+          "sampleStart": 684000,
+          "sampleEnd": 789600,
           "speaker": "Nikola",
           "text": "I'm Nikola. Tyler gets the first service. I'll keep an eye on the rest."
         },
         {
-          "start": 29.22,
-          "end": 34.7,
-          "sampleStart": 701280,
-          "sampleEnd": 832800,
+          "start": 33.22,
+          "end": 38.7,
+          "sampleStart": 797280,
+          "sampleEnd": 928800,
           "speaker": "Tyler",
           "text": "I'm Tyler. That sounds suspiciously like you've given me the homework. Let's get straight to the system."
         }
@@ -92,16 +92,16 @@ window.TALK = {
           "start": 4.0
         }
       ],
-      "duration": 35.36,
+      "duration": 39.36,
       "start": 0,
-      "end": 35.36,
+      "end": 39.36,
       "audio": "narration/01-promise.mp3"
     },
     {
       "id": "02-topology",
       "kind": "topology",
       "title": "One application, many places to look",
-      "plannedDuration": 50,
+      "plannedDuration": 40,
       "lead": "Tyler",
       "turns": [
         {
@@ -134,15 +134,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 21.24,
-      "start": 35.36,
-      "end": 56.6,
+      "start": 39.36,
+      "end": 60.6,
       "audio": "narration/02-topology.mp3"
     },
     {
       "id": "03-install-obi",
       "kind": "terminal",
       "title": "Start with OBI",
-      "plannedDuration": 60,
+      "plannedDuration": 45,
       "lead": "Tyler",
       "turns": [
         {
@@ -204,8 +204,8 @@ window.TALK = {
         }
       ],
       "duration": 24.04,
-      "start": 56.6,
-      "end": 80.64,
+      "start": 60.6,
+      "end": 84.64,
       "audio": "narration/03-install-obi.mp3"
     },
     {
@@ -221,7 +221,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating."
+          "text": "Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change."
         }
       ],
       "pauseAfter": {
@@ -246,11 +246,11 @@ window.TALK = {
         },
         {
           "start": 9.89,
-          "end": 17.13,
+          "end": 19.41,
           "sampleStart": 237360,
-          "sampleEnd": 411120,
+          "sampleEnd": 465840,
           "speaker": "Tyler",
-          "text": "Now we can see service calls, database work, and how their timings fit together. We can move from the application is slow to a place worth investigating."
+          "text": "Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change."
         }
       ],
       "visualCues": [
@@ -261,16 +261,16 @@ window.TALK = {
           "start": 0
         }
       ],
-      "duration": 17.8,
-      "start": 80.64,
-      "end": 98.44,
+      "duration": 20.08,
+      "start": 84.64,
+      "end": 104.72,
       "audio": "narration/04-connected-trace.mp3"
     },
     {
       "id": "05-observed-path",
       "kind": "observed",
       "title": "Follow the cart branch of this request",
-      "plannedDuration": 45,
+      "plannedDuration": 35,
       "lead": "Tyler",
       "turns": [
         {
@@ -307,15 +307,15 @@ window.TALK = {
       "buildTime": 3.15,
       "visualCues": [],
       "duration": 17.8,
-      "start": 98.44,
-      "end": 116.24,
+      "start": 104.72,
+      "end": 122.52,
       "audio": "narration/05-observed-path.mp3"
     },
     {
       "id": "06-local-time",
       "kind": "trace-focus",
       "title": "Find the time before the downstream calls",
-      "plannedDuration": 95,
+      "plannedDuration": 80,
       "lead": "Tyler",
       "turns": [
         {
@@ -328,11 +328,11 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout."
+          "text": "That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. Nearly half of this request is spent before that first call. That is our first useful discovery: look inside Checkout, not at its dependencies."
         },
         {
           "speaker": "Nikola",
-          "text": "Now we've got a reason to add language-level detail."
+          "text": "Now we have a specific question for language-level detail: what is Checkout doing during that wait?"
         }
       ],
       "buildAfter": 1,
@@ -360,33 +360,33 @@ window.TALK = {
         },
         {
           "start": 22.61,
-          "end": 31.17,
+          "end": 36.11,
           "sampleStart": 542640,
-          "sampleEnd": 748080,
+          "sampleEnd": 866640,
           "speaker": "Tyler",
-          "text": "That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. This is the part we want to understand inside Checkout."
+          "text": "That interval is about a hundred and fifty milliseconds. The downstream services haven't started yet, so they can't explain it. Nearly half of this request is spent before that first call. That is our first useful discovery: look inside Checkout, not at its dependencies."
         },
         {
-          "start": 34.49,
-          "end": 37.69,
-          "sampleStart": 827760,
-          "sampleEnd": 904560,
+          "start": 39.43,
+          "end": 44.79,
+          "sampleStart": 946320,
+          "sampleEnd": 1074960,
           "speaker": "Nikola",
-          "text": "Now we've got a reason to add language-level detail."
+          "text": "Now we have a specific question for language-level detail: what is Checkout doing during that wait?"
         }
       ],
       "buildTime": 22.61,
       "visualCues": [],
-      "duration": 38.36,
-      "start": 116.24,
-      "end": 154.6,
+      "duration": 45.44,
+      "start": 122.52,
+      "end": 167.96,
       "audio": "narration/06-local-time.mp3"
     },
     {
       "id": "07-direct-agent",
       "kind": "terminal",
       "title": "Add Java zero-code instrumentation",
-      "plannedDuration": 150,
+      "plannedDuration": 120,
       "lead": "Tyler",
       "turns": [
         {
@@ -477,15 +477,15 @@ window.TALK = {
         }
       ],
       "duration": 52.88,
-      "start": 154.6,
-      "end": 207.48,
+      "start": 167.96,
+      "end": 220.84,
       "audio": "narration/07-direct-agent.mp3"
     },
     {
       "id": "08-new-detail",
       "kind": "screen",
       "title": "The missing interval has a name",
-      "plannedDuration": 75,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
@@ -498,7 +498,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "OBI got us to the right service. The language agent gave us a way to describe the work inside it."
+          "text": "OBI got us to the right service. The language agent named the work inside it. But naming the wait does not remove it. Let's open that pricing method."
         }
       ],
       "pauseAfter": {
@@ -538,11 +538,11 @@ window.TALK = {
         },
         {
           "start": 23.05,
-          "end": 27.81,
+          "end": 30.77,
           "sampleStart": 553200,
-          "sampleEnd": 667440,
+          "sampleEnd": 738480,
           "speaker": "Tyler",
-          "text": "OBI got us to the right service. The language agent gave us a way to describe the work inside it."
+          "text": "OBI got us to the right service. The language agent named the work inside it. But naming the wait does not remove it. Let's open that pricing method."
         }
       ],
       "visualCues": [
@@ -561,21 +561,198 @@ window.TALK = {
           "mediaDuration": 10.2
         }
       ],
-      "duration": 28.48,
-      "start": 207.48,
-      "end": 235.96,
+      "duration": 31.44,
+      "start": 220.84,
+      "end": 252.28,
       "audio": "narration/08-new-detail.mp3"
+    },
+    {
+      "id": "08-fix-pricing",
+      "kind": "pricing-fix",
+      "title": "There's our 150 milliseconds",
+      "plannedDuration": 90,
+      "lead": "Tyler",
+      "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "There is our hundred and fifty milliseconds. This demo deliberately puts a wait inside the pricing method. It is local work, before the first downstream call, exactly where the trace sent us."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "So the fix is small: remove that wait and keep the same price. The instrumentation did not make the application faster. It showed us where to act."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Here we deploy the fixed application image. The Java agent, its settings, and the rest of the request path stay the same."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "The deployment is ready. A completed rollout is not the customer result. Let's send the request again."
+        }
+      ],
+      "visuals": [
+        {
+          "type": "art",
+          "at": 0
+        },
+        {
+          "type": "video",
+          "src": "demo-capture/fix-pricing-edited.mp4",
+          "poster": "demo-capture/fix-pricing-edited-poster.png",
+          "atCue": 2
+        }
+      ],
+      "alignTurnAfterVisual": {
+        "3": 1
+      },
+      "purpose": "Reveal the exact seeded wait, show its removal without changing the price, and record deployment of the real application fix.",
+      "sources": [
+        "demo/proof/apps/checkout/PricingEngine.java",
+        "demo/apps/checkout/fixes/PricingEngine.java",
+        "demo/k8s/checkout-pricing-fixed.patch.yaml",
+        "presentation/data/resolution.json"
+      ],
+      "pauseAfter": {
+        "0": 2.5
+      },
+      "cues": [
+        {
+          "start": 0.65,
+          "end": 10.77,
+          "sampleStart": 15600,
+          "sampleEnd": 258480,
+          "speaker": "Tyler",
+          "text": "There is our hundred and fifty milliseconds. This demo deliberately puts a wait inside the pricing method. It is local work, before the first downstream call, exactly where the trace sent us."
+        },
+        {
+          "start": 13.59,
+          "end": 22.55,
+          "sampleStart": 326160,
+          "sampleEnd": 541200,
+          "speaker": "Nikola",
+          "text": "So the fix is small: remove that wait and keep the same price. The instrumentation did not make the application faster. It showed us where to act."
+        },
+        {
+          "start": 22.87,
+          "end": 28.75,
+          "sampleStart": 548880,
+          "sampleEnd": 690000,
+          "speaker": "Tyler",
+          "text": "Here we deploy the fixed application image. The Java agent, its settings, and the rest of the request path stay the same."
+        },
+        {
+          "start": 44.19,
+          "end": 50.31,
+          "sampleStart": 1060560,
+          "sampleEnd": 1207440,
+          "speaker": "Nikola",
+          "text": "The deployment is ready. A completed rollout is not the customer result. Let's send the request again."
+        }
+      ],
+      "visualCues": [
+        {
+          "type": "art",
+          "at": 0,
+          "start": 0
+        },
+        {
+          "type": "video",
+          "src": "demo-capture/fix-pricing-edited.mp4",
+          "poster": "demo-capture/fix-pricing-edited-poster.png",
+          "atCue": 2,
+          "start": 22.87,
+          "mediaDuration": 20.32
+        }
+      ],
+      "duration": 50.96,
+      "start": 252.28,
+      "end": 303.24,
+      "audio": "narration/08-fix-pricing.mp3"
+    },
+    {
+      "id": "08-customer-result",
+      "kind": "latency-result",
+      "title": "The customer gets the time back",
+      "plannedDuration": 60,
+      "lead": "Tyler",
+      "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "Back to the customer request. In a fresh matched run, the median goes from about three hundred and sixty milliseconds to two hundred and twenty-six. The pricing method goes from a hundred and fifty milliseconds to less than one."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Same price. An order still gets created, and the request still visits all eighteen services. We removed the deliberate wait, not the work needed to finish checkout."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "These are medians of thirty warmed requests on each version, with the same instrumentation. It is a measured demo result, not a production benchmark."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Now that is a useful trace. It helped us change the customer experience. The next question is how to make this kind of investigation available to the rest of the teams."
+        }
+      ],
+      "purpose": "Deliver the measured customer payoff before raising the fleet-scale setup challenge; distinguish fresh matched samples from the historical opening exemplar.",
+      "sources": [
+        "presentation/data/resolution.json",
+        "scripts/presentation/measure_resolution.py",
+        "docs/customer-resolution.md"
+      ],
+      "leadInSeconds": 2,
+      "pauseAfter": {
+        "0": 2.5
+      },
+      "cues": [
+        {
+          "start": 2.0,
+          "end": 12.64,
+          "sampleStart": 48000,
+          "sampleEnd": 303360,
+          "speaker": "Tyler",
+          "text": "Back to the customer request. In a fresh matched run, the median goes from about three hundred and sixty milliseconds to two hundred and twenty-six. The pricing method goes from a hundred and fifty milliseconds to less than one."
+        },
+        {
+          "start": 15.46,
+          "end": 24.9,
+          "sampleStart": 371040,
+          "sampleEnd": 597600,
+          "speaker": "Nikola",
+          "text": "Same price. An order still gets created, and the request still visits all eighteen services. We removed the deliberate wait, not the work needed to finish checkout."
+        },
+        {
+          "start": 25.22,
+          "end": 32.98,
+          "sampleStart": 605280,
+          "sampleEnd": 791520,
+          "speaker": "Tyler",
+          "text": "These are medians of thirty warmed requests on each version, with the same instrumentation. It is a measured demo result, not a production benchmark."
+        },
+        {
+          "start": 33.3,
+          "end": 43.5,
+          "sampleStart": 799200,
+          "sampleEnd": 1044000,
+          "speaker": "Nikola",
+          "text": "Now that is a useful trace. It helped us change the customer experience. The next question is how to make this kind of investigation available to the rest of the teams."
+        }
+      ],
+      "visualCues": [],
+      "duration": 44.16,
+      "start": 303.24,
+      "end": 347.4,
+      "audio": "narration/08-customer-result.mp3"
     },
     {
       "id": "09-the-rest",
       "kind": "scale",
-      "title": "What about the rest of the application?",
+      "title": "One fixed. Thirteen to equip.",
       "plannedDuration": 45,
       "lead": "Nikola",
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?"
+          "text": "We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?"
         },
         {
           "speaker": "Tyler",
@@ -586,37 +763,37 @@ window.TALK = {
           "text": "And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue."
         }
       ],
-      "purpose": "Make the repeated workflow create the need for the operator.",
+      "purpose": "Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.",
       "cues": [
         {
           "start": 0.65,
-          "end": 6.61,
+          "end": 11.13,
           "sampleStart": 15600,
-          "sampleEnd": 158640,
+          "sampleEnd": 267120,
           "speaker": "Nikola",
-          "text": "That's one service. How do we get this kind of detail into the rest without asking each team to repeat the setup?"
+          "text": "We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?"
         },
         {
-          "start": 6.93,
-          "end": 16.45,
-          "sampleStart": 166320,
-          "sampleEnd": 394800,
+          "start": 11.45,
+          "end": 20.97,
+          "sampleStart": 274800,
+          "sampleEnd": 503280,
           "speaker": "Tyler",
           "text": "In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen."
         },
         {
-          "start": 16.77,
-          "end": 23.85,
-          "sampleStart": 402480,
-          "sampleEnd": 572400,
+          "start": 21.29,
+          "end": 28.37,
+          "sampleStart": 510960,
+          "sampleEnd": 680880,
           "speaker": "Nikola",
           "text": "And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue."
         }
       ],
       "visualCues": [],
-      "duration": 24.52,
-      "start": 235.96,
-      "end": 260.48,
+      "duration": 29.04,
+      "start": 347.4,
+      "end": 376.44,
       "audio": "narration/09-the-rest.mp3"
     },
     {
@@ -659,15 +836,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 21.0,
-      "start": 260.48,
-      "end": 281.48,
+      "start": 376.44,
+      "end": 397.44,
       "audio": "narration/10-operator-opt-in.mp3"
     },
     {
       "id": "10-install-operator",
       "kind": "terminal",
       "title": "Let the namespace be the selection",
-      "plannedDuration": 75,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
@@ -722,8 +899,8 @@ window.TALK = {
         }
       ],
       "duration": 23.08,
-      "start": 281.48,
-      "end": 304.56,
+      "start": 397.44,
+      "end": 420.52,
       "audio": "narration/10-install-operator.mp3"
     },
     {
@@ -739,7 +916,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand."
+          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. The shared rule replaces thirteen deployment edits and manual restarts."
         },
         {
           "speaker": "Nikola",
@@ -784,11 +961,11 @@ window.TALK = {
         },
         {
           "start": 12.37,
-          "end": 22.41,
+          "end": 22.77,
           "sampleStart": 296880,
-          "sampleEnd": 537840,
+          "sampleEnd": 546480,
           "speaker": "Tyler",
-          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. We aren't visiting thirteen deployment files or restarting each service by hand."
+          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector supplies their agents. The shared rule replaces thirteen deployment edits and manual restarts."
         },
         {
           "start": 37.36,
@@ -816,15 +993,15 @@ window.TALK = {
         }
       ],
       "duration": 50.68,
-      "start": 304.56,
-      "end": 355.24,
+      "start": 420.52,
+      "end": 471.2,
       "audio": "narration/11-enroll-services.mp3"
     },
     {
       "id": "12-wider-result",
       "kind": "screen",
       "title": "Open language detail in more services",
-      "plannedDuration": 85,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
@@ -837,23 +1014,28 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup."
+          "text": "The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too."
         }
       ],
       "visuals": [
         {
           "type": "image",
-          "src": "demo-capture/fleet-overview.png",
+          "src": "demo-capture/fixed-fleet-overview.png",
           "at": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fleet-detail.mp4",
-          "poster": "demo-capture/fleet-detail-poster.png",
+          "src": "demo-capture/fixed-fleet-detail.mp4",
+          "poster": "demo-capture/fixed-fleet-overview.png",
           "atCue": 1
         }
       ],
       "purpose": "Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.",
+      "sources": [
+        "presentation/data/resolution.json",
+        "docs/customer-resolution.md",
+        "components/otel-injector-images/versions.json"
+      ],
       "cues": [
         {
           "start": 0.65,
@@ -873,39 +1055,39 @@ window.TALK = {
         },
         {
           "start": 22.85,
-          "end": 31.09,
+          "end": 34.09,
           "sampleStart": 548400,
-          "sampleEnd": 746160,
+          "sampleEnd": 818160,
           "speaker": "Tyler",
-          "text": "The namespace rule got us here. We didn't need a separate instrumentation change from each application team. They keep their services; the platform carries the shared setup."
+          "text": "The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too."
         }
       ],
       "visualCues": [
         {
           "type": "image",
-          "src": "demo-capture/fleet-overview.png",
+          "src": "demo-capture/fixed-fleet-overview.png",
           "at": 0,
           "start": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fleet-detail.mp4",
-          "poster": "demo-capture/fleet-detail-poster.png",
+          "src": "demo-capture/fixed-fleet-detail.mp4",
+          "poster": "demo-capture/fixed-fleet-overview.png",
           "atCue": 1,
           "start": 11.45,
-          "mediaDuration": 10.56
+          "mediaDuration": 11.0
         }
       ],
-      "duration": 31.76,
-      "start": 355.24,
-      "end": 387.0,
+      "duration": 34.76,
+      "start": 471.2,
+      "end": 505.96,
       "audio": "narration/12-wider-result.mp3"
     },
     {
       "id": "13-hidden-cost",
       "kind": "savings",
       "title": "The work around a deployment adds up",
-      "plannedDuration": 60,
+      "plannedDuration": 55,
       "lead": "Tyler",
       "turns": [
         {
@@ -962,15 +1144,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 33.88,
-      "start": 387.0,
-      "end": 420.88,
+      "start": 505.96,
+      "end": 539.84,
       "audio": "narration/13-hidden-cost.mp3"
     },
     {
       "id": "14-lifecycle",
       "kind": "lifecycle",
       "title": "Reuse the workflow after day one",
-      "plannedDuration": 60,
+      "plannedDuration": 50,
       "lead": "Tyler",
       "turns": [
         {
@@ -1027,8 +1209,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 31.48,
-      "start": 420.88,
-      "end": 452.36,
+      "start": 539.84,
+      "end": 571.32,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
@@ -1122,8 +1304,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 75.36,
-      "start": 452.36,
-      "end": 527.72,
+      "start": 571.32,
+      "end": 646.68,
       "audio": "narration/15-measure.mp3"
     },
     {
@@ -1192,73 +1374,73 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 48.68,
-      "start": 527.72,
-      "end": 576.4,
+      "start": 646.68,
+      "end": 695.36,
       "audio": "narration/15-scale.mp3"
     },
     {
       "id": "16-close",
       "kind": "close",
-      "title": "Make the next investigation easier",
+      "title": "Less waiting. More services ready.",
       "plannedDuration": 55,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand."
+          "text": "We started with a customer waiting for checkout. OBI showed where the time went. The Java agent named the pricing method. We removed the deliberate wait and came back to measure the request."
         },
         {
           "speaker": "Nikola",
-          "text": "Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services."
+          "text": "Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project."
         },
         {
           "speaker": "Tyler",
-          "text": "Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate."
+          "text": "The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for."
         },
         {
           "speaker": "Nikola",
-          "text": "Keep the engineering. Lose the repetition. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
         }
       ],
-      "purpose": "Resolve the opening and leave a practical next step.",
+      "purpose": "Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions.",
       "cues": [
         {
           "start": 0.65,
-          "end": 10.09,
+          "end": 12.29,
           "sampleStart": 15600,
-          "sampleEnd": 242160,
+          "sampleEnd": 294960,
           "speaker": "Tyler",
-          "text": "We began with a slow request and no chosen culprit. OBI showed us where its time went. Java zero-code instrumentation named the local work we wanted to understand."
+          "text": "We started with a customer waiting for checkout. OBI showed where the time went. The Java agent named the pricing method. We removed the deliberate wait and came back to measure the request."
         },
         {
-          "start": 10.41,
-          "end": 16.81,
-          "sampleStart": 249840,
-          "sampleEnd": 403440,
+          "start": 12.61,
+          "end": 22.37,
+          "sampleStart": 302640,
+          "sampleEnd": 536880,
           "speaker": "Nikola",
-          "text": "Then we chose one namespace. The custom controller and Injector carried the repeated setup across the supported services."
+          "text": "Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project."
         },
         {
-          "start": 17.13,
-          "end": 24.29,
-          "sampleStart": 411120,
-          "sampleEnd": 582960,
+          "start": 22.69,
+          "end": 30.21,
+          "sampleStart": 544560,
+          "sampleEnd": 725040,
           "speaker": "Tyler",
-          "text": "Try one service. Measure the whole path to useful detail. Then ask which repeated steps your platform can take off the next team's plate."
+          "text": "The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for."
         },
         {
-          "start": 24.61,
-          "end": 28.21,
-          "sampleStart": 590640,
-          "sampleEnd": 677040,
+          "start": 30.53,
+          "end": 35.73,
+          "sampleStart": 732720,
+          "sampleEnd": 857520,
           "speaker": "Nikola",
-          "text": "Keep the engineering. Lose the repetition. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
         }
       ],
       "visualCues": [],
-      "duration": 28.88,
-      "start": 576.4,
-      "end": 605.28,
+      "duration": 36.4,
+      "start": 695.36,
+      "end": 731.76,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1327,11 +1509,11 @@ window.TALK = {
       "role": "Nikola, using his authorized synthetic voice"
     }
   },
-  "bigIdea": "Use OBI to find the work worth investigating, add zero-code language detail, then select one namespace to carry instrumentation across supported services.",
-  "scriptRevision": "Compare full work ledgers; count centralized upkeep per rollout group, separate exceptions, and remove the unsupported adoption/maintenance surcharge.",
+  "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
+  "scriptRevision": "Resolve the opening customer latency with a real application fix and matched remeasurement, then make the diagnostic workflow repeatable across services.",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "centralized-upkeep-ledgers-2026-10-26",
-  "duration": 605.28
+  "storyRevision": "customer-resolution-2026-10-26",
+  "duration": 731.76
 };

@@ -1,6 +1,6 @@
 {
-  "recorded": "2026-10-23",
-  "provenance": "Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
+  "recorded": "2026-10-26",
+  "provenance": "Original investigation captured October 23; application fix and fresh fleet captured October 26. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x",
   "assets": [
     {
       "asset": "public/presentation/images/request-latency.png",
@@ -57,6 +57,30 @@
       "bytes": 206845
     },
     {
+      "asset": "public/presentation/images/fix-pricing-edited-poster.png",
+      "source": "public/demo-capture/fix-pricing-edited-poster.png",
+      "sha256": "288880e537de7d7d13eed5e1c52ef2e4bc3481af85833029240cff7e905c8eff",
+      "bytes": 272059
+    },
+    {
+      "asset": "public/presentation/images/fixed-request-trace.png",
+      "source": "public/demo-capture/fixed-request-trace.png",
+      "sha256": "a389d61fbd72eadd6bf996571013f1ddc11f1398dcc0c9d653c8a0837f84fb6d",
+      "bytes": 84938
+    },
+    {
+      "asset": "public/presentation/images/fixed-fleet-catalog.png",
+      "source": "public/demo-capture/fixed-fleet-catalog.png",
+      "sha256": "c23973726b10f9c09ab6922815cb323f64857c0cbbe95e13d07087d9a23e87a5",
+      "bytes": 80149
+    },
+    {
+      "asset": "public/presentation/images/fixed-fleet-overview.png",
+      "source": "public/demo-capture/fixed-fleet-overview.png",
+      "sha256": "a64e61e96b975e366e946d14cc08cbbec666a07d8805063d31ae38df1e7c1e45",
+      "bytes": 83941
+    },
+    {
       "asset": "public/presentation/clips/install-obi-edited.mp4",
       "source": "public/demo-capture/install-obi-edited.mp4",
       "sha256": "aaa7056db196fa5d3b88b252c6662ca4842a626241f7a5f0e7d2bcd62532d42d",
@@ -91,6 +115,18 @@
       "source": "public/demo-capture/fleet-detail.mp4",
       "sha256": "ade553e267aaaeb6af8862c8181a67cb69ec44f95ff65c5b0efba953da29ce02",
       "bytes": 188482
+    },
+    {
+      "asset": "public/presentation/clips/fix-pricing-edited.mp4",
+      "source": "public/demo-capture/fix-pricing-edited.mp4",
+      "sha256": "0d680a4b55ce1e54e9cc4229cccca6e9416247ede81711865714607b48a235e4",
+      "bytes": 198953
+    },
+    {
+      "asset": "public/presentation/clips/fixed-fleet-detail.mp4",
+      "source": "public/demo-capture/fixed-fleet-detail.mp4",
+      "sha256": "25d41cec9f99c7edeae4d3c52bc8e2f81f45d25a6f5e212e339a8dd74286dd09",
+      "bytes": 190171
     },
     {
       "asset": "public/presentation/clips/install-obi-edited.webm",
@@ -132,6 +168,20 @@
       "source": "public/presentation/clips/fleet-detail.mp4",
       "sha256": "ec947b4aaa74036e0a9283af556fc0f62f823c53ab3dbbf962ac5464982d5c03",
       "bytes": 220319,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/fix-pricing-edited.webm",
+      "source": "public/presentation/clips/fix-pricing-edited.mp4",
+      "sha256": "0863a077071f606d240061a43c400c6792511cabc185061ed2481cdb50db9b53",
+      "bytes": 221152,
+      "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/clips/fixed-fleet-detail.webm",
+      "source": "public/presentation/clips/fixed-fleet-detail.mp4",
+      "sha256": "fdb74a12d5269258923bf88e126bdfd1c9862af37469bea57aa738a986a4a302",
+      "bytes": 224094,
       "encoding": "VP9; native playback duration"
     }
   ]

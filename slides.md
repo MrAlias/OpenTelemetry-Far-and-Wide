@@ -4,7 +4,7 @@ title: OpenTelemetry Far and Wide
 titleTemplate: '%s · Observability Day 2026'
 info: |
   Tyler Yahn and Nikola Grcevski · KubeCon + CloudNativeCon North America 2026.
-  Follow a request with OBI, add zero-code detail, then instrument a namespace.
+  Follow a slow customer request, find and fix the wait, then share the instrumentation across a namespace.
 author: Tyler Yahn and Nikola Grcevski
 layout: talk-cover
 defaults:

@@ -81,6 +81,8 @@ Routine narration needs no bootstrap or source-recording extraction.
 mkdir -p .artifacts/animation/runtime/tmp
 export TMPDIR="$PWD/.artifacts/animation/runtime/tmp"
 python3 scripts/animation/build_topology.py
+node scripts/presentation/build_savings.mjs
+node scripts/presentation/build_resolution.mjs
 node scripts/animation/export_slides.mjs
 .artifacts/animation/runtime/venv/bin/python scripts/animation/build_audio.py
 ANIMATION_CHROMIUM=/absolute/path/to/chromium node scripts/animation/render_video.mjs
@@ -139,3 +141,10 @@ Always rerun watermark/media checks after replacing the final movie.
 The authored presentation is slides.md plus slides/*.md. This exporter never
 overwrites those files. Native Vue components and layouts belong to the live
 Slidev deck; public/animation remains an optional narrated review.
+
+Customer story
+--------------
+The measured pricing fix and matched latency recheck precede the fleet-scale
+setup challenge. See docs/customer-resolution.md and presentation/data/resolution.json.
+The live plan is 21 minutes; the natural recorded read may be shorter.
+Never substitute calculated or invented timings for actual captured requests.

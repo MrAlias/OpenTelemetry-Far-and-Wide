@@ -152,9 +152,14 @@ for chapter in talk['chapters']:
         aligned = chapter.get('alignTurnAfterVisual', {}).get(str(i))
         if aligned is not None:
             visual = chapter['visuals'][aligned]
-            assert visual['type'] == 'video' and visual.get('at') == 0
+            assert visual['type'] == 'video'
+            if 'atCue' in visual:
+                assert 0 <= visual['atCue'] < i
+                visual_start = chapter['cues'][visual['atCue']]['start']
+            else:
+                visual_start = float(visual.get('at', 0))
             duration = float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=nw=1:nk=1',str(ROOT/'public'/visual['src'])]))
-            earliest = duration + 1
+            earliest = visual_start + duration + 1
             if local < earliest:
                 hold = earliest-local
                 pieces.append(np.zeros(round(hold*sample_rate),dtype=np.int16))

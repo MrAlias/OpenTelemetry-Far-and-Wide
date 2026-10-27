@@ -12,7 +12,7 @@ kicker: What the shared workflow saves
 </div>
 
 <!--
-Tyler · 60 seconds. We had runtime expertise, full access and control of the release. What happens before an engineer in a real organization can even begin?
+Tyler · 55 seconds. We had runtime expertise, full access and control of the release. What happens before an engineer in a real organization can even begin?
 Nikola: Owner discovery, scope agreement, tickets, meetings, access requests, review, release scheduling and switching away from feature work.
 Tyler: One namespace enrollment can remove repeated application-team changes and keep agent/exporter settings consistent. Establish the mechanism before the explicitly hypothetical dollar model.
 Nikola: Less repeated arrangement of routine work, and less waiting between people.
@@ -39,7 +39,7 @@ kicker: After day one
 <p class="caption">The platform maintains compatibility, rollout and recovery.</p>
 
 <!--
-Tyler · 60 seconds. Setup is only the first bill. Include onboarding, updates, configuration changes, turning instrumentation off and failures.
+Tyler · 50 seconds. Setup is only the first bill. Include onboarding, updates, configuration changes, turning instrumentation off and failures.
 Nikola: A new compatible workload in the selected namespace inherits selection. Shared version/exporter settings can reduce copy/paste drift and repeated training, documentation and debugging. This inheritance is a benefit of the workflow, not a claim that upstream namespace opt-in lacks it.
 The platform still prepares and maintains the shared path, tests compatibility and owns its blast radius. Include those costs.
 
@@ -108,20 +108,22 @@ Tyler: With no qualifying OBI investigations, the demo still saves $5,700 from s
 kicker: Make the next investigation easier
 ---
 
-# OpenTelemetry Far and Wide
+# Less waiting. More services ready.
 
-<div class="closing-lines">Find where to look.<br>Add the detail.<br><span class="accent">Instrument the namespace.</span></div>
+<CustomerResult compact />
 
 <div class="closing-link">Demo and source · github.com/MrAlias/OpenTelemetry-Far-and-Wide</div>
 
 <!--
-Tyler · 55 seconds. We began with a slow request, without selecting a culprit. OBI located the unexplained local interval; Java zero-code instrumentation named it.
+Tyler · 55 seconds. We began with a customer waiting. OBI located the local interval; the Java agent named the pricing method; removing the deliberate wait improved the matched request from roughly 360 to 226 ms. Point back to the opening customer problem.
 Nikola: One namespace choice carried setup across supported services using the custom controller and Injector.
-Tyler: Measure what your next team can avoid. Invite questions while leaving the central message visible.
+Tyler: The customer gets a faster checkout; the next team gets useful diagnostic detail without repeating the setup project. The dollar figures describe hypothetical engineering capacity, distinct from the measured request result. Invite questions with both outcomes visible.
 
 Live content totals 21 minutes, with one minute flex and three minutes questions in the 25-minute slot. The source URL is this talk repository, not an invented official release of the custom component.
 
 [Sources]
+- presentation/data/resolution.json
+- docs/customer-resolution.md
 - docs/talk-brief.md
 - docs/fleet-demo-handoff.md
 - docs/instrumentation-savings.md

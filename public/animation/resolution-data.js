@@ -1,0 +1,504 @@
+window.RESOLUTION = {
+  "version": "customer-resolution-2026-10-26",
+  "recordedAt": "2026-10-26T23:49:28.762588+00:00",
+  "openingExemplarMs": 306.26056,
+  "method": "Median Gateway GET /checkout server-span duration; 30 sequential successful full-flow requests per version after 20 consecutive successful warmups, 100 ms between requests. Separate fresh matched run from the historical opening exemplar.",
+  "controls": {
+    "sameInstrumentation": true,
+    "sameTemplateExceptImageSha256": "e451adb042dfca3ab4ba5ed7b208352b6fc4234a6301319d1b2e69b5ef5c7c56",
+    "sdkServices": [
+      "checkout"
+    ],
+    "applicationServices": 18,
+    "databaseDependencies": [
+      "postgres",
+      "redis"
+    ],
+    "fullResponseFlowValidated": true,
+    "concurrency": 1,
+    "noConcurrentBuildRecordingOrNarration": true
+  },
+  "before": {
+    "image": "far-wide-demo-checkout:local",
+    "sampleCount": 30,
+    "warmupCount": 20,
+    "requestMedianMs": 359.91833499999996,
+    "pricingMedianMs": 150.202822,
+    "exemplarTraceId": "13c389b2f59f4873a6d50c9c07c166ca",
+    "exemplarRequestMs": 356.416184,
+    "exemplarPricingMs": 150.19488,
+    "samples": [
+      {
+        "traceId": "900f613d7c1340048b623f73e206ef46",
+        "requestMs": 381.694038,
+        "pricingMs": 150.161858,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "367f168da7f94264872c532f69d34ce2",
+        "requestMs": 422.242996,
+        "pricingMs": 150.273852,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "13c389b2f59f4873a6d50c9c07c166ca",
+        "requestMs": 356.416184,
+        "pricingMs": 150.19488,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "2e3f5a33c2e9421289c3ece9ede032c0",
+        "requestMs": 407.721175,
+        "pricingMs": 150.241143,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "ecfd682ee26a4c4394e668179e99a051",
+        "requestMs": 293.950554,
+        "pricingMs": 150.138419,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "4ee195cea4754f949c37fd469f98de69",
+        "requestMs": 374.457844,
+        "pricingMs": 150.239525,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "cef32655fa0f4b6daf61ed1be504d4d5",
+        "requestMs": 363.420486,
+        "pricingMs": 150.232043,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "36a0648eb42e45f78d4c6971df2b77c4",
+        "requestMs": 272.925943,
+        "pricingMs": 150.269084,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "bce3e00923644cc78535e84af94a7948",
+        "requestMs": 391.654954,
+        "pricingMs": 150.291486,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "37a1943c56f7491a8a67f0d842cf8b7a",
+        "requestMs": 509.812314,
+        "pricingMs": 150.1561,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "2c2db67c58354bc5ba34f3fd72d0d03e",
+        "requestMs": 253.777948,
+        "pricingMs": 150.167221,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "4d86cb4c8ad14f96a65a93dcc73c2a9d",
+        "requestMs": 252.269936,
+        "pricingMs": 150.112133,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "af79dfbc165c4bf29732339351edae96",
+        "requestMs": 243.204722,
+        "pricingMs": 150.099557,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "d07b65404a034af3b8f4782c6e05c969",
+        "requestMs": 247.848132,
+        "pricingMs": 150.119948,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "03f65b3c5a594e62b2474ed761dd0a8a",
+        "requestMs": 278.776237,
+        "pricingMs": 150.202542,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "82fa9215dc8a41678e782180119111f3",
+        "requestMs": 276.556413,
+        "pricingMs": 150.255715,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "0d8beb309e8047bea94fae9f2108d922",
+        "requestMs": 383.460707,
+        "pricingMs": 150.242638,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "be0a3fff68c74c949e42501be82e9ca0",
+        "requestMs": 398.098138,
+        "pricingMs": 150.211578,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "9122653f778e4aac97e25a8ea37733ae",
+        "requestMs": 243.647793,
+        "pricingMs": 150.124742,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "5370c2b26b8c43c994d2cd4ee80a5c70",
+        "requestMs": 246.282929,
+        "pricingMs": 150.145654,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "66622b45b4b940b6833c7105eafae42f",
+        "requestMs": 241.782113,
+        "pricingMs": 150.106666,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "8621fbd1c33e4f1a84e352a9af49afc0",
+        "requestMs": 328.201292,
+        "pricingMs": 150.235291,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "5237811bb0e1403987db29f831453c90",
+        "requestMs": 437.20205,
+        "pricingMs": 150.179524,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "e26ebd85b8ef420990ea7ee697fab027",
+        "requestMs": 398.254235,
+        "pricingMs": 150.176139,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "75b98011bf474bbd95ca08e038d6ebef",
+        "requestMs": 406.660491,
+        "pricingMs": 150.236563,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "0c658db71e124df78172b1881e665f48",
+        "requestMs": 316.59647,
+        "pricingMs": 150.203102,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "3cb4c06fa6dd45a5be45b44e584af721",
+        "requestMs": 381.372349,
+        "pricingMs": 150.257887,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "01b98a2c571a4433a8840bd4e6b71532",
+        "requestMs": 443.398988,
+        "pricingMs": 150.239259,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "c013d14aad5b4dc4bde1c1478353362f",
+        "requestMs": 400.184904,
+        "pricingMs": 150.175433,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "340d8c64610d4c6a9a48288148d71521",
+        "requestMs": 334.134935,
+        "pricingMs": 150.213845,
+        "status": 200,
+        "price": 42
+      }
+    ]
+  },
+  "after": {
+    "image": "far-wide-demo-checkout:pricing-fixed",
+    "sampleCount": 30,
+    "warmupCount": 20,
+    "requestMedianMs": 226.1922225,
+    "pricingMedianMs": 0.0634155,
+    "exemplarTraceId": "1b2907f796b0456d92aade8b952c52ff",
+    "exemplarRequestMs": 228.196835,
+    "exemplarPricingMs": 0.066661,
+    "samples": [
+      {
+        "traceId": "3971aab3b8304a9882f9bd570a386bef",
+        "requestMs": 121.199782,
+        "pricingMs": 0.028367,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "ebce95c9db0647a3be20e107896b43ad",
+        "requestMs": 239.421554,
+        "pricingMs": 0.04003,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "53015059b8db4ae5addf868c0b12b93f",
+        "requestMs": 213.666341,
+        "pricingMs": 0.065573,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "fa8b54ae1d0840758c2614182753ab6d",
+        "requestMs": 217.887191,
+        "pricingMs": 0.037302,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "7c7561b7ed5b4fccbeb8f88df9346cfe",
+        "requestMs": 291.375673,
+        "pricingMs": 0.051363,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "41a1f61693894b39a4278f15135dbbf3",
+        "requestMs": 302.99252,
+        "pricingMs": 0.0505,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "da951df9eb6649f09ba9406251b1a920",
+        "requestMs": 248.375771,
+        "pricingMs": 0.070757,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "702069e08f7e421886ea8abd1e9bfbb7",
+        "requestMs": 166.43829,
+        "pricingMs": 0.052234,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "b38876d5203f4a66b7f9682640a9f1f5",
+        "requestMs": 202.925503,
+        "pricingMs": 0.111662,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "4fc5d488c302481f85fcd56b43fcfbcc",
+        "requestMs": 284.467332,
+        "pricingMs": 0.115354,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "a62386c188aa48b398f8ec3ebbc654f3",
+        "requestMs": 112.373938,
+        "pricingMs": 0.03466,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "1759dbe656944b68acb2569a648a5151",
+        "requestMs": 321.184501,
+        "pricingMs": 0.204833,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "16c041fecf5e46f48fce9d67c0e99030",
+        "requestMs": 256.422658,
+        "pricingMs": 0.074163,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "a6f23476c3be44c280e9f587fd232ded",
+        "requestMs": 159.275837,
+        "pricingMs": 0.026259,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "1b2907f796b0456d92aade8b952c52ff",
+        "requestMs": 228.196835,
+        "pricingMs": 0.066661,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "a70e98eb7b4c47b8b5f0bfc3eb7ac546",
+        "requestMs": 296.665539,
+        "pricingMs": 0.063083,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "6a97ef3068cb42d99baabec2d8331d10",
+        "requestMs": 122.290741,
+        "pricingMs": 0.034494,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "6b713a0db3ef48e9b434c788edf73eb0",
+        "requestMs": 313.093013,
+        "pricingMs": 0.068994,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "8b864bf30e9949779b947101b6e41498",
+        "requestMs": 297.521506,
+        "pricingMs": 0.046309,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "ee8f9850074444f581fc834b5558e79b",
+        "requestMs": 214.418753,
+        "pricingMs": 0.070418,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "567ee6c52552429d9cfda86939a2b33b",
+        "requestMs": 197.367643,
+        "pricingMs": 0.092246,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "41fbe99aa86a45fe846fe9f13e9b4813",
+        "requestMs": 292.874227,
+        "pricingMs": 0.08625,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "9d13680429254876b2812c7c844c6328",
+        "requestMs": 314.88635,
+        "pricingMs": 0.074188,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "c9a4bffe2fa3460e8792036120c36c0b",
+        "requestMs": 175.358371,
+        "pricingMs": 0.07512,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "27b5070d8ac54d08972fb0431eccd80c",
+        "requestMs": 87.452276,
+        "pricingMs": 0.020643,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "e650e876433a42ee86e625a12eddd1d3",
+        "requestMs": 236.716893,
+        "pricingMs": 0.069352,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "efe55b0ba34744589f90a74f8aecdee4",
+        "requestMs": 183.74328,
+        "pricingMs": 0.053153,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "8e1395785acc4065835fc97f105ed918",
+        "requestMs": 290.526672,
+        "pricingMs": 0.049935,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "94eba3c01a7d4793bcd4990d85e6ce1d",
+        "requestMs": 224.18761,
+        "pricingMs": 0.063748,
+        "status": 200,
+        "price": 42
+      },
+      {
+        "traceId": "a84d057afd2142d4a2bc38ba92976f59",
+        "requestMs": 179.269294,
+        "pricingMs": 0.050731,
+        "status": 200,
+        "price": 42
+      }
+    ]
+  },
+  "change": "Remove only the deliberately seeded Thread.sleep(150) from PricingEngine.calculate; retain the return value 42, checkout flow, existing agent and exporter configuration.",
+  "scope": "Measured local seeded-fault demonstration, not a production benchmark or a claim that instrumentation itself reduces latency. No outage, revenue or labor savings inferred from these timings.",
+  "sources": [
+    "scripts/presentation/measure_resolution.py",
+    "demo/proof/apps/checkout/PricingEngine.java",
+    "demo/apps/checkout/fixes/PricingEngine.java",
+    "demo/k8s/checkout-pricing-fixed.patch.yaml"
+  ],
+  "fleetAfterFix": {
+    "traceId": "ff6f173e7dca4c50af0133a0c2ff25c8",
+    "sdkServices": [
+      "cart",
+      "catalog",
+      "checkout",
+      "customer-profile",
+      "fraud",
+      "inventory",
+      "loyalty",
+      "notifications",
+      "payments",
+      "promotions",
+      "receipts",
+      "recommendations",
+      "stock-planner",
+      "tax"
+    ],
+    "obiOnlyServices": [
+      "gateway",
+      "shipping",
+      "warehouse",
+      "currency"
+    ],
+    "pricingMs": 0.018027,
+    "catalogDatabaseSpans": [
+      "SELECT checkout.products"
+    ],
+    "price": 42,
+    "orderId": 264
+  }
+};

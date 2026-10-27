@@ -3,14 +3,17 @@
 Use the [current storyboard](talk-storyboard.md): brief introduction → actual
 18-service topology with PostgreSQL and Redis → OBI connected view and timing
 comparison → direct language-agent setup on Checkout after evidence selects it →
+reveal and remove the seeded pricing wait → measured customer payoff →
 13 additional payload-supported services → upstream Operator opt-in → custom namespace selection and rollout →
 verified wider picture → coordination, engineering and lifecycle savings.
 Four Go services retain OBI coverage; the payload has no Go language agent.
 
 The central takeaway is that OBI can tell us where to investigate, language
-instrumentation can add useful detail, and shared automation can remove repeated
-setup across the fleet. Compare with a capable direct/upstream baseline. The
-recorded presentation now shows direct Checkout setup and broader enrollment;
+instrumentation can name actionable local work, and changing that work can
+improve the customer request. Shared automation makes that investigation
+capability available across the fleet without repeated setup. Compare with a capable direct/upstream baseline. The
+recorded presentation now shows direct Checkout setup, a real application fix,
+a matched latency recheck and broader enrollment;
 rehearse the same sequence live. Savings are hypotheses until measured;
 adding agent detail does not automatically reduce a backend bill. The closing
 slides and review video include an explicitly hypothetical dollar-capacity model

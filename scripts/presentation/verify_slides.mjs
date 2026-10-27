@@ -58,8 +58,8 @@ try{
   }
   await evaluate('document.fonts.ready');await wait(250);
  }
- for(let n=1;n<=22;n++){
-  for(const clicks of ([6,7,16].includes(n)?[0,1]:[0])){
+ for(let n=1;n<=25;n++){
+  for(const clicks of ([6,7,19].includes(n)?[0,1]:[0])){
    await navigate(n,clicks);
    const result=await evaluate(`(()=>{
     const s=document.querySelector('[data-slidev-no="${n}"] .slidev-layout'),b=s.getBoundingClientRect();
@@ -70,7 +70,7 @@ try{
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -79,14 +79,18 @@ try{
    })()`);
    if(result.overflow.length||result.collisions.length)errors.push(result);
    if(result.images.some(i=>!i.loaded))errors.push({slide:n,images:result.images});
-   if([3,6,11,16].includes(n)&&result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
+   if([3,6,14,19].includes(n)&&result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
    if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});
    if(n===7&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
-   if(n===16&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
-   if(n===20||n===21){
+   if(n===19&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
+   if(n===23||n===24){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] .slidev-layout').innerText`);
     if(!text.includes('$6,900')||!text.includes('capacity'))errors.push({slide:n,issue:'Dollar model missing or not identified as capacity'});
-    if(n===21&&!text.includes('$386,000'))errors.push({slide:n,issue:'Fleet extrapolation missing'});
+    if(n===24&&!text.includes('$386,000'))errors.push({slide:n,issue:'Fleet extrapolation missing'});
+   }
+   if(n===13||n===25){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
+    if(!text?.includes('360')||!text?.includes('226')||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
    const png=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
    await writeFile(path.join(work,'renders',`${String(n).padStart(2,'0')}-${clicks}.png`),Buffer.from(png.data,'base64'));slides.push(result);
@@ -94,16 +98,16 @@ try{
   }
  }
  await writeFile(path.join(work,'render-report.json'),JSON.stringify({errors,slides},null,2)+'\n');
- await navigate(15);
- const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="15"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
+ await navigate(18);
+ const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="18"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
  console.log('Video check '+JSON.stringify(video));
  if(video.time<.5||video.error||!video.muted||video.rate!==1)errors.push({video});
  // Use Slidev's real Next key, so the onSlideLeave lifecycle runs on the existing video element.
- await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="15"] video')`);
+ await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="18"] video')`);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
- await cdp.call('Page.navigate',{url:route('/presenter/14')},sessionId);await wait(500);
+ await cdp.call('Page.navigate',{url:route('/presenter/17')},sessionId);await wait(500);
  for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Shared defaults and exclusions')"))break;await wait(100);}
  const presenter=await evaluate(`({notes:document.body.innerText.includes('Shared defaults and exclusions'),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
@@ -126,5 +130,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All 22 slides, dollar figures, three click builds, video playback and presenter notes passed.');
+ console.log('All 25 slides, dollar figures, three click builds, video playback and presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}
