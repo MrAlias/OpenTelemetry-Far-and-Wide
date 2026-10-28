@@ -9,6 +9,7 @@
   const box=(x,y,w,h,label,sub='',color=C.blue)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${C.panel}" stroke="${color}" stroke-width="2"/>`+text(x+w/2,y+(sub?32:h/2+10),label,30,C.ink,'text-anchor="middle"')+(sub?text(x+w/2,y+72,sub,22,C.muted,'text-anchor="middle"'):'');
   const center=(y,s,size=29,color=C.muted)=>text(640,y,s,size,color,'text-anchor="middle"');
   const fleet=(mode='plain',progress=1)=>window.renderDemoTopology({mode,progress,palette:C});
+  const duration=ms=>ms>=1000?(ms/1000).toFixed(2)+' s':Math.round(ms)+' ms';
   const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
   function localTrace(detail=0){
     const names=['Gateway','Checkout',detail>0?'PricingEngine.calculate':'Unexplained local work','Inventory call',detail>0?'Hibernate / JDBC':'Persistence question','Commerce calls'];let s='';
@@ -21,14 +22,15 @@
   function list(items,{x=85,y=270,size=33,gap=70,color=C.ink}={}){return items.map((s,i)=>text(x,y+i*gap,s,size,color)).join('');}
   function content(scene,p){switch(scene.kind){
     case 'title':return lines(70,270,['OpenTelemetry','Far and Wide'],88)+text(75,485,'Tyler Yahn · Nikola Grcevski',32,C.muted)+lines(75,565,['Find the wait. Fix the cause.','Make the next investigation easier.'],33,C.blue);
-    case 'observed':return fleet('observed',p)+center(655,p>0?'Cart branch · captured server durations · milliseconds':'A topology shows possible calls; the request shows observed calls',25,C.blue);
-    case 'trace-focus':return `<image href="${window.EVIDENCE_IMAGES?.['demo-capture/connected-trace.png']||'demo-capture/connected-trace.png'}" x="0" y="0" width="1280" height="720"/>`+(p>0?`<rect x="513" y="435" width="324" height="30" fill="${C.depth}" opacity="${.35*p}"/><path d="M700 430 L700 388" stroke="${C.depth}" stroke-width="3"/><rect x="530" y="330" width="470" height="58" rx="8" fill="${C.bg}" stroke="${C.depth}"/>`+text(765,368,'150.5 ms · failed connection',25,C.depth,'text-anchor="middle"'):'');
+    case 'observed':return fleet('observed',p)+center(655,p>0?'Cart branch · captured server durations':'A topology shows possible calls; the request shows observed calls',25,C.blue);
+    case 'trace-focus':return `<image href="${window.EVIDENCE_IMAGES?.['demo-capture/connected-trace.png']||'demo-capture/connected-trace.png'}" x="0" y="0" width="1280" height="720"/>`+(p>0?`<rect x="513" y="435" width="${750*window.DEMO_EVIDENCE.failedConnectionMs/window.DEMO_EVIDENCE.serverDurationMs.gateway}" height="30" fill="${C.depth}" opacity="${.35*p}"/><path d="M700 430 L700 388" stroke="${C.depth}" stroke-width="3"/><rect x="530" y="330" width="470" height="58" rx="8" fill="${C.bg}" stroke="${C.depth}"/>`+text(765,368,(window.DEMO_EVIDENCE.failedConnectionMs/1000).toFixed(2)+' s · failed connection',25,C.depth,'text-anchor="middle"'):'');
     case 'screen':case 'terminal':return '';
+    case 'obi-intro':return text(75,210,'OpenTelemetry eBPF Instrumentation',32,C.blue)+lines(75,300,['Start with the applications','you already have.'],52)+lines(75,485,['No application code changes','No application restarts','OpenTelemetry traces and metrics'],30,C.ink)+text(75,665,'Deploy on the nodes · discover supported Linux workloads',26,C.muted);
     case 'timeout-evidence':{
       const e=window.TIMEOUT_EVIDENCE;
       const src=window.EVIDENCE_IMAGES?.['demo-capture/java-timeout-span.png']||'demo-capture/java-timeout-span.png';
       return `<defs><clipPath id="timeout-span-crop"><rect x="70" y="195" width="1140" height="183"/></clipPath></defs><image href="${escape(src)}" x="70" y="-143.4375" width="1140" height="641.25" clip-path="url(#timeout-span-crop)"/>`+
-        text(75,425,'Failed HTTP client span · '+e.durationMs.toFixed(2)+' ms',26,C.muted)+
+        text(75,425,'Failed HTTP client span · '+(e.durationMs/1000).toFixed(2)+' s',26,C.muted)+
         [['url.full',e.url],['error.type',e.errorType],['exception.message',e.exceptionMessage]].map(([key,value],i)=>text(75,478+i*55,key,28,C.muted,'font-family="monospace"')+text(430,478+i*55,value,28,i?C.depth:C.ink,'font-family="monospace"')).join('')+
         text(75,650,'Actual span attributes and exception event · Java agent',25,C.muted);
     }
@@ -49,7 +51,7 @@
     case 'pricing-fix':return `<image href="${escape(window.EVIDENCE_IMAGES?.['demo-capture/edit-pricing-after.png']||'demo-capture/edit-pricing-after.png')}" x="0" y="0" width="1280" height="720"/>`;
     case 'latency-result':{
       const r=window.RESOLUTION,b=Math.round(r.before.requestMedianMs),a=Math.round(r.after.requestMedianMs),max=Math.max(b,a);
-      return text(75,200,'Customer request · median duration',28,C.muted)+[['Before the fix',b,C.depth],['After the fix',a,C.green]].map(([label,value,color],i)=>{const y=260+i*100;return text(75,y+29,label,31)+`<rect x="345" y="${y}" width="640" height="43" fill="${C.panel}"/><rect x="345" y="${y}" width="${640*value/max}" height="43" fill="${color}"/>`+text(1200,y+34,value+' ms',38,color,'text-anchor="end"')}).join('')+text(75,490,'PricingEngine.calculate',29,C.ink,'font-family="monospace"')+text(75,540,r.before.pricingMedianMs.toFixed(1)+' ms → '+r.after.pricingMedianMs.toFixed(2)+' ms',43,C.green)+lines(75,620,['Matched warmed requests · same instrumentation · local demo','The successful price lookup and checkout path remain.'],24,C.muted);
+      return text(75,200,'Customer request · median duration',28,C.muted)+[['Before the fix',b,C.depth],['After the fix',a,C.green]].map(([label,value,color],i)=>{const y=260+i*100;return text(75,y+29,label,31)+`<rect x="345" y="${y}" width="640" height="43" fill="${C.panel}"/><rect x="345" y="${y}" width="${640*value/max}" height="43" fill="${color}"/>`+text(1200,y+34,duration(value),38,color,'text-anchor="end"')}).join('')+text(75,490,'PricingEngine.calculate',29,C.ink,'font-family="monospace"')+text(75,540,duration(r.before.pricingMedianMs)+' → '+r.after.pricingMedianMs.toFixed(2)+' ms',43,C.green)+lines(75,620,['Matched warmed requests · same instrumentation · local demo','The successful price lookup and checkout path remain.'],24,C.muted);
     }
     case 'cost-demo':{
       const r=window.SAVINGS.rows[0];
@@ -61,7 +63,7 @@
       const xs=[75,320,520,770,1195],headers=['Services','Eligible left','Domains','First year','Then / year'];
       return headers.map((v,i)=>text(xs[i],225,v,25,C.muted,i===4?'text-anchor="end"':'')).join('')+window.SAVINGS.rows.map((r,i)=>{const y=292+i*76;return `<line x1="75" y1="${y-40}" x2="1195" y2="${y-40}" stroke="${C.line}"/>`+[r.services.toLocaleString('en-US'),String(r.remaining),String(r.domains),money(r.firstYearValue),money(r.recurringValue)].map((v,j)=>text(xs[j],y,v,33,j===3?C.green:C.ink,j===4?'text-anchor="end"':'')).join('')}).join('')+lines(75,615,['Illustrative USD capacity saved; $100 per person-hour.','12 releases/year · one shared update per rollout domain · hypothetical hours'],23,C.muted);
     }
-    case 'close':return text(75,265,Math.round(window.RESOLUTION.before.requestMedianMs)+' → '+Math.round(window.RESOLUTION.after.requestMedianMs)+' ms',76,C.green)+text(75,325,'Customer request · matched median',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
+    case 'close':return text(75,265,duration(window.RESOLUTION.before.requestMedianMs)+' → '+duration(window.RESOLUTION.after.requestMedianMs),76,C.green)+text(75,325,'Customer request · matched median',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
     default:throw new Error('Unknown artwork kind: '+scene.kind);
   }}
   window.renderArtwork=(scene,seconds,{final=false,reduceMotion=false}={})=>{

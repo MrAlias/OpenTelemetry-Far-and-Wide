@@ -23,7 +23,7 @@ window.renderDemoTopology=({mode='plain',progress=1,palette:C}={})=>{
   const x=n.x-n.w/2,y=n.y-(n.h+8)/2;
   art+=`<g data-service="${n.id}" data-agent="${agent}" data-selected="${marked}" data-eligible="${n.eligible}"><rect x="${x}" y="${y}" width="${n.w}" height="${n.h+8}" rx="5" fill="${C.panel}" stroke="${color}" stroke-width="${marked?4:2}"/>`;
   art+=txt(n.x,n.y-5,n.label,22,C.ink,'text-anchor="middle"');
-  art+=txt(n.x,n.y+22,mode==='observed'&&active.has(n.id)?(window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,18,observed?color:C.muted,'text-anchor="middle"');
+  art+=txt(n.x,n.y+22,mode==='observed'&&active.has(n.id)?((window.DEMO_EVIDENCE?.serverDurationMs[n.id]||0)>=1000?(window.DEMO_EVIDENCE.serverDurationMs[n.id]/1000).toFixed(2)+' s':window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,18,observed?color:C.muted,'text-anchor="middle"');
   if(agent)art+=`<circle cx="${x+n.w-8}" cy="${y+8}" r="4" fill="${C.green}"/>`;
   art+='</g>';
  }

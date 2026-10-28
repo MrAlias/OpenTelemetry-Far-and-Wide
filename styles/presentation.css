@@ -98,3 +98,7 @@
 .slidev-layout .timeout-evidence dd { margin:0; }
 .slidev-layout .timeout-evidence .timeout-value { color:#9d5410; }
 .slidev-layout .timeout-evidence figcaption { margin-top:20px; font-size:21px; color:var(--muted); }
+.slidev-layout .obi-intro .obi-name { font-size:31px; color:var(--accent); margin:25px 0 24px; }
+.slidev-layout .obi-intro .obi-promise { font-size:46px; line-height:1.25; margin:0 0 30px; }
+.slidev-layout .obi-intro ul { font-size:29px; line-height:1.6; padding-left:31px; }
+.slidev-layout .obi-intro .obi-scope { font-size:23px; color:var(--muted); margin-top:28px; }

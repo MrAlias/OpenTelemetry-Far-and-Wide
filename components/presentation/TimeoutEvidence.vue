@@ -4,10 +4,10 @@ const image = `${import.meta.env.BASE_URL}presentation/images/java-timeout-span.
 </script>
 <template>
   <figure class="timeout-evidence" aria-label="Captured failed HTTP client span and its literal timeout attributes">
-    <svg viewBox="0 380 1280 205" role="img" aria-label="Checkout PricingEngine.calculate contains a failed GET lasting 150.91 milliseconds">
+    <svg viewBox="0 380 1280 205" role="img" :aria-label="`Checkout PricingEngine.calculate contains a failed GET lasting ${(evidence.durationMs / 1000).toFixed(2)} seconds`">
       <image :href="image" width="1280" height="720" />
     </svg>
-    <p class="evidence-origin">Failed HTTP client span · {{ evidence.durationMs.toFixed(2) }} ms</p>
+    <p class="evidence-origin">Failed HTTP client span · {{ (evidence.durationMs / 1000).toFixed(2) }} s</p>
     <dl>
       <dt>url.full</dt><dd>{{ evidence.url }}</dd>
       <dt>error.type</dt><dd class="timeout-value">{{ evidence.errorType }}</dd>

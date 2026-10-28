@@ -19,8 +19,8 @@ public final class PricingEngine {
       var endpoint = System.getenv().getOrDefault(
           "LEGACY_PRICING_URL", "http://192.0.2.42:8080/price");
       connection = (HttpURLConnection) URI.create(endpoint).toURL().openConnection();
-      connection.setConnectTimeout(150);
-      connection.setReadTimeout(150);
+      connection.setConnectTimeout(2000);
+      connection.setReadTimeout(2000);
       if (connection.getResponseCode() == 200) {
         try (var input = connection.getInputStream()) {
           return Integer.parseInt(new String(input.readAllBytes()).trim());

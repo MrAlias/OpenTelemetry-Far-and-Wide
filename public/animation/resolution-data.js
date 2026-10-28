@@ -1,10 +1,10 @@
 window.RESOLUTION = {
-  "version": "2026-10-27-timeout-fallback-and-real-trace",
-  "recordedAt": "2026-10-27T19:41:42.960656+00:00",
-  "method": "Median Gateway GET /checkout server duration; 30 sequential complete successful checkouts per image after 20 successful warmups, concurrency one, 100 ms between requests. Same instrumentation and template except image. Local JVM, database and scheduling variation remains; total-duration change need not equal the configured timeout.",
+  "version": "2026-10-27-two-second-timeout",
+  "recordedAt": "2026-10-28T00:27:48.669206+00:00",
+  "method": "Median Gateway GET /checkout server duration; 30 sequential complete successful checkouts per image after 20 successful warmups, concurrency one, 100 ms between requests. Same instrumentation and template except image. Local JVM, database and scheduling variation remains; total-duration change need not equal the configured timeout. Exported Gateway server and pricing-method spans supply every measured duration. The collector preserves a requested ID if it is replaced and resolves only a unique Gateway span inside its non-overlapping client request window; ambiguous matches are rejected. Complete application responses are validated separately from whether every OBI protocol/service observation shares the trace ID.",
   "controls": {
     "sameInstrumentation": true,
-    "sameTemplateExceptImageSha256": "84b664e25534c81a0270760db64d0ee73cb2ffe35930720bf06580011ddd8d69",
+    "sameTemplateExceptImageSha256": "e451adb042dfca3ab4ba5ed7b208352b6fc4234a6301319d1b2e69b5ef5c7c56",
     "sdkServices": [
       "checkout"
     ],
@@ -18,450 +18,462 @@ window.RESOLUTION = {
     "noConcurrentBuildRecordingOrNarration": true
   },
   "before": {
-    "image": "far-wide-demo-checkout:timeout",
+    "image": "far-wide-demo-checkout:two-second-timeout",
     "sampleCount": 30,
     "warmupCount": 20,
-    "requestMedianMs": 361.62698950000004,
-    "pricingMedianMs": 157.0313965,
-    "exemplarTraceId": "f9f9731fb7524e0bbf067c4cbab22eea",
-    "exemplarRequestMs": 365.039673,
-    "exemplarPricingMs": 155.955326,
+    "requestMedianMs": 2211.3696565,
+    "pricingMedianMs": 2009.5839355,
+    "exemplarTraceId": "5c5bea121e2d457c88842d94996e86f5",
+    "exemplarRequestMs": 2228.788545,
+    "exemplarPricingMs": 2010.104943,
     "samples": [
       {
-        "traceId": "f364edfc992641cea46cab6dc5ea627a",
-        "requestMs": 418.20759,
-        "pricingMs": 159.592586,
+        "traceId": "b6d6e8f1937140c38d84c3c1aaf9bcf5",
+        "requestMs": 2278.826308,
+        "pricingMs": 2009.723678,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "7aff794637334ce7ae6cd86497acfd88",
-        "requestMs": 243.858844,
-        "pricingMs": 153.158382,
+        "traceId": "0dd9e842de51474db677f03b9c3aebd9",
+        "requestMs": 2330.932835,
+        "pricingMs": 2010.001775,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "dbac942dbbff452fbee85f2a2376e404",
-        "requestMs": 254.850333,
-        "pricingMs": 153.869113,
+        "traceId": "9b50beb289494a0bbb6591e26ae9037a",
+        "requestMs": 2107.197034,
+        "pricingMs": 2010.61477,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "426a18f86f0c4dce8da9fcc70e3778c2",
-        "requestMs": 259.714436,
-        "pricingMs": 152.903828,
+        "traceId": "c2abd7a228cc41f88e51815c18bf6885",
+        "requestMs": 2111.631855,
+        "pricingMs": 2007.469894,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "fedaa901c4ff428591e4b388291230b8",
-        "requestMs": 373.470409,
-        "pricingMs": 156.871716,
+        "traceId": "540d93a1696347d9b67f51cff905f3d2",
+        "requestMs": 2116.754809,
+        "pricingMs": 2005.406246,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "198ca1b87924434ca771703c2a9783f7",
-        "requestMs": 348.675055,
-        "pricingMs": 160.108239,
+        "traceId": "5e66e473abe74a819ea782a74320840a",
+        "requestMs": 2317.698161,
+        "pricingMs": 2010.044243,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "ddd5a93b956d4093b455039cbe64fb57",
-        "requestMs": 415.106936,
-        "pricingMs": 157.555293,
+        "traceId": "d19d25b054414bc1b1373b2b0ad55e3c",
+        "requestMs": 2231.596273,
+        "pricingMs": 2006.154793,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "6ab4d515478d4cd3a1db5689069c01be",
-        "requestMs": 351.019465,
-        "pricingMs": 162.349797,
+        "traceId": "1b738fcbd31f40ef880e69b4916d5674",
+        "requestMs": 2098.330837,
+        "pricingMs": 2005.020848,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "725a276eac9d43f2910d12e83d467aef",
-        "requestMs": 373.610185,
-        "pricingMs": 155.883987,
+        "traceId": "7b1f86b24da54518aed0413319d20710",
+        "requestMs": 2246.443722,
+        "pricingMs": 2011.383986,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "22b7b355330c4636951fe8a247f766a6",
-        "requestMs": 299.867225,
-        "pricingMs": 162.068395,
+        "traceId": "bdff29c1285743b198fdc82615ea6bde",
+        "requestMs": 2239.580927,
+        "pricingMs": 2009.444193,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "af2285afca9c47d1ae83631b363e1f15",
-        "requestMs": 414.453424,
-        "pricingMs": 155.980964,
+        "traceId": "d2c5e3f493814560905275af34655c74",
+        "requestMs": 2181.506675,
+        "pricingMs": 2011.868036,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "3881d7e9fa1a4665a57bad55ed751e6a",
-        "requestMs": 296.612816,
-        "pricingMs": 154.199545,
+        "traceId": "67fb9762758e413c8b4beaf77704c104",
+        "requestMs": 2147.9218,
+        "pricingMs": 2009.386392,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "abad81e915634c778168b3709543d622",
-        "requestMs": 419.154302,
-        "pricingMs": 155.915781,
+        "traceId": "e8471238f56841cba00aea4b10ee1fc2",
+        "requestMs": 2147.165824,
+        "pricingMs": 2009.125138,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "5f21adde7a95447a884d67de2ca10ddf",
-        "requestMs": 374.047776,
-        "pricingMs": 160.667874,
+        "traceId": "e977004f90594b9091a69a2a476f0e02",
+        "requestMs": 2093.929446,
+        "pricingMs": 2006.730954,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "f9f9731fb7524e0bbf067c4cbab22eea",
-        "requestMs": 365.039673,
-        "pricingMs": 155.955326,
+        "traceId": "e6dfbb1627054b8188e4bfa6282bf3d1",
+        "requestMs": 2338.316171,
+        "pricingMs": 2008.940839,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "3005b06ee3f64821bb7b8f4d1a684026",
-        "requestMs": 289.035199,
-        "pricingMs": 157.607751,
+        "traceId": "0c7e3222bb9c4e1e8f9b18bb848361f5",
+        "requestMs": 2144.808071,
+        "pricingMs": 2008.593478,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "8c8e892def3c4ee59a48589625e4ff41",
-        "requestMs": 433.322676,
-        "pricingMs": 156.736421,
+        "traceId": "667217c0946e4564a2efe35079ac0bd0",
+        "requestMs": 2116.090114,
+        "pricingMs": 2011.238888,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "1e01c27dc6444c908a3f030805d15f76",
-        "requestMs": 256.147336,
-        "pricingMs": 153.683236,
+        "traceId": "5c5bea121e2d457c88842d94996e86f5",
+        "requestMs": 2228.788545,
+        "pricingMs": 2010.104943,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "94480c357055498e9281c792998c356f",
-        "requestMs": 414.02582,
-        "pricingMs": 157.426918,
+        "traceId": "967ef7bd854f420f8d91a0816f0dda8d",
+        "requestMs": 2246.774743,
+        "pricingMs": 2016.015998,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "d41116860dae488fb097294b391fb25a",
-        "requestMs": 377.601076,
-        "pricingMs": 159.656726,
+        "traceId": "19d0979b6500411a88f1b5ad88f0faf7",
+        "requestMs": 2294.857132,
+        "pricingMs": 2010.162991,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "9ef219e3bafc41e48d17a85ef3907fcc",
-        "requestMs": 426.837613,
-        "pricingMs": 157.346553,
+        "traceId": "0a38d056cc1b4fde8a8f0a583ee4fbf8",
+        "requestMs": 2317.521722,
+        "pricingMs": 2009.055003,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "83945f9cc39d491387b98086170582dd",
-        "requestMs": 365.388399,
-        "pricingMs": 162.453653,
+        "traceId": "1be94838757f46b4aba3cd59c4ea86fe",
+        "requestMs": 2327.605677,
+        "pricingMs": 2009.255152,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "5a66e547dde14c18b71e36960bbf19d6",
-        "requestMs": 351.190093,
-        "pricingMs": 157.094761,
+        "traceId": "d76b4660415a4012b0e880fa8ce48d99",
+        "requestMs": 2163.003059,
+        "pricingMs": 2010.974782,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "50ff124c90c44cd9a70f5f4710f667b9",
-        "requestMs": 451.744096,
-        "pricingMs": 156.968032,
+        "traceId": "69f0c425855c48d983912da0b264438d",
+        "requestMs": 2315.082479,
+        "pricingMs": 2008.960567,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "be612ee3edc04766816d8fca5f600af8",
-        "requestMs": 294.452718,
-        "pricingMs": 154.080078,
+        "traceId": "cfa2423047c44ba8b19351b1e4f35ba9",
+        "requestMs": 2188.078144,
+        "pricingMs": 2012.023796,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "644cbb52aeee420fbe07bc1157f87698",
-        "requestMs": 335.223743,
-        "pricingMs": 156.277617,
+        "traceId": "3c0321fbb40a4f7dafa0a9972d445031",
+        "requestMs": 2193.950768,
+        "pricingMs": 2010.042583,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "e03b1e9b41a442aba4cbf52bafeced5c",
-        "requestMs": 358.214306,
-        "pricingMs": 157.521795,
+        "traceId": "6fee334ddd6341aaa3e9f93a476ecaef",
+        "requestMs": 2330.500597,
+        "pricingMs": 2010.456116,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "66863b2aea5c4e7f9020048b0e0ae03c",
-        "requestMs": 336.850275,
-        "pricingMs": 156.327616,
+        "traceId": "6682673484ce40b3813087ce29d1a73d",
+        "requestMs": 2177.953797,
+        "pricingMs": 2009.442428,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "853c8866cb0a4401b2472ea6a634a803",
-        "requestMs": 326.496832,
-        "pricingMs": 157.24,
+        "traceId": "0649ffe8639545ed999f69824f49b5a0",
+        "requestMs": 2171.981249,
+        "pricingMs": 2010.394242,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "7c7d6fb00d52481b9e371c0735ae2e15",
-        "requestMs": 411.306576,
-        "pricingMs": 157.403411,
+        "traceId": "8497a371374a4103afc6c40c0e14027a",
+        "requestMs": 2274.052355,
+        "pricingMs": 2008.275927,
         "status": 200,
         "price": 42
       }
-    ]
+    ],
+    "traceCoverage": {
+      "completeApplicationResponses": 30,
+      "timedGatewayAndPricingSpans": 30,
+      "requestsWithUnlinkedApplicationResources": 0,
+      "identityRecoveredFromRequestWindow": 0
+    }
   },
   "after": {
     "image": "far-wide-demo-checkout:pricing-fixed",
     "sampleCount": 30,
     "warmupCount": 20,
-    "requestMedianMs": 214.088603,
-    "pricingMedianMs": 4.001466000000001,
-    "exemplarTraceId": "99aef33f6f7c4db09a39703cd9d57bf5",
-    "exemplarRequestMs": 215.033806,
-    "exemplarPricingMs": 2.406217,
+    "requestMedianMs": 220.1700015,
+    "pricingMedianMs": 3.7107085,
+    "exemplarTraceId": "36a9b6847e2c4869a30848a7f2465b6c",
+    "exemplarRequestMs": 230.807729,
+    "exemplarPricingMs": 3.958456,
     "samples": [
       {
-        "traceId": "9ac0f9dd95e94c1bb3631d950bb1f7b7",
-        "requestMs": 118.585143,
-        "pricingMs": 2.387246,
+        "traceId": "d4e2ac01cdfc4e8cac19a0cd857998db",
+        "requestMs": 139.714615,
+        "pricingMs": 1.529276,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "1c1dfe76700f42449b71e0f5c713492a",
-        "requestMs": 266.839231,
-        "pricingMs": 4.659513,
+        "traceId": "9e9a42209ea74ccaaa12ba4f3f21ccd0",
+        "requestMs": 120.756748,
+        "pricingMs": 1.443605,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "5bde06e10ca94b30827a76f8f5704d81",
-        "requestMs": 181.256395,
-        "pricingMs": 6.216073,
+        "traceId": "7393e0e7a1474400bd985f8a7da68b42",
+        "requestMs": 175.631378,
+        "pricingMs": 4.954119,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "86a6cb7009ac43b0abf51d9e86061753",
-        "requestMs": 304.150205,
-        "pricingMs": 4.492258,
+        "traceId": "855c1cb37e7640f285f8db7bc5212cef",
+        "requestMs": 171.678214,
+        "pricingMs": 4.036836,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "1cbf0f2aba844334abba37ff75913543",
-        "requestMs": 216.933286,
-        "pricingMs": 4.002608,
+        "traceId": "2bb03b0fa395409b95e669768e569c08",
+        "requestMs": 264.191029,
+        "pricingMs": 4.203121,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "7d71929acc8f4a63b8393f91206090d5",
-        "requestMs": 116.822788,
-        "pricingMs": 1.453832,
+        "traceId": "bc705b995d6b488a8162e31858b008f1",
+        "requestMs": 184.012672,
+        "pricingMs": 2.272268,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "99aef33f6f7c4db09a39703cd9d57bf5",
-        "requestMs": 215.033806,
-        "pricingMs": 2.406217,
+        "traceId": "b5f012c71a07427a89a0050ca3a7e0b4",
+        "requestMs": 247.496731,
+        "pricingMs": 2.911799,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "24fc369e7c3c4134ad7d80103ee65219",
-        "requestMs": 201.281874,
-        "pricingMs": 3.963044,
+        "traceId": "ee21605a57c240f2b4b3b4db8a1975a6",
+        "requestMs": 245.034215,
+        "pricingMs": 3.307247,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "3809ad1665ec4225a2112b9d638a0339",
-        "requestMs": 213.1434,
-        "pricingMs": 2.728112,
+        "traceId": "8b8204bc17e545ed914ac693294bde97",
+        "requestMs": 163.383543,
+        "pricingMs": 3.969295,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "e416728775a342fe9cb3b41b17d8fd9f",
-        "requestMs": 285.859948,
-        "pricingMs": 5.405232,
+        "traceId": "76f0f5481b0641b19b141b5ea9d7970f",
+        "requestMs": 182.883262,
+        "pricingMs": 1.622943,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "310c36b3e36345b4bd7b6cdceb059c4f",
-        "requestMs": 212.289284,
-        "pricingMs": 2.839324,
+        "traceId": "546b91ebbd1d4df7a246ce3bf02b0ada",
+        "requestMs": 161.618233,
+        "pricingMs": 3.330617,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "8d73606920a64795aa246c348f41e462",
-        "requestMs": 338.847949,
-        "pricingMs": 6.35164,
+        "traceId": "dd2953b945b54f48adbccdeaf4b52c7d",
+        "requestMs": 131.646914,
+        "pricingMs": 3.72639,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "18df556c5a5140a8b29e664d0b0368db",
-        "requestMs": 103.510072,
-        "pricingMs": 1.231454,
+        "traceId": "a3f01bc2eb8d4ce7ab32bdc82125ad70",
+        "requestMs": 115.802947,
+        "pricingMs": 2.096244,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "f920c0a73caa4d99887b23e477e5afab",
-        "requestMs": 225.362969,
-        "pricingMs": 4.718214,
+        "traceId": "b65d69236e5b40afb8692c51ae119ecb",
+        "requestMs": 245.164937,
+        "pricingMs": 3.447564,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "7297ac4ffaea434685adbadf39c6c5be",
-        "requestMs": 215.884917,
-        "pricingMs": 5.35419,
+        "traceId": "480d56a414fb4530b8ad470826e002f9",
+        "requestMs": 308.215131,
+        "pricingMs": 4.054003,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "8937aeeff1534a3d8916f3961ae1f26f",
-        "requestMs": 273.427864,
-        "pricingMs": 5.373532,
+        "traceId": "a49e1c2e7dde406198674f986d4fd3b3",
+        "requestMs": 182.594768,
+        "pricingMs": 5.14237,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "e5976911109f429994d26029715da86f",
-        "requestMs": 228.542914,
-        "pricingMs": 2.085563,
+        "traceId": "c720475423224a68a22ab449167d9daf",
+        "requestMs": 201.188039,
+        "pricingMs": 3.925235,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "ba5632a019a9499cbfe9c232a932270b",
-        "requestMs": 188.990511,
-        "pricingMs": 5.191155,
+        "traceId": "36a9b6847e2c4869a30848a7f2465b6c",
+        "requestMs": 230.807729,
+        "pricingMs": 3.958456,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "bc4106118ec0439aa61d634cf48e5d54",
-        "requestMs": 102.507919,
-        "pricingMs": 2.088795,
+        "traceId": "dac89b3463944e75951348b8d37ec7ac",
+        "requestMs": 300.856695,
+        "pricingMs": 4.022976,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "e693ef9e51004600a5b8a1ce70bcf156",
-        "requestMs": 92.135521,
-        "pricingMs": 1.434391,
+        "traceId": "0c0a70dbb3884ec9acae3d4f2b6de3c4",
+        "requestMs": 256.340123,
+        "pricingMs": 3.378996,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "55247f34c09a4dd2b05b9cea05bad82a",
-        "requestMs": 186.000289,
-        "pricingMs": 3.217264,
+        "traceId": "7fa4d6d268634add83da1410b9a3434a",
+        "requestMs": 243.210651,
+        "pricingMs": 3.22107,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "3c660ad81da241caad1129f40b4f9c56",
-        "requestMs": 175.142175,
-        "pricingMs": 5.334484,
+        "traceId": "927189a82f76475186bfb8aa2559bc7b",
+        "requestMs": 246.887632,
+        "pricingMs": 3.431143,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "1505c546b20a4d68948cbf77b9aa3164",
-        "requestMs": 295.239527,
-        "pricingMs": 6.52213,
+        "traceId": "67f90b814943419882ec59ca1dcccc46",
+        "requestMs": 302.295321,
+        "pricingMs": 4.590835,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "8213a614bad4495eb5988072f0d4e47f",
-        "requestMs": 240.447693,
-        "pricingMs": 4.532239,
+        "traceId": "2163162b93d94de5b3fe13e73ec8db66",
+        "requestMs": 276.110529,
+        "pricingMs": 2.385655,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "b89c3272fd4b4f8f8b608dcd472548bc",
-        "requestMs": 246.490116,
-        "pricingMs": 6.2948,
+        "traceId": "0aac35826c1f4132877ed13dfb19b2f9",
+        "requestMs": 209.532274,
+        "pricingMs": 3.695027,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "0e1c1a4289e0445ea3e44099afd78d4e",
-        "requestMs": 158.676287,
-        "pricingMs": 4.000324,
+        "traceId": "ceaf0c2c069e473d98293dbf6ae66cf2",
+        "requestMs": 160.740193,
+        "pricingMs": 4.53348,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "2ad6c51e5952498da772e8766985ea41",
-        "requestMs": 161.089271,
-        "pricingMs": 3.11767,
+        "traceId": "752a52a098b646ffa79084ac60d34ccd",
+        "requestMs": 268.102,
+        "pricingMs": 4.193681,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "0fc65013640343aaa945835de8560612",
-        "requestMs": 155.099597,
-        "pricingMs": 6.324248,
+        "traceId": "365b68f979074295a61699a707aa0f77",
+        "requestMs": 201.494655,
+        "pricingMs": 3.678457,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "043c3a07dfe745a7bef84fed45109d40",
-        "requestMs": 234.78893,
-        "pricingMs": 3.868028,
+        "traceId": "cf6c78fd94dd49e980b59730ce73b72c",
+        "requestMs": 313.931694,
+        "pricingMs": 4.032294,
         "status": 200,
         "price": 42
       },
       {
-        "traceId": "c74101e928424bbfb1802016f7f569b6",
-        "requestMs": 222.651884,
-        "pricingMs": 3.482984,
+        "traceId": "8203672e105442ebab8ca85afdd91799",
+        "requestMs": 239.085766,
+        "pricingMs": 4.368274,
         "status": 200,
         "price": 42
       }
-    ]
+    ],
+    "traceCoverage": {
+      "completeApplicationResponses": 30,
+      "timedGatewayAndPricingSpans": 30,
+      "requestsWithUnlinkedApplicationResources": 2,
+      "identityRecoveredFromRequestWindow": 0
+    }
   },
-  "change": "Remove the real HTTP connection attempt to missing legacy pricing (150 ms connect/read timeout); retain the authoritative PostgreSQL price lookup, value 42, order creation and full checkout flow.",
+  "change": "Remove the real HTTP connection attempt to missing legacy pricing (2000 ms connect/read timeout); retain the authoritative PostgreSQL price lookup, value 42, order creation and full checkout flow.",
   "scope": "Local seeded missing-dependency demonstration, not a production benchmark. Successful timeout-and-fallback baseline compared with direct use of the same price store. No incident, labor, outage or revenue saving inferred from latency.",
   "sources": [
     "scripts/presentation/measure_resolution.py",
@@ -469,8 +481,15 @@ window.RESOLUTION = {
     "demo/apps/checkout/fixes/PricingEngine.java",
     "demo/k8s/checkout-pricing-fixed.patch.yaml"
   ],
+  "openingExemplarMs": 2169.686263,
+  "visualEvidence": {
+    "openingTraceId": "510355971a511b41b4f69c35e2230f19",
+    "javaTraceId": "84a30cdd285d54a503bcc260c03f685a",
+    "fixedTraceId": "c2d80ec514af4b2c4df69ba344500b92",
+    "fleetTraceId": "699a7e37a0fc44658f681d41702e6456"
+  },
   "fleetAfterFix": {
-    "traceId": "05fed0b791c2427f83c14ed3c0c9be8c",
+    "traceId": "699a7e37a0fc44658f681d41702e6456",
     "sdkServices": [
       "cart",
       "catalog",
@@ -493,18 +512,11 @@ window.RESOLUTION = {
       "warehouse",
       "currency"
     ],
-    "pricingMs": 2.072588,
+    "pricingMs": 1.420501,
     "catalogDatabaseSpans": [
       "SELECT checkout.products"
     ],
     "price": 42,
-    "orderId": 493
-  },
-  "openingExemplarMs": 350.341063,
-  "visualEvidence": {
-    "openingTraceId": "e7f5bb95c0acdaf1996964a6489547a3",
-    "javaTraceId": "09007e84d580263d160932d7e72f772b",
-    "fixedTraceId": "99aef33f6f7c4db09a39703cd9d57bf5",
-    "fleetTraceId": "05fed0b791c2427f83c14ed3c0c9be8c"
+    "orderId": 650
   }
 };

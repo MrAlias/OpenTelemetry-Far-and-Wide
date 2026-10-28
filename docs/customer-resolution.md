@@ -9,8 +9,8 @@ minutes of questions. Synthetic narration stays at native speech pace.
 
 1. Start with an actual opaque single-request duration in Grafana.
 2. Use OBI’s connected waterfall to locate the failed Checkout **CONNECT** span
-   around 150 ms, before the successful product lookup and service calls. A
-   parent bar includes child time; don’t choose the longest bar. The current
+   around two seconds, before the successful product lookup and service calls. A
+   parent span includes child time; don’t choose the longest span. The current
    OBI capture sees the failed TCP attempt, so the old no-I/O gap explanation
    is no longer used.
 3. Add the Java zero-code agent. The actual fresh trace shows
@@ -26,7 +26,7 @@ minutes of questions. Synthetic narration stays at native speech pace.
    [exception event](https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/) conventions.
 4. Open the actual Java file in the recorded Vim editor: a stale legacy backend
    is attempted on every checkout.
-   Connection/read timeouts are 150 ms. The backend is absent at the demo’s
+   Connection/read timeouts are 2000 ms. The backend is absent at the demo’s
    TEST-NET-1 address, `192.0.2.42:8080`. No sleep simulates the delay. The
    application falls back to the current PostgreSQL product-price store.
 5. The editor recording removes the whole obsolete HTTP attempt and retains
@@ -69,7 +69,7 @@ kubeconfig, voice profile or synthetic media is versioned.
 
 This is a local seeded missing-dependency demonstration, not a production
 benchmark. JVM, database and scheduling variation remain: the change in total
-request medians need not equal the configured 150 ms timeout. Pricing after the
+request medians need not equal the configured two-second timeout. Pricing after the
 fix still performs real PostgreSQL work; do not describe it as zero work or
 promise a sub-millisecond span. No outage, revenue or engineering savings are
 inferred from these timings. The separate
@@ -94,7 +94,7 @@ endpoint really times out in your demo network; some networks reject missing
 addresses immediately. `LEGACY_PRICING_URL` can point at another known unavailable
 endpoint in the disposable environment. It must never point to a real third
 party merely to manufacture latency. The recorded cluster produced genuine
-`SocketTimeoutException` events at roughly 150 ms.
+`SocketTimeoutException` events at roughly two seconds.
 
 Prebuild both images; reveal the code, deploy, send a new request, then open it:
 
@@ -120,6 +120,15 @@ fresh fixed-fleet trace. Reset to a newly built `far-wide-demo-checkout:local`
 for the slow example. `npm run resolution:build` publishes canonical values;
 `npm run resolution:verify` independently checks arithmetic, real timeout/error
 spans, successful fallback, post-fix waterfall ordering and unchanged settings.
+
+The latency cohort keeps all successful responses. A few OBI application
+observations are independently rooted, so the comparison requires the actual
+Gateway server and pricing-method spans, and records other coverage separately.
+It does not discard a fast request because another service’s span is unlinked.
+If an incoming trace identity is replaced, the collector accepts only a unique
+exported Gateway span inside that request’s client window; ambiguous matches
+are rejected. Original requested identities remain in the local measurement
+record. These are collection details, not stage material.
 
 ## Capture boundary
 

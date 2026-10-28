@@ -59,8 +59,8 @@ kicker: The useful result
 <TimeoutEvidence />
 
 <!--
-Tyler · 60 seconds. Open PricingEngine.calculate in the actual fresh trace. The failed HTTP client span consumes roughly the configured 150 ms connection timeout; inspect its SocketTimeoutException. The successful Hibernate/JDBC product-price query follows inside the same method.
-Nikola: Open the failed HTTP span. Point to error.type = java.net.SocketTimeoutException and the exception event’s exception.message = Connect timed out BEFORE naming the timeout. These are literal exported fields, reflowed for legibility beside the same captured span. The succeeding product lookup explains the successful but delayed checkout. A long bar alone does not prove a timeout.
+Tyler · 60 seconds. Open PricingEngine.calculate in the actual fresh trace. The failed HTTP client span consumes roughly the configured two-second connection timeout; inspect its SocketTimeoutException. The successful Hibernate/JDBC product-price query follows inside the same method.
+Nikola: Open the failed HTTP span. Point to error.type = java.net.SocketTimeoutException and the exception event’s exception.message = Connect timed out BEFORE naming the timeout. These are literal exported fields, reflowed for legibility beside the same captured span. The succeeding product lookup explains the successful but delayed checkout. A long span alone does not prove a timeout.
 
 [Sources]
 - public/demo-capture/java-trace-evidence.json
@@ -80,7 +80,7 @@ kicker: The cause
 <DemoClip src="edit-pricing-source.mp4" poster="edit-pricing-before.png" label="Actual Java source edit in Vim: remove the retired-backend HTTP attempt and retain orders.currentPrice()" />
 
 <!--
-Tyler · 35 seconds. Play the actual Vim recording or open the source live. It edits a working copy of the baseline Java file, selects and removes the whole obsolete try/catch/finally block, removes unused imports, and saves a result byte-for-byte identical to the deployed fixed source. The seeded failure is a real HTTP connection attempt to the retired backend, bounded by a 150 ms connect timeout. If it fails, the baseline queries the authoritative PostgreSQL product store. The fixed version uses that same store directly. The highlighted timeout and HTTP call belong to the actual source, not an illustrative excerpt. The final editor view retains return orders.currentPrice().
+Tyler · 35 seconds. Play the actual Vim recording or open the source live. It edits a working copy of the baseline Java file, selects and removes the whole obsolete try/catch/finally block, removes unused imports, and saves a result byte-for-byte identical to the deployed fixed source. The seeded failure is a real HTTP connection attempt to the retired backend, bounded by a two-second connect timeout. If it fails, the baseline queries the authoritative PostgreSQL product store. The fixed version uses that same store directly. The highlighted timeout and HTTP call belong to the actual source, not an illustrative excerpt. The final editor view retains return orders.currentPrice().
 Nikola: Instrumentation enables collaboration as well as diagnosis. When access and ownership permit, bring the owning team a PR: “Your service is having customer impact. Here is the trace, here is the failing dependency, and here is a fix grounded in that observed request.” Review the change with the owners; don’t just hand them a vague latency ticket.
 
 [Sources]

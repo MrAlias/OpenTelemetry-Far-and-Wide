@@ -7,7 +7,7 @@ Tyler: Welcome everyone. I'm Tyler Yahn.
 
 Nikola: And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-Tyler: The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
+Tyler: The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
 
 Nikola: One customer problem, then a way for the other teams to investigate theirs. Let's open the system.
 
@@ -16,17 +16,19 @@ Tyler: Here is our checkout application: eighteen services, with PostgreSQL and 
 
 Nikola: Every team can have a different definition of healthy. Following the request gives us one shared starting point.
 
-Start with OBI
-Tyler: First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications.
+Meet OBI
+Tyler: First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
 
-Nikola: That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running.
+Nikola: We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket.
 
-Tyler: OBI is ready. Let's open a checkout request.
+Tyler: And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
+
+Nikola: One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request.
 
 One request across the application
-Nikola: The useful result is a connected trace. This is the request behind the duration we started with.
+Nikola: Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service.
 
-Tyler: Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change.
+Tyler: Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change.
 
 Follow the cart branch of this request
 Tyler: Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
@@ -34,9 +36,9 @@ Tyler: Watch the plain topology turn into an observed request path. We can now a
 Nikola: Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
 
 Find the failed connection on the request path
-Tyler: Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix.
+Tyler: Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix.
 
-Nikola: Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls.
+Nikola: Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls.
 
 Tyler: Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code.
 
@@ -59,7 +61,7 @@ Nikola: Open the failed HTTP span. Its error type is Java's SocketTimeoutExcepti
 Tyler: OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate.
 
 Stop calling the retired backend
-Tyler: There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly.
+Tyler: There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly.
 
 Nikola: Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup.
 
@@ -75,7 +77,7 @@ Nikola: Follow it through Inventory, the commerce branches, and the order write.
 Tyler: This is the payoff: a customer symptom, an observed cause, a code change, and a fresh trace showing what changed.
 
 The improvement across repeated requests
-Tyler: In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall.
+Tyler: Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone.
 
 Nikola: That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
 

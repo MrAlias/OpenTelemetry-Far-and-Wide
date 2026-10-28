@@ -50,7 +50,7 @@ report = []
 captions = []
 cursor = 0
 
-def spoken(text):
+def spoken(text, speaker):
     # Preserve visual spelling while making technical acronyms intelligible.
     for pattern, replacement in [
         (r'PricingEngine\.calculate', 'Pricing Engine calculate'),
@@ -58,7 +58,7 @@ def spoken(text):
         (r'\bRIO\b', 'Rio'), (r'\bOTelX\b', 'Oh tell ex'),
         (r'\bNode\.js\b', 'Node J S'), (r'\bJVM\b', 'J V M'),
         (r'OpenTelemetry', 'Open Telemetry'), (r'\beBPF\b', 'E B P F'),
-        (r'\bOBI\b', 'O bee'), (r'\bSDK\b', 'S D K'),
+        (r'\bOBI\b', 'Obi' if speaker == 'Tyler' else 'O bee'), (r'\bSDK\b', 'S D K'),
         (r'\bOTLP\b', 'O T L P'), (r'\bCPU\b', 'C P U'),
         (r'\bHTTP\b', 'H T T P'), (r'\bAPI\b', 'A P I'),
         (r'\bAPIs\b', 'A P I s'), (r'\bv2alpha1\b', 'version two alpha one'),
@@ -81,7 +81,7 @@ for speaker, setup in skill_casts.items():
         for index, turn in enumerate(chapter['turns']):
             if turn['speaker'] != speaker:
                 continue
-            text = spoken(turn['text'])
+            text = spoken(turn['text'], speaker)
             identity = voice_provenance[speaker]['sha256']
             digest = hashlib.sha256((identity+'\n'+text).encode()).hexdigest()[:16]
             name = f'{chapter["id"]}-{index}-{digest}'
@@ -134,7 +134,7 @@ for chapter in talk['chapters']:
         assert meta['model_revision'] == cast['revision']
         assert meta['reference_sha256'] == cast['referenceSha256']
         assert meta['speaker'] == skill_casts[speaker]['profile']['speaker']
-        assert meta['synthetic'] and meta['text'] == spoken(text)
+        assert meta['synthetic'] and meta['text'] == spoken(text, speaker)
         with wave.open(str(path)) as source:
             assert source.getframerate() == sample_rate and source.getsampwidth() == 2
         raw_paths.append(path)

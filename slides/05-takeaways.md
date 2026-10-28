@@ -61,7 +61,7 @@ kicker: An illustrative first year · 18 services
 <p class="savings-context">One namespace setup · 13 updates/month → 1 · no investigation-time credit</p>
 
 <!--
-Tyler · 80 seconds. Explicit hypothetical annual labor model. Compare distributed responsibility for instrumentation with centralized RIO + Injector, not “Before” versus “With tools.” One common pilot is excluded, leaving 13 compatible services.
+Tyler · 70 seconds. Explicit hypothetical annual labor model. Compare distributed responsibility for instrumentation with centralized RIO + Injector, not “Before” versus “With tools.” One common pilot is excluded, leaving 13 compatible services.
 Nikola: Distributed initial setup = 13 × 2.5 = 32.5 hours. Centralized setup = 1 hour controller/policy + 0.5 hour OBI deployment = 1.5 hours once for the namespace. No residual per-service setup charge. The 30-minute OBI budget is presenter-supplied; other durations are authored assumptions.
 Tyler: One agent release each month. Distributed 13 × 12 = 156 update operations; centralized 1 × 12 = 12. At an assumed 0.75 person-hour each, distributed annual upkeep is 117 hours and centralized upkeep is 9. Recurring saving 108 hours = $10,800.
 Nikola: Equivalent installed telemetry implies equal investigation capability; no investigation credit. Initial OBI coverage is counted once, not per incident. No claim of telemetry-bill savings from enabling/disabling collection.
@@ -89,7 +89,7 @@ kicker: The same assumptions · larger fleets
 <p class="savings-context">12 agent releases/year · shared setup and updates once per rollout domain</p>
 
 <!--
-Tyler · 45 seconds. The same hypothetical inputs produce first-year values of $85,300 / $439,800 / $881,900 for 100 / 500 / 1,000 services. Recurring values $66,600 / $343,800 / $689,400. The demo is $13,900 first year, $10,800 recurring.
+Tyler · 40 seconds. The same hypothetical inputs produce first-year values of $85,300 / $439,800 / $881,900 for 100 / 500 / 1,000 services. Recurring values $66,600 / $343,800 / $689,400. The demo is $13,900 first year, $10,800 recurring.
 Nikola: Preserve the 14/18 supported-runtime mix, rounded down, and exclude one pilot per fleet. Independent rollout domains are explicit scenario inputs: 1 / 2 / 5 / 10. Each receives one shared setup and twelve shared update operations. No central work is charged per routine service. Default service exceptions are zero; add known extra compatibility/exception work rather than inventing a blanket charge.
 Tyler: These are scenarios, not observed scaling laws. Lower distributed effort, existing centralization or extra platform work can shrink or reverse the result. The editable calculator includes those cases. No incident-response, waiting-time, revenue or telemetry-bill saving is priced.
 
@@ -112,7 +112,7 @@ kicker: Make the next investigation easier
 <div class="closing-link">Demo and source · github.com/MrAlias/OpenTelemetry-Far-and-Wide</div>
 
 <!--
-Tyler · 55 seconds. We began with a customer waiting. OBI located the local interval; the Java agent named the pricing method; removing the obsolete backend attempt improved the measured request; use the current medians shown on the slide. Point back to the opening customer problem.
+Tyler · 50 seconds. We began with a customer waiting. OBI exposed the two-second failed connection; the Java agent named the pricing method; removing the obsolete backend attempt improved the measured request; use the current medians shown on the slide. Point back to the opening customer problem.
 Nikola: One namespace choice carried setup across supported services using the custom controller and Injector.
 Tyler: The customer gets a faster checkout; the next team gets useful diagnostic detail without repeating the setup project. The dollar figures describe hypothetical engineering capacity, distinct from the measured request result. Invite questions with both outcomes visible.
 

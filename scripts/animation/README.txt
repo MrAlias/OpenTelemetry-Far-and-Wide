@@ -79,7 +79,8 @@ The model and reference files remain in those installations; never copy them
 into the repository. Read their SKILL.md for installation and authorized scope.
 Routine narration needs no bootstrap or source-recording extraction.
 Pronunciation overrides preserve visible spellings: RIO is rhee-o (Spanish río);
-OTelX is oh-tell-X. The speech generator uses Rio and Oh tell ex, avoiding
+OTelX is oh-tell-X. Tyler’s OBI pronunciation uses the single word Obi for a shorter opening vowel.
+The speech generator uses Rio and Oh tell ex, avoiding
 letter-by-letter delivery or an artificial break between Rio's syllables.
 
 mkdir -p .artifacts/animation/runtime/tmp

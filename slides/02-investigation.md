@@ -20,15 +20,19 @@ Nikola: “Following the request gives us one shared starting point.”
 -->
 
 ---
-kicker: Live demo · OBI
+kicker: The starting point
+clicks: 1
 ---
 
-# Start with OBI
+# Meet OBI
 
-<DemoClip src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
+<OBIIntro v-if="$clicks === 0" />
+<DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
 
 <!--
-Tyler · 45 seconds. Execute live: kubectl apply -f demo/k8s/obi.yaml, then rollout status daemonset/obi in obi-system. Recording is a manual-play fallback; it has no narration and pauses when leaving this slide.
+Tyler · 70 seconds. Explain the first view before clicking: OpenTelemetry eBPF Instrumentation observes running Linux applications, using eBPF at application/network boundaries. We get traces and metrics without each team adding a library or restarting its application. Nikola: “That’s a lot of visibility before the first instrumentation ticket.” The click has a job: move from the explanation to the actual installation.
+
+Execute live: kubectl apply -f demo/k8s/obi.yaml, then rollout status daemonset/obi in obi-system. Recording is a manual-play fallback; it has no narration and pauses when leaving this slide.
 
 Expand OBI once: OpenTelemetry eBPF Instrumentation. It discovers the running applications and gives service/dependency observations before language-agent setup. Open a fresh request next. Source command/event logs remain in .artifacts/demo-capture.
 
@@ -46,10 +50,11 @@ kicker: The observed request
 
 <TraceEvidence image="connected-trace.png" label="Actual OBI trace: Gateway, Checkout, Inventory and the Cart branch" />
 
-<p class="caption">350 ms · service calls and database work in one waterfall</p>
+<p class="caption">2.17 s · service calls and database work in one waterfall</p>
 
 <!--
 Nikola · 55 seconds. “The useful result is a connected trace. This is the request behind the duration we started with.”
+Nikola: Emphasize the return on deploying OBI: one deployment, multiple languages and service calls, before adding any language agent. Point to the HTTP calls and the PostgreSQL price query visible in this actual waterfall.
 Tyler: A connected trace is not a faster checkout; the customer is still waiting. Move from “the application is slow” toward work we can change. Point out the nesting and shared time axis. Do not explain trace-ID or parent-link verification; those are preparation checks.
 
 [Sources]
@@ -67,7 +72,7 @@ clicks: 1
 
 <ServiceTopology :phase="$clicks > 0 ? 'observed' : 'plain'" />
 
-<p class="caption">Cart branch · observed server durations in milliseconds</p>
+<p class="caption">Cart branch · observed server durations</p>
 
 <!--
 Tyler · 35 seconds. Start neutral. Advance once when saying “Watch the plain topology turn into an observed request path.” The click adds the actual captured Cart branch and measured timings, not decorative motion.
@@ -86,13 +91,13 @@ clicks: 1
 
 # Find the failed connection on the request path
 
-<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI waterfall with a failed Checkout CONNECT span near 150 milliseconds" />
+<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI waterfall with a failed Checkout CONNECT span near two seconds" />
 
-<p class="caption">Follow the slow failed attempt, rather than the longest parent bar.</p>
+<p class="caption">Follow the slow failed attempt, rather than the longest parent span.</p>
 
 <!--
 Tyler · 70 seconds. Gateway’s long parent includes waiting on Checkout; Checkout includes its downstream work. The longest parent is not a root-cause argument.
-Nikola: Point to the actual red CONNECT span: roughly 150 ms on a failed outbound connection before the successful price query and service calls. Advance the highlight once while naming it.
+Nikola: Point to the actual red CONNECT span: roughly two seconds on a failed outbound connection before the successful price query and service calls. Advance the highlight once while naming it.
 Tyler: OBI has already exposed a failed dependency attempt. The next question is which method makes it, why it is still attempted and what happens afterward. The Java agent gives the calling pricing method, HTTP endpoint, SocketTimeoutException and current-store fallback. Do not reuse the old no-I/O gap explanation.
 
 [Sources]

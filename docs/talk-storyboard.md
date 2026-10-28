@@ -17,6 +17,8 @@ OTelX RIO project, not an upstream Operator release. The upstream configuration
 comparison acknowledges workload and namespace opt-in. The measured request
 result and hypothetical labor-capacity scenarios are separate evidence.
 
+
+
 ## 01 · OpenTelemetry Far and Wide
 
 Open a customer problem and promise a measured resolution, then make that investigation capability repeatable across the namespace.
@@ -27,7 +29,7 @@ Live budget: 60 seconds.
 
 **Nikola:** And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-**Tyler:** The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
+**Tyler:** The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
 
 **Nikola:** One customer problem, then a way for the other teams to investigate theirs. Let's open the system.
 
@@ -41,17 +43,19 @@ Live budget: 40 seconds.
 
 **Nikola:** Every team can have a different definition of healthy. Following the request gives us one shared starting point.
 
-## 03 · Start with OBI
+## 03 · Meet OBI
 
-Show the real OBI installation, then move to its result.
+Introduce OBI before its acronym is used: eBPF observations of running Linux applications, zero app changes/restarts, traces and metrics. Show deployment only after explaining its value.
 
-Live budget: 45 seconds.
+Live budget: 70 seconds.
 
-**Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications.
+**Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
 
-**Nikola:** That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running.
+**Nikola:** We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket.
 
-**Tyler:** OBI is ready. Let's open a checkout request.
+**Tyler:** And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
+
+**Nikola:** One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request.
 
 ## 04 · One request across the application
 
@@ -59,9 +63,9 @@ Give the connected-trace statement its own actual waterfall exemplar.
 
 Live budget: 55 seconds.
 
-**Nikola:** The useful result is a connected trace. This is the request behind the duration we started with.
+**Nikola:** Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service.
 
-**Tyler:** Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change.
+**Tyler:** Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change.
 
 ## 05 · Follow the cart branch of this request
 
@@ -79,9 +83,9 @@ Select Checkout from the actual failed CONNECT span; use language detail to iden
 
 Live budget: 70 seconds.
 
-**Tyler:** Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix.
+**Tyler:** Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix.
 
-**Nikola:** Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls.
+**Nikola:** Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls.
 
 **Tyler:** Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code.
 
@@ -103,7 +107,7 @@ Live budget: 120 seconds.
 
 ## 08 · A failed attempt before a working fallback
 
-Show the actual failed HTTP span with literal error.type and exception.message fields before calling it a timeout. The captured waterfall remains the context.
+Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.
 
 Live budget: 60 seconds.
 
@@ -115,11 +119,11 @@ Live budget: 60 seconds.
 
 ## 09 · Stop calling the retired backend
 
-Show the actual Java edit in Vim: remove the obsolete HTTP block and its unused imports, retain orders.currentPrice(), and save the same source used for deployment. Offer the owning team a PR grounded in the trace.
+Show the actual Java source edit in Vim, retaining the working price lookup; offer a PR backed by the trace, then deploy the same fix.
 
 Live budget: 90 seconds.
 
-**Tyler:** There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly.
+**Tyler:** There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly.
 
 **Nikola:** Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup.
 
@@ -145,7 +149,7 @@ Summarize matched measured request durations only after the audience has seen th
 
 Live budget: 35 seconds.
 
-**Tyler:** In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall.
+**Tyler:** Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone.
 
 **Nikola:** That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
 
@@ -153,7 +157,7 @@ Live budget: 35 seconds.
 
 Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.
 
-Live budget: 45 seconds.
+Live budget: 40 seconds.
 
 **Nikola:** We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
 
@@ -237,7 +241,7 @@ Live budget: 50 seconds.
 
 Compare distributed ownership against one centralized namespace setup and twelve monthly shared agent updates; show operations before dollars, with zero investigation-time credit.
 
-Live budget: 80 seconds.
+Live budget: 70 seconds.
 
 **Tyler:** Let's price that difference in ownership. This is a hypothetical year, at a hundred dollars per person-hour. Thirteen compatible services remain after our common pilot.
 
@@ -253,7 +257,7 @@ Live budget: 80 seconds.
 
 Extrapolate explicit ownership and monthly-update assumptions, with no invented per-investigation or telemetry-bill saving.
 
-Live budget: 45 seconds.
+Live budget: 40 seconds.
 
 **Tyler:** The same assumptions give about eighty-five thousand dollars of capacity for a hundred services in year one, four hundred and forty thousand for five hundred, and eight hundred and eighty-two thousand for a thousand.
 
@@ -265,7 +269,7 @@ Live budget: 45 seconds.
 
 Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions.
 
-Live budget: 55 seconds.
+Live budget: 50 seconds.
 
 **Tyler:** We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change.
 

@@ -20,7 +20,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
         },
         {
           "speaker": "Nikola",
@@ -59,17 +59,17 @@ window.TALK = {
         },
         {
           "start": 10.4,
-          "end": 27.3,
+          "end": 25.7,
           "sampleStart": 249600,
-          "sampleEnd": 655200,
+          "sampleEnd": 616800,
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
         },
         {
-          "start": 27.62,
-          "end": 33.26,
-          "sampleStart": 662880,
-          "sampleEnd": 798240,
+          "start": 26.02,
+          "end": 31.66,
+          "sampleStart": 624480,
+          "sampleEnd": 759840,
           "speaker": "Nikola",
           "text": "One customer problem, then a way for the other teams to investigate theirs. Let's open the system."
         }
@@ -87,9 +87,9 @@ window.TALK = {
           "start": 10.4
         }
       ],
-      "duration": 33.92,
+      "duration": 32.32,
       "start": 0,
-      "end": 33.92,
+      "end": 32.32,
       "audio": "narration/01-promise.mp3"
     },
     {
@@ -129,78 +129,104 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 21.24,
-      "start": 33.92,
-      "end": 55.16,
+      "start": 32.32,
+      "end": 53.56,
       "audio": "narration/02-topology.mp3"
     },
     {
       "id": "03-install-obi",
-      "kind": "terminal",
-      "title": "Start with OBI",
-      "plannedDuration": 45,
+      "kind": "obi-intro",
+      "title": "Meet OBI",
+      "plannedDuration": 70,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications."
+          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics."
         },
         {
           "speaker": "Nikola",
-          "text": "That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running."
+          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket."
         },
         {
           "speaker": "Tyler",
-          "text": "OBI is ready. Let's open a checkout request."
+          "text": "And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request."
         }
       ],
       "visuals": [
         {
+          "type": "art",
+          "at": 0
+        },
+        {
           "type": "video",
           "src": "demo-capture/install-obi-edited.mp4",
           "poster": "demo-capture/install-obi-edited-poster.png",
-          "at": 0
+          "atCue": 2
         }
       ],
-      "purpose": "Show the real OBI installation, then move to its result.",
+      "purpose": "Introduce OBI before its acronym is used: eBPF observations of running Linux applications, zero app changes/restarts, traces and metrics. Show deployment only after explaining its value.",
+      "previewVisualIndex": 0,
+      "sources": [
+        "https://opentelemetry.io/docs/zero-code/obi/",
+        "demo/k8s/obi.yaml"
+      ],
       "cues": [
         {
           "start": 0.65,
-          "end": 7.01,
+          "end": 14.57,
           "sampleStart": 15600,
-          "sampleEnd": 168240,
+          "sampleEnd": 349680,
           "speaker": "Tyler",
-          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications."
+          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics."
         },
         {
-          "start": 7.33,
-          "end": 17.09,
-          "sampleStart": 175920,
-          "sampleEnd": 410160,
+          "start": 14.89,
+          "end": 24.45,
+          "sampleStart": 357360,
+          "sampleEnd": 586800,
           "speaker": "Nikola",
-          "text": "That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running."
+          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket."
         },
         {
-          "start": 17.41,
-          "end": 20.13,
-          "sampleStart": 417840,
-          "sampleEnd": 483120,
+          "start": 24.77,
+          "end": 36.37,
+          "sampleStart": 594480,
+          "sampleEnd": 872880,
           "speaker": "Tyler",
-          "text": "OBI is ready. Let's open a checkout request."
+          "text": "And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications."
+        },
+        {
+          "start": 36.69,
+          "end": 44.21,
+          "sampleStart": 880560,
+          "sampleEnd": 1061040,
+          "speaker": "Nikola",
+          "text": "One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request."
         }
       ],
       "visualCues": [
         {
+          "type": "art",
+          "at": 0,
+          "start": 0
+        },
+        {
           "type": "video",
           "src": "demo-capture/install-obi-edited.mp4",
           "poster": "demo-capture/install-obi-edited-poster.png",
-          "at": 0,
-          "start": 0,
+          "atCue": 2,
+          "start": 24.77,
           "mediaDuration": 22.04
         }
       ],
-      "duration": 24.04,
-      "start": 55.16,
-      "end": 79.2,
+      "duration": 48.84,
+      "start": 53.56,
+      "end": 102.4,
       "audio": "narration/03-install-obi.mp3"
     },
     {
@@ -212,15 +238,15 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "The useful result is a connected trace. This is the request behind the duration we started with."
+          "text": "Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service."
         },
         {
           "speaker": "Tyler",
-          "text": "Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change."
+          "text": "Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change."
         }
       ],
       "pauseAfter": {
-        "0": 4
+        "0": 1
       },
       "visuals": [
         {
@@ -234,19 +260,19 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 5.57,
+          "end": 15.81,
           "sampleStart": 15600,
-          "sampleEnd": 133680,
+          "sampleEnd": 379440,
           "speaker": "Nikola",
-          "text": "The useful result is a connected trace. This is the request behind the duration we started with."
+          "text": "Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service."
         },
         {
-          "start": 9.89,
-          "end": 19.41,
-          "sampleStart": 237360,
-          "sampleEnd": 465840,
+          "start": 17.13,
+          "end": 31.39,
+          "sampleStart": 411120,
+          "sampleEnd": 753360,
           "speaker": "Tyler",
-          "text": "Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change."
+          "text": "Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change."
         }
       ],
       "visualCues": [
@@ -258,9 +284,9 @@ window.TALK = {
           "start": 0
         }
       ],
-      "duration": 20.08,
-      "start": 79.2,
-      "end": 99.28,
+      "duration": 32.04,
+      "start": 102.4,
+      "end": 134.44,
       "audio": "narration/04-connected-trace.mp3"
     },
     {
@@ -304,8 +330,8 @@ window.TALK = {
       "buildTime": 3.15,
       "visualCues": [],
       "duration": 17.8,
-      "start": 99.28,
-      "end": 117.08,
+      "start": 134.44,
+      "end": 152.24,
       "audio": "narration/05-observed-path.mp3"
     },
     {
@@ -317,11 +343,11 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix."
+          "text": "Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix."
         },
         {
           "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls."
+          "text": "Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls."
         },
         {
           "speaker": "Tyler",
@@ -340,42 +366,42 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 11.93,
+          "end": 9.93,
           "sampleStart": 15600,
-          "sampleEnd": 286320,
+          "sampleEnd": 238320,
           "speaker": "Tyler",
-          "text": "Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix."
+          "text": "Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix."
         },
         {
-          "start": 12.25,
-          "end": 21.77,
-          "sampleStart": 294000,
-          "sampleEnd": 522480,
+          "start": 10.25,
+          "end": 17.45,
+          "sampleStart": 246000,
+          "sampleEnd": 418800,
           "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls."
+          "text": "Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls."
         },
         {
-          "start": 23.29,
-          "end": 33.65,
-          "sampleStart": 558960,
-          "sampleEnd": 807600,
+          "start": 18.97,
+          "end": 30.41,
+          "sampleStart": 455280,
+          "sampleEnd": 729840,
           "speaker": "Tyler",
           "text": "Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code."
         },
         {
-          "start": 33.97,
-          "end": 37.25,
-          "sampleStart": 815280,
-          "sampleEnd": 894000,
+          "start": 30.73,
+          "end": 34.01,
+          "sampleStart": 737520,
+          "sampleEnd": 816240,
           "speaker": "Nikola",
           "text": "Let's open Checkout and follow that connection."
         }
       ],
-      "buildTime": 23.29,
+      "buildTime": 18.97,
       "visualCues": [],
-      "duration": 37.92,
-      "start": 117.08,
-      "end": 155.0,
+      "duration": 34.68,
+      "start": 152.24,
+      "end": 186.92,
       "audio": "narration/06-local-time.mp3"
     },
     {
@@ -473,8 +499,8 @@ window.TALK = {
         }
       ],
       "duration": 43.24,
-      "start": 155.0,
-      "end": 198.24,
+      "start": 186.92,
+      "end": 230.16,
       "audio": "narration/07-direct-agent.mp3"
     },
     {
@@ -544,9 +570,9 @@ window.TALK = {
         },
         {
           "start": 27.43,
-          "end": 34.23,
+          "end": 34.91,
           "sampleStart": 658320,
-          "sampleEnd": 821520,
+          "sampleEnd": 837840,
           "speaker": "Tyler",
           "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate."
         }
@@ -572,9 +598,9 @@ window.TALK = {
           "start": 27.43
         }
       ],
-      "duration": 34.88,
-      "start": 198.24,
-      "end": 233.12,
+      "duration": 35.56,
+      "start": 230.16,
+      "end": 265.72,
       "audio": "narration/08-new-detail.mp3"
     },
     {
@@ -586,7 +612,7 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly."
+          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly."
         },
         {
           "speaker": "Nikola",
@@ -630,33 +656,33 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 13.01,
+          "end": 10.93,
           "sampleStart": 15600,
-          "sampleEnd": 312240,
+          "sampleEnd": 262320,
           "speaker": "Tyler",
-          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly."
+          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly."
         },
         {
-          "start": 13.33,
-          "end": 30.63,
-          "sampleStart": 319920,
-          "sampleEnd": 735120,
+          "start": 11.25,
+          "end": 28.55,
+          "sampleStart": 270000,
+          "sampleEnd": 685200,
           "speaker": "Nikola",
           "text": "Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup."
         },
         {
-          "start": 30.95,
-          "end": 36.03,
-          "sampleStart": 742800,
-          "sampleEnd": 864720,
+          "start": 28.87,
+          "end": 33.95,
+          "sampleStart": 692880,
+          "sampleEnd": 814800,
           "speaker": "Tyler",
           "text": "We're deploying that application change now. The Java agent and exporter settings stay the same."
         },
         {
-          "start": 50.83,
-          "end": 55.11,
-          "sampleStart": 1219920,
-          "sampleEnd": 1322640,
+          "start": 48.75,
+          "end": 53.03,
+          "sampleStart": 1170000,
+          "sampleEnd": 1272720,
           "speaker": "Nikola",
           "text": "The rollout is ready. Let's send another customer request and look at its trace."
         }
@@ -668,20 +694,20 @@ window.TALK = {
           "poster": "demo-capture/edit-pricing-before.png",
           "at": 0,
           "start": 0,
-          "mediaDuration": 18.56
+          "mediaDuration": 18.64
         },
         {
           "type": "video",
           "src": "demo-capture/fix-pricing-edited.mp4",
           "poster": "demo-capture/fix-pricing-edited-poster.png",
           "atCue": 2,
-          "start": 30.95,
+          "start": 28.87,
           "mediaDuration": 18.88
         }
       ],
-      "duration": 55.76,
-      "start": 233.12,
-      "end": 288.88,
+      "duration": 53.68,
+      "start": 265.72,
+      "end": 319.4,
       "audio": "narration/08-fix-pricing.mp3"
     },
     {
@@ -767,12 +793,12 @@ window.TALK = {
           "atCue": 1,
           "focus": "waterfall",
           "start": 10.9,
-          "mediaDuration": 10.0
+          "mediaDuration": 10.12
         }
       ],
       "duration": 30.28,
-      "start": 288.88,
-      "end": 319.16,
+      "start": 319.4,
+      "end": 349.68,
       "audio": "narration/08-customer-result.mp3"
     },
     {
@@ -784,7 +810,7 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall."
+          "text": "Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone."
         },
         {
           "speaker": "Nikola",
@@ -798,32 +824,32 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 13.71,
+          "end": 16.23,
           "sampleStart": 15600,
-          "sampleEnd": 329040,
+          "sampleEnd": 389520,
           "speaker": "Tyler",
-          "text": "In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall."
+          "text": "Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone."
         },
         {
-          "start": 14.03,
-          "end": 24.63,
-          "sampleStart": 336720,
-          "sampleEnd": 591120,
+          "start": 16.55,
+          "end": 27.15,
+          "sampleStart": 397200,
+          "sampleEnd": 651600,
           "speaker": "Nikola",
           "text": "That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?"
         }
       ],
       "visualCues": [],
-      "duration": 25.28,
-      "start": 319.16,
-      "end": 344.44,
+      "duration": 27.8,
+      "start": 349.68,
+      "end": 377.48,
       "audio": "narration/08-result-summary.mp3"
     },
     {
       "id": "09-the-rest",
       "kind": "scale",
       "title": "One fixed. Thirteen to equip.",
-      "plannedDuration": 45,
+      "plannedDuration": 40,
       "lead": "Nikola",
       "turns": [
         {
@@ -851,25 +877,25 @@ window.TALK = {
         },
         {
           "start": 11.45,
-          "end": 20.97,
+          "end": 20.73,
           "sampleStart": 274800,
-          "sampleEnd": 503280,
+          "sampleEnd": 497520,
           "speaker": "Tyler",
           "text": "In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen."
         },
         {
-          "start": 21.29,
-          "end": 28.37,
-          "sampleStart": 510960,
-          "sampleEnd": 680880,
+          "start": 21.05,
+          "end": 28.13,
+          "sampleStart": 505200,
+          "sampleEnd": 675120,
           "speaker": "Nikola",
           "text": "And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue."
         }
       ],
       "visualCues": [],
-      "duration": 29.04,
-      "start": 344.44,
-      "end": 373.48,
+      "duration": 28.8,
+      "start": 377.48,
+      "end": 406.28,
       "audio": "narration/09-the-rest.mp3"
     },
     {
@@ -913,8 +939,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 34.24,
-      "start": 373.48,
-      "end": 407.72,
+      "start": 406.28,
+      "end": 440.52,
       "audio": "narration/10-operator-opt-in.mp3"
     },
     {
@@ -977,8 +1003,8 @@ window.TALK = {
         }
       ],
       "duration": 27.64,
-      "start": 407.72,
-      "end": 435.36,
+      "start": 440.52,
+      "end": 468.16,
       "audio": "narration/10-install-operator.mp3"
     },
     {
@@ -1071,8 +1097,8 @@ window.TALK = {
         }
       ],
       "duration": 56.24,
-      "start": 435.36,
-      "end": 491.6,
+      "start": 468.16,
+      "end": 524.4,
       "audio": "narration/11-enroll-services.mp3"
     },
     {
@@ -1161,8 +1187,8 @@ window.TALK = {
         }
       ],
       "duration": 34.76,
-      "start": 491.6,
-      "end": 526.36,
+      "start": 524.4,
+      "end": 559.16,
       "audio": "narration/12-wider-result.mp3"
     },
     {
@@ -1226,8 +1252,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 33.88,
-      "start": 526.36,
-      "end": 560.24,
+      "start": 559.16,
+      "end": 593.04,
       "audio": "narration/13-hidden-cost.mp3"
     },
     {
@@ -1291,15 +1317,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 31.48,
-      "start": 560.24,
-      "end": 591.72,
+      "start": 593.04,
+      "end": 624.52,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
       "id": "15-measure",
       "kind": "cost-demo",
       "title": "Put a price on the repetition",
-      "plannedDuration": 80,
+      "plannedDuration": 70,
       "lead": "Tyler",
       "turns": [
         {
@@ -1374,15 +1400,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 73.64,
-      "start": 591.72,
-      "end": 665.36,
+      "start": 624.52,
+      "end": 698.16,
       "audio": "narration/15-measure.mp3"
     },
     {
       "id": "15-scale",
       "kind": "cost-scale",
       "title": "Repetition changes the economics",
-      "plannedDuration": 45,
+      "plannedDuration": 40,
       "lead": "Tyler",
       "turns": [
         {
@@ -1432,15 +1458,15 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 39.0,
-      "start": 665.36,
-      "end": 704.36,
+      "start": 698.16,
+      "end": 737.16,
       "audio": "narration/15-scale.mp3"
     },
     {
       "id": "16-close",
       "kind": "close",
       "title": "Less waiting. More services ready.",
-      "plannedDuration": 55,
+      "plannedDuration": 50,
       "lead": "Tyler",
       "turns": [
         {
@@ -1464,41 +1490,41 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 14.29,
+          "end": 12.09,
           "sampleStart": 15600,
-          "sampleEnd": 342960,
+          "sampleEnd": 290160,
           "speaker": "Tyler",
           "text": "We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change."
         },
         {
-          "start": 14.61,
-          "end": 24.37,
-          "sampleStart": 350640,
-          "sampleEnd": 584880,
+          "start": 12.41,
+          "end": 22.17,
+          "sampleStart": 297840,
+          "sampleEnd": 532080,
           "speaker": "Nikola",
           "text": "Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project."
         },
         {
-          "start": 24.69,
-          "end": 32.21,
-          "sampleStart": 592560,
-          "sampleEnd": 773040,
+          "start": 22.49,
+          "end": 30.01,
+          "sampleStart": 539760,
+          "sampleEnd": 720240,
           "speaker": "Tyler",
           "text": "The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for."
         },
         {
-          "start": 32.53,
-          "end": 37.73,
-          "sampleStart": 780720,
-          "sampleEnd": 905520,
+          "start": 30.33,
+          "end": 35.53,
+          "sampleStart": 727920,
+          "sampleEnd": 852720,
           "speaker": "Nikola",
           "text": "Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
         }
       ],
       "visualCues": [],
-      "duration": 38.4,
-      "start": 704.36,
-      "end": 742.76,
+      "duration": 36.2,
+      "start": 737.16,
+      "end": 773.36,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1568,14 +1594,15 @@ window.TALK = {
     }
   },
   "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-27-timeout-evidence-code-editor-pronunciation",
+  "scriptRevision": "2026-10-27-noticeable-customer-wait-and-obi-introduction",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "2026-10-27-timeout-fallback-and-real-trace",
+  "storyRevision": "2026-10-27-two-second-timeout",
   "pronunciation": {
     "RIO": "rhee-o (Spanish río)",
-    "OTelX": "oh-tell-X"
+    "OTelX": "oh-tell-X",
+    "OBI": "Tyler: short Oh-bee, spoken as one word with no drawn-out Oh"
   },
-  "duration": 742.76
+  "duration": 773.36
 };

@@ -7,7 +7,7 @@ happens inside Java checkout.
 ```text
 curl > gateway (Go) > checkout (Java) > inventory (Node.js)
                          │
-                         ├─ PricingEngine.calculate(): about 150 ms
+                         ├─ PricingEngine.calculate(): about two seconds
                          ├─ Hibernate > PostgreSQL: save the checkout order
                          ├─ cart (Rails) > catalog (Java) > recommendations (Python) > promotions (Rails)
                          │       └─ tax (.NET) > currency (Go)
@@ -91,7 +91,7 @@ and an increasing Redis counter. Payments and notifications are simulated;
 no real payment provider or email service is contacted.
 
 These applications have no OpenTelemetry SDK dependencies. The Java service's
-pricing method deliberately takes about 150 ms. Each request also loads
+pricing method deliberately takes about two seconds. Each request also loads
 the seeded product and saves an order through Hibernate, using a HikariCP
 connection pool and the PostgreSQL JDBC driver.
 
@@ -172,7 +172,7 @@ range to **Last 15 minutes**, and run:
 Open a recent trace. Look for HTTP spans involving `gateway`, `checkout`, and
 `inventory`, followed by the cart, shipping, payments, and notifications branches.
 Search by another service name, such as `recommendations` or `loyalty`, to explore
-that part of the flow. The checkout request takes roughly 150 ms or more, but there is no
+that part of the flow. The checkout request takes roughly two seconds or more, but there is no
 `PricingEngine.calculate` span yet. The pricing method and Hibernate operations
 are not named in this baseline. Keep a trace open for comparison.
 
@@ -303,7 +303,7 @@ Return to **Explore > Tempo** and run:
 ```
 
 Open a recent result and expand checkout's spans. **`PricingEngine.calculate`
-takes about 150 ms**, explaining the delay you saw with OBI. The application
+takes about two seconds**, explaining the delay you saw with OBI. The application
 image and source have not changed; the policy added the language-level detail.
 
 In the same trace, expand the Hibernate operations and their JDBC query spans.
@@ -320,7 +320,7 @@ You can also search specifically for the Hibernate transaction span:
 ```
 
 The comparison has two parts: the configured pricing-method span explains the
-150 ms delay, and the default Hibernate/JDBC spans expose the order-persistence
+two-second timeout, and the default Hibernate/JDBC spans expose the order-persistence
 operations. Connection-acquisition tracing is not enabled in this demo.
 
 OBI continues covering the other services. Its automatic SDK detection suppresses
@@ -434,7 +434,7 @@ operator walkthrough above; begin from a clean, isolated demo installation.
 ## Resolve the retired-backend timeout
 
 The standard demo now attempts an absent legacy pricing backend with a real
-150 ms HTTP connection timeout, then reads the product price from PostgreSQL.
+two-second HTTP connection timeout, then reads the product price from PostgreSQL.
 The fixed image removes that obsolete attempt and retains the same store lookup.
 The original historical proof fixture is unchanged.
 
@@ -457,8 +457,8 @@ kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
 
 Show the actual fresh waterfall immediately after deployment: the successful
 price query remains and the failed legacy call is absent. Then show the separate
-matched warmed comparison: 361.6 → 214.1 ms median request duration and
-157.0 → 4.0 ms median pricing duration, with identical instrumentation. This is a
+matched warmed comparison: 2.21 s → 220 ms median request duration and
+2.01 s → 3.71 ms median pricing duration, with identical instrumentation. This is a
 local seeded-failure result, not an instrumentation speedup or a production
 benchmark. See [the full protocol](../docs/customer-resolution.md), including how
 to check that the absent address actually times out in your disposable network.

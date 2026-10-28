@@ -20,7 +20,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll use OBI to find where that time goes, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
         },
         {
           "speaker": "Nikola",
@@ -61,33 +61,46 @@
     },
     {
       "id": "03-install-obi",
-      "kind": "terminal",
-      "title": "Start with OBI",
-      "plannedDuration": 45,
+      "kind": "obi-intro",
+      "title": "Meet OBI",
+      "plannedDuration": 70,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. We deploy it and let it discover the running applications."
+          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics."
         },
         {
           "speaker": "Nikola",
-          "text": "That gives us service and dependency observations without setting up a language SDK in each application. We can start investigating while the applications keep running."
+          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket."
         },
         {
           "speaker": "Tyler",
-          "text": "OBI is ready. Let's open a checkout request."
+          "text": "And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request."
         }
       ],
       "visuals": [
         {
+          "type": "art",
+          "at": 0
+        },
+        {
           "type": "video",
           "src": "demo-capture/install-obi-edited.mp4",
           "poster": "demo-capture/install-obi-edited-poster.png",
-          "at": 0
+          "atCue": 2
         }
       ],
-      "purpose": "Show the real OBI installation, then move to its result."
+      "purpose": "Introduce OBI before its acronym is used: eBPF observations of running Linux applications, zero app changes/restarts, traces and metrics. Show deployment only after explaining its value.",
+      "previewVisualIndex": 0,
+      "sources": [
+        "https://opentelemetry.io/docs/zero-code/obi/",
+        "demo/k8s/obi.yaml"
+      ]
     },
     {
       "id": "04-connected-trace",
@@ -98,15 +111,15 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "The useful result is a connected trace. This is the request behind the duration we started with."
+          "text": "Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service."
         },
         {
           "speaker": "Tyler",
-          "text": "Now we can see service calls, database work, and how their timings fit together. But a connected trace is not a faster checkout. The customer is still waiting. We need to find the part we can change."
+          "text": "Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change."
         }
       ],
       "pauseAfter": {
-        "0": 4
+        "0": 1
       },
       "visuals": [
         {
@@ -148,11 +161,11 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Start with the waterfall. Gateway's long bar includes its wait for Checkout, and Checkout includes its downstream work. The longest parent bar doesn't tell us what to fix."
+          "text": "Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix."
         },
         {
           "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout instead. It consumes about a hundred and fifty milliseconds before the successful product lookup and the other service calls."
+          "text": "Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls."
         },
         {
           "speaker": "Tyler",
@@ -270,7 +283,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after a hundred and fifty milliseconds, then we read the price from the current product store. The fix is to use that store directly."
+          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly."
         },
         {
           "speaker": "Nikola",
@@ -364,7 +377,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "In a matched run, the median customer request fell from about three hundred and sixty-two milliseconds to two hundred and fourteen. Pricing fell from about a hundred and fifty-seven milliseconds to about four. The repeated-request result supports what we saw in the waterfall."
+          "text": "Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone."
         },
         {
           "speaker": "Nikola",
@@ -380,7 +393,7 @@
       "id": "09-the-rest",
       "kind": "scale",
       "title": "One fixed. Thirteen to equip.",
-      "plannedDuration": 45,
+      "plannedDuration": 40,
       "lead": "Nikola",
       "turns": [
         {
@@ -598,7 +611,7 @@
       "id": "15-measure",
       "kind": "cost-demo",
       "title": "Put a price on the repetition",
-      "plannedDuration": 80,
+      "plannedDuration": 70,
       "lead": "Tyler",
       "turns": [
         {
@@ -634,7 +647,7 @@
       "id": "15-scale",
       "kind": "cost-scale",
       "title": "Repetition changes the economics",
-      "plannedDuration": 45,
+      "plannedDuration": 40,
       "lead": "Tyler",
       "turns": [
         {
@@ -661,7 +674,7 @@
       "id": "16-close",
       "kind": "close",
       "title": "Less waiting. More services ready.",
-      "plannedDuration": 55,
+      "plannedDuration": 50,
       "lead": "Tyler",
       "turns": [
         {
@@ -750,13 +763,14 @@
     }
   },
   "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-27-timeout-evidence-code-editor-pronunciation",
+  "scriptRevision": "2026-10-27-noticeable-customer-wait-and-obi-introduction",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "2026-10-27-timeout-fallback-and-real-trace",
+  "storyRevision": "2026-10-27-two-second-timeout",
   "pronunciation": {
     "RIO": "rhee-o (Spanish río)",
-    "OTelX": "oh-tell-X"
+    "OTelX": "oh-tell-X",
+    "OBI": "Tyler: short Oh-bee, spoken as one word with no drawn-out Oh"
   }
 }

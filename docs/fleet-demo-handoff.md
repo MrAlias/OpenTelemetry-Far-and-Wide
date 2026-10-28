@@ -1,6 +1,6 @@
 # Recorded demo and live handoff
 
-The October 23 presentation records the expanded demo from Nikola’s
+The current presentation records the expanded demo from Nikola’s
 `759cc0979909` topology. Eighteen application services plus PostgreSQL and Redis
 are exercised by a successful request. Four Go services retain OBI; fourteen
 services use supported Java, Python, Ruby, .NET and Node runtimes.
@@ -20,11 +20,13 @@ baseline and does not add instrumentation calls to the application.
 
 ## Captured observations
 
-The baseline request lasts 306.26 ms. Checkout lasts 304.68 ms inclusively, but
-its first 151.78 ms precede any downstream call. That local interval earns the
-selection. The fresh Java-agent request contains PricingEngine.calculate at
-150.38 ms, plus Hibernate/JDBC library spans. The method span is explicitly
-configured using source knowledge; the agent does not infer business meaning.
+The October 27 two-second version opens with a 2.17 s customer request. OBI
+shows a failed Checkout CONNECT spanning about two seconds, before successful
+product lookup and service calls. The Java-agent exemplar connects that failed
+HTTP attempt to PricingEngine.calculate and its successful PostgreSQL fallback.
+The HTTP span reports java.net.SocketTimeoutException, and its exception event
+says Connect timed out. The method span is explicitly configured using source
+knowledge; the agent does not infer business meaning.
 
 The operator installs and enrolls the remaining supported services. Use the
 fresh fleet trace and Catalog’s JDBC spans for the result, retaining OBI for Go.
@@ -106,14 +108,14 @@ using `.artifacts/demo-capture/kubeconfig`. Other local clusters are untouched.
 
 ## Customer resolution and fresh fleet evidence (October 27)
 
-OBI shows a failed CONNECT near 150 ms. The Java agent adds the pricing method,
+OBI shows a failed CONNECT near two seconds. The Java agent adds the pricing method,
 HTTP connection timeout and successful PostgreSQL fallback. Remove the stale
 legacy call, deploy `checkout-pricing-fixed.patch.yaml`, and **show the actual
 post-fix waterfall first**. Follow with the aggregate request-duration summary.
 Instrumentation settings and the successful price/order/commerce flow remain.
 
-The matched 30-request warmed comparison is 361.6 → 214.1 ms median Gateway
-duration and 157.0 → 4.0 ms median pricing duration. The opening 350 ms request
+The matched 30-request warmed comparison is 2.21 s → 220 ms median Gateway
+duration and 2.01 s → 3.71 ms median pricing duration. The opening 2.17 s request
 is a separate OBI exemplar, not one side of that controlled comparison. The
 seeded failure is a real missing-backend request, not Thread.sleep. Native
 screen captures and raw public trace evidence preserve what was observed.

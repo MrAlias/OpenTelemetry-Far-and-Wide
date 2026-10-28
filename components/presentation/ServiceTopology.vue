@@ -8,7 +8,7 @@ const observed = computed(() => props.phase === 'observed')
 const hasAgent = (node: typeof topology.nodes[number]) => node.eligible && (props.phase === 'complete' || props.phase === 'one' && node.id === 'checkout')
 const tone = (node: typeof topology.nodes[number]) => hasAgent(node) ? 'agent' : observed.value && !branch.has(node.id) ? 'dim' : props.phase === 'plain' ? 'neutral' : 'obi'
 const path = (points: number[][]) => `M${points[0].join(' ')} ` + Array.from({ length: (points.length - 1) / 3 }, (_, i) => `C${points.slice(i * 3 + 1, i * 3 + 4).map(p => p.join(' ')).join(' ')}`).join(' ')
-const timing = (id: string) => `${(request.serverDurationMs as Record<string, number>)[id].toFixed(1)} ms`
+const timing = (id: string) => { const ms = (request.serverDurationMs as Record<string, number>)[id]; return ms >= 1000 ? `${(ms / 1000).toFixed(2)} s` : `${ms.toFixed(1)} ms` }
 </script>
 <template>
   <svg class="service-topology" viewBox="45 185 1195 440" role="img" :aria-label="`Eighteen application services; ${phase === 'complete' ? 'fourteen language agents and four Go services with OBI' : 'request topology'}`">

@@ -58,16 +58,16 @@ media behavior, checks, exports and deployment under a URL prefix.
 The standalone controller and payload project is **[RIO — Runtime Instrumentation Operator](https://github.com/otelx/rio)**. For a fresh installation of OpenTelemetry Zero-Code instrumentation, start with [RIO’s quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). This repository contains the presentation and its recorded demo snapshot.
 
 The [demo walkthrough](demo/README.md) runs eighteen services, PostgreSQL and
-Redis. OBI supplies the baseline. The opening 350 ms request contains a failed
-Checkout connection around 150 ms. Java-agent detail ties the failed HTTP call
+Redis. OBI supplies the baseline. The opening 2.17 s request contains a failed
+Checkout connection around two seconds. Java-agent detail ties the failed HTTP call
 to pricing and its successful PostgreSQL fallback. These are actual local
 exemplars, not performance benchmarks.
 
 The [customer resolution](docs/customer-resolution.md) removes the obsolete
 backend attempt while retaining the current product-price lookup. The actual
 post-fix waterfall comes first; an aggregate comparison follows. Matched warmed
-request medians are 361.6 → 214.1 ms with identical instrumentation. Pricing
-medians are 157.0 → 4.0 ms. The newly built default image retains the timeout
+request medians are 2.21 s → 220 ms with identical instrumentation. Pricing
+medians are 2.01 s → 3.71 ms. The newly built default image retains the timeout
 baseline for rehearsal; the historical proof keeps its older fixture.
 
 The custom controller and OpenTelemetry Injector then enroll thirteen additional

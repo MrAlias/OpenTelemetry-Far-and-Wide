@@ -68,7 +68,7 @@ try{
   })()`);await wait(150);
  }
  for(let n=1;n<=26;n++){
-  for(const clicks of ([6,7,20].includes(n)?[0,1]:[0])){
+  for(const clicks of ([4,6,7,20].includes(n)?[0,1]:[0])){
    await navigate(n,clicks);
    const result=await evaluate(`(()=>{
     const s=document.querySelector('[data-slidev-no="${n}"] .slidev-layout'),b=s.getBoundingClientRect();
@@ -79,7 +79,7 @@ try{
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -107,7 +107,7 @@ try{
    }
    if(n===14||n===26){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
-    if(!text?.includes(String(Math.round(resolution.before.requestMedianMs)))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
+    if(!text?.includes((resolution.before.requestMedianMs/1000).toFixed(2))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
    const png=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
    await writeFile(path.join(work,'renders',`${String(n).padStart(2,'0')}-${clicks}.png`),Buffer.from(png.data,'base64'));slides.push(result);
@@ -147,5 +147,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All 26 slides, dollar figures, three click builds, video playback and presenter notes passed.');
+ console.log('All 26 slides, dollar figures, four click builds, video playback and presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}

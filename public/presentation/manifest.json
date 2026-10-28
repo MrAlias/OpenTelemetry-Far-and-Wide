@@ -5,32 +5,32 @@
     {
       "asset": "public/presentation/images/java-timeout-span.png",
       "source": "public/demo-capture/java-timeout-span.png",
-      "sha256": "738c6865c89e4ddd976942e77bc7a6ec35ed3ad9bce8c0a655ffff3c289c02ed",
-      "bytes": 90569
+      "sha256": "5b8eb3790fef041bf9a86e197fb09b6336db04cb54548644951c8c0a05be762a",
+      "bytes": 85422
     },
     {
       "asset": "public/presentation/images/edit-pricing-before.png",
       "source": "public/demo-capture/edit-pricing-before.png",
-      "sha256": "a0d3db7123ea019faed2cfd2c67280125aafeb2fe0ebcfeb8a8f1571347a0021",
-      "bytes": 373437
+      "sha256": "a88d01e87463fb805beedf10608b459043cbc0b4a6bd76e4f9ca2a887356d967",
+      "bytes": 374140
     },
     {
       "asset": "public/presentation/images/request-latency.png",
       "source": "public/demo-capture/request-latency.png",
-      "sha256": "c3350be0bf7bbab0aa423caffed755f0d261fb72f92aab9b8866d8ac54c46f76",
-      "bytes": 32637
+      "sha256": "9dd1db926f6f4a72b17e7e65e9e6ebcd202c422c7ff165f2edcbf0a35b932a65",
+      "bytes": 29679
     },
     {
       "asset": "public/presentation/images/connected-trace.png",
       "source": "public/demo-capture/connected-trace.png",
-      "sha256": "7f41e5e51816493b526231884510cfc4df32bf277e464f62b9475840a40f86c8",
-      "bytes": 92700
+      "sha256": "12987b4efa6b22ab931e355468d4ec770eb61f23a4c69e780a4b27cf47d3a842",
+      "bytes": 82783
     },
     {
       "asset": "public/presentation/images/java-detail-poster.png",
       "source": "public/demo-capture/java-detail-poster.png",
-      "sha256": "b0d6ddfb519bae3a1de9187b5851fdd8cfbef67bd43b80479391381ec261619c",
-      "bytes": 83020
+      "sha256": "ed0156e8f5f2f73b97809084c7f889bcb0d0019926637325984ad69899244153",
+      "bytes": 77317
     },
     {
       "asset": "public/presentation/images/fleet-catalog.png",
@@ -77,26 +77,26 @@
     {
       "asset": "public/presentation/images/fixed-request-trace.png",
       "source": "public/demo-capture/fixed-request-trace.png",
-      "sha256": "cfc9886d59b9c87b64d1f755f9140144b9b4fd3a291ef983c2a8af6a738937c5",
-      "bytes": 84540
+      "sha256": "fa448f798b351d80b97b3ca5c0650627890ec2d30127538430eeb970ee79fe1d",
+      "bytes": 81732
     },
     {
       "asset": "public/presentation/images/fixed-fleet-catalog.png",
       "source": "public/demo-capture/fixed-fleet-catalog.png",
-      "sha256": "73f5439e61981ccd8bafa64c8985d22a87cdab79cb5bccf866da91f87bba9028",
-      "bytes": 78908
+      "sha256": "23b6de483ef64d5722b10632022ae9eafcf9c7aa5fdb77bb3a20fc9ba732a984",
+      "bytes": 78354
     },
     {
       "asset": "public/presentation/images/fixed-fleet-overview.png",
       "source": "public/demo-capture/fixed-fleet-overview.png",
-      "sha256": "de0c96591925ed6a5248d1a660b8ba6279fcd0b923b8122ddd9f2a68fa5062fb",
-      "bytes": 86552
+      "sha256": "0c9560989b5695fa6893be0902f80fc28069a0c06706c7450ee409052e415251",
+      "bytes": 81916
     },
     {
       "asset": "public/presentation/clips/edit-pricing-source.mp4",
       "source": "public/demo-capture/edit-pricing-source.mp4",
-      "sha256": "521e3bfde8e16c060f42229b3faaf4295ee11d149c6e0341edd9ba528c127a05",
-      "bytes": 335385
+      "sha256": "18526d95e5448c32c6bcc45357428b0723d0377a8e9081e7f379773880f03fbd",
+      "bytes": 318009
     },
     {
       "asset": "public/presentation/clips/install-obi-edited.mp4",
@@ -125,8 +125,8 @@
     {
       "asset": "public/presentation/clips/java-detail.mp4",
       "source": "public/demo-capture/java-detail.mp4",
-      "sha256": "97eb4bd41639c584ce1ba9ae0930115284b4c8a3ec79680555bd50259a90cbd3",
-      "bytes": 121761
+      "sha256": "ec6e33b381786b22589d7508573cf49217cd563a1c52a00c8b810398691b0ca6",
+      "bytes": 118007
     },
     {
       "asset": "public/presentation/clips/fleet-detail.mp4",
@@ -143,20 +143,20 @@
     {
       "asset": "public/presentation/clips/fixed-fleet-detail.mp4",
       "source": "public/demo-capture/fixed-fleet-detail.mp4",
-      "sha256": "53196cac6f52cf09ae9608b4e461101ad96ea820f409488c4f95b918030b282a",
-      "bytes": 175541
+      "sha256": "437de8e220cc65abec94f163314d53ea4665b92bc84c26558446d0f89a7a54ff",
+      "bytes": 164973
     },
     {
       "asset": "public/presentation/clips/fixed-request-detail.mp4",
       "source": "public/demo-capture/fixed-request-detail.mp4",
-      "sha256": "82029fc7e9c9ec4ee4981c8070d9b219a93d3feb6a71c7f8e4559928a76d6f53",
-      "bytes": 132540
+      "sha256": "f1c61d3b5636b05fe87b223a31ba4663ea51f2dbcde05821e972a02b12706b2d",
+      "bytes": 194178
     },
     {
       "asset": "public/presentation/clips/edit-pricing-source.webm",
       "source": "public/presentation/clips/edit-pricing-source.mp4",
-      "sha256": "0c4c4441d69c1a12fff702e5024196bbdd31218bc12e088515b77ae906959827",
-      "bytes": 390212,
+      "sha256": "ef7c1eb144936746bd23af75967969e7a342bee69a980e3992e9737cb844f31c",
+      "bytes": 389924,
       "encoding": "VP9; native playback duration"
     },
     {
@@ -190,8 +190,8 @@
     {
       "asset": "public/presentation/clips/java-detail.webm",
       "source": "public/presentation/clips/java-detail.mp4",
-      "sha256": "8cd1bede8d2b13f133431dc392da5da7c3457610145fc33c876aaa164448ebff",
-      "bytes": 169737,
+      "sha256": "5ccbc8985de93605b9adcb6da83747c6001e6e4448b81b7694e41afc3bc6a69a",
+      "bytes": 169186,
       "encoding": "VP9; native playback duration"
     },
     {
@@ -211,15 +211,15 @@
     {
       "asset": "public/presentation/clips/fixed-fleet-detail.webm",
       "source": "public/presentation/clips/fixed-fleet-detail.mp4",
-      "sha256": "531bee28311b2bbbda43e4285c0dc2414a6833f1878f95ac9aafde54067bdaee",
-      "bytes": 171136,
+      "sha256": "c3f53fb90f6718c2ea0e4ec29a5f32ff8b0b7e139413b0820732d8106854ddbc",
+      "bytes": 166055,
       "encoding": "VP9; native playback duration"
     },
     {
       "asset": "public/presentation/clips/fixed-request-detail.webm",
       "source": "public/presentation/clips/fixed-request-detail.mp4",
-      "sha256": "ceae486f7336d0aab085562ab776cd26ae58a88ad809d3a3cbc0d48d03edf955",
-      "bytes": 163024,
+      "sha256": "79f976386b00d20fcea99237b758cb8c625c95758a0344c94ed79d83c989461c",
+      "bytes": 170849,
       "encoding": "VP9; native playback duration"
     }
   ]

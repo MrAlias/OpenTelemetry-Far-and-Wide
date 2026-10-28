@@ -2,7 +2,7 @@
   "method": "Actual X11 screen capture of Vim editing a copy of the demo source",
   "baseline": "demo/apps/checkout/baseline/PricingEngine.java",
   "fixed": "demo/apps/checkout/fixes/PricingEngine.java",
-  "beforeSha256": "91d9707829bf53fde56a766902c480f9251c1bcf6e257114212c953374d2886b",
+  "beforeSha256": "8296a85d2780cfa6c45b4d55c61a0009e6d79cea92a27b977c8a139e65bbed4a",
   "afterSha256": "17e5ff2736a49e26c631679e1bfda7d5e813af85355e33514c1797532eb053bc",
   "savedFileMatchesFixedSource": true,
   "playbackRate": 1,

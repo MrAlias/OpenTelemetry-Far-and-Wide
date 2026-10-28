@@ -79,7 +79,7 @@ https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-worker
 
 Customer resolution (October 27, 2026):
 The pricing baseline makes a real HTTP connection attempt to a missing legacy
-backend with a 150 ms timeout, then reads the current price from PostgreSQL.
+backend with a two-second timeout, then reads the current price from PostgreSQL.
 The fix removes the stale attempt and retains the same successful store lookup.
 Actual Grafana waterfalls precede the repeated-request summary. See canonical
 presentation/data/resolution.json and docs/customer-resolution.md for current

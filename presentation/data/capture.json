@@ -1,12 +1,12 @@
 {
-  "source": "Actual isolated local demo, timeout/fallback revision recorded October 27, 2026",
+  "source": "Actual isolated local demo, two-second timeout and successful price-store fallback recorded October 27, 2026",
   "baseline": {
-    "traceId": "e7f5bb95c0acdaf1996964a6489547a3",
-    "rootDurationMs": 350.341063,
-    "checkoutDurationMs": 349.402207,
-    "failedConnectionMs": 150.543582,
-    "checkoutSpanId": "AN0nY+PqDbI=",
-    "spanCount": 95,
+    "traceId": "510355971a511b41b4f69c35e2230f19",
+    "rootDurationMs": 2169.686263,
+    "checkoutDurationMs": 2168.790273,
+    "failedConnectionMs": 2001.549574,
+    "checkoutSpanId": "Q76c5Sz0w00=",
+    "spanCount": 109,
     "services": [
       "cart",
       "catalog",
@@ -31,9 +31,9 @@
     ]
   },
   "fleetTrace": {
-    "traceID": "05fed0b791c2427f83c14ed3c0c9be8c",
+    "traceID": "699a7e37a0fc44658f681d41702e6456",
     "fixedCheckout": true,
-    "pricingMs": 2.072588,
+    "pricingMs": 1.420501,
     "sdkServices": [
       "cart",
       "catalog",
@@ -165,7 +165,7 @@
           ]
         }
       },
-      "fullPolicyGeneration": 6,
+      "fullPolicyGeneration": 8,
       "obiServices": [
         "currency",
         "gateway",
@@ -196,16 +196,16 @@
       ]
     },
     "recorded": "2026-10-27",
-    "observedGeneration": 6
+    "observedGeneration": 8
   },
   "javaDetail": {
-    "traceId": "09007e84d580263d160932d7e72f772b",
-    "pricingMs": 154.969743,
-    "fault": "Real HTTP connection timeout to missing legacy endpoint; successful PostgreSQL fallback",
+    "traceId": "84a30cdd285d54a503bcc260c03f685a",
+    "pricingMs": 2009.602554,
+    "fault": "Real two-second HTTP connection timeout to the absent legacy endpoint, followed by successful PostgreSQL fallback",
     "evidence": "public/demo-capture/java-trace-evidence.json",
     "timeoutEvidence": {
-      "spanId": "792eb17d6a12e0c2",
-      "durationMs": 150.911394,
+      "spanId": "fd10d234be1e4721",
+      "durationMs": 2003.378675,
       "errorType": "java.net.SocketTimeoutException",
       "exceptionMessage": "Connect timed out"
     },
@@ -224,7 +224,7 @@
     "method": "Actual X11 screen capture of Vim editing a copy of the demo source",
     "baseline": "demo/apps/checkout/baseline/PricingEngine.java",
     "fixed": "demo/apps/checkout/fixes/PricingEngine.java",
-    "beforeSha256": "91d9707829bf53fde56a766902c480f9251c1bcf6e257114212c953374d2886b",
+    "beforeSha256": "8296a85d2780cfa6c45b4d55c61a0009e6d79cea92a27b977c8a139e65bbed4a",
     "afterSha256": "17e5ff2736a49e26c631679e1bfda7d5e813af85355e33514c1797532eb053bc",
     "savedFileMatchesFixedSource": true,
     "playbackRate": 1,
