@@ -233,7 +233,8 @@ Live budget: 50 seconds.
 
 **Tyler:** And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
 
-**Nikola:** Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve.
+**Nikola:** Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. You'll never have to worry if any new service someone
+is deploying will be instrumented, or if they decided to rewrite in Rust for efficiency.
 
 **Tyler:** That can reduce drift and repeated troubleshooting. But the platform does not maintain itself.
 
