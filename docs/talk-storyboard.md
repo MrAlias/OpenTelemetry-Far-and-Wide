@@ -29,9 +29,9 @@ Live budget: 60 seconds.
 
 **Nikola:** And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-**Tyler:** The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator.
+**Tyler:** The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, a namespace-driven operator.
 
-**Nikola:** One customer problem, then a way for the other teams to investigate theirs. Let's open the system.
+**Nikola:** One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
 
 ## 02 · One application, many places to look
 
@@ -51,7 +51,8 @@ Live budget: 70 seconds.
 
 **Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
 
-**Nikola:** We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket.
+**Nikola:** We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed you this last year at Kubecon in Atlanta. One tool, 
+single command shows all of this visibility. Except, now the tool is GA.
 
 **Tyler:** And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
 
@@ -103,7 +104,7 @@ Live budget: 120 seconds.
 
 **Tyler:** Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout.
 
-**Nikola:** Zero code is useful. It hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
+**Nikola:** Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
 
 ## 08 · A failed attempt before a working fallback
 
@@ -125,7 +126,7 @@ Live budget: 90 seconds.
 
 **Tyler:** There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly.
 
-**Nikola:** Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup.
+**Nikola:** Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, this is the trace showing the timeout, and now we have a change that removes it while keeping the price lookup.
 
 **Tyler:** We're deploying that application change now. The Java agent and exporter settings stay the same.
 
@@ -161,7 +162,7 @@ Live budget: 40 seconds.
 
 **Nikola:** We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
 
-**Tyler:** In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen.
+**Tyler:** In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen.
 
 **Nikola:** And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
@@ -173,7 +174,7 @@ Live budget: 45 seconds.
 
 **Tyler:** To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
 
-**Nikola:** That already saves work. RIO, the Runtime Instrumentation Operator from OTelX, takes a different route: select the namespace centrally, let the Injector detect supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation.
+**Nikola:** That already saves work. RIO, the Runtime Instrumentation Operator from our OTelX org, takes a different route: select the namespace centrally, let the Injector do the work for supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation.
 
 ## 14 · Install the namespace-driven controller
 
@@ -181,7 +182,7 @@ Install the merged custom component as a distinct step after upstream opt-in; ea
 
 Live budget: 60 seconds.
 
-**Tyler:** Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector detects supported runtimes and loads their agents.
+**Tyler:** Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector injects into supported runtimes and loads their agents.
 
 **Nikola:** The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
 
@@ -193,9 +194,10 @@ Live budget: 105 seconds.
 
 **Nikola:** Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
 
-**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector detects their runtimes and supplies the agents. Compatible services deployed into the namespace later inherit the same policy.
+**Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy.
 
-**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it.
+**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. Notice how there is no trace duplication even as OBI is running in the bacground for the same namespace. OBI detects
+OTel instrumented services and stands down, no action required from the operator.
 
 ## 16 · Open language detail in more services
 
