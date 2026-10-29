@@ -27,11 +27,10 @@ exportFilename: opentelemetry-far-and-wide
 # OpenTelemetry<br>Far and Wide
 
 <!--
-**Tyler → Nikola · 0:10**
+**Tyler**
 
-- **Tyler:** “Welcome everyone.” Introduce **Tyler Yahn**.
-- **Nikola:** **Nikola Grcevski**; slow customer checkout → a fix.
-- **Next · Tyler:** Put the customer's waiting time on screen.
+- “Welcome everyone.”
+- Tyler Yahn; Nikola Grcevski.
 -->
 
 ---

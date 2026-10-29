@@ -12,21 +12,9 @@ kicker: The investigation
 <p class="caption">Find the wait. Fix the cause. Check the customer request.</p>
 
 <!--
-**Tyler → Nikola · 0:50**
+**Tyler**
 
-- **Show:** Actual request duration — **2.17 s**; successful response, waiting customer.
-- **Tyler:** Follow request → find cause → change code → show result.
-- **Tyler:** Then share visibility through OpenTelemetry Injector + RIO, a namespace-driven operator.
-- **Nikola:** One customer problem; a shared way for every team to investigate.
-- **Next · Tyler:** Open the system; culprit still unknown.
-
-<details>
-<summary>Sources</summary>
-
-[Sources]
-- public/demo-capture/capture-summary.json
-- docs/animation-script-research.md
-[/Sources]
-
-</details>
+- Request succeeds, but the customer waits.
+- Follow the request, find the cause, fix the code.
+- Then make that visibility available to every team.
 -->

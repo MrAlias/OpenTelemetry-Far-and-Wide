@@ -125,8 +125,8 @@ try{
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
  await cdp.call('Page.navigate',{url:route('/presenter/18')},sessionId);await wait(500);
- for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Shared defaults and exclusions')"))break;await wait(100);}
- const presenter=await evaluate(`({notes:document.body.innerText.includes('Shared defaults and exclusions'),text:document.body.innerText.slice(-1500)})`);
+ for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Namespace selection, not a list of services or languages.')"))break;await wait(100);}
+ const presenter=await evaluate(`({notes:document.body.innerText.includes('Namespace selection, not a list of services or languages.'),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
  await cdp.call('Page.navigate',{url:origin+'/presentation/savings.html'},sessionId);
  for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$13,900'"))break;await wait(100);}

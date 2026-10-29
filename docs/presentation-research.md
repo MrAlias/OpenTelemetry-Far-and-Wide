@@ -37,43 +37,172 @@ qualities with representative listeners before the event.
 
 ## Speaker notes for live delivery — October 29, 2026
 
-The notes in `slides.md` and `slides/01-opening.md` through
-`slides/05-takeaways.md` condense the transcript into speaking cues. Nikola's
-latest changes to `docs/talk-storyboard.md` were pulled at `183ce37` before
-editing. That collaborator-edited document supplies the newer Atlanta callback,
-GA announcement, coexistence reminder and onboarding points; it is preserved
-without regenerating it from the older animation script. Tyler confirmed the
-v1.0 release is planned for October 30, before this presentation. The GA cue is
-written for that delivery date, not as a claim about the October 29 release.
+Each slide's notes contain the current lead speaker and two to four short
+content reminders. No handoffs, timing headers, stage directions, commands,
+click markers or reference controls. Figures already legible on the slide
+are not repeated unless needed to explain an assumption.
 
-Joel Schwartzberg's [Good Notes: A Public Speaker's Best Ally, Toastmasters,
-March 2018](https://www.toastmasters.org/magazine/Magazine%20Issues/2018/Mar2018/Good%20Notes)
-recommends sparse reminders for the points and facts a speaker might forget.
-His [March 2026 preparation guide](https://www.toastmasters.org/magazine/magazine-issues/2026/march/10-ways-to-prepare-for-a-work-presentation)
-specifically recommends key points, names, numbers and short phrases, with
-out-loud rehearsal to catch weak transitions. These are practitioner guidelines,
-not experimental evidence for an optimal word count per slide.
+This applies the sparse reminder approach in Joel Schwartzberg's
+[Toastmasters article](https://www.toastmasters.org/magazine/Magazine%20Issues/2018/Mar2018/Good%20Notes)
+and the keyword guidance in
+[Stand Up, Speak Out, chapter 14](https://milnepublishing.geneseo.edu/stand-up-speak-out-3/chapter/chapter-14-delivering-the-speech/).
+The format is an editorial choice for this talk, not a prescribed word count.
 
-The open textbook [Stand Up, Speak Out, third edition, chapter 14](https://milnepublishing.geneseo.edu/stand-up-speak-out-3/chapter/chapter-14-delivering-the-speech/)
-likewise recommends ordered keywords and phrases, readable notes, and practicing
-with them to support conversational delivery and audience contact.
+Notes follow the transcript and Nikola's edits pulled at `183ce37`.
+Tyler confirmed v1.0 is planned for October 30, before the presentation;
+the GA reminder is written for that delivery date.
 
-Applied here: one short speaker/time line; ordered bullets with bold speaker
-names, exact numbers or attribute names where accuracy matters; an explicit
-visual/demo action; and a reminder of the next question or handoff. Exact
-wording is retained for the requested welcome, speaker names and closing line.
-The notes avoid production history, recording mechanics and a second transcript.
-Commands and references remain available in closed disclosure sections, keeping
-the live reading area focused. This format is an editorial choice for this
-two-person technical demo, not a universal note-taking formula.
+### Slide evidence references
 
-[Slidev's notes syntax](https://sli.dev/guide/syntax#notes) supports Markdown and
-HTML in final comment blocks. Its [click markers](https://sli.dev/features/click-marker)
-highlight the corresponding passage as the slide advances. The four existing
-click builds use those markers; the audience-facing slides are unchanged.
-Rehearse with the presenter view and adjust cue wording to what each speaker
-actually needs to remember. Keep unfamiliar exact commands below the cues;
-don't try to memorize their spelling or read all reference links on stage.
+References belong here for preparation, outside the live speaker notes.
+Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
+
+**Slide 2**
+
+- public/demo-capture/capture-summary.json
+- docs/animation-script-research.md
+
+**Slide 3**
+
+- demo/k8s/applications.yaml
+- demo/apps/README.md
+- demo/scripts/check-flow.py
+
+**Slide 4**
+
+- demo/k8s/obi.yaml
+- https://opentelemetry.io/docs/zero-code/obi/
+
+**Slide 5**
+
+- public/demo-capture/capture-summary.json
+- presentation/data/request.json
+
+**Slide 6**
+
+- presentation/data/topology.json
+- presentation/data/request.json
+
+**Slide 7**
+
+- public/demo-capture/obi-trace-evidence.json
+- presentation/data/request.json
+
+**Slide 8**
+
+- demo/k8s/checkout-direct-agent.patch.yaml
+- demo/apps/checkout/src/main/java/demo/checkout/Checkout.java
+- https://opentelemetry.io/docs/zero-code/java/agent/
+
+**Slide 9**
+
+- demo/k8s/checkout-direct-agent.patch.yaml
+- docs/fleet-demo-handoff.md
+
+**Slide 10**
+
+- public/demo-capture/java-trace-evidence.json
+- presentation/data/timeout-evidence.json
+- https://opentelemetry.io/docs/specs/semconv/http/http-spans/
+- https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/
+- demo/apps/checkout/baseline/PricingEngine.java
+
+**Slide 11**
+
+- demo/apps/checkout/baseline/PricingEngine.java
+- demo/apps/checkout/fixes/PricingEngine.java
+
+**Slide 12**
+
+- demo/k8s/checkout-pricing-fixed.patch.yaml
+- demo/apps/checkout/Dockerfile
+- docs/customer-resolution.md
+
+**Slide 13**
+
+- public/demo-capture/fixed-request-evidence.json
+- public/demo-capture/fixed-request-trace.png
+- presentation/data/resolution.json
+
+**Slide 14**
+
+- presentation/data/resolution.json
+- scripts/presentation/measure_resolution.py
+- docs/customer-resolution.md
+
+**Slide 15**
+
+- presentation/data/topology.json
+- components/otel-injector-images/versions.json
+
+**Slide 16**
+
+- https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
+- https://github.com/otelx/rio
+- docs/technical-findings.md#identified-implementation
+
+**Slide 17**
+
+- components/otel-injector-operator/README.md
+- components/otel-injector-images/README.md
+- docs/technical-findings.md#identified-implementation
+
+**Slide 18**
+
+- demo/k8s/fleet-instrumentation-base.yaml
+- demo/k8s/instrument-demo-namespace.patch.yaml
+- public/demo-capture/capture-summary.json
+
+**Slide 19**
+
+- demo/k8s/instrument-demo-namespace.patch.yaml
+- public/demo-capture/capture-summary.json
+
+**Slide 20**
+
+- public/demo-capture/capture-summary.json
+- presentation/data/capture.json
+- presentation/data/topology.json
+
+**Slide 21**
+
+- presentation/data/resolution.json
+- docs/customer-resolution.md
+- components/otel-injector-images/versions.json
+
+**Slide 22**
+
+- docs/instrumentation-savings.md
+- https://sre.google/workbook/eliminating-toil/
+
+**Slide 23**
+
+- components/otel-injector-operator/README.md
+- docs/instrumentation-savings.md
+
+**Slide 24**
+
+- presentation/data/savings-assumptions.json
+- presentation/savings-model.js
+- docs/instrumentation-savings.md
+- https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm
+- https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm
+- https://sre.google/workbook/eliminating-toil/
+
+**Slide 25**
+
+- presentation/data/savings-assumptions.json
+- presentation/savings-model.js
+- public/presentation/savings.html
+- docs/instrumentation-savings.md
+
+**Slide 26**
+
+- presentation/data/resolution.json
+- docs/customer-resolution.md
+- docs/talk-brief.md
+- docs/fleet-demo-handoff.md
+- docs/instrumentation-savings.md
 
 ## What the evidence supports
 
