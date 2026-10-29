@@ -65,6 +65,7 @@
 .slidev-layout .savings-scale td { border-top:1px solid var(--line); padding:15px 0; }
 .slidev-layout .savings-scale th:not(:first-child),.slidev-layout .savings-scale td:not(:first-child) { text-align:right; padding-left:28px; }
 .slidev-layout .savings-context { font-size:23px!important; line-height:1.35!important; color:var(--muted); margin:8px 0; }
+.slidev-layout .rollout-comparison svg { display:block; width:100%; height:440px; }
 .slidev-layout.talk-cover { padding:55px 70px; background:radial-gradient(ellipse at 92% 18%,#e9e8fb 0,transparent 48%),#fbfbfd; }
 .slidev-layout.talk-cover .cover-event { font-size:20px; color:var(--muted); margin:0; }
 .slidev-layout.talk-cover h1 { font-size:92px; font-weight:600; line-height:1.02; letter-spacing:-.05em; margin:135px 0 0; max-width:950px; }

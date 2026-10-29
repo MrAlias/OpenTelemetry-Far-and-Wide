@@ -77,13 +77,20 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slides 24–25 and the review video's final cost scenes share the calculator in
+Slide 24 compares adoption paths; slide 25 compares cumulative setup and upkeep
+cost over 24 months for the existing 1,000-service scenario. The adoption curves
+are conceptual, not measured rates or a rollout forecast; this is covered in
+the spoken notes rather than an on-slide label. Both charts use
+`../presentation/rollout-charts.js`.
+
+The cost chart and the review video's cost scene share the calculator in
 `../presentation/savings-model.js`, with inputs in
 `../presentation/data/savings-assumptions.json`. These are theoretical capacity
 values, not measured customer savings. They compare complete work ledgers;
 central setup is counted once per rollout group and upkeep uses twelve monthly
 agent releases, with optional exceptions separately. No investigation-time credit.
-The scope and sensitivity examples are
+The $1.57M callout is $881,900 first-year capacity plus $689,400 of second-year
+upkeep capacity. The scope and sensitivity examples are
 in `../docs/instrumentation-savings.md`.
 
 Run `npm run savings:verify` to check the worked examples and accounting,

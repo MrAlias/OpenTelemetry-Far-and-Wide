@@ -79,7 +79,7 @@ try{
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.savings-demo,.savings-scale,.savings-context,.rollout-comparison,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -100,10 +100,13 @@ try{
     const source=await evaluate(`document.querySelector('[data-slidev-no="11"] video source')?.getAttribute('src')`);
     if(!source?.includes('edit-pricing-source'))errors.push({slide:n,issue:'Code fix lacks actual Java editor recording'});
    }
-   if(n===24||n===25){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] .slidev-layout').innerText`);
-    if(!text.includes('$13,900')||!text.includes('capacity'))errors.push({slide:n,issue:'Dollar model missing or not identified as capacity'});
-    if(n===25&&!text.includes('$881,900'))errors.push({slide:n,issue:'Fleet extrapolation missing'});
+   if(n===24){
+    const chart=await evaluate(`document.querySelector('[data-slidev-no="24"] [data-rollout-chart="adoption"]')?.innerHTML`);
+    if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
+   }
+   if(n===25){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="25"] .slidev-layout').textContent`);
+    if(!text.includes('$1.57M')||!text.includes('capacity')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or capacity callout missing'});
    }
    if(n===14||n===26){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);

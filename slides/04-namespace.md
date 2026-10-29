@@ -33,20 +33,20 @@ instrumentation.opentelemetry.io/inject-python: "true"
 
 </div>
 
-<p class="lead">RIO: select the namespace.<br>The Injector detects supported runtimes.</p>
-<p class="caption">Upstream also supports namespace annotations. RIO adds its own selection and rollout workflow.</p>
+<p class="lead">Select the namespace.<br>Let the Injector handle supported runtimes.</p>
+<p class="caption">RIO is purpose-built for this talk. We want this workflow upstream.</p>
 
 <!--
 **Tyler**
 
 - Upstream supports workload OR namespace annotations.
-- RIO: Runtime Instrumentation Operator, from OTelX.
+- RIO: Runtime Instrumentation Operator; our talk-specific demo in OTelX.
 - Namespace selection, runtime injection and managed rollout together.
-- This demo uses RIO’s precursor, not the upstream Operator.
+- Goal: upstream functionality, in the Operator or another form; path undecided.
 -->
 
 ---
-kicker: Live demo · RIO’s namespace-driven approach
+kicker: Live demo · centralized control
 ---
 
 # Install the namespace-driven controller
@@ -58,7 +58,8 @@ kicker: Live demo · RIO’s namespace-driven approach
 
 - Controller selects workloads and manages rollout; Injector supplies agents.
 - Payload, exporter and exclusions configured centrally.
-- Jack Berg’s prototype; Nikola’s participation; precursor to RIO.
+- RIO demonstrates the workflow; future upstream work still needs design and agreement.
+- Jack Berg’s prototype; Nikola’s participation.
 -->
 
 ---

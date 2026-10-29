@@ -1,10 +1,20 @@
 # The value of centralized instrumentation ownership
 
 Compare **distributed responsibility for instrumentation** with a **centralized
-RIO injector/operator approach**, at the same useful telemetry outcome. This is
+injector/operator approach**, at the same useful telemetry outcome. RIO is the
+talk-specific demo implementation of that idea, with an upstream home as the
+intended direction rather than an agreed roadmap. This is
 an editable labor-capacity scenario, not measured customer savings or an industry
 average. Dollars value engineering time; cash savings require actual spending to
 fall.
+
+The presentation uses one cumulative-cost chart for the 1,000-service scenario:
+distributed ownership costs $1,590,800 over 24 months; central ownership costs
+$19,500. Their $1,571,300 difference equals the existing $881,900 year-one value
+plus $689,400 of recurring year-two value. `presentation/rollout-charts.js`
+derives every monthly point from the same setup and annual-upkeep ledgers.
+There is no additional adoption-delay credit. The preceding adoption chart is
+a conceptual comparison of rollout shapes, not observed uptake or a schedule.
 
 ## One-time setup
 

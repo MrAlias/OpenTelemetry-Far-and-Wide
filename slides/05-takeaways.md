@@ -44,42 +44,38 @@ kicker: After day one
 -->
 
 ---
-kicker: An illustrative first year · 18 services
+kicker: Adoption across the organization
 ---
 
-# Put a price on the repetition
+# Make coverage the default
 
-<SavingsExample mode="demo" />
-
-<p class="savings-context">13 remaining eligible services · $100 per person-hour · hypothetical inputs</p>
-<p class="savings-context">One namespace setup · 13 updates/month → 1 · no investigation-time credit</p>
+<RolloutComparison mode="adoption" />
 
 <!--
-**Tyler**
+**Nikola**
 
-- Assumptions: $100/hour, 2.5 hours/service setup, 45 minutes/update.
-- Central setup once: 1 hour controller/policy + 30 minutes OBI.
-- Monthly updates: thirteen owners versus one; no investigation-time saving.
-- Engineering capacity, not guaranteed cash savings.
+- One shared rollout covers eligible services; new compatible workloads inherit it.
+- Team-by-team adoption can stall or slip as services change.
+- Illustrative trajectories, not measured adoption rates or rollout durations.
 -->
 
 ---
-kicker: The same assumptions · larger fleets
+kicker: The cost of repeated setup and upkeep
 ---
 
-# Repetition changes the economics
+# The cost of team-by-team ownership
 
-<SavingsExample mode="fleet" />
+<RolloutComparison mode="cost" />
 
-<p class="savings-context">Illustrative USD capacity saved · $100 per person-hour</p>
-<p class="savings-context">12 agent releases/year · shared setup and updates once per rollout domain</p>
+<p class="caption">1,000 services · engineering time valued at $100/hour</p>
 
 <!--
 **Tyler**
 
-- Same runtime mix; shared work once per rollout domain.
-- Use your own effort, compatibility and support costs.
-- Already centralized? Equivalent work means zero additional saving.
+- Hypothetical scenario: setup plus monthly agent updates over two years.
+- Shared setup and upkeep once per rollout domain, instead of per service owner.
+- Capacity freed, not guaranteed cash; include compatibility, hardening and support.
+- Same supported-runtime mix as the demo; adoption delays are not priced.
 -->
 
 ---
@@ -98,4 +94,5 @@ kicker: Make the next investigation easier
 - OBI found the failed call; Java detail tied it to pricing.
 - Code fix improved checkout; instrumentation enabled the investigation.
 - One namespace equips the next team without another setup project.
+- RIO demonstrates the idea; we want an upstream home, with the path still open.
 -->

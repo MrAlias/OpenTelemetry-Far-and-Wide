@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict'
 import {readFile} from 'node:fs/promises'
 import {calculateSavings} from '../../presentation/savings-model.js'
+import {costTimeline, adoptionPaths} from '../../presentation/rollout-charts.js'
 const original=JSON.parse(await readFile(new URL('../../presentation/data/savings-assumptions.json',import.meta.url)))
 const calc=(edit=()=>{},scenario={})=>{const m=structuredClone(original);edit(m);return calculateSavings(m,{...m.scenarios[0],...scenario})}
 const d=calc()
@@ -28,4 +29,10 @@ for(const scenario of original.scenarios){const r=calculateSavings(original,scen
 assert.throws(()=>calc(()=>{},{eligibleServices:19}),/exceed/)
 assert.throws(()=>calc(()=>{},{exceptionsPerChange:14}),/Exception/)
 assert.throws(()=>calc(m=>{m.shared.changePerDomainHours=-1}),/nonnegative/)
+const timeline=costTimeline(original), yearOne=timeline.points[12], yearTwo=timeline.points[24]
+assert.equal(yearOne.distributed-yearOne.centralized,881900)
+assert.deepEqual([yearTwo.distributed,yearTwo.centralized,timeline.saved],[1590800,19500,1571300])
+assert.equal(timeline.saved,881900+689400)
+assert.equal(adoptionPaths.centralized.at(-1)[1],100)
+assert(adoptionPaths.distributed.some((p,i,a)=>i&&p[1]<a[i-1][1]))
 console.log('Savings verified: one central setup, 12 monthly releases, 156 versus 12 update operations, no investigation credit, centralized baseline and negative outcomes.')
