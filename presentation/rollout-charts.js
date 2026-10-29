@@ -9,11 +9,13 @@ export const adoptionPaths = {
 
 export function costTimeline(model, scenario = model.scenarios[0], months = 24) {
   const row = calculateSavings(model, scenario)
-  const points = Array.from({ length: months + 1 }, (_, month) => ({
-    month,
-    distributed: (row.initialBaselineHours + row.lifecycleBaselineHours * month / 12) * model.hourlyRate,
-    centralized: (row.initialSharedHours + row.lifecycleSharedHours * month / 12) * model.hourlyRate,
-  }))
+  const points = Array.from({ length: months + 1 }, (_, month) => {
+    const distributedHours = row.initialBaselineHours + row.lifecycleBaselineHours * month / 12
+    const centralizedHours = row.initialSharedHours + row.lifecycleSharedHours * month / 12
+    return { month, distributedHours, centralizedHours,
+      distributed: distributedHours * model.hourlyRate,
+      centralized: centralizedHours * model.hourlyRate }
+  })
   // Updates are discrete monthly work, not continuously accruing effort.
   const steps = points.flatMap((point, index) => index
     ? [{ ...points[index - 1], month: point.month }, point]
@@ -56,25 +58,25 @@ export function renderCostChart(model, palette = {}) {
   const last = data.points.at(-1)
   const shortMoney = value => '$' + (value >= 1000000 ? (value / 1000000).toFixed(2) + 'M' : value.toLocaleString('en-US'))
   const x = month => 125 + month / data.months * 560
-  const y = dollars => 390 - dollars / 30000 * 320
-  let body = text(125, 33, 'Cumulative instrumentation labor', 25, p.muted)
-  for (const value of [0, 15000, 30000]) {
+  const y = hours => 390 - hours / 300 * 320
+  let body = ''
+  for (const value of [0, 150, 300]) {
     body += `<path d="M125 ${y(value)}H685" stroke="${p.grid}" stroke-width="1.5"/>`
-    body += text(110, y(value) + 8, value ? '$' + (value / 1000).toFixed(0) + 'k' : '$0', 24, p.muted, 'text-anchor="end"')
+    body += text(110, y(value) + 8, value + ' h', 24, p.muted, 'text-anchor="end"')
   }
   body += `<path d="M125 70V390H685" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   for (const month of [0, 6, 12, 18, 24]) body += text(x(month), 428, month, 24, p.muted, 'text-anchor="middle"')
   body += text(405, 462, 'Months', 23, p.muted, 'text-anchor="middle"')
   for (const [key, color] of [['distributed', p.distributed], ['centralized', p.central]]) {
-    body += `<path data-cost-series="${key}" d="${path(data.steps.map(row => [row.month, row[key]]), x, y)}" fill="none" stroke="${color}" stroke-width="5" ${key === 'distributed' ? 'stroke-dasharray="12 6"' : ''}/>`
+    body += `<path data-cost-series="${key}" d="${path(data.steps.map(row => [row.month, row[key + 'Hours']]), x, y)}" fill="none" stroke="${color}" stroke-width="5"/>`
   }
   body += text(711, 78, 'Distributed ownership', 26, p.distributed)
-  body += text(711, 113, shortMoney(last.distributed), 24, p.distributed)
+  body += text(711, 113, last.distributedHours.toLocaleString('en-US') + ' hours', 24, p.distributed)
   body += text(711, 385, 'Centralized control', 26, p.central)
-  body += text(711, 420, shortMoney(last.centralized), 24, p.central)
+  body += text(711, 420, last.centralizedHours.toLocaleString('en-US') + ' hours', 24, p.central)
   body += text(800, 213, data.savedHours.toLocaleString('en-US') + ' hours', 64, p.emphasis, 'font-weight="600" letter-spacing="-2" data-capacity-hours="' + data.savedHours + '"')
   body += text(807, 258, 'Engineering capacity', 25, p.ink)
   body += text(807, 293, 'freed over two years', 25, p.ink)
   body += text(807, 335, shortMoney(data.saved) + ' at $' + model.hourlyRate.toLocaleString('en-US') + '/hour', 24, p.muted)
-  return svg('Cumulative instrumentation labor for the 18-service demo, stepping up with each monthly update over 24 months: distributed ownership costs $26,650; centralized control costs $1,950. This frees 247 engineering hours, valued at $24,700 at $100 per hour.', body, p)
+  return svg('Cumulative instrumentation hours for the 18-service demo, stepping up with each monthly update over 24 months: distributed ownership takes 266.5 hours; centralized control takes 19.5 hours. This frees 247 engineering hours, valued at $24,700 at $100 per hour.', body, p)
 }

@@ -52,6 +52,11 @@
 .slidev-layout .measurements th { color:var(--accent); font-weight:500; }
 .slidev-layout .closing-lines { font-size:60px; line-height:1.45; margin-top:60px; letter-spacing:-.025em; }
 .slidev-layout .closing-link { font-size:22px; margin-top:40px; }
+.slidev-layout .closing-resources { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:28px; }
+.slidev-layout .closing-resources a { display:flex; gap:20px; align-items:center; color:var(--ink); text-decoration:none; border:0; }
+.slidev-layout .closing-resources img { width:200px; height:200px; flex:none; }
+.slidev-layout .closing-resources strong { display:block; font-size:28px; font-weight:500; }
+.slidev-layout .closing-resources small { display:block; font-size:20px; line-height:1.5; color:var(--muted); margin-top:8px; }
 .slidev-layout .savings-ledger { width:100%; margin-top:30px; font-size:29px; border-collapse:collapse; }
 .slidev-layout .savings-ledger td, .slidev-layout .savings-ledger th { border-bottom:1px solid var(--line); padding:10px 0; text-align:right; }
 .slidev-layout .savings-ledger th { font-size:23px; color:var(--muted); font-weight:400; }

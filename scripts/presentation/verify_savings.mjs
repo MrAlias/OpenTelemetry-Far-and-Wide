@@ -35,8 +35,8 @@ assert.deepEqual([yearTwo.distributed,yearTwo.centralized,timeline.saved],[26650
 assert.equal(timeline.saved,13900+10800)
 assert.equal(timeline.savedHours,247)
 assert.deepEqual(timeline.points.slice(0,2),[
-  {month:0,distributed:3250,centralized:150},
-  {month:1,distributed:4225,centralized:225},
+  {month:0,distributedHours:32.5,centralizedHours:1.5,distributed:3250,centralized:150},
+  {month:1,distributedHours:42.25,centralizedHours:2.25,distributed:4225,centralized:225},
 ])
 // Hold cost flat between releases and charge each monthly update once.
 assert.equal(timeline.steps.length,49)

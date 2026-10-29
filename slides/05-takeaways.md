@@ -86,7 +86,10 @@ kicker: Make the next investigation easier
 
 <CustomerResult compact />
 
-<div class="closing-link">Demo and source · github.com/MrAlias/OpenTelemetry-Far-and-Wide</div>
+<div class="closing-resources">
+  <a href="https://github.com/MrAlias/OpenTelemetry-Far-and-Wide"><img src="/presentation/qr-demo-source.svg" alt="QR code for the demo and presentation source" /><span><strong>Demo + slides</strong><small>MrAlias /<br>OpenTelemetry-Far-and-Wide</small></span></a>
+  <a href="https://github.com/otelx/rio"><img src="/presentation/qr-rio.svg" alt="QR code for the RIO repository" /><span><strong>RIO</strong><small>otelx/rio</small></span></a>
+</div>
 
 <!--
 **Tyler**
