@@ -19,16 +19,24 @@ OTEL_INSTRUMENTATION_METHODS_INCLUDE: >-
 <p class="lead">The agent supplies instrumentation.<br>We still supply the setup.</p>
 
 <!--
-Tyler · 45 seconds. We have source access: PricingEngine.calculate attempts the retired backend and then reads the current price store before Inventory. The method-inclusion setting explicitly names that method; the agent does not magically infer business meaning. Library instrumentation adds Hibernate/JDBC detail.
-Nikola: “Zero code is useful. It hasn't made the release calendar disappear.” The direct setup still needs agent delivery, startup, service identity/export settings and a deployment.
+**Tyler → Nikola · 0:45**
 
-The excerpt highlights three settings; the real patch also has exporter and volume/init-container configuration. Show the actual file during the live demo.
+- **Tyler:** Source access; pricing runs before Inventory.
+- **Point:** Agent startup; service identity; explicitly included **PricingEngine.calculate**.
+- **Tyler:** Agent provides library detail; named business method needs configuration.
+- **Nikola:** Zero-code instrumentation still needs agent delivery, exporter settings, a rollout.
+- **Next · Tyler:** Apply the actual deployment patch; same application image.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/k8s/checkout-direct-agent.patch.yaml
 - demo/apps/checkout/src/main/java/demo/checkout/Checkout.java
 - https://opentelemetry.io/docs/zero-code/java/agent/
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -40,14 +48,37 @@ kicker: Live demo · Java agent
 <DemoClip src="install-java-agent-edited.mp4" poster="install-java-agent-edited-poster.png" label="Actual Java agent deployment patch, rollout and startup log" />
 
 <!--
-Tyler · 75 seconds. Apply the actual strategic patch from demo/k8s/checkout-direct-agent.patch.yaml to deployment/checkout, wait for readiness, and generate fresh traffic. Application source/image stay the same during this instrumentation change.
+**Tyler → Nikola · 1:15**
 
-Nikola: We know the runtime and have full access; there is still work around a competent setup. No staged mistakes or typing race. The recording cuts long unchanged readiness waits with an explicit card and keeps command/output playback at 1x.
+- **Do:** Apply direct-agent patch → wait for Checkout → send fresh traffic.
+- **Tyler:** Agent + identity + exporter + method setting; **application image unchanged**.
+- **Nikola:** Full access and runtime expertise; setup still takes work.
+- **Land:** Zero code hasn't removed the release calendar.
+- **Next · Tyler:** Open the new request's pricing method.
+
+<details>
+<summary>Demo commands / fallback</summary>
+
+```sh
+kubectl patch deployment/checkout -n demo-apps --type=strategic \
+  --patch-file demo/k8s/checkout-direct-agent.patch.yaml
+kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
+curl -fsS http://localhost:8080/checkout
+```
+
+Silent recording: manual play, native speed; use if the live demo stalls.
+
+</details>
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/k8s/checkout-direct-agent.patch.yaml
 - docs/fleet-demo-handoff.md
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -59,8 +90,17 @@ kicker: The useful result
 <TimeoutEvidence />
 
 <!--
-Tyler · 60 seconds. Open PricingEngine.calculate in the actual fresh trace. The failed HTTP client span consumes roughly the configured two-second connection timeout; inspect its SocketTimeoutException. The successful Hibernate/JDBC product-price query follows inside the same method.
-Nikola: Open the failed HTTP span. Point to error.type = java.net.SocketTimeoutException and the exception event’s exception.message = Connect timed out BEFORE naming the timeout. These are literal exported fields, reflowed for legibility beside the same captured span. The succeeding product lookup explains the successful but delayed checkout. A long span alone does not prove a timeout.
+**Tyler → Nikola → Tyler · 1:00**
+
+- **Tyler · show:** Checkout → **PricingEngine.calculate** → failed HTTP span.
+- **Nikola · point:** `error.type = java.net.SocketTimeoutException`.
+- **Nikola · point:** Exception event: `exception.message = Connect timed out`.
+- **Then name it:** **~2 s connection timeout**; successful product-price query follows.
+- **Tyler:** OBI located the failed call; Java detail names method + fallback.
+- **Next · Tyler:** Open the responsible Java code.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - public/demo-capture/java-trace-evidence.json
@@ -69,6 +109,8 @@ Nikola: Open the failed HTTP span. Point to error.type = java.net.SocketTimeoutE
 - https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/
 - demo/apps/checkout/baseline/PricingEngine.java
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -80,13 +122,24 @@ kicker: The cause
 <DemoClip src="edit-pricing-source.mp4" poster="edit-pricing-before.png" label="Actual Java source edit in Vim: remove the retired-backend HTTP attempt and retain orders.currentPrice()" />
 
 <!--
-Tyler · 35 seconds. Play the actual Vim recording or open the source live. It edits a working copy of the baseline Java file, selects and removes the whole obsolete try/catch/finally block, removes unused imports, and saves a result byte-for-byte identical to the deployed fixed source. The seeded failure is a real HTTP connection attempt to the retired backend, bounded by a two-second connect timeout. If it fails, the baseline queries the authoritative PostgreSQL product store. The fixed version uses that same store directly. The highlighted timeout and HTTP call belong to the actual source, not an illustrative excerpt. The final editor view retains return orders.currentPrice().
-Nikola: Instrumentation enables collaboration as well as diagnosis. When access and ownership permit, bring the owning team a PR: “Your service is having customer impact. Here is the trace, here is the failing dependency, and here is a fix grounded in that observed request.” Review the change with the owners; don’t just hand them a vague latency ticket.
+**Tyler → Nikola · 0:35**
+
+- **Show:** Real Java file in Vim; timeout **2000 ms**.
+- **Tyler:** Retired backend attempt → timeout → current PostgreSQL price store.
+- **Edit:** Remove obsolete HTTP block; keep `orders.currentPrice()`.
+- **Nikola:** Instrumentation enables action + collaboration.
+- **Land:** Bring the owning team a **PR: customer impact + trace + proposed fix**.
+- **Next · Tyler:** Deploy that application change.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/apps/checkout/baseline/PricingEngine.java
 - demo/apps/checkout/fixes/PricingEngine.java
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -98,15 +151,39 @@ kicker: Live demo · application fix
 <DemoClip src="fix-pricing-edited.mp4" poster="fix-pricing-edited-poster.png" label="Actual Checkout fix deployment and successful rollout" />
 
 <!--
-Tyler · 55 seconds. Prebuild/load far-wide-demo-checkout:pricing-fixed with make -C demo pricing-fixed-image pricing-fixed-load CLUSTER=<demo-cluster>. Apply demo/k8s/checkout-pricing-fixed.patch.yaml to deployment/checkout, then rollout status. The recording is actual execution at native speed; a long unchanged readiness wait is cut only with a visible card if necessary.
-Nikola: Agent, exporter and request path stay the same. A successful rollout is not the customer result. “Let’s send the request again.”
-The standard demo build now uses the timeout baseline. The historical proof harness retains its original fixture. Live reset uses the newly built far-wide-demo-checkout:local; the recording baseline is tagged :timeout.
+**Tyler → Nikola · 0:55**
+
+- **Do:** Deploy prebuilt `pricing-fixed` image; wait for readiness.
+- **Tyler:** Only application behavior changes; **same Java agent + exporter**.
+- **Nikola:** Rollout ready ≠ customer problem solved.
+- **Next · Nikola:** Send another customer request; **show its waterfall immediately**.
+
+<details>
+<summary>Demo commands / fallback</summary>
+
+Prebuild/load `pricing-fixed` before presenting; see `docs/customer-resolution.md`.
+
+```sh
+kubectl patch deployment/checkout -n demo-apps --type=strategic \
+  --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
+kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
+curl -fsS http://localhost:8080/checkout
+```
+
+Silent recording: manual play, native speed; use if the live demo stalls.
+
+</details>
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/k8s/checkout-pricing-fixed.patch.yaml
 - demo/apps/checkout/Dockerfile
 - docs/customer-resolution.md
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -120,14 +197,24 @@ kicker: Back to the customer
 <p class="caption">The failed call is gone. The successful checkout path remains.</p>
 
 <!--
-Tyler · 50 seconds. This is the FIRST visual after deploying the application fix: the real post-fix waterfall. Expand Checkout → PricingEngine.calculate. Point to the successful product-price query and the absence of the failed legacy HTTP span; follow Inventory and the commerce calls. Use fixed-request-detail.mp4 or the live backend to scroll to the order insert and retained downstream work.
-Nikola: The useful work remains. The customer stops paying for the obsolete backend attempt. Say what the trace demonstrates before introducing any aggregate metric. No abstract timing graphic is a substitute for this evidence.
+**Tyler → Nikola → Tyler · 0:50**
+
+- **Show first:** Fresh **post-fix waterfall**, before aggregate numbers.
+- **Tyler · point:** Checkout → PricingEngine.calculate; price query remains, failed legacy call gone.
+- **Nikola · follow:** Inventory, commerce branches, order write — useful work retained.
+- **Land:** Customer no longer waits for the retired backend.
+- **Next · Tyler:** Symptom → cause → code change → fresh trace; now compare requests.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - public/demo-capture/fixed-request-evidence.json
 - public/demo-capture/fixed-request-trace.png
 - presentation/data/resolution.json
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -139,12 +226,22 @@ kicker: The repeated-request result
 <CustomerResult />
 
 <!--
-Tyler · 35 seconds. After the actual waterfall, show the measured request medians from presentation/data/resolution.json. Same instrumentation, same successful application flow; the obsolete backend attempt is the application change. Pricing retains real PostgreSQL work, so do not promise a zero-duration method.
-Nikola: This summary supports the trace, rather than replacing it. Local demo timings are not a production benchmark. Transition: how do other teams get this detail without repeating setup?
+**Tyler → Nikola · 0:35**
+
+- **Tyler · point:** Matched request medians: **2.21 s → 220 ms**.
+- **Tyler:** Pricing: **2.01 s → 3.71 ms**; successful price lookup retained.
+- **Nikola:** Same instrumentation; warmed local demo, **not a production benchmark**.
+- **Land:** Summary supports the waterfall we just saw.
+- **Next · Nikola:** How do other teams get this detail without repeating setup?
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - presentation/data/resolution.json
 - scripts/presentation/measure_resolution.py
 - docs/customer-resolution.md
 [/Sources]
+
+</details>
 -->

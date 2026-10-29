@@ -12,10 +12,27 @@ hand-authored sections; the animation exporter does not generate them.
 | `05-takeaways.md` | 22–26 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
 
 The live budget is 21 minutes, one minute flex and three minutes questions.
-Speaker notes include handoffs, time budgets, commands, source references and
-places to switch into the running demo. Use Slidev's presenter view (`/presenter/`)
-and press `F` for fullscreen. Only slides 6, 7 and 20 have click builds; each
-adds evidence or changes the enrollment state.
+Every slide has brief speaker cues drawn from the transcript and the latest
+collaborator edits in `../docs/talk-storyboard.md`. Open `/presenter/1` on the
+running Slidev server. Keep the audience on the
+normal slide view; notes appear only in presenter/notes views.
+
+The first line names the speakers and the slide's live time budget. Bold names
+mark who speaks; **Point / Show / Do** mark visual or demo actions; **Next**
+marks the handoff. Speak from these reminders rather than reading them aloud.
+Slides 4, 6, 7 and 20 have one click build each. Their notes use Slidev's
+`[click]` markers to highlight the matching cue when advancing.
+
+Sources and exact demo commands sit in closed disclosure sections below the
+delivery cues. Open them during preparation or if needed during a fallback;
+they are not part of the spoken delivery. Rehearse both speakers' handoffs
+with the actual presenter view. The research and rationale are in the
+speaker-notes section of `../docs/presentation-research.md`.
+Use **Toggle Presenter Layout** in the bottom toolbar to select layout **2**
+for full-height notes. Drag the notes divider to roughly 40% of the screen;
+the default small corner panel requires unnecessary scrolling. Use the note
+font-size controls to suit the presenter display. Presenter-only CSS tightens
+bullet spacing while preserving Slidev's layout and size controls.
 
 Terminal recordings play manually using their native controls. They are muted,
 run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback

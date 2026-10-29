@@ -35,6 +35,46 @@ guarantee a 10/10 rating from every attendee. We can make the talk relevant,
 understandable, technically credible, memorable, and useful, then test those
 qualities with representative listeners before the event.
 
+## Speaker notes for live delivery — October 29, 2026
+
+The notes in `slides.md` and `slides/01-opening.md` through
+`slides/05-takeaways.md` condense the transcript into speaking cues. Nikola's
+latest changes to `docs/talk-storyboard.md` were pulled at `183ce37` before
+editing. That collaborator-edited document supplies the newer Atlanta callback,
+GA announcement, coexistence reminder and onboarding points; it is preserved
+without regenerating it from the older animation script. Tyler confirmed the
+v1.0 release is planned for October 30, before this presentation. The GA cue is
+written for that delivery date, not as a claim about the October 29 release.
+
+Joel Schwartzberg's [Good Notes: A Public Speaker's Best Ally, Toastmasters,
+March 2018](https://www.toastmasters.org/magazine/Magazine%20Issues/2018/Mar2018/Good%20Notes)
+recommends sparse reminders for the points and facts a speaker might forget.
+His [March 2026 preparation guide](https://www.toastmasters.org/magazine/magazine-issues/2026/march/10-ways-to-prepare-for-a-work-presentation)
+specifically recommends key points, names, numbers and short phrases, with
+out-loud rehearsal to catch weak transitions. These are practitioner guidelines,
+not experimental evidence for an optimal word count per slide.
+
+The open textbook [Stand Up, Speak Out, third edition, chapter 14](https://milnepublishing.geneseo.edu/stand-up-speak-out-3/chapter/chapter-14-delivering-the-speech/)
+likewise recommends ordered keywords and phrases, readable notes, and practicing
+with them to support conversational delivery and audience contact.
+
+Applied here: one short speaker/time line; ordered bullets with bold speaker
+names, exact numbers or attribute names where accuracy matters; an explicit
+visual/demo action; and a reminder of the next question or handoff. Exact
+wording is retained for the requested welcome, speaker names and closing line.
+The notes avoid production history, recording mechanics and a second transcript.
+Commands and references remain available in closed disclosure sections, keeping
+the live reading area focused. This format is an editorial choice for this
+two-person technical demo, not a universal note-taking formula.
+
+[Slidev's notes syntax](https://sli.dev/guide/syntax#notes) supports Markdown and
+HTML in final comment blocks. Its [click markers](https://sli.dev/features/click-marker)
+highlight the corresponding passage as the slide advances. The four existing
+click builds use those markers; the audience-facing slides are unchanged.
+Rehearse with the presenter view and adjust cue wording to what each speaker
+actually needs to remember. Keep unfamiliar exact commands below the cues;
+don't try to memorize their spelling or read all reference links on stage.
+
 ## What the evidence supports
 
 The sources include five books through publisher previews, author explanations,

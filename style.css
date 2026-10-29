@@ -1,2 +1,3 @@
 /* Slidev imports this entry; canvas styling stays in styles/. */
 @import './styles/presentation.css';
+@import './styles/presenter.css';

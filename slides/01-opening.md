@@ -12,13 +12,21 @@ kicker: The investigation
 <p class="caption">Find the wait. Fix the cause. Check the customer request.</p>
 
 <!--
-Tyler · 50 seconds. “The application completes the request, but the customer is waiting.” Introduce the symptom while the actual request-duration panel is visible. Both speakers have already introduced themselves by full name on the title slide.
-Promise: follow the customer request across the system, expose the cause with language instrumentation, fix it, and return to the actual waterfall. Then share instrumentation through the Injector and RIO’s centralized namespace approach. Speak conversationally; no inserted dramatic pauses.
+**Tyler → Nikola · 0:50**
 
-This is an actual single-request Grafana stat. Do not name Checkout as the culprit yet. Transition into the live application.
+- **Show:** Actual request duration — **2.17 s**; successful response, waiting customer.
+- **Tyler:** Follow request → find cause → change code → show result.
+- **Tyler:** Then share visibility through OpenTelemetry Injector + RIO, a namespace-driven operator.
+- **Nikola:** One customer problem; a shared way for every team to investigate.
+- **Next · Tyler:** Open the system; culprit still unknown.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - public/demo-capture/capture-summary.json
 - docs/animation-script-research.md
 [/Sources]
+
+</details>
 -->

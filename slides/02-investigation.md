@@ -9,14 +9,24 @@ kicker: The application
 <p class="caption">A map tells us what can talk to what. We need to follow a request.</p>
 
 <!--
-Tyler · 40 seconds. Orient: Gateway to Checkout, Inventory and four commerce branches. A successful checkout visits all eighteen services, plus PostgreSQL and Redis. No chosen culprit.
-Nikola: “Following the request gives us one shared starting point.”
+**Tyler → Nikola · 0:40**
+
+- **Tyler:** **18 services**, PostgreSQL, Redis.
+- **Point:** Gateway → Checkout → Inventory + four commerce branches.
+- **Tyler:** Topology = possible calls; duration = slow whole request.
+- **Nikola:** Different teams, one shared request to follow.
+- **Next · Tyler:** Introduce OBI before deploying it.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/k8s/applications.yaml
 - demo/apps/README.md
 - demo/scripts/check-flow.py
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -30,16 +40,40 @@ clicks: 1
 <DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
 
 <!--
-Tyler · 70 seconds. Explain the first view before clicking: OpenTelemetry eBPF Instrumentation observes running Linux applications, using eBPF at application/network boundaries. We get traces and metrics without each team adding a library or restarting its application. Nikola: “That’s a lot of visibility before the first instrumentation ticket.” The click has a job: move from the explanation to the actual installation.
+**Tyler → Nikola · 1:10**
 
-Execute live: kubectl apply -f demo/k8s/obi.yaml, then rollout status daemonset/obi in obi-system. Recording is a manual-play fallback; it has no narration and pauses when leaving this slide.
+- **Tyler:** **OpenTelemetry eBPF Instrumentation — OBI**; short “Oh-bee.”
+- **Tyler:** Observe running Linux applications/network activity; export traces + metrics.
+- **Nikola:** No app libraries or restarts; visibility before the first instrumentation ticket.
+- **Nikola:** Atlanta callback — last year's demo; **now v1.0 / GA**.
+- **Tyler:** Supported HTTP, PostgreSQL, Redis; deploy once on the nodes.
 
-Expand OBI once: OpenTelemetry eBPF Instrumentation. It discovers the running applications and gives service/dependency observations before language-agent setup. Open a fresh request next. Source command/event logs remain in .artifacts/demo-capture.
+[click] **Deploy OBI** — live terminal, or play the silent fallback.
+
+- **Nikola → next:** One deployment, eighteen services; open a request.
+
+<details>
+<summary>Demo commands / fallback</summary>
+
+```sh
+kubectl apply -f demo/k8s/obi.yaml
+kubectl rollout status daemonset/obi -n obi-system --timeout=180s
+curl -fsS http://localhost:8080/checkout
+```
+
+Silent recording: manual play, native speed; use if the live demo stalls.
+
+</details>
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - demo/k8s/obi.yaml
 - https://opentelemetry.io/docs/zero-code/obi/
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -53,14 +87,23 @@ kicker: The observed request
 <p class="caption">2.17 s · service calls and database work in one waterfall</p>
 
 <!--
-Nikola · 55 seconds. “The useful result is a connected trace. This is the request behind the duration we started with.”
-Nikola: Emphasize the return on deploying OBI: one deployment, multiple languages and service calls, before adding any language agent. Point to the HTTP calls and the PostgreSQL price query visible in this actual waterfall.
-Tyler: A connected trace is not a faster checkout; the customer is still waiting. Move from “the application is slow” toward work we can change. Point out the nesting and shared time axis. Do not explain trace-ID or parent-link verification; those are preparation checks.
+**Nikola → Tyler · 0:55**
+
+- **Nikola:** Same **2.17 s** request as the opening panel.
+- **Point:** HTTP service spans + PostgreSQL price query; shared time axis.
+- **Nikola:** One OBI deployment; multiple languages; **no language agents yet**.
+- **Tyler:** Much more visibility for little setup; customer still waiting.
+- **Next · Tyler:** Follow the observed path, then find the time we can change.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - public/demo-capture/capture-summary.json
 - presentation/data/request.json
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -75,13 +118,25 @@ clicks: 1
 <p class="caption">Cart branch · observed server durations</p>
 
 <!--
-Tyler · 35 seconds. Start neutral. Advance once when saying “Watch the plain topology turn into an observed request path.” The click adds the actual captured Cart branch and measured timings, not decorative motion.
-Nikola: Follow Cart → Catalog → Recommendations → Promotions. This is one branch of the same request; dimmed branches are context, not a claim they were unvisited. Durations are inclusive.
+**Tyler → Nikola · 0:35**
+
+- **Tyler:** Possible calls → calls observed in this request.
+
+[click] **Reveal the observed path** as you name it.
+
+- **Nikola · point:** Cart → Catalog → Recommendations → Promotions.
+- **Tyler:** One branch of this request; durations include downstream work.
+- **Next · Tyler:** Return to the waterfall; which span explains the wait?
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - presentation/data/topology.json
 - presentation/data/request.json
 [/Sources]
+
+</details>
 -->
 
 ---
@@ -96,12 +151,24 @@ clicks: 1
 <p class="caption">Follow the slow failed attempt, rather than the longest parent span.</p>
 
 <!--
-Tyler · 70 seconds. Gateway’s long parent includes waiting on Checkout; Checkout includes its downstream work. The longest parent is not a root-cause argument.
-Nikola: Point to the actual red CONNECT span: roughly two seconds on a failed outbound connection before the successful price query and service calls. Advance the highlight once while naming it.
-Tyler: OBI has already exposed a failed dependency attempt. The next question is which method makes it, why it is still attempted and what happens afterward. The Java agent gives the calling pricing method, HTTP endpoint, SocketTimeoutException and current-store fallback. Do not reuse the old no-I/O gap explanation.
+**Tyler → Nikola → Tyler · 1:10**
+
+- **Tyler:** Gateway includes Checkout; Checkout includes children.
+- **Reminder:** Longest parent **span** ≠ cause.
+
+[click] **Highlight the failed CONNECT span.**
+
+- **Nikola · point:** **~2 s**, before successful product lookup and other calls.
+- **Tyler:** Why attempt this connection? Which method? What fallback?
+- **Next · Nikola:** Open Checkout; add language detail.
+
+<details>
+<summary>Sources</summary>
 
 [Sources]
 - public/demo-capture/obi-trace-evidence.json
 - presentation/data/request.json
 [/Sources]
+
+</details>
 -->
