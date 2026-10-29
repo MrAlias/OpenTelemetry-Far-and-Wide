@@ -55,7 +55,7 @@ kicker: Adoption across the organization
 **Nikola**
 
 - One shared rollout covers eligible services; new compatible workloads inherit it.
-- Team-by-team adoption can stall or slip as services change.
+- Team-by-team adoption can slip with new services or rewrites in another language.
 - Illustrative trajectories, not measured adoption rates or rollout durations.
 -->
 
@@ -67,12 +67,12 @@ kicker: The cost of repeated setup and upkeep
 
 <RolloutComparison mode="cost" />
 
-<p class="caption">1,000 services · engineering time valued at $100/hour</p>
+<p class="caption">18-service demo · setup + monthly updates · $100/hour</p>
 
 <!--
 **Tyler**
 
-- Hypothetical scenario: setup plus monthly agent updates over two years.
+- Same 18-service demo, thirteen remaining eligible services; two years.
 - Shared setup and upkeep once per rollout domain, instead of per service owner.
 - Capacity freed, not guaranteed cash; include compatibility, hardening and support.
 - Same supported-runtime mix as the demo; adoption delays are not priced.

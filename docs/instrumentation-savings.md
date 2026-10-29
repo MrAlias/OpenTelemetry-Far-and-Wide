@@ -8,10 +8,10 @@ an editable labor-capacity scenario, not measured customer savings or an industr
 average. Dollars value engineering time; cash savings require actual spending to
 fall.
 
-The presentation uses one cumulative-cost chart for the 1,000-service scenario:
-distributed ownership costs $1,590,800 over 24 months; central ownership costs
-$19,500. Their $1,571,300 difference equals the existing $881,900 year-one value
-plus $689,400 of recurring year-two value. `presentation/rollout-charts.js`
+The presentation uses one cumulative-cost chart for the 18-service demo:
+distributed ownership costs $26,650 over 24 months; central ownership costs
+$1,950. Their $24,700 difference equals the existing $13,900 year-one value
+plus $10,800 of recurring year-two value. `presentation/rollout-charts.js`
 derives every monthly point from the same setup and annual-upkeep ledgers.
 There is no additional adoption-delay credit. The preceding adoption chart is
 a conceptual comparison of rollout shapes, not observed uptake or a schedule.
@@ -21,7 +21,7 @@ a conceptual comparison of rollout shapes, not observed uptake or a schedule.
 The demo has 18 application services, 14 compatible with the demonstrated agent
 payload. Exclude the common direct Checkout pilot, leaving 13 service owners.
 
-| One-time activity | Distributed ownership | Centralized RIO + Injector |
+| One-time activity | Distributed ownership | Centralized injector/operator |
 | --- | ---: | ---: |
 | Agent configuration, review and rollout | 13 × 2.5 h = 32.5 h | One controller/policy deployment: 1 h |
 | Cluster-wide OBI deployment | Not added to this baseline | Once: 0.5 h |
@@ -42,7 +42,7 @@ Assume one new agent release every month: **12 releases per year**. Each of the
 update for the namespace. Shared release qualification common to both workflows
 cancels. Budget the same 45 minutes of active labor per owned rollout operation.
 
-| Annual activity | Distributed ownership | Centralized RIO + Injector |
+| Annual activity | Distributed ownership | Centralized injector/operator |
 | --- | ---: | ---: |
 | Update operations | 13 × 12 = 156 | 1 × 12 = 12 |
 | Active labor | 156 × 0.75 = 117 h | 12 × 0.75 = 9 h |

@@ -3,11 +3,11 @@ import { calculateSavings } from './savings-model.js'
 // Conceptual adoption paths, not observed rollout data or a duration forecast.
 // The denominator is eligible workloads within the selected policy scope.
 export const adoptionPaths = {
-  centralized: [[0, 0], [12, 0], [12, 100], [100, 100]],
-  distributed: [[0, 0], [8, 0], [8, 18], [20, 18], [20, 38], [35, 38], [35, 54], [50, 54], [50, 68], [65, 68], [65, 59], [78, 59], [78, 72], [100, 72]],
+  centralized: [[0, 0], [2, 0], [2, 100], [100, 100]],
+  distributed: [[0, 0], [8, 0], [8, 18], [20, 18], [20, 38], [35, 38], [35, 54], [50, 54], [50, 68], [65, 68], [65, 59], [78, 59], [78, 72], [87, 72], [87, 58], [100, 58]],
 }
 
-export function costTimeline(model, scenario = model.scenarios.at(-1), months = 24) {
+export function costTimeline(model, scenario = model.scenarios[0], months = 24) {
   const row = calculateSavings(model, scenario)
   const points = Array.from({ length: months + 1 }, (_, month) => ({
     month,
@@ -36,9 +36,10 @@ export function renderAdoptionChart(palette = {}) {
   body += `<path data-adoption-series="distributed" d="${path(adoptionPaths.distributed, x, y)}" fill="none" stroke="${p.distributed}" stroke-width="5" stroke-dasharray="12 6"/>`
   body += text(315, 82, 'Centralized control', 29, p.central)
   body += text(315, 127, 'One rollout; new services inherit the policy', 23, p.central)
-  body += text(957, 189, 'Team-by-team', 25, p.distributed)
-  body += text(566, 320, 'New services can reopen the gap', 23, p.muted)
-  body += `<path d="M672 301L${x(65)} ${y(59) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
+  body += text(957, 229, 'Team-by-team', 25, p.distributed)
+  body += text(420, 330, 'New services', 23, p.muted)+text(760, 330, 'Language rewrite', 23, p.muted)
+  body += `<path d="M570 310L${x(65)} ${y(59) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
+  body += `<path d="M820 310L${x(87)} ${y(58) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   body += text(95, 430, 'Start', 24, p.muted)
   body += text(940, 430, 'Over time →', 24, p.muted, 'text-anchor="end"')
   return svg('Eligible service coverage over time: centralized rollout reaches full coverage; team-by-team adoption has a long tail and can lose coverage as services change.', body, p)
@@ -47,13 +48,13 @@ export function renderAdoptionChart(palette = {}) {
 export function renderCostChart(model, palette = {}) {
   const p = { ...light, ...palette }, data = costTimeline(model)
   const last = data.points.at(-1)
-  const shortMoney = value => '$' + (value >= 1000000 ? (value / 1000000).toFixed(2) + 'M' : (value / 1000).toFixed(1) + 'k')
+  const shortMoney = value => '$' + (value >= 1000000 ? (value / 1000000).toFixed(2) + 'M' : value.toLocaleString('en-US'))
   const x = month => 125 + month / data.months * 560
-  const y = dollars => 390 - dollars / 1600000 * 320
+  const y = dollars => 390 - dollars / 30000 * 320
   let body = text(125, 33, 'Cumulative instrumentation labor', 25, p.muted)
-  for (const value of [0, 800000, 1600000]) {
+  for (const value of [0, 15000, 30000]) {
     body += `<path d="M125 ${y(value)}H685" stroke="${p.grid}" stroke-width="1.5"/>`
-    body += text(110, y(value) + 8, value ? '$' + (value / 1000000).toFixed(1) + 'M' : '$0', 24, p.muted, 'text-anchor="end"')
+    body += text(110, y(value) + 8, value ? '$' + (value / 1000).toFixed(0) + 'k' : '$0', 24, p.muted, 'text-anchor="end"')
   }
   body += `<path d="M125 70V390H685" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   for (const month of [0, 6, 12, 18, 24]) body += text(x(month), 428, month, 24, p.muted, 'text-anchor="middle"')
@@ -65,8 +66,8 @@ export function renderCostChart(model, palette = {}) {
   body += text(711, 113, shortMoney(last.distributed), 24, p.distributed)
   body += text(711, 385, 'Centralized control', 26, p.central)
   body += text(711, 420, shortMoney(last.centralized), 24, p.central)
-  body += text(800, 213, '$' + (data.saved / 1000000).toFixed(2) + 'M', 79, p.emphasis, 'font-weight="600" letter-spacing="-3" data-capacity-saved="' + data.saved + '"')
+  body += text(800, 213, '$' + data.saved.toLocaleString('en-US'), 79, p.emphasis, 'font-weight="600" letter-spacing="-3" data-capacity-saved="' + data.saved + '"')
   body += text(807, 258, 'Engineering capacity', 25, p.ink)
   body += text(807, 293, 'freed over two years', 25, p.ink)
-  return svg('Cumulative instrumentation labor for 1,000 services over 24 months: distributed ownership costs $1,590,800; centralized control costs $19,500, a difference of $1,571,300 in engineering capacity.', body, p)
+  return svg('Cumulative instrumentation labor for the 18-service demo over 24 months: distributed ownership costs $26,650; centralized control costs $1,950, a difference of $24,700 in engineering capacity.', body, p)
 }

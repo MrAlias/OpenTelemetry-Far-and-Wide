@@ -78,7 +78,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 ## Dollar examples
 
 Slide 24 compares adoption paths; slide 25 compares cumulative setup and upkeep
-cost over 24 months for the existing 1,000-service scenario. The adoption curves
+cost over 24 months for the existing 18-service demo. The adoption curves
 are conceptual, not measured rates or a rollout forecast; this is covered in
 the spoken notes rather than an on-slide label. Both charts use
 `../presentation/rollout-charts.js`.
@@ -89,7 +89,7 @@ The cost chart and the review video's cost scene share the calculator in
 values, not measured customer savings. They compare complete work ledgers;
 central setup is counted once per rollout group and upkeep uses twelve monthly
 agent releases, with optional exceptions separately. No investigation-time credit.
-The $1.57M callout is $881,900 first-year capacity plus $689,400 of second-year
+The $24,700 callout is $13,900 first-year capacity plus $10,800 of second-year
 upkeep capacity. The scope and sensitivity examples are
 in `../docs/instrumentation-savings.md`.
 
