@@ -14,8 +14,15 @@ export function costTimeline(model, scenario = model.scenarios[0], months = 24) 
     distributed: (row.initialBaselineHours + row.lifecycleBaselineHours * month / 12) * model.hourlyRate,
     centralized: (row.initialSharedHours + row.lifecycleSharedHours * month / 12) * model.hourlyRate,
   }))
+  // Updates are discrete monthly work, not continuously accruing effort.
+  const steps = points.flatMap((point, index) => index
+    ? [{ ...points[index - 1], month: point.month }, point]
+    : [point])
   const last = points.at(-1)
-  return { scenario: row, points, months, saved: last.distributed - last.centralized }
+  const saved = last.distributed - last.centralized
+  const savedHours = row.initialBaselineHours - row.initialSharedHours
+    + (row.lifecycleBaselineHours - row.lifecycleSharedHours) * months / 12
+  return { scenario: row, points, steps, months, saved, savedHours }
 }
 
 const light = { ink: '#16182b', muted: '#5f6475', grid: '#dce0e8', central: '#087b6a', distributed: '#5b5bd6', emphasis: '#9d5410' }
@@ -40,8 +47,7 @@ export function renderAdoptionChart(palette = {}) {
   body += text(420, 330, 'New services', 23, p.muted)+text(760, 330, 'Language rewrite', 23, p.muted)
   body += `<path d="M570 310L${x(65)} ${y(59) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   body += `<path d="M820 310L${x(87)} ${y(58) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
-  body += text(95, 430, 'Start', 24, p.muted)
-  body += text(940, 430, 'Over time →', 24, p.muted, 'text-anchor="end"')
+  body += text(517.5, 430, 'time', 24, p.muted, 'text-anchor="middle"')
   return svg('Eligible service coverage over time: centralized rollout reaches full coverage; team-by-team adoption has a long tail and can lose coverage as services change.', body, p)
 }
 
@@ -60,14 +66,15 @@ export function renderCostChart(model, palette = {}) {
   for (const month of [0, 6, 12, 18, 24]) body += text(x(month), 428, month, 24, p.muted, 'text-anchor="middle"')
   body += text(405, 462, 'Months', 23, p.muted, 'text-anchor="middle"')
   for (const [key, color] of [['distributed', p.distributed], ['centralized', p.central]]) {
-    body += `<path data-cost-series="${key}" d="${path(data.points.map(row => [row.month, row[key]]), x, y)}" fill="none" stroke="${color}" stroke-width="5" ${key === 'distributed' ? 'stroke-dasharray="12 6"' : ''}/>`
+    body += `<path data-cost-series="${key}" d="${path(data.steps.map(row => [row.month, row[key]]), x, y)}" fill="none" stroke="${color}" stroke-width="5" ${key === 'distributed' ? 'stroke-dasharray="12 6"' : ''}/>`
   }
   body += text(711, 78, 'Distributed ownership', 26, p.distributed)
   body += text(711, 113, shortMoney(last.distributed), 24, p.distributed)
   body += text(711, 385, 'Centralized control', 26, p.central)
   body += text(711, 420, shortMoney(last.centralized), 24, p.central)
-  body += text(800, 213, '$' + data.saved.toLocaleString('en-US'), 79, p.emphasis, 'font-weight="600" letter-spacing="-3" data-capacity-saved="' + data.saved + '"')
+  body += text(800, 213, data.savedHours.toLocaleString('en-US') + ' hours', 64, p.emphasis, 'font-weight="600" letter-spacing="-2" data-capacity-hours="' + data.savedHours + '"')
   body += text(807, 258, 'Engineering capacity', 25, p.ink)
   body += text(807, 293, 'freed over two years', 25, p.ink)
-  return svg('Cumulative instrumentation labor for the 18-service demo over 24 months: distributed ownership costs $26,650; centralized control costs $1,950, a difference of $24,700 in engineering capacity.', body, p)
+  body += text(807, 335, shortMoney(data.saved) + ' at $' + model.hourlyRate.toLocaleString('en-US') + '/hour', 24, p.muted)
+  return svg('Cumulative instrumentation labor for the 18-service demo, stepping up with each monthly update over 24 months: distributed ownership costs $26,650; centralized control costs $1,950. This frees 247 engineering hours, valued at $24,700 at $100 per hour.', body, p)
 }

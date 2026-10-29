@@ -74,7 +74,7 @@ kicker: The cost of repeated setup and upkeep
 
 - Same 18-service demo, thirteen remaining eligible services; two years.
 - Shared setup and upkeep once per rollout domain, instead of per service owner.
-- Capacity freed, not guaranteed cash; include compatibility, hardening and support.
+- 247 engineering hours over two years; $24,700 at $100/hour, not guaranteed cash.
 - Same supported-runtime mix as the demo; adoption delays are not priced.
 -->
 

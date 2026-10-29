@@ -106,7 +106,7 @@ try{
    }
    if(n===25){
     const text=await evaluate(`document.querySelector('[data-slidev-no="25"] .slidev-layout').textContent`);
-    if(!text.includes('$24,700')||!text.includes('capacity')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or capacity callout missing'});
+    if(!text.includes('247 hours')||!text.includes('$24,700')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or hours callout missing'});
    }
    if(n===14||n===26){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);

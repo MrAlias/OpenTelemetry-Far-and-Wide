@@ -33,6 +33,18 @@ const timeline=costTimeline(original), yearOne=timeline.points[12], yearTwo=time
 assert.equal(yearOne.distributed-yearOne.centralized,13900)
 assert.deepEqual([yearTwo.distributed,yearTwo.centralized,timeline.saved],[26650,1950,24700])
 assert.equal(timeline.saved,13900+10800)
+assert.equal(timeline.savedHours,247)
+assert.deepEqual(timeline.points.slice(0,2),[
+  {month:0,distributed:3250,centralized:150},
+  {month:1,distributed:4225,centralized:225},
+])
+// Hold cost flat between releases and charge each monthly update once.
+assert.equal(timeline.steps.length,49)
+for(let i=1;i<timeline.steps.length;i++){
+  const before=timeline.steps[i-1],after=timeline.steps[i]
+  assert(before.month===after.month||(
+    before.distributed===after.distributed&&before.centralized===after.centralized))
+}
 assert.equal(adoptionPaths.centralized.at(-1)[1],100)
 assert.deepEqual(adoptionPaths.centralized[2],[2,100])
 assert(adoptionPaths.centralized[2][0]<adoptionPaths.distributed.find(p=>p[1]>0)[0])
