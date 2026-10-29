@@ -1,6 +1,6 @@
 # Demo Injector payload image
 
-For standalone installation and ongoing development, use **[RIO](https://github.com/otelx/rio)** and its [quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). This directory preserves the presentation’s demo snapshot; its `demo.opentelemetry.io` API differs from RIO’s `rio.otelx.github.io` API.
+[RIO](https://github.com/otelx/rio) is the talk-specific demo of this workflow. We want the capability to find an upstream home, in the Operator or another form; that path remains open. This directory retains the recorded snapshot and its `demo.opentelemetry.io` API, which differs from RIO’s `rio.otelx.github.io` API.
 
 This component builds the image consumed by
 [the demo operator](../otel-injector-operator/README.md). It bundles the upstream

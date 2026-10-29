@@ -8,11 +8,16 @@ an editable labor-capacity scenario, not measured customer savings or an industr
 average. Dollars value engineering time; cash savings require actual spending to
 fall.
 
-The presentation uses one cumulative-cost chart for the 18-service demo:
-distributed ownership costs $26,650 over 24 months; central ownership costs
-$1,950. Their $24,700 difference equals the existing $13,900 year-one value
-plus $10,800 of recurring year-two value. `presentation/rollout-charts.js`
-derives every monthly point from the same setup and annual-upkeep ledgers.
+The presentation uses one cumulative-effort chart for the 18-service demo:
+distributed ownership takes 266.5 hours over 24 months; central ownership
+takes 19.5 hours. At $100/hour, those totals are $26,650 and $1,950.
+The primary callout is **247 engineering hours freed**: 31 hours of
+setup plus 108 hours in each of two upkeep years. At $100/hour, their $24,700
+value equals $13,900 in year one plus $10,800 in year two. The chart starts
+with setup effort of 32.5 versus 1.5 hours, then holds flat between monthly
+releases. Each release adds 9.75 hours (13 × 0.75 hours; $975) to distributed
+ownership and 0.75 hours (1 × 0.75 hours; $75) to centralized control.
+`presentation/rollout-charts.js` derives these steps from the same ledgers.
 There is no additional adoption-delay credit. The preceding adoption chart is
 a conceptual comparison of rollout shapes, not observed uptake or a schedule.
 

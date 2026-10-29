@@ -85,16 +85,25 @@ Actual Grafana waterfalls precede the repeated-request summary. See canonical
 presentation/data/resolution.json and docs/customer-resolution.md for current
 measurements; these are local demo observations, not production benchmarks.
 
-RIO is an independent experimental OTelX project using the upstream OpenTelemetry
-Injector and language agents, not a distribution of the upstream Operator.
-The recording uses the bundled demo precursor that led to RIO:
+RIO is a demo operator purpose-built for this talk, using upstream Injector
+and language agents. We want this functionality upstream, possibly in the
+Operator or another form; the design and path remain open. Demo source:
 https://github.com/otelx/rio
 The upstream Operator comparison includes its existing namespace opt-in support:
 https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
 
 Economic scenario (October 27, 2026):
-Distributed instrumentation ownership versus centralized RIO + Injector.
+Distributed instrumentation ownership versus centralized injector/operator.
 One namespace setup, twelve monthly agent releases, thirteen update owners versus
 one central owner. No per-investigation or telemetry-bill credit. $13,900 of
 first-year capacity and $10,800 recurring for the demo under explicit hypothetical
 labor inputs. See docs/instrumentation-savings.md and the editable calculator.
+
+October 29 chart revision:
+Adoption trajectories are conceptual; they are not measured rates or a schedule.
+The cumulative-cost chart uses the same 18-service demo over 24 months:
+$26,650 distributed labor value versus $1,950 centralized. The primary callout
+is 247 engineering hours freed, valued at $24,700 at an assumed $100/hour.
+Each monthly release steps up by $975 versus $75; costs hold flat between
+releases. No adoption-delay saving is priced. The same renderer drives both
+slides and animation: presentation/rollout-charts.js.

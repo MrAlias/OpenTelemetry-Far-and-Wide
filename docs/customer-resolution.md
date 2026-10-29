@@ -42,7 +42,7 @@ minutes of questions. Synthetic narration stays at native speech pace.
 7. Only then show matched repeated-request medians. The trace proves what
    changed; the summary shows how the observed timings behaved across samples.
 8. Share diagnostic detail with thirteen more services through the bundled
-   namespace-driven prototype that led to [RIO](https://github.com/otelx/rio).
+   talk-specific namespace-controller demo, [RIO](https://github.com/otelx/rio).
    The fresh fleet trace uses the fixed application and shows Catalog JDBC work.
 
 ## Measured evidence and limits

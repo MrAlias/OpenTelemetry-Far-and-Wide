@@ -33,7 +33,7 @@
       <label>Independent rollout domains<input id="domains" type="number" min="1" step="1"></label>
       <label>USD / person-hour<input id="rate" type="number" min="0" step="1"></label>
     </div>
-    <p class="muted">One common pilot is excluded. Compare distributed service-team responsibility with centralized RIO + Injector. Compatible future workloads inherit the namespace policy; they do not each incur another central setup charge.</p>
+    <p class="muted">One common pilot is excluded. Compare distributed service-team responsibility with centralized injector/operator. Compatible future workloads inherit the namespace policy; they do not each incur another central setup charge.</p>
     <h2>One-time coverage and enrollment</h2>
     <div class="inputs">
       <label>Distributed setup hours / service<input id="directSetup" type="number" min="0" step="0.25"></label>
@@ -61,7 +61,7 @@
   <section class="results" aria-live="polite" aria-label="Calculated capacity value">
     <h2>First-year capacity saved</h2>
     <div id="firstYear" class="money"></div>
-    <div class="table-scroll"><table aria-label="Distributed and centralized responsibility comparison"><thead><tr><th>Person-hours</th><th>Distributed ownership</th><th>Centralized RIO + Injector</th><th>Saved</th></tr></thead><tbody id="ledger"></tbody></table></div>
+    <div class="table-scroll"><table aria-label="Distributed and centralized responsibility comparison"><thead><tr><th>Person-hours</th><th>Distributed ownership</th><th>Centralized injector/operator</th><th>Saved</th></tr></thead><tbody id="ledger"></tbody></table></div>
     <p id="equation"></p>
     <p id="recurring"></p>
     <p id="adjusted"></p>
@@ -94,7 +94,7 @@
       $('firstYear').textContent=money(row.firstYearValue);$('firstYear').classList.toggle('negative',row.firstYearValue<0)
       const fmt=v=>Number(v.toFixed(3)).toLocaleString('en-US')
       $('ledger').innerHTML=[['One-time setup',row.initialBaselineHours,row.initialSharedHours,row.initialHours],['Annual agent upkeep',row.lifecycleBaselineHours,row.lifecycleSharedHours,row.lifecycleHours],['Total',row.baselineHours,row.sharedHours,row.firstYearHours]].map(([label,...values])=>`<tr><td>${label}</td>${values.map(v=>`<td>${fmt(v)}</td>`).join('')}</tr>`).join('')
-      $('equation').textContent=`${fmt(row.baselineHours)} distributed ownership hours − ${fmt(row.sharedHours)} centralized RIO + Injector hours = ${fmt(row.firstYearHours)} saved × ${money(model.hourlyRate)}. Shared deployment: ${fmt(row.sharedSetupHours)} hours. Annual shared updates: ${fmt(row.sharedUpdateHours)} hours; service exceptions: ${fmt(row.exceptionHours)} hours. These are already included above.`
+      $('equation').textContent=`${fmt(row.baselineHours)} distributed ownership hours − ${fmt(row.sharedHours)} centralized injector/operator hours = ${fmt(row.firstYearHours)} saved × ${money(model.hourlyRate)}. Shared deployment: ${fmt(row.sharedSetupHours)} hours. Annual shared updates: ${fmt(row.sharedUpdateHours)} hours; service exceptions: ${fmt(row.exceptionHours)} hours. These are already included above.`
       $('recurring').textContent=`Following year, with no new-service growth: ${money(row.recurringValue)} (${row.recurringHours} hours).`
       $('adjusted').textContent=`After the extra annual telemetry/support costs you entered: ${money(row.firstYearAfterAdditionalCosts)} in year one; ${money(row.recurringAfterAdditionalCosts)} in the following year. This is an economic value comparison, not a prediction of cash savings.`
       document.querySelector('.results').hidden=false

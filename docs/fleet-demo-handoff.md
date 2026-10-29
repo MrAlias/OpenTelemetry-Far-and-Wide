@@ -96,7 +96,7 @@ inherit selection on admission. Shared agent versions and export settings reduce
 drift; a central scope also provides a place to change or remove enrollment.
 Compatibility, platform maintenance and telemetry costs still need management.
 
-The [earlier prototype review](technical-findings.md#identified-implementation) records Jack Berg’s implementation work and Nikola’s participation. The standalone project is now [RIO — Runtime Instrumentation Operator](https://github.com/otelx/rio), an independent otelx project using OpenTelemetry components. This recorded demo uses the bundled snapshot and its `demo.opentelemetry.io` API; RIO uses `rio.otelx.github.io`. Direct audience members to RIO’s quickstart for a fresh evaluation.
+The [earlier prototype review](technical-findings.md#identified-implementation) records Jack Berg’s work and Nikola’s participation. [RIO](https://github.com/otelx/rio) is a demo operator purpose-built for this talk. We want the capability upstream, in the Operator or another form; the path still needs design and agreement. This recording retains the bundled `demo.opentelemetry.io` API snapshot; the RIO demo repository uses `rio.otelx.github.io`.
 
 
 Capture runtime: the disposable `far-wide-recording-control-plane` container was
@@ -126,10 +126,10 @@ fleet trace. After namespace enrollment, use the new fixed-fleet captures:
 Checkout fix. Wait for both the controller’s current observed generation and
 Ready phase before generating traffic; stale Ready status is insufficient.
 
-This recorded component is the bundled namespace-driven prototype that led to
-RIO. It uses the historical `demo.opentelemetry.io` API. Current standalone RIO
-is an independent OTelX project using upstream Injector/agents, not the upstream
-Operator or a distribution of it. The comparison slide explicitly shows
+This recording uses the bundled namespace-driven demo implementation and its
+`demo.opentelemetry.io` API. RIO demonstrates the centralized workflow using
+upstream Injector/agents; it is a talk-specific demo, not an upstream Operator
+release. An upstream implementation is an intention, not an agreed roadmap. The comparison slide explicitly shows
 upstream language opt-in and acknowledges its namespace support.
 
 Prebuild/load the fixed image with `make -C demo pricing-fixed-image

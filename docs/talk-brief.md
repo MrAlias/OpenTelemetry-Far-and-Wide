@@ -1,11 +1,11 @@
-# Current presentation direction · October 26, 2026
+# Current presentation direction · October 29, 2026
 
 Use the [current storyboard](talk-storyboard.md): brief introduction → actual
 18-service topology with PostgreSQL and Redis → OBI connected view and timing
 comparison → direct language-agent setup on Checkout after evidence selects it →
 expose the retired-backend timeout and working fallback → remove the stale call → actual post-fix waterfall → measured customer payoff →
-13 additional payload-supported services → upstream configuration comparison → RIO precursor / namespace selection and rollout →
-verified wider picture → coordination, engineering and lifecycle savings.
+13 additional payload-supported services → upstream configuration comparison → talk-specific RIO demo / namespace selection and rollout →
+wider picture → coordination and lifecycle savings → adoption → cumulative costs.
 Four Go services retain OBI coverage; the payload has no Go language agent.
 
 The central takeaway is that OBI can tell us where to investigate, language
@@ -17,7 +17,8 @@ a matched latency recheck and broader enrollment;
 rehearse the same sequence live. Savings are hypotheses until measured;
 adding agent detail does not automatically reduce a backend bill. The closing
 slides and review video include an explicitly hypothetical dollar-capacity model
-for the demo and larger fleets; see [the inputs and scope](instrumentation-savings.md#worked-result-and-scale).
+for the same 18-service demo over two years. RIO demonstrates a capability we want
+to bring upstream, with the implementation still open; see [the inputs and scope](instrumentation-savings.md#worked-result-and-scale).
 
 The submitted proposal below is retained as the original event abstract. It is
 historical context; the current storyboard supersedes its proposed live sequence.

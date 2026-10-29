@@ -10,3 +10,4 @@ await copyFile(new URL('../../presentation/data/savings-assumptions.json', impor
 await copyFile(new URL('../../presentation/savings-model.js', import.meta.url), new URL('savings-model.js', out))
 await writeFile(new URL('../../public/animation/savings-data.js', import.meta.url), 'window.SAVINGS = ' + JSON.stringify(result, null, 2) + ';\n')
 for (const row of rows) console.log(`${row.services} services; ${row.remaining} remaining eligible; first year $${row.firstYearValue.toLocaleString('en-US')}; recurring $${row.recurringValue.toLocaleString('en-US')}`)
+await import('./build_rollout_charts.mjs')

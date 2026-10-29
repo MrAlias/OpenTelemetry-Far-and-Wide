@@ -6,7 +6,9 @@ topology plus PostgreSQL and Redis. Fourteen services use payload-supported
 language runtimes; four Go services retain OBI coverage.
 OBI establishes the system view and guides the service selection; direct language-agent setup proves
 useful detail on one; a custom operator/injector addresses the remaining fleet;
-then the speakers examine coordination, engineering and lifecycle savings.
+then the speakers examine coordination, adoption and cumulative setup/upkeep costs.
+RIO is a purpose-built demo for this talk. We want the capability upstream;
+the implementation and upstream path remain open.
 Trace and terminal views were recorded from the running demo. The actual missing-backend timeout and fallback are resolved with a code change;
 show the post-fix waterfall before the matched-duration summary. Dollars use a
 separate hypothetical ownership/monthly-upkeep model, not measured savings.
@@ -27,6 +29,9 @@ Editable sources
 public/storyboard.html               Authoritative standalone visual storyboard
 scripts/animation/talk.json           Speaker-tagged script, profiles and cues
 public/animation/art.js               Shared vector compositions and three builds
+presentation/rollout-charts.js        Shared adoption/cumulative-effort renderer
+scripts/presentation/build_rollout_charts.mjs  Packages that renderer for playback
+scripts/presentation/build_resources.mjs  Reuses the deck's two closing QR vectors
 public/animation/player.js            Playback, optional audio, captions and looping
 public/animation.html                 Review entry point
 scripts/animation/build_topology.py   Source-checked Graphviz layout and offline embed

@@ -182,19 +182,15 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 
 **Slide 24**
 
-- presentation/data/savings-assumptions.json
-- presentation/savings-model.js
-- docs/instrumentation-savings.md
-- https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm
-- https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm
-- https://sre.google/workbook/eliminating-toil/
+- presentation/rollout-charts.js — conceptual adoption trajectories, not observed data or a schedule; denominator is eligible services in the selected scope.
+- demo/k8s/instrument-demo-namespace.patch.yaml — shared selection mechanism.
 
 **Slide 25**
 
+- presentation/rollout-charts.js — cumulative engineering hours, with 24 monthly update steps after initial setup.
 - presentation/data/savings-assumptions.json
 - presentation/savings-model.js
-- public/presentation/savings.html
-- docs/instrumentation-savings.md
+- docs/instrumentation-savings.md — 247 engineering hours = 31 setup + 108 upkeep per year × 2; $24,700 at $100/hour. Monthly cost steps are $975 versus $75, with no adoption-delay credit.
 
 **Slide 26**
 

@@ -9,15 +9,14 @@ Begin with a customer waiting. OBI reveals a failed connection; Java detail
 identifies the pricing method, timeout and working fallback. Remove the obsolete
 backend attempt, deploy the fix, and immediately return to an actual waterfall.
 Show aggregate timings afterward. Then equip the remaining teams through the
-central namespace policy of the RIO precursor and Injector. Close with customer
+central namespace policy of the talk-specific RIO demo and Injector. Close with customer
 impact, collaborative fixes and less repeated setup/monthly upkeep.
 
-The recorded component is the bundled prototype that led to the independent
-OTelX RIO project, not an upstream Operator release. The upstream configuration
-comparison acknowledges workload and namespace opt-in. The measured request
+RIO is a demo operator purpose-built for this talk. We want this functionality
+to find an upstream home, in the Operator or another form; the implementation
+and upstream path remain open. The upstream configuration comparison
+acknowledges workload and namespace opt-in. The measured request
 result and hypothetical labor-capacity scenarios are separate evidence.
-
-
 
 ## 01 · OpenTelemetry Far and Wide
 
@@ -29,7 +28,7 @@ Live budget: 60 seconds.
 
 **Nikola:** And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-**Tyler:** The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, a namespace-driven operator.
+**Tyler:** The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
 
 **Nikola:** One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
 
@@ -51,8 +50,7 @@ Live budget: 70 seconds.
 
 **Tyler:** First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
 
-**Nikola:** We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed you this last year at Kubecon in Atlanta. One tool, 
-single command shows all of this visibility. Except, now the tool is GA.
+**Nikola:** We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available.
 
 **Tyler:** And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
 
@@ -168,21 +166,21 @@ Live budget: 40 seconds.
 
 ## 13 · From language opt-in to a shared namespace policy
 
-Show real upstream configuration for context, credit namespace opt-in, and name the independent RIO project and bundled prototype accurately.
+Put upstream opt-in in context, then explain RIO as a talk-specific demonstration of functionality we want upstream; no agreed implementation or roadmap.
 
 Live budget: 45 seconds.
 
 **Tyler:** To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
 
-**Nikola:** That already saves work. RIO, the Runtime Instrumentation Operator from our OTelX org, takes a different route: select the namespace centrally, let the Injector do the work for supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation.
+**Nikola:** That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement.
 
 ## 14 · Install the namespace-driven controller
 
-Install the merged custom component as a distinct step after upstream opt-in; earn the namespace-wide payoff.
+Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.
 
 Live budget: 60 seconds.
 
-**Tyler:** Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector injects into supported runtimes and loads their agents.
+**Tyler:** Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents.
 
 **Nikola:** The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
 
@@ -196,8 +194,7 @@ Live budget: 105 seconds.
 
 **Tyler:** Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy.
 
-**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. Notice how there is no trace duplication even as OBI is running in the bacground for the same namespace. OBI detects
-OTel instrumented services and stands down, no action required from the operator.
+**Nikola:** Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service.
 
 ## 16 · Open language detail in more services
 
@@ -233,40 +230,37 @@ Live budget: 50 seconds.
 
 **Tyler:** And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
 
-**Nikola:** Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. You'll never have to worry if any new service someone
-is deploying will be instrumented, or if they decided to rewrite in Rust for efficiency.
+**Nikola:** Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime.
 
 **Tyler:** That can reduce drift and repeated troubleshooting. But the platform does not maintain itself.
 
 **Nikola:** Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
 
-## 19 · Put a price on the repetition
+## 19 · Make coverage the default
 
-Compare distributed ownership against one centralized namespace setup and twelve monthly shared agent updates; show operations before dollars, with zero investigation-time credit.
+Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.
 
-Live budget: 70 seconds.
+Live budget: 50 seconds.
 
-**Tyler:** Let's price that difference in ownership. This is a hypothetical year, at a hundred dollars per person-hour. Thirteen compatible services remain after our common pilot.
+**Nikola:** This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage.
 
-**Nikola:** With distributed ownership, allow two and a half hours per team to arrange and deploy its instrumentation. Thirteen teams means thirty-two and a half hours. RIO centralizes the setup. Allow one hour for the controller and namespace policy, plus thirty minutes to deploy OBI. Once for the namespace. There is no additional setup allowance for each service.
+**Tyler:** And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up.
 
-**Tyler:** Now assume an agent release every month. Thirteen separately owned updates versus one shared update: a hundred and fifty-six operations versus twelve in a year. At an assumed forty-five minutes each, that's a hundred and seventeen hours versus nine. A hundred and eight hours saved every year.
+**Nikola:** Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path.
 
-**Nikola:** We give neither side a faster-investigation credit once both have equivalent telemetry. OBI gives us broad initial visibility; we count its deployment once, not once per incident.
+## 20 · The cost of team-by-team ownership
 
-**Tyler:** Setup plus monthly upkeep saves a hundred and thirty-nine person-hours in this scenario: thirteen thousand nine hundred dollars of engineering capacity in year one. Ten thousand eight hundred in following years. Replace the assumed hours with your own; this is not a measured customer saving.
+Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.
 
-## 20 · Repetition changes the economics
+Live budget: 60 seconds.
 
-Extrapolate explicit ownership and monthly-update assumptions, with no invented per-investigation or telemetry-bill saving.
+**Tyler:** Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release.
 
-Live budget: 40 seconds.
+**Nikola:** With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time.
 
-**Tyler:** The same assumptions give about eighty-five thousand dollars of capacity for a hundred services in year one, four hundred and forty thousand for five hundred, and eight hundred and eighty-two thousand for a thousand.
+**Tyler:** Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating.
 
-**Nikola:** These are scenarios, not a scaling law. We retain the demo's supported-runtime mix and allow more independent rollout domains as the fleet grows. Each domain pays for its shared setup and monthly updates once.
-
-**Tyler:** Already centralized? Compare against that workflow. Equivalent work should give zero saving. Extra compatibility testing, exceptions, hardening, and support need their own estimates. We haven't priced incident response, waiting time, or a smaller telemetry bill.
+**Nikola:** These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams.
 
 ## 21 · Less waiting. More services ready.
 
@@ -280,4 +274,4 @@ Live budget: 50 seconds.
 
 **Tyler:** The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for.
 
-**Nikola:** Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions.
+**Nikola:** The demo shows the idea. We want an upstream home for this workflow, with the design still open. Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions.

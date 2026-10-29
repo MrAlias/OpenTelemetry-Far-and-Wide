@@ -20,11 +20,11 @@
         },
         {
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll make that visibility available across the application with the OpenTelemetry Injector and RIO, its namespace-driven operator."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
         },
         {
           "speaker": "Nikola",
-          "text": "One customer problem, then a way for the other teams to investigate theirs. Let's open the system."
+          "text": "One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system."
         }
       ],
       "leadInSeconds": 0.6,
@@ -72,7 +72,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket."
+          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available."
         },
         {
           "speaker": "Tyler",
@@ -140,8 +140,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.",
-          "direction": "Invite the viewer to look. Pause before the meaningful result appears."
+          "text": "Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went."
         },
         {
           "speaker": "Nikola",
@@ -203,7 +202,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Zero code is useful. It hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change."
+          "text": "Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change."
         }
       ],
       "pauseAfter": {
@@ -287,7 +286,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, here is the trace showing the timeout, and here is a change that removes it while keeping the price lookup."
+          "text": "Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, this is the trace showing the timeout, and now we have a change that removes it while keeping the price lookup."
         },
         {
           "speaker": "Tyler",
@@ -402,7 +401,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "In this demo, thirteen more services use runtimes in the Injector payload. The Go services keep their OBI coverage. Our next step is to share the setup across those thirteen."
+          "text": "In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen."
         },
         {
           "speaker": "Nikola",
@@ -424,10 +423,10 @@
         },
         {
           "speaker": "Nikola",
-          "text": "That already saves work. RIO, the Runtime Instrumentation Operator from OTelX, takes a different route: select the namespace centrally, let the Injector detect supported runtimes, and let the controller manage existing workloads. This demo uses the bundled prototype that led to RIO, not an upstream Operator installation."
+          "text": "That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement."
         }
       ],
-      "purpose": "Show real upstream configuration for context, credit namespace opt-in, and name the independent RIO project and bundled prototype accurately.",
+      "purpose": "Put upstream opt-in in context, then explain RIO as a talk-specific demonstration of functionality we want upstream; no agreed implementation or roadmap.",
       "sources": [
         "https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/",
         "https://github.com/otelx/rio"
@@ -442,7 +441,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here we install the namespace-driven controller once. This is the demo's RIO precursor, working with the OpenTelemetry Injector. The controller selects workloads and manages rollout; the Injector detects supported runtimes and loads their agents."
+          "text": "Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents."
         },
         {
           "speaker": "Nikola",
@@ -457,7 +456,7 @@
           "at": 0
         }
       ],
-      "purpose": "Install the merged custom component as a distinct step after upstream opt-in; earn the namespace-wide payoff.",
+      "purpose": "Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.",
       "sources": [
         "components/otel-injector-operator/README.md",
         "components/otel-injector-images/README.md",
@@ -478,11 +477,11 @@
         },
         {
           "speaker": "Tyler",
-          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector detects their runtimes and supplies the agents. Compatible services deployed into the namespace later inherit the same policy."
+          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy."
         },
         {
           "speaker": "Nikola",
-          "text": "Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it."
+          "text": "Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service."
         }
       ],
       "visuals": [
@@ -594,7 +593,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve."
+          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime."
         },
         {
           "speaker": "Tyler",
@@ -608,66 +607,60 @@
       "purpose": "Cover onboarding, updates, consistency, recovery, training and shared upkeep."
     },
     {
-      "id": "15-measure",
-      "kind": "cost-demo",
-      "title": "Put a price on the repetition",
-      "plannedDuration": 70,
-      "lead": "Tyler",
+      "id": "15-adoption",
+      "kind": "adoption",
+      "title": "Make coverage the default",
+      "plannedDuration": 50,
+      "lead": "Nikola",
       "turns": [
         {
+          "speaker": "Nikola",
+          "text": "This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage."
+        },
+        {
           "speaker": "Tyler",
-          "text": "Let's price that difference in ownership. This is a hypothetical year, at a hundred dollars per person-hour. Thirteen compatible services remain after our common pilot."
+          "text": "And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up."
         },
         {
           "speaker": "Nikola",
-          "text": "With distributed ownership, allow two and a half hours per team to arrange and deploy its instrumentation. Thirteen teams means thirty-two and a half hours. RIO centralizes the setup. Allow one hour for the controller and namespace policy, plus thirty minutes to deploy OBI. Once for the namespace. There is no additional setup allowance for each service."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "Now assume an agent release every month. Thirteen separately owned updates versus one shared update: a hundred and fifty-six operations versus twelve in a year. At an assumed forty-five minutes each, that's a hundred and seventeen hours versus nine. A hundred and eight hours saved every year."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "We give neither side a faster-investigation credit once both have equivalent telemetry. OBI gives us broad initial visibility; we count its deployment once, not once per incident."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "Setup plus monthly upkeep saves a hundred and thirty-nine person-hours in this scenario: thirteen thousand nine hundred dollars of engineering capacity in year one. Ten thousand eight hundred in following years. Replace the assumed hours with your own; this is not a measured customer saving."
+          "text": "Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path."
         }
       ],
-      "purpose": "Compare distributed ownership against one centralized namespace setup and twelve monthly shared agent updates; show operations before dollars, with zero investigation-time credit.",
+      "purpose": "Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.",
       "sources": [
-        "docs/instrumentation-savings.md",
-        "presentation/data/savings-assumptions.json",
-        "https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm",
-        "https://www.bls.gov/opub/ted/2026/compensation-costs-for-private-industry-workers-averaged-46-89-per-hour-worked-in-june-2026.htm"
+        "presentation/rollout-charts.js",
+        "demo/k8s/instrument-demo-namespace.patch.yaml"
       ]
     },
     {
-      "id": "15-scale",
-      "kind": "cost-scale",
-      "title": "Repetition changes the economics",
-      "plannedDuration": 40,
+      "id": "15-cost",
+      "kind": "cost-timeline",
+      "title": "The cost of team-by-team ownership",
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "The same assumptions give about eighty-five thousand dollars of capacity for a hundred services in year one, four hundred and forty thousand for five hundred, and eight hundred and eighty-two thousand for a thousand."
+          "text": "Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release."
         },
         {
           "speaker": "Nikola",
-          "text": "These are scenarios, not a scaling law. We retain the demo's supported-runtime mix and allow more independent rollout domains as the fleet grows. Each domain pays for its shared setup and monthly updates once."
+          "text": "With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time."
         },
         {
           "speaker": "Tyler",
-          "text": "Already centralized? Compare against that workflow. Equivalent work should give zero saving. Extra compatibility testing, exceptions, hardening, and support need their own estimates. We haven't priced incident response, waiting time, or a smaller telemetry bill."
+          "text": "Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams."
         }
       ],
-      "purpose": "Extrapolate explicit ownership and monthly-update assumptions, with no invented per-investigation or telemetry-bill saving.",
+      "purpose": "Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.",
       "sources": [
-        "docs/instrumentation-savings.md",
+        "presentation/rollout-charts.js",
         "presentation/data/savings-assumptions.json",
-        "public/presentation/savings.html"
+        "docs/instrumentation-savings.md"
       ]
     },
     {
@@ -691,7 +684,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
+          "text": "The demo shows the idea. We want an upstream home for this workflow, with the design still open. Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
         }
       ],
       "purpose": "Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions."
@@ -763,13 +756,13 @@
     }
   },
   "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-27-noticeable-customer-wait-and-obi-introduction",
+  "scriptRevision": "2026-10-29-adoption-cost-and-upstream-direction",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
   "storyRevision": "2026-10-27-two-second-timeout",
   "pronunciation": {
-    "RIO": "rhee-o (Spanish río)",
+    "RIO": "rhee-o (Spanish r\u00edo)",
     "OTelX": "oh-tell-X",
     "OBI": "Tyler: short Oh-bee, spoken as one word with no drawn-out Oh"
   }
