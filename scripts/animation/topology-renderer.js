@@ -16,19 +16,27 @@ window.renderDemoTopology=({mode='plain',progress=1,palette:C}={})=>{
   const a=points.at(-2),b=points.at(-1),angle=Math.atan2(b[1]-a[1],b[0]-a[0]);
   art+=`<path d="M${b[0]-7*Math.cos(angle-.45)} ${b[1]-7*Math.sin(angle-.45)} L${b[0]} ${b[1]} L${b[0]-7*Math.cos(angle+.45)} ${b[1]-7*Math.sin(angle+.45)}" stroke="${observed?C.blue:C.line}" stroke-width="2" fill="none"/>`;
  }
+ for(const e of model.storeEdges){
+  const points=e.points;let d=`M${points[0].join(' ')}`;
+  for(let i=1;i<points.length;i+=3)d+=' C '+points.slice(i,i+3).map(p=>p.join(' ')).join(' ');
+  art+=`<path data-store-edge="${e.from}:${e.to}" d="${d}" stroke="${C.line}" stroke-width="1.7" stroke-dasharray="5 5" fill="none"/>`;
+  const a=points.at(-2),b=points.at(-1),angle=Math.atan2(b[1]-a[1],b[0]-a[0]);
+  art+=`<path d="M${b[0]-7*Math.cos(angle-.45)} ${b[1]-7*Math.sin(angle-.45)} L${b[0]} ${b[1]} L${b[0]-7*Math.cos(angle+.45)} ${b[1]-7*Math.sin(angle+.45)}" stroke="${C.line}" stroke-width="1.7" fill="none"/>`;
+ }
  for(const n of model.nodes){
   const marked=mode==='slow'&&progress>0&&n.id==='checkout';
   const agent=n.eligible&&(mode==='complete'||mode==='deploy'&&(n.id==='checkout'||progress>0)||mode==='one'&&n.id==='checkout');
   const color=marked?C.depth:agent?C.green:mode==='observed'?(active.has(n.id)?C.blue:C.line):observed?C.blue:C.line;
-  const x=n.x-n.w/2,y=n.y-(n.h+8)/2;
-  art+=`<g data-service="${n.id}" data-agent="${agent}" data-selected="${marked}" data-eligible="${n.eligible}"><rect x="${x}" y="${y}" width="${n.w}" height="${n.h+8}" rx="5" fill="${C.panel}" stroke="${color}" stroke-width="${marked?4:2}"/>`;
-  art+=txt(n.x,n.y-5,n.label,22,C.ink,'text-anchor="middle"');
-  art+=txt(n.x,n.y+22,mode==='observed'&&active.has(n.id)?((window.DEMO_EVIDENCE?.serverDurationMs[n.id]||0)>=1000?(window.DEMO_EVIDENCE.serverDurationMs[n.id]/1000).toFixed(2)+' s':window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,18,observed?color:C.muted,'text-anchor="middle"');
-  if(agent)art+=`<circle cx="${x+n.w-8}" cy="${y+8}" r="4" fill="${C.green}"/>`;
+  const x=n.x-n.w/2,y=n.y-n.h/2;
+  art+=`<g data-service="${n.id}" data-agent="${agent}" data-selected="${marked}" data-eligible="${n.eligible}"><rect x="${x}" y="${y}" width="${n.w}" height="${n.h}" rx="5" fill="${C.panel}" stroke="${color}" stroke-width="${marked?4:2}"/>`;
+  art+=txt(n.x,n.y-4,n.label,20,C.ink,'text-anchor="middle"');
+  art+=txt(n.x,n.y+17,mode==='observed'&&active.has(n.id)?((window.DEMO_EVIDENCE?.serverDurationMs[n.id]||0)>=1000?(window.DEMO_EVIDENCE.serverDurationMs[n.id]/1000).toFixed(2)+' s':window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,16,observed?color:C.muted,'text-anchor="middle"');
   art+='</g>';
  }
- art+=`<line x1="70" y1="557" x2="1210" y2="557" stroke="${C.line}"/>`;
- art+=txt(75,583,'PostgreSQL',22,C.muted)+txt(75,611,model.databases.PostgreSQL.join(' · '),19,C.muted);
- art+=txt(790,583,'Redis',22,C.muted)+txt(790,611,model.databases.Redis.join(' · '),19,C.muted);
+ for(const store of model.stores){
+  const {x,y,w,h}=store;
+  art+=`<g data-store="${store.id}" transform="translate(${x} ${y})" fill="${C.panel}" stroke="${C.muted}" stroke-width="1.8"><path d="M${-w/2} ${-h/2+9} a${w/2} 9 0 0 1 ${w} 0 v${h-18} a${w/2} 9 0 0 1 ${-w} 0 Z"/><ellipse cx="0" cy="${-h/2+9}" rx="${w/2}" ry="9"/></g>`;
+  art+=txt(x,y+12,store.label,22,C.ink,'text-anchor="middle"');
+ }
  return art;
 };

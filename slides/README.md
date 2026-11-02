@@ -51,7 +51,9 @@ give recordings the full canvas, `codeHero` enlarges the namespace rule, and
 for contrast in both light and dark mode.
 
 Code and headings are editable Markdown/HTML. The Vue graph uses
-Graphviz geometry generated from the demo manifest; actual trace screenshots
+Graphviz geometry generated from the demo manifest, including shared database
+nodes and their eight explicit client connections. Data stores are separate
+from the eighteen application services and never count as agent deployments; actual trace screenshots
 remain evidence rather than redrawn span diagrams.
 
 ## Checks and exports

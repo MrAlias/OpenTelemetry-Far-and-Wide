@@ -91,7 +91,20 @@ try{
    })()`);
    if(result.overflow.length||result.collisions.length)errors.push(result);
    if(result.images.some(i=>!i.loaded))errors.push({slide:n,images:result.images});
-   if([3,6,15,20].includes(n)&&result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
+   if([3,6,15,20].includes(n)){
+    if(result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
+    const stores=await evaluate(`(()=>{
+     const s=document.querySelector('[data-slidev-no="${n}"] .service-topology');
+     return {nodes:[...s.querySelectorAll('[data-store]')].map(e=>e.dataset.store).sort(),
+      edges:[...s.querySelectorAll('[data-store-edge]')].map(e=>e.dataset.storeEdge).sort(),
+      labelOverflow:[...s.querySelectorAll('[data-service]')].filter(node=>{
+       const rect=node.querySelector('rect').getBoundingClientRect();
+       return [...node.querySelectorAll('text')].some(text=>{const r=text.getBoundingClientRect();return r.left<rect.left+2||r.right>rect.right-2});
+      }).map(node=>node.dataset.service)};
+    })()`);
+    const expected=['checkout:postgres','catalog:postgres','stock-planner:postgres','loyalty:postgres','receipts:postgres','cart:redis','recommendations:redis','promotions:redis'].sort();
+    if(JSON.stringify(stores.nodes)!==JSON.stringify(['postgres','redis'])||JSON.stringify(stores.edges)!==JSON.stringify(expected)||stores.labelOverflow.length)errors.push({slide:n,clicks,issue:'Shared stores must have their real client links and readable node labels',stores});
+   }
    if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});
    if(n===7&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
    if(n===20&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});

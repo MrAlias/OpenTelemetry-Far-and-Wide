@@ -28,18 +28,19 @@
 .slidev-layout .service-topology { display:block; width:100%; height:510px; }
 .slidev-layout .topology-links path { fill:none; stroke:var(--link); stroke-width:2.3; }
 .slidev-layout .topology-links path.branch-link { stroke:var(--accent); stroke-width:4; }
-.slidev-layout .topology-links path.dim-link { stroke:var(--dim-link); }
+.slidev-layout .topology-links path.dim-link,.slidev-layout .topology-store-links path.dim-link { stroke:var(--dim-link); }
 .slidev-layout .topology-node rect { fill:var(--surface); stroke:var(--line); stroke-width:2; }
 .slidev-layout .topology-node text { text-anchor:middle; fill:var(--ink); }
-.slidev-layout .topology-node .node-name { font-size:22px; }
-.slidev-layout .topology-node .node-runtime { font-size:18px; fill:var(--muted); }
+.slidev-layout .topology-node .node-name { font-size:20px; }
+.slidev-layout .topology-node .node-runtime { font-size:16px; fill:var(--muted); }
 .slidev-layout .topology-node.obi rect { stroke:var(--accent); }
 .slidev-layout .topology-node.obi .node-runtime { fill:var(--accent); }
 .slidev-layout .topology-node.agent rect { stroke:var(--agent); }
-.slidev-layout .topology-node.agent .node-runtime,.slidev-layout .topology-node.agent circle { fill:var(--agent); }
+.slidev-layout .topology-node.agent .node-runtime { fill:var(--agent); }
 .slidev-layout .topology-node.dim { opacity:.38; }
-.slidev-layout .topology-databases line { stroke:var(--line); }
-.slidev-layout .topology-databases text { font-size:22px; fill:var(--muted); }
+.slidev-layout .topology-store-links path { fill:none; stroke:var(--link); stroke-width:1.7; stroke-dasharray:5 5; }
+.slidev-layout .topology-store path,.slidev-layout .topology-store ellipse { fill:var(--surface); stroke:var(--muted); stroke-width:1.8; }
+.slidev-layout .topology-store text { font-size:22px; fill:var(--ink); }
 .slidev-layout .coverage-key { display:flex; justify-content:center; gap:44px; margin-top:10px; font-size:23px; }
 .slidev-layout .coverage-key span { display:flex; gap:10px; align-items:center; }
 .slidev-layout .coverage-key span::before { content:''; width:12px; height:12px; border:2px solid; border-radius:50%; }
