@@ -110,6 +110,8 @@ clicks: 1
 <div v-if="$clicks > 0" class="coverage-key"><span class="agent-key">14 language agents</span><span class="obi-key">4 with OBI</span></div>
 
 <!--
+[click]
+
 **Nikola:**
 
 There they are. Checkout keeps its direct agent. Thirteen more services gain language detail. And the four Go services keep OBI. We didn't have to visit each service to make that happen.

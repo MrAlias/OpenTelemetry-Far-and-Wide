@@ -8,6 +8,7 @@ await mkdir(path.join(work,'tmp'),{recursive:true});
 await mkdir(path.join(work,'renders'),{recursive:true});
 const resolution=JSON.parse(await readFile(path.join(root,'presentation/data/resolution.json'),'utf8'));
 const talk=JSON.parse(await readFile(path.join(root,'scripts/animation/talk.json'),'utf8'));
+const scriptMap=JSON.parse(await readFile(path.join(root,'presentation/data/slide-script-map.json'),'utf8'));
 const namespaceNote=talk.chapters.find(c=>c.id==='11-enroll-services').turns[0].text;
 const origin=process.env.SLIDEV_URL||'http://localhost:3040';
 class CDP {
@@ -137,6 +138,39 @@ try{
  for(let i=0;i<100;i++){if(await evaluate(`document.body.innerText.includes(${JSON.stringify(namespaceNote)})`))break;await wait(100);}
  const presenter=await evaluate(`({notes:document.body.innerText.includes(${JSON.stringify(namespaceNote)}),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
+ // Exercise the real presenter controls in both directions. A marker must
+ // emphasize exactly the dialogue belonging to the visible click state.
+ for(const [index, entry] of scriptMap.entries()) {
+  if(!entry.noteClicks?.length)continue;
+  const n=index+1,chapter=talk.chapters.find(c=>c.id===entry.chapter);
+  await cdp.call('Page.navigate',{url:route(`/presenter/${n}?clicks=0`)},sessionId);
+  for(let i=0;i<100;i++){
+   if(await evaluate(`!!document.querySelector('.slidev-note-with-clicks .slidev-note-click-mark')`))break;
+   await wait(100);
+  }
+  for(const [step,clicks] of [0,1,0].entries()) {
+   if(step){
+    const key=clicks?'ArrowRight':'ArrowLeft',code=clicks?39:37;
+    await cdp.call('Input.dispatchKeyEvent',{type:'keyDown',key,code:key,windowsVirtualKeyCode:code},sessionId);
+    await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key,code:key,windowsVirtualKeyCode:code},sessionId);
+   }
+   await wait(250);
+   const expected=entry.turns.map(turn=>({text:chapter.turns[turn].text,
+    active:entry.noteClicks.filter(marker=>entry.turns.indexOf(marker.turn)<=entry.turns.indexOf(turn)).at(-1)?.at===clicks
+      || (clicks===0&&!entry.noteClicks.some(marker=>entry.turns.indexOf(marker.turn)<=entry.turns.indexOf(turn)))}));
+   const noteState=await evaluate(`(()=>{
+    const note=document.querySelector('.slidev-note-with-clicks');
+    const marker=note?.querySelector('.slidev-note-click-mark-active');
+    return {marker:marker?Number(marker.dataset.clicks):0,turns:${JSON.stringify(expected)}.map(turn=>{
+     const p=[...note.querySelectorAll('p')].find(p=>p.textContent===turn.text);
+     return {...turn,present:!!p,emphasized:!!p&&!p.closest('.slidev-note-fade')};
+    })};
+   })()`);
+   if(noteState.marker!==clicks||noteState.turns.some(turn=>!turn.present||turn.active!==turn.emphasized))errors.push({slide:n,clicks,issue:'Presenter note click highlighting does not match the visible build',noteState});
+   console.log(`Checked presenter notes on slide ${n}, click ${clicks}`);
+  }
+ }
+
  await cdp.call('Page.navigate',{url:origin+'/presentation/savings.html'},sessionId);
  for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$13,900'"))break;await wait(100);}
  const calculator=await evaluate(`(()=>{
@@ -156,5 +190,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All 27 slides, measured results, five click builds, video playback and presenter notes passed.');
+ console.log('All 27 slides, measured results, five click builds, video playback and click-aware presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}

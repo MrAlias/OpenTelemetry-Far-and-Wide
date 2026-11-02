@@ -25,6 +25,8 @@ OTEL_INSTRUMENTATION_METHODS_INCLUDE: >-
 
 We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
 
+[click]
+
 **Nikola:**
 
 We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it.
