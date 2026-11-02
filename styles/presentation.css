@@ -66,8 +66,6 @@
 .slidev-layout .measurements th { color:var(--accent); font-weight:500; }
 .slidev-layout .closing-lines { font-size:60px; line-height:1.45; margin-top:60px; letter-spacing:-.025em; }
 .slidev-layout .closing-link { font-size:22px; margin-top:40px; }
-.slidev-layout .previous-talk { position:absolute; left:64px; bottom:65px; margin:0; font-size:21px; }
-.slidev-layout .previous-talk a { color:var(--accent); }
 .slidev-layout .configuration-evidence { margin:25px 0 0; }
 .slidev-layout .configuration-evidence p { font-size:25px; color:var(--muted); margin:0 0 16px; }
 .slidev-layout .configuration-evidence svg { width:100%; height:auto; aspect-ratio:550/36; display:block; margin-bottom:28px; }
@@ -131,3 +129,10 @@
 .slidev-layout .obi-intro .obi-promise { font-size:46px; line-height:1.25; margin:0 0 30px; }
 .slidev-layout .obi-intro ul { font-size:29px; line-height:1.6; padding-left:31px; }
 .slidev-layout .obi-intro .obi-scope { font-size:23px; color:var(--muted); margin-top:28px; }
+.slidev-layout .obi-intro { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:48px; }
+.slidev-layout .obi-previous-talk { padding-top:26px; text-align:center; }
+.slidev-layout .obi-previous-talk a { display:flex; flex-direction:column; align-items:center; color:var(--ink); text-decoration:none; border:0; }
+.slidev-layout .obi-recording-label { font-size:22px; color:var(--muted); margin-bottom:16px; }
+.slidev-layout .obi-previous-talk img { display:block; width:256px; height:256px; background:white; }
+.slidev-layout .obi-previous-talk strong { font-size:25px; font-weight:500; line-height:1.35; margin-top:18px; }
+.slidev-layout .obi-previous-talk small { font-size:20px; color:var(--muted); margin-top:10px; }

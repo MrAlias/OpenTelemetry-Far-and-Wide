@@ -28,8 +28,6 @@ clicks: 1
 <OBIIntro v-if="$clicks === 0" />
 <DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
 
-<p v-if="$clicks === 0" class="previous-talk"><a href="https://www.youtube.com/watch?v=Jy0d9QXZXrQ">Previously: Debugging Your Cluster When It’s on Fire · KubeCon NA 2025 ↗</a></p>
-
 <!--
 **Tyler:**
 
