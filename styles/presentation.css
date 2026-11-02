@@ -33,11 +33,12 @@
 .slidev-layout .topology-node text { text-anchor:middle; fill:var(--ink); }
 .slidev-layout .topology-node .node-name { font-size:20px; }
 .slidev-layout .topology-node .node-runtime { font-size:16px; fill:var(--muted); }
+.slidev-layout .topology-node .node-duration { font-weight:600; }
 .slidev-layout .topology-node.obi rect { stroke:var(--accent); }
 .slidev-layout .topology-node.obi .node-runtime { fill:var(--accent); }
 .slidev-layout .topology-node.agent rect { stroke:var(--agent); }
 .slidev-layout .topology-node.agent .node-runtime { fill:var(--agent); }
-.slidev-layout .topology-node.dim { opacity:.38; }
+.slidev-layout .topology-node.dim { opacity:.55; }
 .slidev-layout .topology-store-links path { fill:none; stroke:var(--link); stroke-width:1.7; stroke-dasharray:5 5; }
 .slidev-layout .topology-store path,.slidev-layout .topology-store ellipse { fill:var(--surface); stroke:var(--muted); stroke-width:1.8; }
 .slidev-layout .topology-store text { font-size:22px; fill:var(--ink); }

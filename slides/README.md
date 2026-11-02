@@ -53,8 +53,10 @@ for contrast in both light and dark mode.
 Code and headings are editable Markdown/HTML. The Vue graph uses
 Graphviz geometry generated from the demo manifest, including shared database
 nodes and their eight explicit client connections. Data stores are separate
-from the eighteen application services and never count as agent deployments; actual trace screenshots
-remain evidence rather than redrawn span diagrams.
+from the eighteen application services and never count as agent deployments.
+Every service keeps its language label; the observed-request state adds the
+recorded duration alongside it, rather than replacing the language. Actual
+trace screenshots remain evidence rather than redrawn span diagrams.
 
 ## Checks and exports
 

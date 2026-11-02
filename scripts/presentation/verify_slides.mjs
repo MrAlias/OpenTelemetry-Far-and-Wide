@@ -95,14 +95,16 @@ try{
     if(result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
     const stores=await evaluate(`(()=>{
      const s=document.querySelector('[data-slidev-no="${n}"] .service-topology');
-     return {nodes:[...s.querySelectorAll('[data-store]')].map(e=>e.dataset.store).sort(),
+     return {languages:s.querySelectorAll('[data-language]').length,durations:s.querySelectorAll('[data-duration]').length,
+      nodes:[...s.querySelectorAll('[data-store]')].map(e=>e.dataset.store).sort(),
       edges:[...s.querySelectorAll('[data-store-edge]')].map(e=>e.dataset.storeEdge).sort(),
       labelOverflow:[...s.querySelectorAll('[data-service]')].filter(node=>{
        const rect=node.querySelector('rect').getBoundingClientRect();
-       return [...node.querySelectorAll('text')].some(text=>{const r=text.getBoundingClientRect();return r.left<rect.left+2||r.right>rect.right-2});
+       return [...node.querySelectorAll('text')].some(text=>{const r=text.getBoundingClientRect();return r.left<rect.left+2||r.right>rect.right-2||r.top<rect.top+2||r.bottom>rect.bottom-2});
       }).map(node=>node.dataset.service)};
     })()`);
     const expected=['checkout:postgres','catalog:postgres','stock-planner:postgres','loyalty:postgres','receipts:postgres','cart:redis','recommendations:redis','promotions:redis'].sort();
+    if(stores.languages!==18||stores.durations!==(n===6&&clicks===1?18:0))errors.push({slide:n,clicks,issue:'Map must preserve all languages and show request durations alongside them when observed',stores});
     if(JSON.stringify(stores.nodes)!==JSON.stringify(['postgres','redis'])||JSON.stringify(stores.edges)!==JSON.stringify(expected)||stores.labelOverflow.length)errors.push({slide:n,clicks,issue:'Shared stores must have their real client links and readable node labels',stores});
    }
    if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});

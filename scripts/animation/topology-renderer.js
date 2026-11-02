@@ -30,12 +30,15 @@ window.renderDemoTopology=({mode='plain',progress=1,palette:C}={})=>{
   const x=n.x-n.w/2,y=n.y-n.h/2;
   art+=`<g data-service="${n.id}" data-agent="${agent}" data-selected="${marked}" data-eligible="${n.eligible}"><rect x="${x}" y="${y}" width="${n.w}" height="${n.h}" rx="5" fill="${C.panel}" stroke="${color}" stroke-width="${marked?4:2}"/>`;
   art+=txt(n.x,n.y-4,n.label,20,C.ink,'text-anchor="middle"');
-  art+=txt(n.x,n.y+17,mode==='observed'&&active.has(n.id)?((window.DEMO_EVIDENCE?.serverDurationMs[n.id]||0)>=1000?(window.DEMO_EVIDENCE.serverDurationMs[n.id]/1000).toFixed(2)+' s':window.DEMO_EVIDENCE?.serverDurationMs[n.id]?.toFixed(1)+' ms'):n.runtime,16,observed?color:C.muted,'text-anchor="middle"');
+  const ms=window.DEMO_EVIDENCE?.serverDurationMs[n.id];
+  const duration=Number.isFinite(ms)?(ms>=1000?(ms/1000).toFixed(2)+' s':ms.toFixed(1)+' ms'):null;
+  const detail=n.runtime+(mode==='observed'&&duration?' · '+duration:'');
+  art+=txt(n.x,n.y+17,detail,16,observed?color:C.muted,'text-anchor="middle"');
   art+='</g>';
  }
  for(const store of model.stores){
   const {x,y,w,h}=store;
-  art+=`<g data-store="${store.id}" transform="translate(${x} ${y})" fill="${C.panel}" stroke="${C.muted}" stroke-width="1.8"><path d="M${-w/2} ${-h/2+9} a${w/2} 9 0 0 1 ${w} 0 v${h-18} a${w/2} 9 0 0 1 ${-w} 0 Z"/><ellipse cx="0" cy="${-h/2+9}" rx="${w/2}" ry="9"/></g>`;
+  art+=`<g data-store="${store.id}" transform="translate(${x} ${y})" fill="${C.panel}" stroke="${C.muted}" stroke-width="1.8"><path d="M${-w/2} ${-h/2+6} a${w/2} 6 0 0 1 ${w} 0 v${h-12} a${w/2} 6 0 0 1 ${-w} 0 Z"/><ellipse cx="0" cy="${-h/2+6}" rx="${w/2}" ry="6"/></g>`;
   art+=txt(x,y+12,store.label,22,C.ink,'text-anchor="middle"');
  }
  return art;

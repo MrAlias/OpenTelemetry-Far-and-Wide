@@ -1,6 +1,6 @@
 """Derive the presentation topology from the checked-in demo and lay it out with Graphviz."""
 from pathlib import Path
-import ast, hashlib, json, os, shlex, subprocess
+import ast, hashlib, html, json, os, shlex, subprocess
 import yaml
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -31,8 +31,16 @@ stores=[{'id':'postgres','label':'PostgreSQL'},{'id':'redis','label':'Redis'}]
 store_ids={store['label']:store['id'] for store in stores}
 store_edges=[[client,store_ids[label]] for label,clients in database_clients.items() for client in clients]
 work=ROOT/'.artifacts/storyboard/topology';work.mkdir(parents=True,exist_ok=True)
-dot=['digraph Demo {','graph [rankdir=LR, nodesep=0.34, ranksep=0.35, margin=0, splines=spline, outputorder=edgesfirst];','node [shape=box, fontname="DejaVu Sans", fontsize=20, width=1.3, margin="0.12,0.08"];']
-for n in nodes:dot.append(json.dumps(n['id'])+' [label='+json.dumps(n['label']+'\\n'+n['runtime'])+'];')
+dot=['digraph Demo {','graph [rankdir=LR, nodesep=0.34, ranksep=0.35, margin=0, splines=spline, outputorder=edgesfirst];','node [shape=box, fontname="DejaVu Sans", fontsize=20, width=1.8, height=1.3, margin="0.20,0.08"];']
+# Reserve room for languages and measured durations together in every state.
+# Match the rendered fonts rather than laying out names alone.
+timings=json.loads((ROOT/'presentation/data/request.json').read_text())['serverDurationMs']
+for n in nodes:
+ ms=timings[n['id']]
+ duration=f'{ms/1000:.2f} s' if ms>=1000 else f'{ms:.1f} ms'
+ label='<FONT POINT-SIZE="20">'+html.escape(n['label'])+'</FONT><BR/><FONT POINT-SIZE="16">'+html.escape(n['runtime'])+' · <B>'+duration+'</B></FONT>'
+ dot.append(json.dumps(n['id'])+' [label=<'+label+'>];')
+
 for a,b in edges:dot.append(json.dumps(a)+' -> '+json.dumps(b)+';')
 for store in stores:dot.append(json.dumps(store['id'])+' [shape=cylinder, fontsize=24, height=1.1, width=1.7, label='+json.dumps(store['label'])+'];')
 # Shared stores are real graph nodes. Route their client edges around service

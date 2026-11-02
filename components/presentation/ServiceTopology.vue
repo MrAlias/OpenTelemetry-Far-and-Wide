@@ -21,12 +21,12 @@ const timing = (id: string) => { const ms = (request.serverDurationMs as Record<
     </g>
     <g v-for="node in topology.nodes" :key="node.id" :data-service="node.id" :data-agent="hasAgent(node)" :class="`topology-node ${tone(node)}`">
       <rect :x="node.x - node.w / 2" :y="node.y - node.h / 2" :width="node.w" :height="node.h" rx="5" />
-      <text :x="node.x" :y="node.y + (phase === 'plain' || observed && !branch.has(node.id) ? 6 : -4)" class="node-name">{{ node.label }}</text>
-      <text v-if="phase === 'one' || phase === 'complete' || observed && branch.has(node.id)" :x="node.x" :y="node.y + 17" class="node-runtime">{{ observed && branch.has(node.id) ? timing(node.id) : node.runtime }}</text>
+      <text :x="node.x" :y="node.y - 4" class="node-name">{{ node.label }}</text>
+      <text :x="node.x" :y="node.y + 17" class="node-runtime"><tspan data-language>{{ node.runtime }}</tspan><tspan v-if="observed" class="node-duration" data-duration> · {{ timing(node.id) }}</tspan></text>
     </g>
     <g v-for="store in topology.stores" :key="store.id" class="topology-store" :data-store="store.id" :transform="`translate(${store.x} ${store.y})`">
-      <path :d="`M${-store.w / 2} ${-store.h / 2 + 9} a${store.w / 2} 9 0 0 1 ${store.w} 0 v${store.h - 18} a${store.w / 2} 9 0 0 1 ${-store.w} 0 Z`" />
-      <ellipse :cx="0" :cy="-store.h / 2 + 9" :rx="store.w / 2" ry="9" />
+      <path :d="`M${-store.w / 2} ${-store.h / 2 + 6} a${store.w / 2} 6 0 0 1 ${store.w} 0 v${store.h - 12} a${store.w / 2} 6 0 0 1 ${-store.w} 0 Z`" />
+      <ellipse :cx="0" :cy="-store.h / 2 + 6" :rx="store.w / 2" ry="6" />
       <text y="12" text-anchor="middle">{{ store.label }}</text>
     </g>
   </svg>
