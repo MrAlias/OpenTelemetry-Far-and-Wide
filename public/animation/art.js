@@ -20,6 +20,11 @@
     });return s;
   }
   function list(items,{x=85,y=270,size=33,gap=70,color=C.ink}={}){return items.map((s,i)=>text(x,y+i*gap,s,size,color)).join('');}
+  function capturedPanel(capture, region, x, y, width, id) {
+    const [left,top,w,h]=region, scale=width/w;
+    const file='demo-capture/'+capture.image, src=window.EVIDENCE_IMAGES?.[file]||file;
+    return `<defs><clipPath id="${id}"><rect x="${x}" y="${y}" width="${width}" height="${h*scale}" rx="5"/></clipPath></defs><image href="${escape(src)}" x="${x-left*scale}" y="${y-top*scale}" width="${capture.width*scale}" height="${capture.height*scale}" clip-path="url(#${id})"/>`;
+  }
   function content(scene,p){switch(scene.kind){
     case 'title':return lines(70,270,['OpenTelemetry','Far and Wide'],88)+text(75,485,'Tyler Yahn · Nikola Grcevski',32,C.muted)+lines(75,565,['Find the wait. Fix the cause.','Make the next investigation easier.'],33,C.blue);
     case 'observed':return fleet('observed',p)+center(655,p>0?'Cart branch · captured server durations':'A topology shows possible calls; the request shows observed calls',25,C.blue);
@@ -27,16 +32,15 @@
     case 'screen':case 'terminal':return '';
     case 'obi-intro':return text(75,210,'OpenTelemetry eBPF Instrumentation',32,C.blue)+lines(75,300,['Start with the applications','you already have.'],52)+lines(75,485,['No application code changes','No application restarts','OpenTelemetry traces and metrics'],30,C.ink)+text(75,665,'Deploy on the nodes · discover supported Linux workloads',26,C.muted);
     case 'timeout-evidence':{
-      const e=window.TIMEOUT_EVIDENCE;
-      const src=window.EVIDENCE_IMAGES?.['demo-capture/java-detail-poster.png']||'demo-capture/java-detail-poster.png';
-      return `<defs><clipPath id="timeout-span-crop"><rect x="70" y="195" width="1140" height="183"/></clipPath></defs><image href="${escape(src)}" x="70" y="-143.4375" width="1140" height="641.25" clip-path="url(#timeout-span-crop)"/>`+
-        text(75,425,'Failed HTTP client span · '+(e.durationMs/1000).toFixed(2)+' s',26,C.muted)+
-        [['url.full',e.url],['error.type',e.errorType],['exception.message',e.exceptionMessage]].map(([key,value],i)=>text(75,478+i*55,key,28,C.muted,'font-family="monospace"')+text(430,478+i*55,value,28,i?C.depth:C.ink,'font-family="monospace"')).join('')+
-        text(75,650,'Actual span attributes and exception event · Java agent',25,C.muted);
+      const c=window.ATTRIBUTE_CAPTURES.timeout, width=980;
+      return capturedPanel(c,c.attributes,150,190,width,'timeout-attributes')
+        +capturedPanel(c,c.event,150,190+c.attributes[3]*width/c.attributes[2]+16,width,'timeout-event');
     }
     case 'configuration-fix':{
-      const e=window.TIMEOUT_EVIDENCE,src=window.EVIDENCE_IMAGES?.['demo-capture/pricing-config-attribute.png']||'demo-capture/pricing-config-attribute.png';
-      return text(75,190,'Checkout resource attribute',27,C.muted)+`<defs><clipPath id="config-row"><rect x="75" y="215" width="1100" height="72"/></clipPath></defs><g clip-path="url(#config-row)"><image href="${src}" x="-1315" y="-313" width="2560" height="1440"/></g>`+text(75,420,'process.environment_variable.',29,C.muted,'font-family="monospace"')+text(75,475,'LEGACY_PRICING_URL',44,C.ink,'font-family="monospace"')+text(75,555,e.environmentValue,35,C.green,'font-family="monospace"')+text(75,635,'Same address as the failed HTTP span.',28,C.muted);
+      const c=window.ATTRIBUTE_CAPTURES.configuration, width=1120;
+      return capturedPanel(c,c.context,80,185,width,'resource-context')
+        +capturedPanel(c,c.setting,80,185+c.context[3]*width/c.context[2]+24,width,'resource-setting')
+        +text(80,650,'Same address as the failed HTTP span.',28,C.muted);
     }
     case 'operator-opt-in':return text(75,205,'Upstream Operator · configuration examples',29,C.blue)+text(75,270,'Java: inject-java: "true"',29,C.ink,'font-family="monospace"')+text(75,320,'Python: inject-python: "true"',29,C.ink,'font-family="monospace"')+text(75,380,'Workload or namespace annotations + agent settings',26,C.muted)+text(75,480,'Our demo: centralized control',38,C.green)+lines(75,535,['RIO is purpose-built for this talk','Goal: an upstream home; implementation still open'],28,C.ink);
     case 'namespace-result':return text(75,163,'selector.namespaces: [demo-apps]',29,C.blue,'font-family="monospace"')+fleet(p>0?'deploy':'one',p)+center(655,'14 language agents · 4 Go services with OBI · one namespace choice',26,C.green);

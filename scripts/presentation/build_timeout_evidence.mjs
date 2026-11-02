@@ -1,5 +1,6 @@
-// Reflow literal captured attributes for legibility; never infer timeout from duration.
+// Validate the recorded timeout and package native dashboard screenshot views.
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { readFile, writeFile } from 'node:fs/promises'
 const root = new URL('../../', import.meta.url)
 const source = 'public/demo-capture/java-trace-evidence.json'
@@ -28,5 +29,18 @@ const data = {
   provenance: 'Literal fields from the captured HTTP client span and its exception event. The screenshot shows the same span.'
 }
 await writeFile(new URL('presentation/data/timeout-evidence.json', root), JSON.stringify(data, null, 2) + '\n')
-await writeFile(new URL('public/animation/timeout-data.js', root), 'window.TIMEOUT_EVIDENCE = ' + JSON.stringify(data, null, 2) + ';\n')
+const captures = JSON.parse(await readFile(new URL('presentation/data/attribute-captures.json', root)))
+assert.equal(captures.traceId, data.traceId)
+assert.equal(captures.spanId, data.spanId)
+for (const capture of [captures.timeout, captures.configuration]) {
+  for (const folder of ['public/demo-capture/', 'public/presentation/images/']) {
+    const png = await readFile(new URL(folder + capture.image, root))
+    assert.equal(createHash('sha256').update(png).digest('hex'), capture.sha256)
+    assert.equal(png.readUInt32BE(16), capture.width * capture.deviceScaleFactor)
+    assert.equal(png.readUInt32BE(20), capture.height * capture.deviceScaleFactor)
+  }
+}
+await writeFile(new URL('public/animation/timeout-data.js', root),
+  'window.TIMEOUT_EVIDENCE = ' + JSON.stringify(data, null, 2) + ';\n'
+  + 'window.ATTRIBUTE_CAPTURES = ' + JSON.stringify(captures, null, 2) + ';\n')
 console.log(`Captured timeout: ${data.durationMs.toFixed(2)} ms; ${data.errorType}; ${data.exceptionMessage}`)

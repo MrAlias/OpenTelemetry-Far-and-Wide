@@ -4,7 +4,7 @@ const talk=JSON.parse(await readFile('scripts/animation/talk.json','utf8'));
 const timed=JSON.parse((await readFile('public/animation/timeline.js','utf8')).replace(/^window.TALK = /,'').replace(/;\s*$/,''));
 const images={};
 for(const c of talk.chapters)for(const v of c.visuals||[]){const src=v.type==='image'?v.src:v.poster;if(src)images[src]='data:image/png;base64,'+(await readFile('public/'+src)).toString('base64');}
-for(const name of ['connected-trace','java-timeout-span','pricing-config-attribute'])images['demo-capture/'+name+'.png']='data:image/png;base64,'+(await readFile('public/demo-capture/'+name+'.png')).toString('base64');
+for(const name of ['connected-trace','java-timeout-span','pricing-config-attribute','java-timeout-proof','checkout-resource-proof'])images['demo-capture/'+name+'.png']='data:image/png;base64,'+(await readFile('public/demo-capture/'+name+'.png')).toString('base64');
 const scripts=await Promise.all(['savings-data.js','rollout-charts.js','resources.js','resolution-data.js','timeout-data.js','topology.js','evidence.js','art.js'].map(p=>readFile('public/animation/'+p,'utf8')));
 const data=talk.chapters.map((c,i)=>({...c,buildTime:timed.chapters[i]?.id===c.id?timed.chapters[i].buildTime:0,visualCues:(Number.isInteger(c.previewVisualIndex)?[c.visuals[c.previewVisualIndex]]:c.visuals||[]).map(v=>({...v,start:0})),number:i+1}));
 await writeFile('public/storyboard.html',`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OpenTelemetry Far and Wide — Storyboard</title><style>
