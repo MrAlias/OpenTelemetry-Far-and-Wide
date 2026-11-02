@@ -29,7 +29,7 @@ export function costTimeline(model, scenario = model.scenarios[0], months = 24) 
 
 const light = { ink: '#16182b', muted: '#5f6475', grid: '#dce0e8', central: '#087b6a', distributed: '#5b5bd6', emphasis: '#9d5410' }
 const escape = value => String(value).replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
-const text = (x, y, value, size = 25, color, extra = '') => `<text x="${x}" y="${y}" fill="${color}" font-size="${size}" ${extra}>${escape(value)}</text>`
+const text = (x, y, value, size = 25, color, extra = '') => `<text x="${x}" y="${y}" fill="${color}" style="font-size:${size}px" ${extra}>${escape(value)}</text>`
 const path = (points, x, y) => points.map(([a, b], i) => `${i ? 'L' : 'M'}${x(a).toFixed(2)},${y(b).toFixed(2)}`).join(' ')
 const svg = (label, body, p) => `<svg viewBox="0 0 1152 470" role="img" aria-label="${escape(label)}" xmlns="http://www.w3.org/2000/svg" style="font-family:DejaVu Sans,sans-serif;color:${p.ink}">${body}</svg>`
 
@@ -42,9 +42,8 @@ export function renderAdoptionChart(palette = {}) {
   }
   body += `<path d="M95 100V390H940" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   body += `<path data-adoption-series="centralized" d="${path(adoptionPaths.centralized, x, y)}" fill="none" stroke="${p.central}" stroke-width="5"/>`
-  body += `<path data-adoption-series="distributed" d="${path(adoptionPaths.distributed, x, y)}" fill="none" stroke="${p.distributed}" stroke-width="5" stroke-dasharray="12 6"/>`
+  body += `<path data-adoption-series="distributed" d="${path(adoptionPaths.distributed, x, y)}" fill="none" stroke="${p.distributed}" stroke-width="5"/>`
   body += text(315, 82, 'Centralized control', 29, p.central)
-  body += text(315, 127, 'One rollout; new services inherit the policy', 23, p.central)
   body += text(957, 229, 'Team-by-team', 25, p.distributed)
   body += text(420, 330, 'New services', 23, p.muted)+text(760, 330, 'Language rewrite', 23, p.muted)
   body += `<path d="M570 310L${x(65)} ${y(59) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
@@ -75,8 +74,7 @@ export function renderCostChart(model, palette = {}) {
   body += text(711, 385, 'Centralized control', 26, p.central)
   body += text(711, 420, last.centralizedHours.toLocaleString('en-US') + ' hours', 24, p.central)
   body += text(800, 213, data.savedHours.toLocaleString('en-US') + ' hours', 64, p.emphasis, 'font-weight="600" letter-spacing="-2" data-capacity-hours="' + data.savedHours + '"')
-  body += text(807, 258, 'Engineering capacity', 25, p.ink)
-  body += text(807, 293, 'freed over two years', 25, p.ink)
-  body += text(807, 335, shortMoney(data.saved) + ' at $' + model.hourlyRate.toLocaleString('en-US') + '/hour', 24, p.muted)
+  body += text(807, 263, 'freed over two years', 25, p.ink)
+  body += text(807, 310, shortMoney(data.saved) + ' at $' + model.hourlyRate.toLocaleString('en-US') + '/hour', 24, p.muted)
   return svg('Cumulative instrumentation hours for the 18-service demo, stepping up with each monthly update over 24 months: distributed ownership takes 266.5 hours; centralized control takes 19.5 hours. This frees 247 engineering hours, valued at $24,700 at $100 per hour.', body, p)
 }

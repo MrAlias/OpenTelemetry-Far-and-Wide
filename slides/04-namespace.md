@@ -2,11 +2,9 @@
 kicker: The scaling question
 ---
 
-# One fixed. Thirteen to equip.
+# What about the other 13?
 
 <ServiceTopology phase="one" />
-
-<p class="caption">How do the other teams get this detail without repeating the setup?</p>
 
 <!--
 **Nikola:**
@@ -22,21 +20,9 @@ I was hoping you wouldn't ask. Each of those thirteen services can use the OpenT
 kicker: Configuration context · upstream comparison
 ---
 
-# Choose languages—or share one runtime policy
+# From languages to a namespace
 
-<div class="code-focus">
-
-```yaml
-# Upstream Operator: Java workload opt-in
-instrumentation.opentelemetry.io/inject-java: "true"
-# Upstream Operator: Python workload opt-in
-instrumentation.opentelemetry.io/inject-python: "true"
-```
-
-</div>
-
-<p class="lead">Select the namespace.<br>Let the Injector handle supported runtimes.</p>
-<p class="caption">RIO is purpose-built for this talk. We want this workflow upstream.</p>
+<OperatorChoice />
 
 <!--
 **Tyler:**
@@ -58,6 +44,7 @@ We'd like this capability to find an upstream home, in the Operator or another f
 
 ---
 kicker: Live demo · centralized control
+evidence: true
 ---
 
 # Install the namespace-driven controller
@@ -76,6 +63,7 @@ We prepare the shared payload, exporter, and exclusions here. Then the applicati
 
 ---
 kicker: Choose the application boundary
+codeHero: true
 ---
 
 # Instrument this namespace
@@ -90,10 +78,6 @@ action: Inject
 
 </div>
 
-<p class="lead">One namespace choice.<br>No list of individual services.</p>
-
-<p class="caption">Shared payload, exporter and exclusions are configured once.</p>
-
 <!--
 **Nikola:**
 
@@ -102,6 +86,7 @@ Here's the decision: instrument demo-apps. One namespace rule. We haven't named 
 
 ---
 kicker: Live demo · namespace selection
+evidence: true
 ---
 
 # Apply once. Let the controller roll it out.
@@ -119,12 +104,10 @@ kicker: The namespace result
 clicks: 1
 ---
 
-# The supported services light up
+# Ready for the next investigation
 
-<div class="namespace-rule">selector.namespaces: [demo-apps]</div>
-<div class="namespace-topology"><ServiceTopology :phase="$clicks > 0 ? 'complete' : 'one'" /></div>
-
-<p class="caption"><span class="agent-text">14 language agents</span> · 4 Go services with OBI</p>
+<ServiceTopology :phase="$clicks > 0 ? 'complete' : 'one'" />
+<div v-if="$clicks > 0" class="coverage-key"><span class="agent-key">14 language agents</span><span class="obi-key">4 with OBI</span></div>
 
 <!--
 **Nikola:**
@@ -144,11 +127,9 @@ So when the next team has a slow request, the detail can already be there. The p
 kicker: The useful fleet result
 ---
 
-# One request. The whole application.
+# Across the whole application
 
 <TraceEvidence image="fixed-fleet-overview.png" label="Actual post-fix request waterfall after namespace enrollment, including all supported language agents and OBI-covered services" />
-
-<p class="caption">18 application services observed · 14 language agents + 4 services with OBI</p>
 
 <!--
 **Tyler:**
@@ -158,6 +139,7 @@ Let's check a fresh order. We can still follow it across the application. Now mo
 
 ---
 kicker: The useful fleet result
+evidence: true
 ---
 
 # Open language detail in Catalog

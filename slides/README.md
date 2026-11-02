@@ -40,7 +40,13 @@ assumes the shared payload, exporter and exclusions were configured first.
 - `../public/presentation/`: checked-in stills and short clips; no narration runtime
   or demo cluster is needed to view the slides.
 
-Code, headings and conclusions are editable Markdown/HTML. The Vue graph uses
+Audience slides use a headline with evidence, code, or a diagram; the full
+dialogue stays in presenter notes. Shared layout flags `evidence` and `mediaAt`
+give recordings the full canvas, `codeHero` enlarges the namespace rule, and
+`titleHidden` lets the cost chart stand alone. Code uses GitHub syntax themes
+for contrast in both light and dark mode.
+
+Code and headings are editable Markdown/HTML. The Vue graph uses
 Graphviz geometry generated from the demo manifest; actual trace screenshots
 remain evidence rather than redrawn span diagrams.
 
@@ -65,7 +71,7 @@ With the development server running on port 3030, run:
 SLIDEV_URL=http://localhost:3030 npm run slides:verify
 ```
 
-The check renders every slide, checks bounds and collisions, exercises all four
+The check renders every slide, checks bounds and collisions, exercises all five
 click builds, plays a real clip and verifies pause-on-leave and presenter notes.
 Set `SLIDEV_CHROMIUM` to an installed Chromium executable if necessary. Browser
 profiles, screenshots and reports stay in `.artifacts/slides/`.
@@ -82,7 +88,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slide 24 compares adoption paths; slide 25 compares cumulative setup and upkeep
+Slide 25 compares adoption paths; slide 26 compares cumulative setup and upkeep
 cost over 24 months for the existing 18-service demo. The adoption curves
 are conceptual, not measured rates or a rollout forecast; this is covered in
 the spoken notes rather than an on-slide label. Both charts use

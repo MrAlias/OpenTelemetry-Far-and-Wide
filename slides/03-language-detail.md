@@ -1,9 +1,10 @@
 ---
 kicker: Add useful detail
 clicks: 1
+mediaAt: 1
 ---
 
-# Give the local work a name
+# Inside Checkout
 
 <div v-if="$clicks === 0" class="code-focus">
 
@@ -19,8 +20,6 @@ OTEL_INSTRUMENTATION_METHODS_INCLUDE: >-
 
 <DemoClip v-else src="inspect-java-setup-edited.mp4" poster="inspect-java-setup-edited-poster.png" label="Actual inspection of the Java-agent setup and method configuration" />
 
-<p v-if="$clicks === 0" class="lead">The agent supplies instrumentation.<br>We still supply the setup.</p>
-
 <!--
 **Tyler:**
 
@@ -33,6 +32,7 @@ We do still have to get the agent into the workload, tell Java to load it, and s
 
 ---
 kicker: Live demo · Java agent
+evidence: true
 ---
 
 # Roll Checkout with the Java agent
@@ -53,7 +53,7 @@ Keep those steps in mind. We managed them for one service we know. We'll come ba
 kicker: The useful result
 ---
 
-# A failed attempt before a working fallback
+# The failed call timed out
 
 <TimeoutEvidence />
 
@@ -75,7 +75,7 @@ Now we have something better than, Checkout is slow. We have the call, the reaso
 kicker: The cause
 ---
 
-# The retired endpoint is still configured
+# A retired endpoint, still configured
 
 <ConfigEvidence />
 
@@ -91,6 +91,7 @@ Think about the conversation we can have with the owning team now. Customers are
 
 ---
 kicker: Live demo · application fix
+evidence: true
 ---
 
 # Remove the setting. Roll the same image.
@@ -109,6 +110,7 @@ The rollout is ready. Let's go back to the customer. What does the next order lo
 
 ---
 kicker: Back to the customer
+evidence: true
 ---
 
 # The next checkout skips the failed call
@@ -133,7 +135,7 @@ That's the moment we wanted. The same checkout has a shorter path through it, an
 kicker: The repeated-request result
 ---
 
-# The improvement holds across requests
+# The wait is gone
 
 <CustomerResult />
 

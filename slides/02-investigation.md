@@ -2,11 +2,9 @@
 kicker: The application
 ---
 
-# One application. Eighteen services.
+# 18 services. One customer request.
 
 <ServiceTopology />
-
-<p class="caption">A map tells us what can talk to what. We need to follow a request.</p>
 
 <!--
 **Tyler:**
@@ -21,9 +19,10 @@ The person placing the order doesn't care which service owns the delay. They jus
 ---
 kicker: The starting point
 clicks: 1
+mediaAt: 1
 ---
 
-# Meet OBI
+# OBI
 
 <OBIIntro v-if="$clicks === 0" />
 <DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
@@ -50,11 +49,9 @@ One deployment. Now let's see how much of the customer's wait we can explain.
 kicker: The observed request
 ---
 
-# One request across the application
+# Follow one request
 
 <TraceEvidence image="connected-trace.png" label="Actual OBI trace: Gateway, Checkout, Inventory and the Cart branch" />
-
-<p class="caption">Service calls and database work in one waterfall</p>
 
 <!--
 **Nikola:**
@@ -71,11 +68,9 @@ kicker: The observed request
 clicks: 1
 ---
 
-# Follow the request through the map
+# The path it actually took
 
 <ServiceTopology :phase="$clicks > 0 ? 'observed' : 'plain'" />
-
-<p class="caption">Cart branch · observed server durations</p>
 
 <!--
 **Tyler:**
@@ -92,11 +87,9 @@ kicker: Choose the investigation
 clicks: 1
 ---
 
-# Find the failed connection on the request path
+# Where is the wait?
 
 <TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI waterfall with a failed Checkout CONNECT span near two seconds" />
-
-<p class="caption">Follow the slow failed attempt, rather than the longest parent span.</p>
 
 <!--
 **Tyler:**

@@ -2,14 +2,9 @@
 kicker: What the shared workflow saves
 ---
 
-# The work around a deployment adds up
+# The work between deployments
 
-<div class="payoff">One shared path.<br>Fewer repeated handoffs.</div>
-
-<div class="clocks">
-  <section><h2>People doing the work</h2><p>Find an owner. Get access.<br>Configure, review and deploy.</p></section>
-  <section><h2>Time between the steps</h2><p>Tickets, meetings, release queues.<br>Context lost while waiting.</p></section>
-</div>
+<OwnershipFlow mode="handoffs" />
 
 <!--
 **Tyler:**
@@ -33,16 +28,9 @@ Count both the people doing that work and the time they spend waiting. We usuall
 kicker: After day one
 ---
 
-# Reuse the workflow
+# Maintain once. Roll out together.
 
-<dl class="lifecycle">
-  <dt>New service</dt><dd>Inherit the namespace selection</dd>
-  <dt>Agent update</dt><dd>Use the shared rollout path</dd>
-  <dt>Configuration</dt><dd>Reduce drift and repeated rework</dd>
-  <dt>Recovery</dt><dd>Use a tested path</dd>
-</dl>
-
-<p class="caption">The platform maintains compatibility, rollout and recovery.</p>
+<OwnershipFlow mode="maintenance" />
 
 <!--
 **Tyler:**
@@ -86,13 +74,14 @@ With the namespace policy, one rollout covers the eligible services in scope, an
 
 ---
 kicker: The cost of repeated setup and upkeep
+titleHidden: true
 ---
 
 # The cost of team-by-team ownership
 
 <RolloutComparison mode="cost" />
 
-<p class="caption">18-service demo · setup + monthly updates · $100/hour</p>
+<p class="chart-context">18 services · monthly updates</p>
 
 <!--
 **Tyler:**
@@ -121,8 +110,8 @@ kicker: Make the next investigation easier
 <CustomerResult compact />
 
 <div class="closing-resources">
-  <a href="https://github.com/MrAlias/OpenTelemetry-Far-and-Wide"><img src="/presentation/qr-demo-source.svg" alt="QR code for the demo and presentation source" /><span><strong>Demo + slides</strong><small>MrAlias /<br>OpenTelemetry-Far-and-Wide</small></span></a>
-  <a href="https://github.com/otelx/rio"><img src="/presentation/qr-rio.svg" alt="QR code for the RIO repository" /><span><strong>RIO</strong><small>otelx/rio</small></span></a>
+  <a href="https://github.com/MrAlias/OpenTelemetry-Far-and-Wide"><img src="/presentation/qr-demo-source.svg" alt="QR code for the demo and presentation source" /><span><strong>Demo + slides</strong></span></a>
+  <a href="https://github.com/otelx/rio"><img src="/presentation/qr-rio.svg" alt="QR code for the RIO repository" /><span><strong>RIO</strong></span></a>
 </div>
 
 <!--
