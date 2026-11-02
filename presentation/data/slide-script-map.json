@@ -130,7 +130,9 @@
     "chapter": "10-operator-opt-in",
     "turns": [
       0,
-      1
+      1,
+      2,
+      3
     ]
   },
   {
@@ -159,7 +161,9 @@
     "file": "slides/04-namespace.md",
     "chapter": "11-enroll-services",
     "turns": [
-      2
+      2,
+      3,
+      4
     ]
   },
   {

@@ -24,11 +24,11 @@ OTEL_INSTRUMENTATION_METHODS_INCLUDE: >-
 <!--
 **Tyler:**
 
-We have source access here. Pricing runs before Inventory. We'll use the Java agent to time that method and expose the library calls inside it.
+We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
 
 **Nikola:**
 
-This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes.
+We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it.
 -->
 
 ---
@@ -42,11 +42,11 @@ kicker: Live demo · Java agent
 <!--
 **Tyler:**
 
-Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout.
+Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
 
 **Nikola:**
 
-Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
+Keep those steps in mind. We managed them for one service we know. We'll come back to what happens when the other teams need the same thing.
 -->
 
 ---
@@ -60,15 +60,15 @@ kicker: The useful result
 <!--
 **Tyler:**
 
-Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup.
+Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish.
 
 **Nikola:**
 
-Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first.
+And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, Connect timed out. Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
 
 **Tyler:**
 
-OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address.
+Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
 -->
 
 ---
@@ -82,11 +82,11 @@ kicker: The cause
 <!--
 **Tyler:**
 
-Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store.
+There it is: LEGACY_PRICING_URL, in Checkout's resource attributes. Its value matches the failing call. This instance is still configured to try a retired backend before it uses the working product store. An old setting is adding a wait to every order.
 
 **Nikola:**
 
-Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application.
+Think about the conversation we can have with the owning team now. Customers are losing two seconds here. This connection times out. Here's a configuration PR that removes the unused endpoint. The instrumentation gave us enough context to help with a fix, instead of just sending another team a slow-service alert.
 -->
 
 ---
@@ -100,11 +100,11 @@ kicker: Live demo · application fix
 <!--
 **Tyler:**
 
-Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes.
+Let's make that change. Remove LEGACY_PRICING_URL from the Deployment and roll Checkout. Same application image, same Java agent, same exporter. We don't need an application rebuild to stop calling the retired backend.
 
 **Nikola:**
 
-The rollout is ready. Let's send another customer request and look at its trace.
+The rollout is ready. Let's go back to the customer. What does the next order look like?
 -->
 
 ---
@@ -118,15 +118,15 @@ kicker: Back to the customer
 <!--
 **Tyler:**
 
-Here is the new request's waterfall. Expand Checkout and PricingEngine.calculate. The product-price query is still here. The failed legacy call is gone, and the rest of the request starts sooner.
+Here's the new trace. The product-price query is still there. The failed legacy call is gone. Pricing can get on with finding the price, without waiting for that old connection to time out first.
 
 **Nikola:**
 
-Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there.
+Follow the rest of the order: Inventory, the commerce branches, and the order write. Everything the customer needed still happens. We removed the wait, and kept the work that completes the order.
 
 **Tyler:**
 
-This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared.
+That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
 -->
 
 ---
@@ -140,9 +140,9 @@ kicker: The repeated-request result
 <!--
 **Tyler:**
 
-Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait.
+Across the matched requests, checkout goes from just over two seconds to about a hundred and eighty-five milliseconds. That's the wait we started with, gone from the customer's experience. The chart summarizes the change we just followed in the waterfall.
 
 **Nikola:**
 
-That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
+These are local demo measurements. The result to take away is the investigation: start with the customer, follow the request, make a change the evidence supports, and check a new request. Now let's make that possible for the next team too.
 -->

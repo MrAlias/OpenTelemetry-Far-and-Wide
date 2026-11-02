@@ -117,6 +117,11 @@ Cache keys include the whole profile identity and pronounced text. A cast change
 cannot reuse the other speaker's audio. Completed Tyler passages are reused when
 only Nikola changes. Performance directions stay outside the synthesized text.
 
+Write for the two presenters talking through a customer problem together.
+Connect each technical action to what it lets a customer or team do next.
+Use short replies and occasional light banter; avoid alternating documentation
+readouts, unexplained terms, and jokes inserted to decorate a feature list.
+
 The delivery mix normalizes loudness without altering speech duration. Cues and
 builds derive from measured original WAVs, handoff gaps and explicit inspection
 pauses. Caption sentence chunks use word weights within each turn; they remain
@@ -162,9 +167,10 @@ Never substitute calculated or invented timings for actual captured requests.
 Timeout evidence and code edit
 ------------------------------
 Run node scripts/presentation/build_timeout_evidence.mjs before exporting.
-The slide and animation reflow literal error.type and exception.message values
-from java-trace-evidence.json alongside the actual failed span. Original Grafana
-attribute/event screenshots remain reviewable under public/demo-capture/.
+The slides and animation enlarge native Grafana screenshots of the span
+attributes, exception event, and Checkout resource attributes. Captured field
+values and screenshot hashes are checked against java-trace-evidence.json.
+Full dashboard captures remain reviewable under public/demo-capture/.
 The Checkout launcher explicitly exposes LEGACY_PRICING_URL as a resource
 attribute. Remove that setting and roll the same image; do not rebuild or edit
 application code during the resolution. The new request waterfall precedes the

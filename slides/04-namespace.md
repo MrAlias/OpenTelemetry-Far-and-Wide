@@ -11,11 +11,11 @@ kicker: The scaling question
 <!--
 **Nikola:**
 
-We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
+We got our answer, but we had to arrange the Java setup before we could get that detail. Could you do the same for the thirteen other supported services?
 
 **Tyler:**
 
-In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen.
+I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
 -->
 
 ---
@@ -41,11 +41,19 @@ instrumentation.opentelemetry.io/inject-python: "true"
 <!--
 **Tyler:**
 
-To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
+The upstream OpenTelemetry Operator already saves some of that work. Here's its opt-in configuration: different injection annotations for Java and Python, with an Instrumentation resource supplying the settings. Those annotations can go on a workload or a namespace.
 
 **Nikola:**
 
-That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement.
+But suppose I own the application and want its supported services instrumented. I'd like to make that choice once, and have the controller handle the runtimes and the rollouts.
+
+**Tyler:**
+
+That's the workflow we're demonstrating with RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. This next installation is RIO, rather than the upstream Operator.
+
+**Nikola:**
+
+We'd like this capability to find an upstream home, in the Operator or another form. That needs community design and agreement. Here's the experience we'd like people to be able to have.
 -->
 
 ---
@@ -59,11 +67,11 @@ kicker: Live demo · centralized control
 <!--
 **Tyler:**
 
-Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents.
+Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service.
 
 **Nikola:**
 
-The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
+We prepare the shared payload, exporter, and exclusions here. Then the application owner gets a simpler decision: instrument this namespace. They can ask for coverage without first turning it into a separate project with every service owner.
 -->
 
 ---
@@ -89,7 +97,7 @@ action: Inject
 <!--
 **Nikola:**
 
-Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
+Here's the decision: instrument demo-apps. One namespace rule. We haven't named thirteen services or sorted them into language-specific lists.
 -->
 
 ---
@@ -103,7 +111,7 @@ kicker: Live demo · namespace selection
 <!--
 **Tyler:**
 
-Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy.
+Apply it, and the controller rolls the selected workloads. The Injector supplies the agents for supported runtimes. If another compatible service is deployed here later, it inherits the policy. That team doesn't need to arrange its own instrumentation rollout first.
 -->
 
 ---
@@ -121,7 +129,15 @@ clicks: 1
 <!--
 **Nikola:**
 
-Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service.
+There they are. Checkout keeps its direct agent. Thirteen more services gain language detail. And the four Go services keep OBI. We didn't have to visit each service to make that happen.
+
+**Tyler:**
+
+OBI is still running alongside them. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI service by service as those agents arrived.
+
+**Nikola:**
+
+So when the next team has a slow request, the detail can already be there. The platform maintains the shared setup. The application team can start with its question.
 -->
 
 ---
@@ -137,7 +153,7 @@ kicker: The useful fleet result
 <!--
 **Tyler:**
 
-Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
+Let's check a fresh order. We can still follow it across the application. Now more of those services have the detail we had to set up by hand for Checkout.
 -->
 
 ---
@@ -151,9 +167,9 @@ kicker: The useful fleet result
 <!--
 **Nikola:**
 
-Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
+Open Catalog. These are database spans from its Java agent. The same enrollment covers the Node, Python, Ruby, and dot net services. If a team needs to understand a database call, it can open that detail instead of first asking how to install an agent.
 
 **Tyler:**
 
-The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
+We haven't fixed a problem in every service. We've given the other teams a way to start looking. Checkout keeps its fix, and the next investigation can begin closer to the answer.
 -->

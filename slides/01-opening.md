@@ -14,9 +14,9 @@ kicker: The investigation
 <!--
 **Tyler:**
 
-The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
+You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer.
 
 **Nikola:**
 
-One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
+Then we'll tackle the other problem: getting eighteen services ready for that investigation. We'll use the OpenTelemetry Injector and our demo Kubernetes operator so every team doesn't have to repeat the setup. First, let's follow that order.
 -->

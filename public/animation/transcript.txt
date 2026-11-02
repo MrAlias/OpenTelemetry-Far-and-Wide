@@ -5,150 +5,158 @@ Tyler and Nikola use their separate authorized synthetic voice profiles.
 OpenTelemetry Far and Wide
 Tyler: Welcome everyone. I'm Tyler Yahn.
 
-Nikola: And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
+Nikola: And I'm Nikola Grcevski.
 
-Tyler: The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
+Tyler: You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer.
 
-Nikola: One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
+Nikola: Then we'll tackle the other problem: getting eighteen services ready for that investigation. We'll use the OpenTelemetry Injector and our demo Kubernetes operator so every team doesn't have to repeat the setup. First, let's follow that order.
 
 One application, many places to look
-Tyler: Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow.
+Tyler: This is where the order goes. Gateway, Checkout, Inventory, then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Somewhere along that route, we're losing the customer's time.
 
-Nikola: Every team can have a different definition of healthy. Following the request gives us one shared starting point.
+Nikola: The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
 
 Meet OBI
-Tyler: First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
+Tyler: We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported application traffic from Linux using eBPF, then gives us OpenTelemetry traces and metrics. We can start with the applications that are already running. No application code changes, and no application restarts.
 
-Nikola: We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available.
+Nikola: That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available.
 
-Tyler: And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
+Tyler: Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
 
-Nikola: One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request.
+Nikola: One deployment. Now let's see how much of the customer's wait we can explain.
 
 One request across the application
-Nikola: Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service.
+Nikola: Here's the order we've been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
-Tyler: Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change.
+Tyler: And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about.
 
 Follow the cart branch of this request
-Tyler: Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
+Tyler: These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram.
 
-Nikola: Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
+Nikola: That's useful when the first team you call says, we don't call that service. Maybe not directly. The request still went there, and now both teams can look at the same evidence.
 
 Find the failed connection on the request path
-Tyler: Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix.
+Tyler: Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
 
-Nikola: Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls.
+Nikola: Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer has already paid for that failed attempt with their time.
 
-Tyler: Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code.
+Tyler: That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
 
-Nikola: Let's open Checkout and follow that connection.
+Nikola: Let's open Checkout. We have a specific question for it now.
 
 Add Java zero-code instrumentation
-Tyler: We have source access here. Pricing runs before Inventory. We'll use the Java agent to time that method and expose the library calls inside it.
+Tyler: We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
 
-Nikola: This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes.
+Nikola: We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it.
 
-Tyler: Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout.
+Tyler: Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
 
-Nikola: Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change.
+Nikola: Keep those steps in mind. We managed them for one service we know. We'll come back to what happens when the other teams need the same thing.
 
 A failed attempt before a working fallback
-Tyler: Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup.
+Tyler: Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish.
 
-Nikola: Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first.
+Nikola: And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, Connect timed out. Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
 
-Tyler: OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address.
+Tyler: Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
 
 Remove the stale endpoint setting
-Tyler: Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store.
+Tyler: There it is: LEGACY_PRICING_URL, in Checkout's resource attributes. Its value matches the failing call. This instance is still configured to try a retired backend before it uses the working product store. An old setting is adding a wait to every order.
 
-Nikola: Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application.
+Nikola: Think about the conversation we can have with the owning team now. Customers are losing two seconds here. This connection times out. Here's a configuration PR that removes the unused endpoint. The instrumentation gave us enough context to help with a fix, instead of just sending another team a slow-service alert.
 
-Tyler: Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes.
+Tyler: Let's make that change. Remove LEGACY_PRICING_URL from the Deployment and roll Checkout. Same application image, same Java agent, same exporter. We don't need an application rebuild to stop calling the retired backend.
 
-Nikola: The rollout is ready. Let's send another customer request and look at its trace.
+Nikola: The rollout is ready. Let's go back to the customer. What does the next order look like?
 
 The next checkout skips the failed call
-Tyler: Here is the new request's waterfall. Expand Checkout and PricingEngine.calculate. The product-price query is still here. The failed legacy call is gone, and the rest of the request starts sooner.
+Tyler: Here's the new trace. The product-price query is still there. The failed legacy call is gone. Pricing can get on with finding the price, without waiting for that old connection to time out first.
 
-Nikola: Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there.
+Nikola: Follow the rest of the order: Inventory, the commerce branches, and the order write. Everything the customer needed still happens. We removed the wait, and kept the work that completes the order.
 
-Tyler: This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared.
+Tyler: That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
 
 The improvement across repeated requests
-Tyler: Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait.
+Tyler: Across the matched requests, checkout goes from just over two seconds to about a hundred and eighty-five milliseconds. That's the wait we started with, gone from the customer's experience. The chart summarizes the change we just followed in the waterfall.
 
-Nikola: That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
+Nikola: These are local demo measurements. The result to take away is the investigation: start with the customer, follow the request, make a change the evidence supports, and check a new request. Now let's make that possible for the next team too.
 
 One fixed. Thirteen to equip.
-Nikola: We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
+Nikola: We got our answer, but we had to arrange the Java setup before we could get that detail. Could you do the same for the thirteen other supported services?
 
-Tyler: In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen.
+Tyler: I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
 
 From language opt-in to a shared namespace policy
-Tyler: To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
+Tyler: The upstream OpenTelemetry Operator already saves some of that work. Here's its opt-in configuration: different injection annotations for Java and Python, with an Instrumentation resource supplying the settings. Those annotations can go on a workload or a namespace.
 
-Nikola: That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement.
+Nikola: But suppose I own the application and want its supported services instrumented. I'd like to make that choice once, and have the controller handle the runtimes and the rollouts.
+
+Tyler: That's the workflow we're demonstrating with RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. This next installation is RIO, rather than the upstream Operator.
+
+Nikola: We'd like this capability to find an upstream home, in the Operator or another form. That needs community design and agreement. Here's the experience we'd like people to be able to have.
 
 Install the namespace-driven controller
-Tyler: Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents.
+Tyler: Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service.
 
-Nikola: The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
+Nikola: We prepare the shared payload, exporter, and exclusions here. Then the application owner gets a simpler decision: instrument this namespace. They can ask for coverage without first turning it into a separate project with every service owner.
 
 Instrument this namespace
-Nikola: Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
+Nikola: Here's the decision: instrument demo-apps. One namespace rule. We haven't named thirteen services or sorted them into language-specific lists.
 
-Tyler: Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy.
+Tyler: Apply it, and the controller rolls the selected workloads. The Injector supplies the agents for supported runtimes. If another compatible service is deployed here later, it inherits the policy. That team doesn't need to arrange its own instrumentation rollout first.
 
-Nikola: Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service.
+Nikola: There they are. Checkout keeps its direct agent. Thirteen more services gain language detail. And the four Go services keep OBI. We didn't have to visit each service to make that happen.
+
+Tyler: OBI is still running alongside them. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI service by service as those agents arrived.
+
+Nikola: So when the next team has a slow request, the detail can already be there. The platform maintains the shared setup. The application team can start with its question.
 
 Open language detail in more services
-Tyler: Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
+Tyler: Let's check a fresh order. We can still follow it across the application. Now more of those services have the detail we had to set up by hand for Checkout.
 
-Nikola: Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
+Nikola: Open Catalog. These are database spans from its Java agent. The same enrollment covers the Node, Python, Ruby, and dot net services. If a team needs to understand a database call, it can open that detail instead of first asking how to install an agent.
 
-Tyler: The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
+Tyler: We haven't fixed a problem in every service. We've given the other teams a way to start looking. Checkout keeps its fix, and the next investigation can begin closer to the answer.
 
 The work around a deployment adds up
-Tyler: Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?
+Tyler: Think about your last investigation that needed more instrumentation. How long was it between, I know what I need to see, and actually being able to see it?
 
-Nikola: Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work.
+Nikola: There's the owner to find, access to arrange, a review, and a release. People are fitting that work around something else. While those conversations happen, the customer still has the slow checkout.
 
-Tyler: One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands.
+Tyler: That's the work this namespace choice can remove from the next investigation. Agree on the shared setup once, and maintain it together. Each service doesn't need to reopen the whole conversation.
 
-Nikola: It is fewer people arranging the same work. Count their active effort separately from the time spent waiting.
+Nikola: Count both the people doing that work and the time they spend waiting. We usually remember the few minutes spent typing the change. The rest is where a small instrumentation task can turn into a long interruption.
 
 Reuse the workflow after day one
-Tyler: And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
+Tyler: Now an agent release arrives next month. Do all thirteen service owners need another task and another rollout? And what happens when a new service appears?
 
-Nikola: Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime.
+Nikola: The shared approach gives us a place to handle that work together. Compatible new services inherit the policy. Agent updates use the shared rollout path. Settings and recovery instructions have one place to improve.
 
-Tyler: That can reduce drift and repeated troubleshooting. But the platform does not maintain itself.
+Tyler: A service can still change runtimes, or need an exception. OBI can keep the baseline for supported traffic, while the available language detail depends on the runtime. Someone still has to look after those cases.
 
-Nikola: Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
+Nikola: Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
 
 Make coverage the default
-Nikola: This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage.
+Nikola: This is a sketch of what that can mean for coverage. One team gets instrumentation done. Another has a release freeze. A third is busy with something else. Months can pass with the application only partly covered.
 
-Tyler: And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up.
+Tyler: And the application doesn't wait for the project to finish. Add a service, or rewrite one from Java to Python, and coverage can fall again. The finish line moves while the teams are still catching up.
 
-Nikola: Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path.
+Nikola: With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
 
 The cost of team-by-team ownership
-Tyler: Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release.
+Tyler: Here's what repeating the work can cost in our eighteen-service example. After Checkout, thirteen services still need language instrumentation. These steps cover their setup and two years of monthly agent updates. Every jump is another release to handle.
 
-Nikola: With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time.
+Nikola: On the distributed path, the service owners arrange that work separately. On the centralized path, we set up the namespace once and share each update. That lower line still includes maintaining the shared approach.
 
-Tyler: Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating.
+Tyler: The difference is two hundred and forty-seven engineering hours over two years. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. That's time people could spend on the next customer problem, rather than repeating this setup and upkeep.
 
-Nikola: These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams.
+Nikola: Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
 
 OpenTelemetry. Ready to install.
-Tyler: We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace.
+Tyler: Remember the customer waiting at the start? OBI helped us find the failed connection. The Java agent showed the pricing call and its fallback. The resource attributes exposed the retired endpoint setting. Remove that setting, roll the same image, and the next trace shows the wait has gone.
 
-Nikola: Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project.
+Nikola: Then one namespace choice made language detail available across the supported services. RIO demonstrates the shared workflow we'd like to bring upstream. The next team should be able to open a trace and start investigating, without repeating our setup first.
 
-Tyler: OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers.
+Tyler: OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service, or across a cluster, and use to find what's keeping a customer waiting. That's what makes all this setup worthwhile: we can get from their problem to something we can fix.
 
-Nikola: Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions.
+Nikola: Find the wait, fix the cause, and make the next investigation easier. Thank you. Let's take your questions.
