@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import evidence from '../../presentation/data/timeout-evidence.json'
-defineProps<{ image: string }>()
-const asset = (name: string) => `${import.meta.env.BASE_URL}presentation/images/${name}`
+import captures from '../../presentation/data/attribute-captures.json'
+const capture = captures.configuration
+const image = `${import.meta.env.BASE_URL}presentation/images/${capture.image}`
 </script>
 <template>
-  <figure class="configuration-evidence" aria-label="Actual Checkout resource attribute matching the failed HTTP destination">
-    <p>Checkout resource attribute</p>
-    <svg viewBox="695 264 550 36" role="img" aria-label="Recorded Grafana resource attribute row">
-      <image :href="asset(image)" width="1280" height="720" />
-    </svg>
-    <code>process.environment_variable.<br><strong>LEGACY_PRICING_URL</strong></code>
-    <div class="configuration-value">{{ evidence.environmentValue }}</div>
+  <figure class="configuration-evidence" :data-trace-id="captures.traceId" :data-span-id="captures.spanId" aria-label="Grafana screenshots of Checkout resource attributes and its configured legacy endpoint">
+    <a :href="image" target="_blank" rel="noopener noreferrer" title="Open the full dashboard screenshot">
+      <svg :viewBox="capture.context.join(' ')" :style="{ aspectRatio: `${capture.context[2]} / ${capture.context[3]}` }" role="img" aria-label="Actual Grafana Resource attributes panel: service.name checkout; service.namespace demo-apps">
+        <image :href="image" :width="capture.width" :height="capture.height" />
+      </svg>
+    </a>
+    <a :href="image" target="_blank" rel="noopener noreferrer" title="Open the full dashboard screenshot">
+      <svg :viewBox="capture.setting.join(' ')" :style="{ aspectRatio: `${capture.setting[2]} / ${capture.setting[3]}` }" role="img" :aria-label="`Actual Grafana resource attribute: ${evidence.environmentKey} = ${evidence.environmentValue}`">
+        <image :href="image" :width="capture.width" :height="capture.height" />
+      </svg>
+    </a>
     <figcaption>Same address as the failed HTTP span.</figcaption>
   </figure>
 </template>

@@ -17,7 +17,7 @@ try{
  const targets=await call('Target.getTargets');let target=targets.targetInfos.find(t=>t.type==='page');
  if(!target){const t=await call('Target.createTarget',{url:'about:blank'});target={targetId:t.targetId};}
  const {sessionId}=await call('Target.attachToTarget',{targetId:target.targetId,flatten:true});
- await call('Page.enable',{},sessionId);await call('Network.enable',{},sessionId);await call('Emulation.setDeviceMetricsOverride',{width:plan.width||1280,height:plan.height||720,deviceScaleFactor:1,mobile:!!plan.mobile},sessionId);
+ await call('Page.enable',{},sessionId);await call('Network.enable',{},sessionId);await call('Emulation.setDeviceMetricsOverride',{width:plan.width||1280,height:plan.height||720,deviceScaleFactor:plan.deviceScaleFactor||1,mobile:!!plan.mobile},sessionId);
  const evaluate=async expression=>{const r=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true},sessionId);if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
  await call('Page.navigate',{url:plan.url},sessionId);await wait(plan.loadMs||6500);
  if(plan.waitText){for(let i=0;i<60;i++){if((await evaluate('document.body.innerText')).includes(plan.waitText))break;await wait(500);}}

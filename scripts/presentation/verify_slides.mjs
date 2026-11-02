@@ -92,13 +92,17 @@ try{
    if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});
    if(n===7&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
    if(n===20&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
+   if(n===10||n===11){
+    const captured=await evaluate(`(()=>{const f=document.querySelector('[data-slidev-no="${n}"] figure');return {images:f?.querySelectorAll('svg image').length,redrawn:!!f?.querySelector('dl,code,svg text'),trace:f?.dataset.traceId,span:f?.dataset.spanId}})()`);
+    if(captured.images!==2||captured.redrawn||!captured.trace||!captured.span)errors.push({slide:n,issue:'Attribute proof must use two linked dashboard screenshot views with trace/span identity',captured});
+   }
    if(n===10){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="10"] .timeout-evidence')?.textContent`);
-    if(!text?.includes('java.net.SocketTimeoutException')||!text?.includes('Connect timed out'))errors.push({slide:n,issue:'Timeout claim lacks visible captured error evidence'});
+    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="10"] .timeout-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
+    if(!text?.includes('java.net.SocketTimeoutException')||!text?.includes('Connect timed out'))errors.push({slide:n,issue:'Timeout screenshot lacks accessible error evidence'});
    }
    if(n===11){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="11"] .configuration-evidence')?.textContent`);
-    if(!text?.includes('LEGACY_PRICING_URL')||!text.includes('192.0.2.42'))errors.push({slide:n,issue:'Captured configuration setting is missing'});
+    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="11"] .configuration-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
+    if(!text?.includes('LEGACY_PRICING_URL')||!text.includes('192.0.2.42'))errors.push({slide:n,issue:'Configuration screenshot lacks the recorded setting'});
    }
    if(n===25){
     const chart=await evaluate(`document.querySelector('[data-slidev-no="25"] [data-rollout-chart="adoption"]')?.innerHTML`);

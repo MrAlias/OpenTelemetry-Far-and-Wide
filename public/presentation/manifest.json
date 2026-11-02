@@ -227,6 +227,18 @@
       "sha256": "95ca35ce545fd6a1d200842d96fea63fe301e188ccb72a8112b2599b0b7ee4a1",
       "bytes": 177130,
       "encoding": "VP9; native playback duration"
+    },
+    {
+      "asset": "public/presentation/images/java-timeout-proof.png",
+      "source": "public/demo-capture/java-timeout-proof.png",
+      "sha256": "1897d19ad6e1e0a69b30f1888e54a37ea85500345244a3dbd0fa51e5f6d461b6",
+      "bytes": 306195
+    },
+    {
+      "asset": "public/presentation/images/checkout-resource-proof.png",
+      "source": "public/demo-capture/checkout-resource-proof.png",
+      "sha256": "1083880de251558660150b61426005983a7e2791c056e75ac9e7f8b699f244cc",
+      "bytes": 328007
     }
   ]
 }

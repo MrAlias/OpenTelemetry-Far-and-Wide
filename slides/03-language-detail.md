@@ -77,7 +77,7 @@ kicker: The cause
 
 # The retired endpoint is still configured
 
-<ConfigEvidence image="pricing-config-attribute.png" />
+<ConfigEvidence />
 
 <!--
 **Tyler:**

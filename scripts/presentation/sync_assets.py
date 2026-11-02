@@ -3,7 +3,7 @@ from pathlib import Path
 import hashlib,json,shutil,subprocess
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'public/demo-capture';TARGET=ROOT/'public/presentation'
-IMAGES=['java-timeout-span','pricing-config-attribute','inspect-java-setup-edited-poster','request-latency','connected-trace','java-detail-poster','fleet-catalog','namespace-rule','install-obi-edited-poster','install-java-agent-edited-poster','install-operator-edited-poster','instrument-namespace-edited-poster','fix-pricing-edited-poster','fixed-request-trace','fixed-fleet-catalog','fixed-fleet-overview']
+IMAGES=['java-timeout-proof','checkout-resource-proof','java-timeout-span','pricing-config-attribute','inspect-java-setup-edited-poster','request-latency','connected-trace','java-detail-poster','fleet-catalog','namespace-rule','install-obi-edited-poster','install-java-agent-edited-poster','install-operator-edited-poster','instrument-namespace-edited-poster','fix-pricing-edited-poster','fixed-request-trace','fixed-fleet-catalog','fixed-fleet-overview']
 CLIPS=['inspect-java-setup-edited','install-obi-edited','install-java-agent-edited','install-operator-edited','instrument-namespace-edited','java-detail','fleet-detail','fix-pricing-edited','fixed-fleet-detail','fixed-request-detail']
 
 def assert_silent_video(path):
