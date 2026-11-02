@@ -1,7 +1,7 @@
 # Presentation scene plan
 
 The editable visual review is [storyboard.html](../public/storyboard.html).
-Live content is 21 minutes, plus one minute flex and three minutes Q&A.
+Live content is 23 minutes, plus two minutes Q&A.
 The narrated review uses natural speech pace and can run shorter.
 Say **RIO** “rhee-o,” as in Spanish río, and **OTelX** “oh-tell-X.”
 
@@ -162,25 +162,45 @@ Live budget: 40 seconds.
 
 **Tyler:** I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
 
-## 13 · From language opt-in to a shared namespace policy
+## 13 · The annotation is the easy part
 
-Put upstream opt-in in context, then explain RIO as a talk-specific demonstration of functionality we want upstream; no agreed implementation or roadmap.
+Show upstream OpenTelemetry Operator configuration growing for an illustrative Python API and .NET worker, then expose the process/startup limits and application-team coordination that more annotations cannot solve.
 
-Live budget: 45 seconds.
+Live budget: 135 seconds.
 
-**Tyler:** The upstream OpenTelemetry Operator already saves some of that work. Here's its opt-in configuration: different injection annotations for Java and Python, with an Instrumentation resource supplying the settings. Those annotations can go on a workload or a namespace.
+**Tyler:** We can opt in a workload or a namespace with the upstream OpenTelemetry Operator. It handles agent injection. Now take a Python API owned by another team. What does the platform need to know?
 
-**Nikola:** But suppose I own the application and want its supported services instrumented. I'd like to make that choice once, and have the controller handle the runtimes and the rollouts.
+**Nikola:** Which Python, which base image, and who has the Dockerfile? That's where I'd start.
 
-**Tyler:** That's the workflow we're demonstrating with RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. This next installation is RIO, rather than the upstream Operator.
+**Tyler:** This image uses musl, so we add the Python platform setting. Native wheels also depend on the Python version. Dot net has a runtime identifier; Ruby has separate support and enablement checks.
 
-**Nikola:** We'd like this capability to find an upstream home, in the Operator or another form. That needs community design and agreement. Here's the experience we'd like people to be able to have.
+**Nikola:** So the value comes from the application's image. It isn't something the platform team can safely guess.
+
+**Tyler:** Now the pod also has a dot net worker. We name which container gets Python and which gets dot net, and choose the worker's runtime. Multi-instrumentation must be enabled in the Operator.
+
+**Nikola:** And those are container names. They tell us nothing about the processes running inside.
+
+**Tyler:** Suppose api starts both Python and Node. The Operator's multi-instrumentation feature doesn't support two language instrumentations inside one container. We need the application team to inspect that startup or change the packaging.
+
+**Nikola:** Another annotation isn't going to answer that.
+
+**Tyler:** Or Python starts in isolated mode, with site initialization disabled. The Operator sets PYTHONPATH, but this process ignores that environment and skips the startup hook. The pod can be healthy without the agent loading.
+
+**Nikola:** Now we need the actual entrypoint. A namespace policy can't make the program honor that hook.
+
+**Tyler:** Then check payload compatibility, permissions, existing agents and Collector access. Restart the workload, respect its release constraints, and confirm the instrumentation actually loads and exports.
+
+**Nikola:** The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration.
 
 ## 14 · Install the namespace-driven controller
 
 Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.
 
-Live budget: 60 seconds.
+Live budget: 90 seconds.
+
+**Tyler:** Now let's demonstrate a different way to share the repeatable work. This installation is RIO, the Runtime Instrumentation Operator in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. It isn't the upstream Operator.
+
+**Nikola:** We'd like this workflow to find an upstream home, in the Operator or another form. That needs community agreement. It also doesn't remove application compatibility or startup constraints.
 
 **Tyler:** Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service.
 

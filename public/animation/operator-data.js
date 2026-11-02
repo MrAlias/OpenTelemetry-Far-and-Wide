@@ -1,0 +1,52 @@
+// Generated from presentation/data/operator-complexity.json.
+window.OPERATOR_CONFIGURATION = {
+  "scope": "Upstream OpenTelemetry Operator",
+  "example": "reporting-api",
+  "annotationPrefix": "instrumentation.opentelemetry.io/",
+  "steps": [
+    "Choose the language",
+    "Match the image",
+    "Target the containers",
+    "Inspect the processes",
+    "Check the startup",
+    "Coordinate the change"
+  ],
+  "annotations": [
+    {
+      "key": "inject-python",
+      "value": "true",
+      "at": 0
+    },
+    {
+      "key": "otel-python-platform",
+      "value": "musl",
+      "at": 1
+    },
+    {
+      "key": "python-container-names",
+      "value": "api",
+      "at": 2
+    },
+    {
+      "key": "inject-dotnet",
+      "value": "true",
+      "at": 2
+    },
+    {
+      "key": "dotnet-container-names",
+      "value": "worker",
+      "at": 2
+    },
+    {
+      "key": "otel-dotnet-auto-runtime",
+      "value": "linux-musl-x64",
+      "at": 2
+    }
+  ],
+  "startup": "exec python -I -S /app/reporting.py",
+  "operatorSourceCommit": "614a0378b14276a4dbea8d575b4a5825e3c3538a",
+  "pythonPayload": {
+    "field": "Instrumentation.spec.python.image",
+    "image": "platform/python-agent:py312-musl"
+  }
+};

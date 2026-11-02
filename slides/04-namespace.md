@@ -17,29 +17,72 @@ I was hoping you wouldn't ask. Each of those thirteen services can use the OpenT
 -->
 
 ---
-kicker: Configuration context · upstream comparison
+kicker: Upstream OpenTelemetry Operator
+clicks: 5
 ---
 
-# From languages to a namespace
+# The annotation is the easy part
 
-<OperatorChoice />
+<OperatorConfiguration :step="$clicks" />
 
 <!--
 **Tyler:**
 
-The upstream OpenTelemetry Operator already saves some of that work. Here's its opt-in configuration: different injection annotations for Java and Python, with an Instrumentation resource supplying the settings. Those annotations can go on a workload or a namespace.
+We can opt in a workload or a namespace with the upstream OpenTelemetry Operator. It handles agent injection. Now take a Python API owned by another team. What does the platform need to know?
 
 **Nikola:**
 
-But suppose I own the application and want its supported services instrumented. I'd like to make that choice once, and have the controller handle the runtimes and the rollouts.
+Which Python, which base image, and who has the Dockerfile? That's where I'd start.
+
+[click]
 
 **Tyler:**
 
-That's the workflow we're demonstrating with RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. This next installation is RIO, rather than the upstream Operator.
+This image uses musl, so we add the Python platform setting. Native wheels also depend on the Python version. Dot net has a runtime identifier; Ruby has separate support and enablement checks.
 
 **Nikola:**
 
-We'd like this capability to find an upstream home, in the Operator or another form. That needs community design and agreement. Here's the experience we'd like people to be able to have.
+So the value comes from the application's image. It isn't something the platform team can safely guess.
+
+[click]
+
+**Tyler:**
+
+Now the pod also has a dot net worker. We name which container gets Python and which gets dot net, and choose the worker's runtime. Multi-instrumentation must be enabled in the Operator.
+
+**Nikola:**
+
+And those are container names. They tell us nothing about the processes running inside.
+
+[click]
+
+**Tyler:**
+
+Suppose api starts both Python and Node. The Operator's multi-instrumentation feature doesn't support two language instrumentations inside one container. We need the application team to inspect that startup or change the packaging.
+
+**Nikola:**
+
+Another annotation isn't going to answer that.
+
+[click]
+
+**Tyler:**
+
+Or Python starts in isolated mode, with site initialization disabled. The Operator sets PYTHONPATH, but this process ignores that environment and skips the startup hook. The pod can be healthy without the agent loading.
+
+**Nikola:**
+
+Now we need the actual entrypoint. A namespace policy can't make the program honor that hook.
+
+[click]
+
+**Tyler:**
+
+Then check payload compatibility, permissions, existing agents and Collector access. Restart the workload, respect its release constraints, and confirm the instrumentation actually loads and exports.
+
+**Nikola:**
+
+The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration.
 -->
 
 ---
@@ -52,6 +95,14 @@ evidence: true
 <DemoClip src="install-operator-edited.mp4" poster="install-operator-edited-poster.png" label="Actual installation of the custom Injector controller" />
 
 <!--
+**Tyler:**
+
+Now let's demonstrate a different way to share the repeatable work. This installation is RIO, the Runtime Instrumentation Operator in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. It isn't the upstream Operator.
+
+**Nikola:**
+
+We'd like this workflow to find an upstream home, in the Operator or another form. That needs community agreement. It also doesn't remove application compatibility or startup constraints.
+
 **Tyler:**
 
 Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service.

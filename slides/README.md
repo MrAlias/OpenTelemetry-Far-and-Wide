@@ -11,12 +11,14 @@ hand-authored sections; the animation exporter does not generate them.
 | `04-namespace.md` | 15–22 | Repetition, upstream opt-in, custom controller and one namespace rule |
 | `05-takeaways.md` | 23–27 | Coordination, lifecycle, adoption, engineering hours and the close |
 
-The live budget is 21 minutes, one minute flex and three minutes questions.
+The live budget is 23 minutes with two minutes for questions. Slide 16
+uses about 2¼ minutes to walk through upstream Operator configuration and
+application-team coordination at a natural pace.
 Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
 its full dialogue, tagged Tyler or Nikola, for reading while presenting.
 `../scripts/animation/talk.json` is the script source;
 `../presentation/data/slide-script-map.json` assigns every turn once, in order.
-The five click-build slides use native `[click]` markers: the matching
+The six click-build slides use native `[click]` markers: the matching
 passage is highlighted as you advance, and the rest stays dimmed for context.
 `noteClicks` in the script map places each marker before a chapter turn; it
 does not add audience-facing content or change the transcript.
@@ -27,7 +29,8 @@ post-fix waterfall, full fleet waterfall and Catalog inspection.
 
 References remain in `../docs/presentation-research.md`; demo commands are in
 `../demo/README.md`. Slide 4 links the previous talk’s CNCF recording. Slides
-4, 6, 7, 8 and 20 have purposeful click builds.
+4, 6, 7, 8, 16 and 20 have purposeful click builds. Slide 16 has five
+steps; each has its own highlighted dialogue in presenter notes.
 
 Terminal recordings play manually using their native controls. They are muted,
 run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback
@@ -79,8 +82,8 @@ With the development server running on port 3030, run:
 SLIDEV_URL=http://localhost:3030 npm run slides:verify
 ```
 
-The check renders every slide, checks bounds and collisions, exercises all five
-click builds, plays a real clip and verifies pause-on-leave and presenter notes.
+The check renders every slide, checks bounds and collisions, exercises all ten
+click transitions, plays a real clip and verifies pause-on-leave and presenter notes.
 Set `SLIDEV_CHROMIUM` to an installed Chromium executable if necessary. Browser
 profiles, screenshots and reports stay in `.artifacts/slides/`.
 
@@ -117,7 +120,7 @@ including an already-centralized baseline with zero additional savings.
 Run `npm run savings:build` after changing the inputs. `npm run build` also
 refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at
-`/presentation/savings.html`. The notes keep the live content at 21 minutes;
+`/presentation/savings.html`. The current notes budget 23 minutes of live content;
 the existing coordination and lifecycle sections were shortened to make room.
 
 

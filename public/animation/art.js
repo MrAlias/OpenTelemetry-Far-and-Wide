@@ -42,7 +42,20 @@
         +capturedPanel(c,c.setting,80,185+c.context[3]*width/c.context[2]+24,width,'resource-setting')
         +text(80,650,'Same address as the failed HTTP span.',28,C.muted);
     }
-    case 'operator-opt-in':return text(75,205,'Upstream Operator · configuration examples',29,C.blue)+text(75,270,'Java: inject-java: "true"',29,C.ink,'font-family="monospace"')+text(75,320,'Python: inject-python: "true"',29,C.ink,'font-family="monospace"')+text(75,380,'Workload or namespace annotations + agent settings',26,C.muted)+text(75,480,'Our demo: centralized control',38,C.green)+lines(75,535,['RIO is purpose-built for this talk','Goal: an upstream home; implementation still open'],28,C.ink);
+    case 'operator-opt-in':{
+      const c=window.OPERATOR_CONFIGURATION,step=scene.operatorStep??5;
+      const rows=c.annotations.filter(row=>row.at<=step);
+      return text(75,190,'Upstream OpenTelemetry Operator · reporting-api',25,C.blue)
+        +text(75,240,c.annotationPrefix,19,C.muted,'font-family="monospace"')
+        +rows.map((row,i)=>text(75,292+i*43,row.key+': "'+row.value+'"',25,row.at===step?C.blue:C.ink,'font-family="monospace"')).join('')
+        +text(850,220,c.steps[step],27,C.ink)
+        +box(850,260,350,86,'App team','Image + startup')+arrow(1025,346,1025,380)
+        +box(850,380,350,86,'Platform','Payload + configuration')+arrow(1025,466,1025,500)
+        +box(850,500,350,86,'Release','Restart + trace')
+        +text(75,566,c.pythonPayload.field,18,C.muted)+text(75,596,c.pythonPayload.image,23,C.blue,'font-family="monospace"')
+        +text(75,635,c.startup,25,C.depth,'font-family="monospace"')
+        +text(75,680,'Pod mutation still needs application facts.',25,C.muted);
+    }
     case 'namespace-result':return text(75,163,'selector.namespaces: [demo-apps]',29,C.blue,'font-family="monospace"')+fleet(p>0?'deploy':'one',p)+center(655,'14 language agents · 4 Go services with OBI · one namespace choice',26,C.green);
     case 'topology':return fleet()+center(655,'18 application services · one successful checkout visits the full tree',27);
     case 'obi':return fleet('obi',p)+center(655,p>0?'Follow gateway → checkout → the commerce branches':'Apply OBI · send a checkout request',28,C.blue);

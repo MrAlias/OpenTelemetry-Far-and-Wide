@@ -99,17 +99,23 @@
 .slidev-layout .obi-previous-talk img { display:block; width:256px; height:256px; background:white; }
 .slidev-layout .obi-previous-talk strong { font-size:25px; font-weight:500; line-height:1.35; margin-top:22px; }
 .slidev-layout .ownership-flow { display:block; width:100%; height:520px; }
-.slidev-layout .operator-choice { display:grid; grid-template-columns:1fr 90px 1fr; align-items:start; gap:18px; height:500px; padding-top:90px; }
-.slidev-layout .operator-choice h2 { font-size:29px; font-weight:500; margin:0 0 32px; }
-.slidev-layout .operator-choice h2 small { display:block; font-size:20px; color:var(--muted); margin-top:10px; }
-.slidev-layout .annotation-prefix { display:block; font-size:20px!important; color:var(--muted)!important; margin-bottom:12px; }
-.slidev-layout .annotation-keys { display:flex; flex-direction:column; gap:22px; }
-.slidev-layout .annotation-keys code { font-size:29px!important; }
-.slidev-layout .annotation-keys code span { color:var(--agent); }
-.slidev-layout .choice-arrow { width:90px; height:80px; margin-top:105px; }
-
-.slidev-layout .namespace-choice { display:block; font-size:26px!important; white-space:nowrap; }
-.slidev-layout .namespace-choice span { color:var(--agent); }
-.slidev-layout .operator-namespace > svg { display:block; width:100%; height:210px; }
+.slidev-layout .operator-configuration { display:grid; grid-template-columns:720px 384px; gap:48px; margin-top:36px; }
+.slidev-layout .operator-scope { font-size:21px!important; color:var(--muted); margin:0 0 30px; }
+.slidev-layout .operator-key-prefix { display:block; font-size:18px!important; color:var(--muted)!important; background:transparent; padding:0; margin-bottom:20px; }
+.slidev-layout .operator-annotations { min-height:264px; padding:16px 22px; background:var(--surface); border-radius:5px; }
+.slidev-layout .operator-annotations > div { line-height:38px; }
+.slidev-layout .operator-annotations code { font-size:23px!important; background:transparent; padding:0; color:var(--muted)!important; white-space:pre; }
+.slidev-layout .operator-yaml-key { color:var(--ink); }
+.slidev-layout .operator-yaml-value { color:var(--agent); }
+.slidev-layout .operator-new-line .operator-yaml-key { color:var(--accent); }
+.slidev-layout .operator-context h2 { font-size:27px; font-weight:500; margin:0 0 20px; }
+.slidev-layout .operator-context > svg { display:block; width:384px; height:355px; }
+.slidev-layout .operator-payload { display:flex; gap:14px; align-items:baseline; margin-top:14px; color:var(--muted); font-size:17px; }
+.slidev-layout .operator-payload code { font-size:18px!important; background:transparent; padding:0; }
+.slidev-layout .operator-startup { margin-top:22px; display:flex; flex-direction:column; gap:12px; }
+.slidev-layout .operator-startup > span { font-size:18px; color:var(--muted); }
+.slidev-layout .operator-startup code { font-size:23px!important; background:var(--surface); color:var(--ink)!important; padding:14px 22px; }
+.slidev-layout .operator-startup strong { font-weight:600; color:var(--warning); }
+.slidev-layout .operator-release-checks { display:flex; gap:30px; margin-top:38px; font-size:22px; color:var(--muted); }
 @keyframes evidence-in { from {opacity:0} to {opacity:1} }
 @media(prefers-reduced-motion:reduce) { .slidev-layout .trace-highlight {animation:none} }

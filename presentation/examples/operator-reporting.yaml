@@ -1,0 +1,42 @@
+# Illustrative upstream Operator configuration, not a change to the live demo.
+# Both application images in this example use musl; review actual images first.
+# The Operator must have multi-instrumentation enabled.
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: reporting
+  namespace: reporting
+spec:
+  exporter:
+    endpoint: http://otel-collector.observability.svc.cluster.local:4318
+  python:
+    # Placeholder: supply a payload tested against this application's Python
+    # version, native wheels, libc and supported frameworks.
+    image: platform/python-agent:py312-musl
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reporting-api
+  namespace: reporting
+spec:
+  selector:
+    matchLabels:
+      app: reporting-api
+  template:
+    metadata:
+      labels:
+        app: reporting-api
+      annotations:
+        instrumentation.opentelemetry.io/inject-python: reporting
+        instrumentation.opentelemetry.io/otel-python-platform: musl
+        instrumentation.opentelemetry.io/python-container-names: api
+        instrumentation.opentelemetry.io/inject-dotnet: reporting
+        instrumentation.opentelemetry.io/dotnet-container-names: worker
+        instrumentation.opentelemetry.io/otel-dotnet-auto-runtime: linux-musl-x64
+    spec:
+      containers:
+        - name: api
+          image: registry.example/reporting-api:reviewed
+        - name: worker
+          image: registry.example/reporting-worker:reviewed

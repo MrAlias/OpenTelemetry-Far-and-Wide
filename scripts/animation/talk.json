@@ -408,40 +408,80 @@
     {
       "id": "10-operator-opt-in",
       "kind": "operator-opt-in",
-      "title": "From language opt-in to a shared namespace policy",
-      "plannedDuration": 45,
+      "title": "The annotation is the easy part",
+      "plannedDuration": 135,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "The upstream OpenTelemetry Operator already saves some of that work. Here's its opt-in configuration: different injection annotations for Java and Python, with an Instrumentation resource supplying the settings. Those annotations can go on a workload or a namespace."
+          "text": "We can opt in a workload or a namespace with the upstream OpenTelemetry Operator. It handles agent injection. Now take a Python API owned by another team. What does the platform need to know?"
         },
         {
           "speaker": "Nikola",
-          "text": "But suppose I own the application and want its supported services instrumented. I'd like to make that choice once, and have the controller handle the runtimes and the rollouts."
+          "text": "Which Python, which base image, and who has the Dockerfile? That's where I'd start."
         },
         {
           "speaker": "Tyler",
-          "text": "That's the workflow we're demonstrating with RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. This next installation is RIO, rather than the upstream Operator."
+          "text": "This image uses musl, so we add the Python platform setting. Native wheels also depend on the Python version. Dot net has a runtime identifier; Ruby has separate support and enablement checks."
         },
         {
           "speaker": "Nikola",
-          "text": "We'd like this capability to find an upstream home, in the Operator or another form. That needs community design and agreement. Here's the experience we'd like people to be able to have."
+          "text": "So the value comes from the application's image. It isn't something the platform team can safely guess."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Now the pod also has a dot net worker. We name which container gets Python and which gets dot net, and choose the worker's runtime. Multi-instrumentation must be enabled in the Operator."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "And those are container names. They tell us nothing about the processes running inside."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Suppose api starts both Python and Node. The Operator's multi-instrumentation feature doesn't support two language instrumentations inside one container. We need the application team to inspect that startup or change the packaging."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Another annotation isn't going to answer that."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Or Python starts in isolated mode, with site initialization disabled. The Operator sets PYTHONPATH, but this process ignores that environment and skips the startup hook. The pod can be healthy without the agent loading."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "Now we need the actual entrypoint. A namespace policy can't make the program honor that hook."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Then check payload compatibility, permissions, existing agents and Collector access. Restart the workload, respect its release constraints, and confirm the instrumentation actually loads and exports."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration."
         }
       ],
-      "purpose": "Put upstream opt-in in context, then explain RIO as a talk-specific demonstration of functionality we want upstream; no agreed implementation or roadmap.",
+      "purpose": "Show upstream OpenTelemetry Operator configuration growing for an illustrative Python API and .NET worker, then expose the process/startup limits and application-team coordination that more annotations cannot solve.",
       "sources": [
-        "https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/",
-        "https://github.com/otelx/rio"
+        "docs/operator-configuration.md",
+        "presentation/data/operator-complexity.json"
       ]
     },
     {
       "id": "10-install-operator",
       "kind": "terminal",
       "title": "Install the namespace-driven controller",
-      "plannedDuration": 60,
+      "plannedDuration": 90,
       "lead": "Tyler",
       "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "Now let's demonstrate a different way to share the repeatable work. This installation is RIO, the Runtime Instrumentation Operator in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. It isn't the upstream Operator."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "We'd like this workflow to find an upstream home, in the Operator or another form. That needs community agreement. It also doesn't remove application compatibility or startup constraints."
+        },
         {
           "speaker": "Tyler",
           "text": "Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service."
@@ -769,8 +809,8 @@
   "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
   "scriptRevision": "2026-11-02-customer-story-and-presenter-dialogue",
   "timing": "natural",
-  "plannedDuration": 1260,
-  "maxContentSeconds": 1320,
+  "plannedDuration": 1380,
+  "maxContentSeconds": 1380,
   "storyRevision": "2026-11-02-configured-legacy-endpoint",
   "pronunciation": {
     "RIO": "rhee-o (Spanish río)",
