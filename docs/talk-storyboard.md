@@ -54,7 +54,7 @@ Live budget: 70 seconds.
 
 **Tyler:** Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
 
-**Nikola:** A single deployment. Now let's see how much of the customer's wait we can explain.
+**Nikola:** Just a single deployment. Now let's see how much of the customer's wait we can explain.
 
 ## 04 · One request across the application
 
@@ -62,7 +62,7 @@ Give the connected-trace statement its own actual waterfall exemplar.
 
 Live budget: 55 seconds.
 
-**Nikola:** Here's the order we've been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
+**Nikola:** Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
 **Tyler:** And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about.
 
@@ -84,7 +84,7 @@ Live budget: 70 seconds.
 
 **Tyler:** Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
 
-**Nikola:** Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait for that failed attempt.
+**Nikola:** Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
 
 **Tyler:** That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
 
@@ -98,11 +98,11 @@ Live budget: 120 seconds.
 
 **Tyler:** We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
 
-**Nikola:** We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it.
+**Nikola:** We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
 
 **Tyler:** Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
 
-**Nikola:** Keep those steps in mind. We managed them for one service we know. We'll come back to what happens when the other teams need the same thing.
+**Nikola:** Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
 
 ## 08 · A failed attempt before a working fallback
 
@@ -138,7 +138,7 @@ Live budget: 50 seconds.
 
 **Tyler:** Here's the new trace. The product-price query is still there. The failed legacy call is gone. Pricing can get on with finding the price, without waiting for that old connection to time out first.
 
-**Nikola:** If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there.
+**Nikola:** If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there. Nothing else changed.
 
 **Tyler:** That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
 
@@ -158,7 +158,7 @@ Turn the resolved customer delay into the second tension: make the same diagnost
 
 Live budget: 40 seconds.
 
-**Nikola:** We got our answer, but we had to arrange the Java setup before we could get that detail. Could you do the same for the thirteen other supported services?
+**Nikola:** We got our answer, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?
 
 **Tyler:** I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
 
@@ -192,7 +192,7 @@ Show the actual single namespace selection and automatic rollout, then light the
 
 Live budget: 105 seconds.
 
-**Nikola:** The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
+**Nikola:** The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we previously showed, this rule doesn't list languages or individual services.
 
 **Tyler:** Apply it, and the controller rolls the selected workloads. The Injector supplies the agents for supported runtimes. If another compatible service is deployed here later, it inherits the policy. That team doesn't need to arrange its own instrumentation rollout first.
 
