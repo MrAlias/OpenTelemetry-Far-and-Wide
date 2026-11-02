@@ -6,15 +6,17 @@ kicker: The investigation
 
 <div class="hook-grid">
   <p>A customer is waiting.<br>Where do we act?</p>
-  <img src="/presentation/images/request-latency.png" alt="Grafana: one checkout request took 2.17 seconds" />
+  <img src="/presentation/images/request-latency.png" alt="Grafana: one checkout request takes more than two seconds" />
 </div>
 
 <p class="caption">Find the wait. Fix the cause. Check the customer request.</p>
 
 <!--
-**Tyler**
+**Tyler:**
 
-- Request succeeds, but the customer waits.
-- Follow the request, find the cause, fix the code.
-- Then make that visibility available to every team.
+The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
+
+**Nikola:**
+
+One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
 -->

@@ -53,7 +53,8 @@ def resolve_trace(row):
     row['traceId']=tid
     row['correlation']='Unique exported Gateway server span inside the recorded client request window (20 ms clock allowance)'
     return trace
-parser=argparse.ArgumentParser();parser.add_argument('phase',choices=['before','after']);parser.add_argument('--count',type=int,default=30);parser.add_argument('--warmup',type=int,default=20);parser.add_argument('--expected-sdk-services',type=int,default=1);parser.add_argument('--resume',action='store_true');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('phase',choices=['before','after']);parser.add_argument('--count',type=int,default=30);parser.add_argument('--warmup',type=int,default=20);parser.add_argument('--expected-sdk-services',type=int,default=1);parser.add_argument('--resume',action='store_true');parser.add_argument('--work-dir',type=Path,default=WORK);args=parser.parse_args()
+WORK=args.work_dir.resolve();WORK.mkdir(parents=True,exist_ok=True)
 assert args.count>=2 and args.warmup>=1
 if args.resume:
     saved=json.loads((WORK/(args.phase+'-requests.json')).read_text());rows=saved['requests']
@@ -61,6 +62,8 @@ if args.resume:
     assert all(r['status']==200 and r['price']==42 for r in rows)
 else:
     state=json.loads(subprocess.check_output(['kubectl','--kubeconfig',str(ROOT/'.artifacts/demo-capture/kubeconfig'),'-n','demo-apps','get','deploy','checkout','-o','json']))
+    pods=json.loads(subprocess.check_output(['kubectl','--kubeconfig',str(ROOT/'.artifacts/demo-capture/kubeconfig'),'-n','demo-apps','get','pods','-l','app=checkout','-o','json']))
+    state['measuredContainerImageIDs']=sorted({c['imageID'] for p in pods['items'] if not p['metadata'].get('deletionTimestamp') for c in p['status'].get('containerStatuses',[]) if c['name']=='checkout'})
     (WORK/(args.phase+'-deployment.json')).write_text(json.dumps(state,indent=2)+'\n')
     warm=[];consecutive=0
     for _ in range(args.warmup+10):

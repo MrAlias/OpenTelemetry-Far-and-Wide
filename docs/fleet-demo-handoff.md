@@ -20,7 +20,7 @@ baseline and does not add instrumentation calls to the application.
 
 ## Captured observations
 
-The October 27 two-second version opens with a 2.17 s customer request. OBI
+The current version opens with a customer request over two seconds. OBI
 shows a failed Checkout CONNECT spanning about two seconds, before successful
 product lookup and service calls. The Java-agent exemplar connects that failed
 HTTP attempt to PricingEngine.calculate and its successful PostgreSQL fallback.
@@ -33,7 +33,7 @@ fresh fleet trace and Catalog’s JDBC spans for the result, retaining OBI for G
 Readiness, instrumentation scopes, exports and correlation are preparation
 checks; the audience does not need a lesson in trace identity verification.
 No measured engineering-cost savings are claimed. The later customer-resolution
-addition measures an actual application change, separately from the hypothetical
+addition measures an actual configuration change, separately from the hypothetical
 labor model; see [customer-resolution.md](customer-resolution.md).
 
 ## Capture and reproducibility
@@ -106,35 +106,24 @@ private kubeconfig are retained. Restart with
 using `.artifacts/demo-capture/kubeconfig`. Other local clusters are untouched.
 
 
-## Customer resolution and fresh fleet evidence (October 27)
+## Configuration resolution and fresh fleet evidence (November 2)
 
-OBI shows a failed CONNECT near two seconds. The Java agent adds the pricing method,
-HTTP connection timeout and successful PostgreSQL fallback. Remove the stale
-legacy call, deploy `checkout-pricing-fixed.patch.yaml`, and **show the actual
-post-fix waterfall first**. Follow with the aggregate request-duration summary.
-Instrumentation settings and the successful price/order/commerce flow remain.
+Follow OBI’s failed CONNECT to Checkout, add the Java agent, and show the
+SocketTimeoutException and successful price lookup. Then show the resource
+attribute `process.environment_variable.LEGACY_PRICING_URL`, which matches
+the failed destination. The launcher explicitly exposes this one demo setting.
 
-The matched 30-request warmed comparison is 2.21 s → 220 ms median Gateway
-duration and 2.01 s → 3.71 ms median pricing duration. The opening 2.17 s request
-is a separate OBI exemplar, not one side of that controlled comparison. The
-seeded failure is a real missing-backend request, not Thread.sleep. Native
-screen captures and raw public trace evidence preserve what was observed.
+Remove the setting and roll the same image with the same agent/exporter settings.
+Show the actual post-fix waterfall before the measured summary. Across 30 warmed
+requests per configuration, the median Gateway duration falls from 2.22 seconds
+to 185 ms. Keep this measured local result separate from hypothetical labor costs.
 
-`presentation/data/resolution.json` contains measurements and the fresh fixed
-fleet trace. After namespace enrollment, use the new fixed-fleet captures:
-14 SDK services, four Go OBI baselines, Catalog JDBC detail and the retained
-Checkout fix. Wait for both the controller’s current observed generation and
-Ready phase before generating traffic; stale Ready status is insufficient.
+After namespace selection, show the complete fleet waterfall, then Catalog’s
+JDBC detail. Fourteen services have language agents; four Go services retain OBI.
+Checkout keeps the configuration fix. RIO is a talk-specific demonstration of a
+capability we want upstream; implementation and upstream agreement remain open.
 
-This recording uses the bundled namespace-driven demo implementation and its
-`demo.opentelemetry.io` API. RIO demonstrates the centralized workflow using
-upstream Injector/agents; it is a talk-specific demo, not an upstream Operator
-release. An upstream implementation is an intention, not an agreed roadmap. The comparison slide explicitly shows
-upstream language opt-in and acknowledges its namespace support.
-
-Prebuild/load the fixed image with `make -C demo pricing-fixed-image
-pricing-fixed-load CLUSTER=<demo-cluster>`. Existing disposable database volumes
-need `demo/k8s/upgrade-product-price.sql` once. Reset to a newly built
-`far-wide-demo-checkout:local` for another rehearsal. The old proof reports
-retain their original fixture. Synthetic voices and narrated movies remain
-untracked; all capture working files stay inside this repository.
+Full captures stay under ignored `.artifacts/configuration-fix/`. Public trace
+snapshots omit host/process metadata and stack traces, retaining only the fields
+needed for this presentation. See [customer-resolution.md](customer-resolution.md)
+for the commands, measurement protocol and reset.

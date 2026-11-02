@@ -11,6 +11,10 @@ assert.equal(failed.length, 1)
 const span = failed[0]
 const event = span.events.find(e => e.name === 'exception')
 const attrs = attributes(span.attributes), exception = attributes(event.attributes)
+const resource = trace.batches.find(batch => batch.scopeSpans.some(group => group.spans.includes(span))).resource
+const environmentKey = 'process.environment_variable.LEGACY_PRICING_URL'
+const environmentValue = attributes(resource.attributes)[environmentKey]
+assert.equal(environmentValue, attrs['url.full'], 'Captured setting must match the failed destination')
 assert.equal(exception['exception.message'], 'Connect timed out')
 assert.equal(exception['exception.type'], attrs['error.type'])
 assert.equal(span.status.code, 'STATUS_CODE_ERROR')
@@ -20,6 +24,7 @@ const data = {
   name: span.name, durationMs: Number(BigInt(span.endTimeUnixNano) - BigInt(span.startTimeUnixNano)) / 1e6,
   errorType: attrs['error.type'], url: attrs['url.full'],
   exceptionType: exception['exception.type'], exceptionMessage: exception['exception.message'],
+  environmentKey, environmentValue,
   provenance: 'Literal fields from the captured HTTP client span and its exception event. The screenshot shows the same span.'
 }
 await writeFile(new URL('presentation/data/timeout-evidence.json', root), JSON.stringify(data, null, 2) + '\n')

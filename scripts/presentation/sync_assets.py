@@ -3,8 +3,8 @@ from pathlib import Path
 import hashlib,json,shutil,subprocess
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=ROOT/'public/demo-capture';TARGET=ROOT/'public/presentation'
-IMAGES=['java-timeout-span','edit-pricing-before','request-latency','connected-trace','java-detail-poster','fleet-catalog','namespace-rule','install-obi-edited-poster','install-java-agent-edited-poster','install-operator-edited-poster','instrument-namespace-edited-poster','fix-pricing-edited-poster','fixed-request-trace','fixed-fleet-catalog','fixed-fleet-overview']
-CLIPS=['edit-pricing-source','install-obi-edited','install-java-agent-edited','install-operator-edited','instrument-namespace-edited','java-detail','fleet-detail','fix-pricing-edited','fixed-fleet-detail','fixed-request-detail']
+IMAGES=['java-timeout-span','pricing-config-attribute','inspect-java-setup-edited-poster','request-latency','connected-trace','java-detail-poster','fleet-catalog','namespace-rule','install-obi-edited-poster','install-java-agent-edited-poster','install-operator-edited-poster','instrument-namespace-edited-poster','fix-pricing-edited-poster','fixed-request-trace','fixed-fleet-catalog','fixed-fleet-overview']
+CLIPS=['inspect-java-setup-edited','install-obi-edited','install-java-agent-edited','install-operator-edited','instrument-namespace-edited','java-detail','fleet-detail','fix-pricing-edited','fixed-fleet-detail','fixed-request-detail']
 
 def assert_silent_video(path):
     probe=subprocess.run(['ffprobe','-v','error','-show_entries','stream=codec_type','-of','json',str(path)],capture_output=True,text=True,check=True)
@@ -31,7 +31,7 @@ def main():
             subprocess.run(['ffmpeg','-v','error','-y','-i',str(source),'-an','-c:v','libvpx-vp9','-crf','32','-b:v','0','-deadline','good','-cpu-used','4','-row-mt','1','-threads','2',str(target)],check=True)
         assert_silent_video(target)
         manifest.append({'asset':str(target.relative_to(ROOT)),'source':str(source.relative_to(ROOT)),'sha256':hashlib.sha256(target.read_bytes()).hexdigest(),'bytes':target.stat().st_size,'encoding':'VP9; native playback duration'})
-    (TARGET/'manifest.json').write_text(json.dumps({'recorded':'2026-10-27','provenance':'Timeout/fallback investigation, application fix and fresh fleet recaptured October 27; unchanged install clips retain their original capture dates. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x','assets':manifest},indent=2)+'\n')
+    (TARGET/'manifest.json').write_text(json.dumps({'recorded':'2026-11-02','provenance':'Configuration-only fix and fresh request/fleet traces recorded November 2; unchanged install clips retain their original dates. Actual isolated demo; long readiness waits cut with visible cards, playback stays at 1x','assets':manifest},indent=2)+'\n')
     shutil.copy2(SOURCE/'capture-summary.json',ROOT/'presentation/data/capture.json')
     print('Curated',len(manifest),'recorded assets for Slidev')
 

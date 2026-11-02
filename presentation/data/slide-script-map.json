@@ -1,0 +1,229 @@
+[
+  {
+    "file": "slides.md",
+    "chapter": "01-promise",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/01-opening.md",
+    "chapter": "01-promise",
+    "turns": [
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/02-investigation.md",
+    "chapter": "02-topology",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/02-investigation.md",
+    "chapter": "03-install-obi",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/02-investigation.md",
+    "chapter": "04-connected-trace",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/02-investigation.md",
+    "chapter": "05-observed-path",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/02-investigation.md",
+    "chapter": "06-local-time",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "07-direct-agent",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "07-direct-agent",
+    "turns": [
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "08-new-detail",
+    "turns": [
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "08-fix-pricing",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "08-fix-pricing",
+    "turns": [
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "08-customer-result",
+    "turns": [
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "file": "slides/03-language-detail.md",
+    "chapter": "08-result-summary",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "09-the-rest",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "10-operator-opt-in",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "10-install-operator",
+    "turns": [
+      0,
+      1
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "11-enroll-services",
+    "turns": [
+      0
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "11-enroll-services",
+    "turns": [
+      1
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "11-enroll-services",
+    "turns": [
+      2
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "12-wider-result",
+    "turns": [
+      0
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "12-wider-result",
+    "turns": [
+      1,
+      2
+    ]
+  },
+  {
+    "file": "slides/05-takeaways.md",
+    "chapter": "13-hidden-cost",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/05-takeaways.md",
+    "chapter": "14-lifecycle",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/05-takeaways.md",
+    "chapter": "15-adoption",
+    "turns": [
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "file": "slides/05-takeaways.md",
+    "chapter": "15-cost",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  {
+    "file": "slides/05-takeaways.md",
+    "chapter": "16-close",
+    "turns": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+]

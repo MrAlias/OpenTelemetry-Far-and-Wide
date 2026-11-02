@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import evidence from '../../presentation/data/resolution.json'
 defineProps<{ compact?: boolean }>()
-const before = Math.round(evidence.before.requestMedianMs)
-const after = Math.round(evidence.after.requestMedianMs)
+const before = evidence.before.requestMedianMs
+const after = evidence.after.requestMedianMs
 const maximum = Math.max(before, after)
 const rows = [{label:'Before the fix', value:before, kind:'before'}, {label:'After the fix', value:after, kind:'after'}]
 const duration = (ms: number) => ms >= 1000 ? { number: (ms / 1000).toFixed(2), unit: 's' } : { number: String(Math.round(ms)), unit: 'ms' }

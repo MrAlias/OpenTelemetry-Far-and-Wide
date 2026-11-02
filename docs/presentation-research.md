@@ -105,12 +105,12 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 - presentation/data/timeout-evidence.json
 - https://opentelemetry.io/docs/specs/semconv/http/http-spans/
 - https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/
-- demo/apps/checkout/baseline/PricingEngine.java
+- demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java
 
 **Slide 11**
 
-- demo/apps/checkout/baseline/PricingEngine.java
-- demo/apps/checkout/fixes/PricingEngine.java
+- demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java
+- demo/apps/checkout/launch.sh
 
 **Slide 12**
 
@@ -166,33 +166,38 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 
 **Slide 21**
 
+- public/demo-capture/fixed-fleet-overview.png
+- public/demo-capture/fixed-fleet-trace-evidence.json
+
+**Slide 22**
+
 - presentation/data/resolution.json
 - docs/customer-resolution.md
 - components/otel-injector-images/versions.json
 
-**Slide 22**
+**Slide 23**
 
 - docs/instrumentation-savings.md
 - https://sre.google/workbook/eliminating-toil/
 
-**Slide 23**
+**Slide 24**
 
 - components/otel-injector-operator/README.md
 - docs/instrumentation-savings.md
 
-**Slide 24**
+**Slide 25**
 
 - presentation/rollout-charts.js — conceptual adoption trajectories, not observed data or a schedule; denominator is eligible services in the selected scope.
 - demo/k8s/instrument-demo-namespace.patch.yaml — shared selection mechanism.
 
-**Slide 25**
+**Slide 26**
 
 - presentation/rollout-charts.js — cumulative engineering hours, with 24 monthly update steps after initial setup.
 - presentation/data/savings-assumptions.json
 - presentation/savings-model.js
 - docs/instrumentation-savings.md — 247 engineering hours = 31 setup + 108 upkeep per year × 2; $24,700 at $100/hour. Monthly cost steps are $975 versus $75, with no adoption-delay credit.
 
-**Slide 26**
+**Slide 27**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
@@ -656,3 +661,11 @@ selection, useful new detail, then the fleet scaling problem. Verification
 lectures are preparation notes rather than audience content. The visuals must
 show the result being discussed. Use [OpenTelemetry’s preferred zero-code
 terminology](https://opentelemetry.io/docs/zero-code/) throughout narration.
+
+## November 2 configuration and script audit
+
+Slide 4 links the CNCF recording of [Debugging Your Cluster When It’s on Fire](https://www.youtube.com/watch?v=Jy0d9QXZXrQ), Nikola Grcevski and Tyler Yahn, KubeCon NA 2025. The recording title and CNCF channel were verified using YouTube’s oEmbed response.
+
+The explicit setting capture follows the [process environment-variable attribute](https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/) and [Java resource-attribute configuration](https://opentelemetry.io/docs/languages/java/configuration/). The launcher exposes only the requested demo setting; no default Java-agent collection of all environment variables is claimed.
+
+`npm run slides:audit` verifies all 21 video chapters against the 27 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.

@@ -1,7 +1,9 @@
-# Application fix only. Preserve the existing agent and exporter configuration.
+# Configuration fix only. Reuse the same image, agent and exporter settings.
 spec:
   template:
     spec:
       containers:
         - name: checkout
-          image: far-wide-demo-checkout:pricing-fixed
+          env:
+            - name: LEGACY_PRICING_URL
+              $patch: delete

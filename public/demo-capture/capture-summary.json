@@ -1,12 +1,13 @@
 {
-  "source": "Actual isolated local demo, two-second timeout and successful price-store fallback recorded October 27, 2026",
+  "source": "Actual isolated local demo; configuration-only resolution recorded November 2, 2026",
   "baseline": {
-    "traceId": "510355971a511b41b4f69c35e2230f19",
-    "rootDurationMs": 2169.686263,
-    "checkoutDurationMs": 2168.790273,
-    "failedConnectionMs": 2001.549574,
-    "checkoutSpanId": "Q76c5Sz0w00=",
-    "spanCount": 109,
+    "traceId": "48ade2ae7239986f28f19e112ae411b4",
+    "rootDurationMs": 2262.799707,
+    "checkoutDurationMs": 2261.247951,
+    "failedConnectionMs": 2001.840843,
+    "failedConnectionRowY": 500,
+    "checkoutSpanId": "4wJ17eUdUuw=",
+    "spanCount": 121,
     "services": [
       "cart",
       "catalog",
@@ -31,9 +32,9 @@
     ]
   },
   "fleetTrace": {
-    "traceID": "699a7e37a0fc44658f681d41702e6456",
+    "traceID": "6c6d48d2a8cc4395b149313d657f7e9c",
     "fixedCheckout": true,
-    "pricingMs": 1.420501,
+    "pricingMs": 1.210481,
     "sdkServices": [
       "cart",
       "catalog",
@@ -165,7 +166,7 @@
           ]
         }
       },
-      "fullPolicyGeneration": 8,
+      "fullPolicyGeneration": 10,
       "obiServices": [
         "currency",
         "gateway",
@@ -195,40 +196,25 @@
         "warehouse"
       ]
     },
-    "recorded": "2026-10-27",
-    "observedGeneration": 8
+    "recorded": "2026-11-02",
+    "observedGeneration": 10
   },
   "javaDetail": {
-    "traceId": "84a30cdd285d54a503bcc260c03f685a",
-    "pricingMs": 2009.602554,
-    "fault": "Real two-second HTTP connection timeout to the absent legacy endpoint, followed by successful PostgreSQL fallback",
-    "evidence": "public/demo-capture/java-trace-evidence.json",
-    "timeoutEvidence": {
-      "spanId": "fd10d234be1e4721",
-      "durationMs": 2003.378675,
-      "errorType": "java.net.SocketTimeoutException",
-      "exceptionMessage": "Connect timed out"
-    },
-    "screenshots": [
-      "public/demo-capture/java-timeout-span.png",
-      "public/demo-capture/java-timeout-attributes.png",
-      "public/demo-capture/java-timeout-event.png"
-    ]
+    "traceId": "26abea5ca66f7e87389d931bfecdf3d0",
+    "pricingMs": 2010.278399,
+    "fault": "Stale optional endpoint setting; real connection timeout, then successful PostgreSQL fallback",
+    "evidence": "public/demo-capture/java-trace-evidence.json"
   },
   "operatorIdentity": {
     "project": "RIO \u2014 Runtime Instrumentation Operator",
     "url": "https://github.com/otelx/rio",
-    "recording": "Bundled prototype precursor using demo.opentelemetry.io; independent from the upstream OpenTelemetry Operator"
+    "recording": "Talk-specific RIO demo snapshot; upstream capability is a goal, with the implementation still open"
   },
-  "sourceEdit": {
-    "method": "Actual X11 screen capture of Vim editing a copy of the demo source",
-    "baseline": "demo/apps/checkout/baseline/PricingEngine.java",
-    "fixed": "demo/apps/checkout/fixes/PricingEngine.java",
-    "beforeSha256": "8296a85d2780cfa6c45b4d55c61a0009e6d79cea92a27b977c8a139e65bbed4a",
-    "afterSha256": "17e5ff2736a49e26c631679e1bfda7d5e813af85355e33514c1797532eb053bc",
-    "savedFileMatchesFixedSource": true,
-    "playbackRate": 1,
-    "audio": false,
-    "video": "public/demo-capture/edit-pricing-source.mp4"
+  "configurationFix": {
+    "variable": "LEGACY_PRICING_URL",
+    "sameImageId": "sha256:084182a7922adebd0970b37ac18e9ce9a563381321e2494d0726f8dd466dafdf",
+    "command": "kubectl set env deployment/checkout -n demo-apps LEGACY_PRICING_URL-",
+    "resourceAttribute": "process.environment_variable.LEGACY_PRICING_URL",
+    "recording": "public/demo-capture/fix-pricing-edited.mp4"
   }
 }

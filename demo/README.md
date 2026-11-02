@@ -214,7 +214,7 @@ do not yet produce OTLP logs, and the stack does not collect container stdout.
 
 ## 5. Build and deploy the operator and Injector
 
-For a standalone evaluation, use [RIO](https://github.com/otelx/rio) and its [quickstart](https://github.com/otelx/rio/blob/main/docs/quickstart.md). The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
+[RIO](https://github.com/otelx/rio) is the demo operator purpose-built for this talk; we want this capability to find an upstream home. The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
 
 Build the operator and the payload containing the Injector and language agents:
 
@@ -433,36 +433,40 @@ operator walkthrough above; begin from a clean, isolated demo installation.
 
 ## Resolve the retired-backend timeout
 
-The standard demo now attempts an absent legacy pricing backend with a real
-two-second HTTP connection timeout, then reads the product price from PostgreSQL.
-The fixed image removes that obsolete attempt and retains the same store lookup.
-The original historical proof fixture is unchanged.
+`applications.yaml` sets `LEGACY_PRICING_URL=http://192.0.2.42:8080/price` on
+Checkout. While that optional setting is present, pricing attempts the absent
+backend with a real two-second HTTP connection/read timeout, then falls back
+to PostgreSQL. An unset or blank setting goes straight to the same store.
 
-Existing disposable database volumes need the new price column once:
+`apps/checkout/launch.sh` explicitly copies this one non-secret demo setting
+into the `process.environment_variable.LEGACY_PRICING_URL` resource attribute.
+The Java agent exports it; this is not automatic collection of the environment.
+Its value matches the failed HTTP span’s `url.full`.
 
-```sh
-kubectl exec -i -n demo-apps deployment/postgres -- \
-  psql -U checkout -d checkout < demo/k8s/upgrade-product-price.sql
-```
-
-Fresh databases seed it automatically. From the repository root, prepare the
-fixed image before presenting:
+Remove the setting and roll the **same image**:
 
 ```sh
-make -C demo pricing-fixed-image pricing-fixed-load CLUSTER=<demo-cluster>
-kubectl patch deployment/checkout -n demo-apps --type=strategic \
-  --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
+kubectl set env deployment/checkout -n demo-apps LEGACY_PRICING_URL-
 kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
 ```
 
-Show the actual fresh waterfall immediately after deployment: the successful
-price query remains and the failed legacy call is absent. Then show the separate
-matched warmed comparison: 2.21 s → 220 ms median request duration and
-2.01 s → 3.71 ms median pricing duration, with identical instrumentation. This is a
-local seeded-failure result, not an instrumentation speedup or a production
-benchmark. See [the full protocol](../docs/customer-resolution.md), including how
-to check that the absent address actually times out in your disposable network.
+The equivalent manifest patch is `k8s/checkout-pricing-fixed.patch.yaml`.
+Persist the removal in your GitOps source too. Show the actual new waterfall
+immediately: the successful price query remains and the failed call is gone.
+Then show the matched warmed comparison: 2.22 s → 185 ms median request duration,
+with unchanged image and instrumentation. This is a local seeded-failure result,
+not a production benchmark or an instrumentation speedup.
 
-Next enroll the namespace, retaining the fixed Checkout image. Reset to a newly
-built `far-wide-demo-checkout:local` for the timeout example. Keep all assets and
-working files in this repository; synthetic media remains local and ignored.
+Next enroll the namespace, retaining Checkout’s corrected configuration.
+Reset this disposable example without rebuilding:
+
+```sh
+kubectl set env deployment/checkout -n demo-apps \
+  LEGACY_PRICING_URL=http://192.0.2.42:8080/price
+kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
+```
+
+Existing disposable database volumes may need `k8s/upgrade-product-price.sql`
+once; fresh databases seed the price column. See [the full protocol](../docs/customer-resolution.md).
+All assets and working files stay in this repository. Synthetic media stays local
+and ignored; only verified silent demo recordings may be versioned.

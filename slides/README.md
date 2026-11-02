@@ -8,17 +8,22 @@ hand-authored sections; the animation exporter does not generate them.
 | `01-opening.md` | 2 | The visible slow request and the promise |
 | `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
 | `03-language-detail.md` | 8–14 | Explicit Java configuration, rollout and useful method detail |
-| `04-namespace.md` | 15–21 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 22–26 | Coordination, lifecycle, illustrative dollars, fleet scaling and the close |
+| `04-namespace.md` | 15–22 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 23–27 | Coordination, lifecycle, adoption, engineering hours and the close |
 
 The live budget is 21 minutes, one minute flex and three minutes questions.
-Open `/presenter/1` on the running Slidev server. Notes contain the current lead
-speaker and two to four content reminders. They follow the transcript and the
-latest edits in `../docs/talk-storyboard.md`.
+Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
+its full dialogue, tagged Tyler or Nikola, for reading while presenting.
+`../scripts/animation/talk.json` is the script source;
+`../presentation/data/slide-script-map.json` assigns every turn once, in order.
+Run `npm run slides:notes` after changing dialogue. `npm run slides:audit`
+checks all 21 video chapters, all 27 slides, spoken-turn coverage and the
+material recorded views, including terminal setup, the configuration fix,
+post-fix waterfall, full fleet waterfall and Catalog inspection.
 
-References are in `../docs/presentation-research.md`; demo commands are in
-`../demo/README.md`. Neither appears in the live notes. Slides 4, 6, 7 and 20
-retain their existing click builds.
+References remain in `../docs/presentation-research.md`; demo commands are in
+`../demo/README.md`. Slide 4 links the previous talk’s CNCF recording. Slides
+4, 6, 7, 8 and 20 have purposeful click builds.
 
 Terminal recordings play manually using their native controls. They are muted,
 run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback
@@ -104,8 +109,8 @@ the existing coordination and lifecycle sections were shortened to make room.
 
 ## Customer payoff
 
-Slides 11–14 resolve the customer problem: remove the retired-backend attempt,
-deploy the application change, show the actual post-fix waterfall, then compare
+Slides 11–14 resolve the customer problem: identify the stale endpoint setting,
+remove it and roll the same image, show the actual post-fix waterfall, then compare
 matched request medians. `../presentation/data/resolution.json` holds all 60 request timings and
 controls. `CustomerResult.vue` uses the same evidence as the animation. The
 closing slide recalls both the faster request and namespace-wide readiness.

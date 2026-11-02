@@ -2,7 +2,7 @@ CLUSTER ?= far-wide-demo
 LANGUAGES := go java dotnet python rails
 IMAGES := far-wide-demo-gateway:local far-wide-demo-checkout:local far-wide-demo-inventory:local $(foreach language,$(LANGUAGES),far-wide-demo-$(language):local)
 
-.PHONY: images load smoke pricing-fixed-image pricing-fixed-load
+.PHONY: images load smoke
 
 # Run from any directory: Make enters demo/ before invoking these recipes.
 images:
@@ -19,10 +19,3 @@ load:
 # The gateway must already be port-forwarded to localhost:8080.
 smoke:
 	python3 scripts/check-flow.py
-
-# Resolve the seeded pricing delay without changing the default slow demo.
-pricing-fixed-image:
-	docker build -t far-wide-demo-checkout:pricing-fixed -f apps/checkout/Dockerfile --build-arg PRICING_SOURCE=apps/checkout/fixes/PricingEngine.java .
-
-pricing-fixed-load:
-	kind load docker-image --name $(CLUSTER) far-wide-demo-checkout:pricing-fixed

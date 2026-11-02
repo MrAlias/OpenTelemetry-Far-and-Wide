@@ -52,6 +52,15 @@
 .slidev-layout .measurements th { color:var(--accent); font-weight:500; }
 .slidev-layout .closing-lines { font-size:60px; line-height:1.45; margin-top:60px; letter-spacing:-.025em; }
 .slidev-layout .closing-link { font-size:22px; margin-top:40px; }
+.slidev-layout .previous-talk { position:absolute; left:64px; bottom:65px; margin:0; font-size:21px; }
+.slidev-layout .previous-talk a { color:var(--accent); }
+.slidev-layout .configuration-evidence { margin:25px 0 0; }
+.slidev-layout .configuration-evidence p { font-size:25px; color:var(--muted); margin:0 0 16px; }
+.slidev-layout .configuration-evidence svg { width:100%; height:auto; aspect-ratio:550/36; display:block; margin-bottom:28px; }
+.slidev-layout .configuration-evidence code { display:block; font-size:27px; line-height:1.5; }
+.slidev-layout .configuration-evidence code strong { font-size:38px; font-weight:500; }
+.slidev-layout .configuration-value { font:34px/1.4 'DejaVu Sans Mono',monospace; color:var(--agent); margin:18px 0; }
+.slidev-layout .configuration-evidence figcaption { font-size:25px; color:var(--muted); }
 .slidev-layout .closing-resources { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:28px; }
 .slidev-layout .closing-resources a { display:flex; gap:20px; align-items:center; color:var(--ink); text-decoration:none; border:0; }
 .slidev-layout .closing-resources img { width:200px; height:200px; flex:none; }

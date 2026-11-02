@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import evidence from '../../presentation/data/timeout-evidence.json'
-const image = `${import.meta.env.BASE_URL}presentation/images/java-timeout-span.png`
+const image = `${import.meta.env.BASE_URL}presentation/images/java-detail-poster.png`
 </script>
 <template>
   <figure class="timeout-evidence" aria-label="Captured failed HTTP client span and its literal timeout attributes">

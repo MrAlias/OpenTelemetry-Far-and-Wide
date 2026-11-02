@@ -16,7 +16,7 @@ npm ci
 npm run dev
 ```
 
-Open the URL printed by Slidev. Use `/presenter/` for notes and handoffs.
+Open the URL printed by Slidev. Use `/presenter/` for the full slide-by-slide dialogue.
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 

@@ -9,11 +9,13 @@ kicker: The scaling question
 <p class="caption">How do the other teams get this detail without repeating the setup?</p>
 
 <!--
-**Nikola**
+**Nikola:**
 
-- One service required expertise, access, configuration and a rollout.
-- Thirteen more services need language detail; four Go services retain OBI.
-- Other teams have different access and release queues.
+We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
+
+**Tyler:**
+
+In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen.
 -->
 
 ---
@@ -37,12 +39,13 @@ instrumentation.opentelemetry.io/inject-python: "true"
 <p class="caption">RIO is purpose-built for this talk. We want this workflow upstream.</p>
 
 <!--
-**Tyler**
+**Tyler:**
 
-- Upstream supports workload OR namespace annotations.
-- RIO: Runtime Instrumentation Operator; our talk-specific demo in OTelX.
-- Namespace selection, runtime injection and managed rollout together.
-- Goal: upstream functionality, in the Operator or another form; path undecided.
+To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
+
+**Nikola:**
+
+That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement.
 -->
 
 ---
@@ -54,12 +57,13 @@ kicker: Live demo · centralized control
 <DemoClip src="install-operator-edited.mp4" poster="install-operator-edited-poster.png" label="Actual installation of the custom Injector controller" />
 
 <!--
-**Tyler**
+**Tyler:**
 
-- Controller selects workloads and manages rollout; Injector supplies agents.
-- Payload, exporter and exclusions configured centrally.
-- RIO demonstrates the workflow; future upstream work still needs design and agreement.
-- Jack Berg’s prototype; Nikola’s participation.
+Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents.
+
+**Nikola:**
+
+The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace.
 -->
 
 ---
@@ -83,11 +87,9 @@ action: Inject
 <p class="caption">Shared payload, exporter and exclusions are configured once.</p>
 
 <!--
-**Nikola**
+**Nikola:**
 
-- Namespace selection, not a list of services or languages.
-- Shared settings and exclusions already configured.
-- Thirteen additional services; retain direct Checkout and Go/OBI coverage.
+Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services.
 -->
 
 ---
@@ -99,11 +101,9 @@ kicker: Live demo · namespace selection
 <DemoClip src="instrument-namespace-edited.mp4" poster="namespace-rule.png" label="Actual namespace selection patch, automatic rollout and ready deployments" />
 
 <!--
-**Tyler**
+**Tyler:**
 
-- Controller rolls existing workloads; Injector supplies their agents.
-- Compatible future workloads inherit the policy.
-- No separate instrumentation change from each application team.
+Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy.
 -->
 
 ---
@@ -119,11 +119,25 @@ clicks: 1
 <p class="caption"><span class="agent-text">14 language agents</span> · 4 Go services with OBI</p>
 
 <!--
-**Nikola**
+**Nikola:**
 
-- Checkout keeps its direct agent; thirteen more gain language detail.
-- Four Go services retain OBI.
-- Platform owns the shared instrumentation setup.
+Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service.
+-->
+
+---
+kicker: The useful fleet result
+---
+
+# One request. The whole application.
+
+<TraceEvidence image="fixed-fleet-overview.png" label="Actual post-fix request waterfall after namespace enrollment, including all supported language agents and OBI-covered services" />
+
+<p class="caption">18 application services observed · 14 language agents + 4 services with OBI</p>
+
+<!--
+**Tyler:**
+
+Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services.
 -->
 
 ---
@@ -132,15 +146,14 @@ kicker: The useful fleet result
 
 # Open language detail in Catalog
 
-<TraceEvidence image="fixed-fleet-catalog.png" label="Actual fixed Checkout request after namespace enrollment, showing Catalog JDBC product lookup and downstream calls" />
-
-<p class="caption">Catalog's database work is visible too. Checkout keeps its fix.</p>
+<DemoClip src="fixed-fleet-detail.mp4" poster="fixed-fleet-catalog.png" label="Actual namespace-wide trace inspection, opening Catalog JDBC product lookup and downstream calls" />
 
 <!--
-**Tyler**
+**Nikola:**
 
-- Catalog’s Java-agent database spans.
-- Same enrollment covers Node, Python, Ruby and .NET.
-- OBI detects SDK-exported traces and avoids duplicate tracing.
-- Checkout retains its application fix.
+Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application.
+
+**Tyler:**
+
+The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too.
 -->

@@ -67,8 +67,8 @@ try{
    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
   })()`);await wait(150);
  }
- for(let n=1;n<=26;n++){
-  for(const clicks of ([4,6,7,20].includes(n)?[0,1]:[0])){
+ for(let n=1;n<=27;n++){
+  for(const clicks of ([4,6,7,8,20].includes(n)?[0,1]:[0])){
    await navigate(n,clicks);
    const result=await evaluate(`(()=>{
     const s=document.querySelector('[data-slidev-no="${n}"] .slidev-layout'),b=s.getBoundingClientRect();
@@ -79,7 +79,7 @@ try{
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.closing-resources,.savings-demo,.savings-scale,.savings-context,.rollout-comparison,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.previous-talk,.configuration-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.closing-resources,.savings-demo,.savings-scale,.savings-context,.rollout-comparison,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -97,18 +97,18 @@ try{
     if(!text?.includes('java.net.SocketTimeoutException')||!text?.includes('Connect timed out'))errors.push({slide:n,issue:'Timeout claim lacks visible captured error evidence'});
    }
    if(n===11){
-    const source=await evaluate(`document.querySelector('[data-slidev-no="11"] video source')?.getAttribute('src')`);
-    if(!source?.includes('edit-pricing-source'))errors.push({slide:n,issue:'Code fix lacks actual Java editor recording'});
-   }
-   if(n===24){
-    const chart=await evaluate(`document.querySelector('[data-slidev-no="24"] [data-rollout-chart="adoption"]')?.innerHTML`);
-    if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
+    const text=await evaluate(`document.querySelector('[data-slidev-no="11"] .configuration-evidence')?.textContent`);
+    if(!text?.includes('LEGACY_PRICING_URL')||!text.includes('192.0.2.42'))errors.push({slide:n,issue:'Captured configuration setting is missing'});
    }
    if(n===25){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="25"] .slidev-layout').textContent`);
+    const chart=await evaluate(`document.querySelector('[data-slidev-no="25"] [data-rollout-chart="adoption"]')?.innerHTML`);
+    if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
+   }
+   if(n===26){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="26"] .slidev-layout').textContent`);
     if(!text.includes('247 hours')||!text.includes('$24,700')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or hours callout missing'});
    }
-   if(n===14||n===26){
+   if(n===14||n===27){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
     if(!text?.includes((resolution.before.requestMedianMs/1000).toFixed(2))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
@@ -128,8 +128,8 @@ try{
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
  await cdp.call('Page.navigate',{url:route('/presenter/18')},sessionId);await wait(500);
- for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Namespace selection, not a list of services or languages.')"))break;await wait(100);}
- const presenter=await evaluate(`({notes:document.body.innerText.includes('Namespace selection, not a list of services or languages.'),text:document.body.innerText.slice(-1500)})`);
+ for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Here is the selection rule: instrument demo-apps.')"))break;await wait(100);}
+ const presenter=await evaluate(`({notes:document.body.innerText.includes('Here is the selection rule: instrument demo-apps.'),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
  await cdp.call('Page.navigate',{url:origin+'/presentation/savings.html'},sessionId);
  for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$13,900'"))break;await wait(100);}
@@ -150,5 +150,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All 26 slides, dollar figures, four click builds, video playback and presenter notes passed.');
+ console.log('All 27 slides, measured results, five click builds, video playback and presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}

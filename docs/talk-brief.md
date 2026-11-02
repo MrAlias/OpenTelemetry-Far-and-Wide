@@ -1,9 +1,9 @@
-# Current presentation direction · October 29, 2026
+# Current presentation direction · November 2, 2026
 
 Use the [current storyboard](talk-storyboard.md): brief introduction → actual
 18-service topology with PostgreSQL and Redis → OBI connected view and timing
 comparison → direct language-agent setup on Checkout after evidence selects it →
-expose the retired-backend timeout and working fallback → remove the stale call → actual post-fix waterfall → measured customer payoff →
+expose the retired-backend timeout and working fallback → remove the stale endpoint setting and roll the same image → actual post-fix waterfall → measured customer payoff →
 13 additional payload-supported services → upstream configuration comparison → talk-specific RIO demo / namespace selection and rollout →
 wider picture → coordination and lifecycle savings → adoption → cumulative costs.
 Four Go services retain OBI coverage; the payload has no Go language agent.

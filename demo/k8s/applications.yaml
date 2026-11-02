@@ -223,6 +223,9 @@ spec:
           image: far-wide-demo-checkout:local
           imagePullPolicy: IfNotPresent
           env:
+            # Remove this stale optional setting to skip the retired backend.
+            - name: LEGACY_PRICING_URL
+              value: http://192.0.2.42:8080/price
             - name: COMMERCE_SERVICES
               value: cart,shipping,payments,notifications
             - name: DATABASE_URL
