@@ -34,7 +34,7 @@ Welcome everyone. I'm Tyler Yahn.
 
 **Nikola:**
 
-And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
+And I'm Nikola Grcevski.
 -->
 
 ---

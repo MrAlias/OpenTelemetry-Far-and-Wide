@@ -11,11 +11,11 @@ kicker: The application
 <!--
 **Tyler:**
 
-Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow.
+This is where the order goes. Gateway, Checkout, Inventory, then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Somewhere along that route, we're losing the customer's time.
 
 **Nikola:**
 
-Every team can have a different definition of healthy. Following the request gives us one shared starting point.
+The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
 -->
 
 ---
@@ -31,19 +31,19 @@ clicks: 1
 <!--
 **Tyler:**
 
-First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics.
+We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported application traffic from Linux using eBPF, then gives us OpenTelemetry traces and metrics. We can start with the applications that are already running. No application code changes, and no application restarts.
 
 **Nikola:**
 
-We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available.
+That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available.
 
 **Tyler:**
 
-And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications.
+Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
 
 **Nikola:**
 
-One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request.
+One deployment. Now let's see how much of the customer's wait we can explain.
 -->
 
 ---
@@ -59,11 +59,11 @@ kicker: The observed request
 <!--
 **Nikola:**
 
-Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service.
+Here's the order we've been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
 **Tyler:**
 
-Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change.
+And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about.
 -->
 
 ---
@@ -80,11 +80,11 @@ clicks: 1
 <!--
 **Tyler:**
 
-Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went.
+These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram.
 
 **Nikola:**
 
-Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system.
+That's useful when the first team you call says, we don't call that service. Maybe not directly. The request still went there, and now both teams can look at the same evidence.
 -->
 
 ---
@@ -101,17 +101,17 @@ clicks: 1
 <!--
 **Tyler:**
 
-Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix.
+Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
 
 **Nikola:**
 
-Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls.
+Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer has already paid for that failed attempt with their time.
 
 **Tyler:**
 
-Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code.
+That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
 
 **Nikola:**
 
-Let's open Checkout and follow that connection.
+Let's open Checkout. We have a specific question for it now.
 -->

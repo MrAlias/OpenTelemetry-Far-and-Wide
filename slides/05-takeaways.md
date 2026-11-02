@@ -14,19 +14,19 @@ kicker: What the shared workflow saves
 <!--
 **Tyler:**
 
-Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?
+Think about your last investigation that needed more instrumentation. How long was it between, I know what I need to see, and actually being able to see it?
 
 **Nikola:**
 
-Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work.
+There's the owner to find, access to arrange, a review, and a release. People are fitting that work around something else. While those conversations happen, the customer still has the slow checkout.
 
 **Tyler:**
 
-One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands.
+That's the work this namespace choice can remove from the next investigation. Agree on the shared setup once, and maintain it together. Each service doesn't need to reopen the whole conversation.
 
 **Nikola:**
 
-It is fewer people arranging the same work. Count their active effort separately from the time spent waiting.
+Count both the people doing that work and the time they spend waiting. We usually remember the few minutes spent typing the change. The rest is where a small instrumentation task can turn into a long interruption.
 -->
 
 ---
@@ -47,19 +47,19 @@ kicker: After day one
 <!--
 **Tyler:**
 
-And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off.
+Now an agent release arrives next month. Do all thirteen service owners need another task and another rollout? And what happens when a new service appears?
 
 **Nikola:**
 
-Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime.
+The shared approach gives us a place to handle that work together. Compatible new services inherit the policy. Agent updates use the shared rollout path. Settings and recovery instructions have one place to improve.
 
 **Tyler:**
 
-That can reduce drift and repeated troubleshooting. But the platform does not maintain itself.
+A service can still change runtimes, or need an exception. OBI can keep the baseline for supported traffic, while the available language detail depends on the runtime. Someone still has to look after those cases.
 
 **Nikola:**
 
-Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too.
+Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
 -->
 
 ---
@@ -73,15 +73,15 @@ kicker: Adoption across the organization
 <!--
 **Nikola:**
 
-This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage.
+This is a sketch of what that can mean for coverage. One team gets instrumentation done. Another has a release freeze. A third is busy with something else. Months can pass with the application only partly covered.
 
 **Tyler:**
 
-And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up.
+And the application doesn't wait for the project to finish. Add a service, or rewrite one from Java to Python, and coverage can fall again. The finish line moves while the teams are still catching up.
 
 **Nikola:**
 
-Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path.
+With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
 -->
 
 ---
@@ -97,19 +97,19 @@ kicker: The cost of repeated setup and upkeep
 <!--
 **Tyler:**
 
-Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release.
+Here's what repeating the work can cost in our eighteen-service example. After Checkout, thirteen services still need language instrumentation. These steps cover their setup and two years of monthly agent updates. Every jump is another release to handle.
 
 **Nikola:**
 
-With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time.
+On the distributed path, the service owners arrange that work separately. On the centralized path, we set up the namespace once and share each update. That lower line still includes maintaining the shared approach.
 
 **Tyler:**
 
-Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating.
+The difference is two hundred and forty-seven engineering hours over two years. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. That's time people could spend on the next customer problem, rather than repeating this setup and upkeep.
 
 **Nikola:**
 
-These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams.
+Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
 -->
 
 ---
@@ -128,17 +128,17 @@ kicker: Make the next investigation easier
 <!--
 **Tyler:**
 
-We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace.
+Remember the customer waiting at the start? OBI helped us find the failed connection. The Java agent showed the pricing call and its fallback. The resource attributes exposed the retired endpoint setting. Remove that setting, roll the same image, and the next trace shows the wait has gone.
 
 **Nikola:**
 
-Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project.
+Then one namespace choice made language detail available across the supported services. RIO demonstrates the shared workflow we'd like to bring upstream. The next team should be able to open a trace and start investigating, without repeating our setup first.
 
 **Tyler:**
 
-OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers.
+OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service, or across a cluster, and use to find what's keeping a customer waiting. That's what makes all this setup worthwhile: we can get from their problem to something we can fix.
 
 **Nikola:**
 
-Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions.
+Find the wait, fix the cause, and make the next investigation easier. Thank you. Let's take your questions.
 -->
