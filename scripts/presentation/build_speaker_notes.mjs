@@ -15,7 +15,21 @@ for (const [index, entry] of map.entries()) {
     assigned.push(`${entry.chapter}/${turn}`)
     return chapter.turns[turn]
   })
-  const note = '<!--\n' + turns.map(turn => `**${turn.speaker}:**\n\n${turn.text}`).join('\n\n') + '\n-->'
+  const clickMarkers = entry.noteClicks || []
+  let previousClick = 0
+  const clickByTurn = new Map()
+  for (const marker of clickMarkers) {
+    assert(Number.isInteger(marker.at) && marker.at > previousClick, 'Note clicks must advance in order')
+    assert(entry.turns.includes(marker.turn), `Note click references an unmapped turn: ${entry.chapter}/${marker.turn}`)
+    assert(!clickByTurn.has(marker.turn), 'Only one click marker may precede a turn')
+    clickByTurn.set(marker.turn, marker.at - previousClick)
+    previousClick = marker.at
+  }
+  const note = '<!--\n' + turns.map((turn, i) => {
+    const click = clickByTurn.get(entry.turns[i])
+    const prefix = click ? `[click${click === 1 ? '' : ':' + click}]\n\n` : ''
+    return `${prefix}**${turn.speaker}:**\n\n${turn.text}`
+  }).join('\n\n') + '\n-->'
   if (!files.has(entry.file)) files.set(entry.file, [])
   files.get(entry.file).push({note, entry, slide:index + 1})
 }
@@ -31,7 +45,11 @@ for (const [file, entries] of files) {
     const body = source.slice(cursor, offset); cursor = offset + old.length
     const title = body.match(/^# (.+)$/m)?.[1]
     assert(title, `${file}: mapped slide has no title`)
+    const clickCount = Number(body.match(/^clicks: (\d+)$/m)?.[1] || 0)
+    assert.equal(row.entry.noteClicks?.at(-1)?.at || 0, clickCount,
+      `${file}: every visual click must have a matching note marker`)
     slides.push({slide:row.slide, title, chapter:row.entry.chapter, turns:row.entry.turns,
+      noteClicks:row.entry.noteClicks || [],
       components:[...body.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)].map(match => match[1]),
       visuals:[...body.matchAll(/(?:src|image|poster)="([^"]+)"/g)].map(match => match[1].split('/').at(-1))})
     return row.note

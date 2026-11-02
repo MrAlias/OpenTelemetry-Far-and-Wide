@@ -36,6 +36,8 @@ We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported appli
 
 That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available.
 
+[click]
+
 **Tyler:**
 
 Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
@@ -73,6 +75,8 @@ clicks: 1
 <ServiceTopology :phase="$clicks > 0 ? 'observed' : 'plain'" />
 
 <!--
+[click]
+
 **Tyler:**
 
 These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram.
@@ -95,6 +99,8 @@ clicks: 1
 **Tyler:**
 
 Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
+
+[click]
 
 **Nikola:**
 

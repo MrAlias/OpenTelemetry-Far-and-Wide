@@ -16,7 +16,11 @@ Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
 its full dialogue, tagged Tyler or Nikola, for reading while presenting.
 `../scripts/animation/talk.json` is the script source;
 `../presentation/data/slide-script-map.json` assigns every turn once, in order.
-Run `npm run slides:notes` after changing dialogue. `npm run slides:audit`
+The five click-build slides use native `[click]` markers: the matching
+passage is highlighted as you advance, and the rest stays dimmed for context.
+`noteClicks` in the script map places each marker before a chapter turn; it
+does not add audience-facing content or change the transcript.
+Run `npm run slides:notes` after changing dialogue or click assignments. `npm run slides:audit`
 checks all 21 video chapters, all 27 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,
 post-fix waterfall, full fleet waterfall and Catalog inspection.
