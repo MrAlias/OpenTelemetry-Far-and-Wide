@@ -1,5 +1,6 @@
 ---
 theme: default
+colorSchema: auto
 title: OpenTelemetry Far and Wide
 titleTemplate: '%s · Observability Day 2026'
 info: |
