@@ -32,6 +32,7 @@ for (const [file, entries] of files) {
     const title = body.match(/^# (.+)$/m)?.[1]
     assert(title, `${file}: mapped slide has no title`)
     slides.push({slide:row.slide, title, chapter:row.entry.chapter, turns:row.entry.turns,
+      components:[...body.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)].map(match => match[1]),
       visuals:[...body.matchAll(/(?:src|image|poster)="([^"]+)"/g)].map(match => match[1].split('/').at(-1))})
     return row.note
   })
@@ -46,9 +47,9 @@ for (const chapter of talk.chapters) {
   for (const visual of chapter.visuals || []) {
     if (visual.type === 'art') continue
     const basename = visual.src.split('/').at(-1)
-    // The timeout slide reflows literal fields beside a crop of that same trace.
+    // Native screenshot views carry the same recorded timeout evidence.
     if (basename === 'java-detail-poster.png') {
-      assert(authored.some(slide => slide.title === 'A failed attempt before a working fallback'))
+      assert(authored.some(slide => slide.components.includes('TimeoutEvidence')))
     } else assert(authored.some(slide => slide.visuals.includes(basename)),
       `Video evidence missing from slides: ${chapter.id}/${basename}`)
   }

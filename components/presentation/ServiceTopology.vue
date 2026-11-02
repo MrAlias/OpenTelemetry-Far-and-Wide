@@ -18,14 +18,14 @@ const timing = (id: string) => { const ms = (request.serverDurationMs as Record<
     </g>
     <g v-for="node in topology.nodes" :key="node.id" :data-service="node.id" :data-agent="hasAgent(node)" :class="`topology-node ${tone(node)}`">
       <rect :x="node.x - node.w / 2" :y="node.y - (node.h + 8) / 2" :width="node.w" :height="node.h + 8" rx="5" />
-      <text :x="node.x" :y="node.y - 5" class="node-name">{{ node.label }}</text>
-      <text :x="node.x" :y="node.y + 22" class="node-runtime">{{ observed && branch.has(node.id) ? timing(node.id) : node.runtime }}</text>
+      <text :x="node.x" :y="node.y + (phase === 'plain' || observed && !branch.has(node.id) ? 7 : -5)" class="node-name">{{ node.label }}</text>
+      <text v-if="phase === 'one' || phase === 'complete' || observed && branch.has(node.id)" :x="node.x" :y="node.y + 22" class="node-runtime">{{ observed && branch.has(node.id) ? timing(node.id) : node.runtime }}</text>
       <circle v-if="hasAgent(node)" :cx="node.x + node.w / 2 - 8" :cy="node.y - (node.h + 8) / 2 + 8" r="4" />
     </g>
     <g class="topology-databases">
       <line x1="60" y1="557" x2="1220" y2="557" />
-      <text x="65" y="584">PostgreSQL</text><text x="65" y="611" class="database-clients">{{ topology.databases.PostgreSQL.join(' · ') }}</text>
-      <text x="790" y="584">Redis</text><text x="790" y="611" class="database-clients">{{ topology.databases.Redis.join(' · ') }}</text>
+      <text x="65" y="590">PostgreSQL</text>
+      <text x="790" y="590">Redis</text>
     </g>
   </svg>
 </template>

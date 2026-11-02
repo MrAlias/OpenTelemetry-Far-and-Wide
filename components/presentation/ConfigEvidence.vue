@@ -16,6 +16,5 @@ const image = `${import.meta.env.BASE_URL}presentation/images/${capture.image}`
         <image :href="image" :width="capture.width" :height="capture.height" />
       </svg>
     </a>
-    <figcaption>Same address as the failed HTTP span.</figcaption>
   </figure>
 </template>

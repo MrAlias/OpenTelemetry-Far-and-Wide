@@ -7,6 +7,8 @@ const root=process.cwd(), work=path.join(root,'.artifacts/slides');
 await mkdir(path.join(work,'tmp'),{recursive:true});
 await mkdir(path.join(work,'renders'),{recursive:true});
 const resolution=JSON.parse(await readFile(path.join(root,'presentation/data/resolution.json'),'utf8'));
+const talk=JSON.parse(await readFile(path.join(root,'scripts/animation/talk.json'),'utf8'));
+const namespaceNote=talk.chapters.find(c=>c.id==='11-enroll-services').turns[0].text;
 const origin=process.env.SLIDEV_URL||'http://localhost:3040';
 class CDP {
   constructor(process) {
@@ -74,12 +76,12 @@ try{
     const s=document.querySelector('[data-slidev-no="${n}"] .slidev-layout'),b=s.getBoundingClientRect();
     const out=[],collisions=[],h=s.querySelector('h1');
     const visible=e=>{const st=getComputedStyle(e);return st.visibility!=='hidden'&&Number(st.opacity)!==0&&e.getBoundingClientRect().width>0};
-    for(const e of s.querySelectorAll('h1,p,pre,td,th,dt,dd,footer,svg text')){
+    for(const e of s.querySelectorAll('h1,h2,p,pre,td,th,dt,dd,footer,svg text')){
      if(!visible(e))continue;const r=e.getBoundingClientRect();
      if(r.left<b.left-1||r.right>b.right+1||r.top<b.top-1||r.bottom>b.bottom-1)out.push(e.textContent.trim().slice(0,100));
      if(e.tagName==='PRE'&&e.scrollWidth>e.clientWidth+2)out.push('code scroll: '+e.textContent.slice(0,80));
     }
-    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.previous-talk,.configuration-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.closing-resources,.savings-demo,.savings-scale,.savings-context,.rollout-comparison,.customer-result,.customer-callback,.fix-caption,.talk-footer')].filter(visible);
+    const blocks=[...s.querySelectorAll('h1,.caption,.lead,.service-topology,.trace-evidence,.timeout-evidence,.obi-intro,.previous-talk,.configuration-evidence,.demo-clip,pre,.clocks,.lifecycle,.measurements,.payoff,.closing-lines,.closing-link,.closing-resources,.savings-demo,.savings-scale,.savings-context,.rollout-comparison,.customer-result,.customer-callback,.fix-caption,.talk-footer,.opening-evidence,.ownership-flow,.operator-choice,.coverage-key,.chart-context')].filter(visible);
     for(let a=0;a<blocks.length;a++)for(let c=a+1;c<blocks.length;c++){
      const x=blocks[a],y=blocks[c];if(x.contains(y)||y.contains(x))continue;const r=x.getBoundingClientRect(),t=y.getBoundingClientRect();
      if(Math.min(r.right,t.right)-Math.max(r.left,t.left)>4&&Math.min(r.bottom,t.bottom)-Math.max(r.top,t.top)>4)collisions.push([x.tagName+':'+x.className,y.tagName+':'+y.className]);
@@ -132,8 +134,8 @@ try{
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
  await cdp.call('Page.navigate',{url:route('/presenter/18')},sessionId);await wait(500);
- for(let i=0;i<100;i++){if(await evaluate("document.body.innerText.includes('Here is the selection rule: instrument demo-apps.')"))break;await wait(100);}
- const presenter=await evaluate(`({notes:document.body.innerText.includes('Here is the selection rule: instrument demo-apps.'),text:document.body.innerText.slice(-1500)})`);
+ for(let i=0;i<100;i++){if(await evaluate(`document.body.innerText.includes(${JSON.stringify(namespaceNote)})`))break;await wait(100);}
+ const presenter=await evaluate(`({notes:document.body.innerText.includes(${JSON.stringify(namespaceNote)}),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
  await cdp.call('Page.navigate',{url:origin+'/presentation/savings.html'},sessionId);
  for(let i=0;i<100;i++){if(await evaluate("document.getElementById('firstYear')?.textContent==='$13,900'"))break;await wait(100);}

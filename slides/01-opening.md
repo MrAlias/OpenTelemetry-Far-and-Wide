@@ -2,14 +2,9 @@
 kicker: The investigation
 ---
 
-# You know it's slow
+# Why is checkout taking so long?
 
-<div class="hook-grid">
-  <p>A customer is waiting.<br>Where do we act?</p>
-  <img src="/presentation/images/request-latency.png" alt="Grafana: one checkout request takes more than two seconds" />
-</div>
-
-<p class="caption">Find the wait. Fix the cause. Check the customer request.</p>
+<figure class="opening-evidence"><img src="/presentation/images/request-latency.png" alt="Actual Grafana measurement: one checkout request takes two seconds" /></figure>
 
 <!--
 **Tyler:**
