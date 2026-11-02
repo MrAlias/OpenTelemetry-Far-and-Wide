@@ -13,8 +13,8 @@ services and four Go OBI baselines. Graphviz supplies the graph layout.
 Trace timing and instrumentation results come from individual local demo
 requests, not benchmarks. Engineering and coordination dollars are an illustrative labor-capacity model,
 not measured customer savings.
-The merged custom controller/Injector is a demo integration; a standalone official
-repository is future work, and no upstream release commitment is implied.
+RIO is the talk-specific demo of centralized control. We want an upstream home
+for the capability; the implementation and upstream agreement remain open.
 
 Content sources, with pinned upstream references retained in those documents:
   docs/talk-brief.md
@@ -107,3 +107,12 @@ is 247 engineering hours freed, valued at $24,700 at an assumed $100/hour.
 Each monthly release steps up by $975 versus $75; costs hold flat between
 releases. No adoption-delay saving is priced. The same renderer drives both
 slides and animation: presentation/rollout-charts.js.
+
+November 2 revision: optional LEGACY_PRICING_URL, explicitly captured as a
+process.environment_variable resource attribute. Remove the setting and roll
+the same image; show the actual new waterfall before the repeated-request
+summary. Public snapshots omit unneeded host/process metadata and stack traces.
+The 27-slide deck now includes the full fleet waterfall before Catalog detail.
+Full dialogue is mapped once across slide notes from the same script.
+Previous talk: https://www.youtube.com/watch?v=Jy0d9QXZXrQ
+Process attribute: https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/

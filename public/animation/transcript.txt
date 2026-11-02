@@ -7,7 +7,7 @@ Tyler: Welcome everyone. I'm Tyler Yahn.
 
 Nikola: And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix.
 
-Tyler: The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
+Tyler: The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application.
 
 Nikola: One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system.
 
@@ -58,14 +58,14 @@ Tyler: Here's a fresh request with the Java agent. Open PricingEngine.calculate.
 
 Nikola: Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first.
 
-Tyler: OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate.
+Tyler: OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address.
 
-Stop calling the retired backend
-Tyler: There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly.
+Remove the stale endpoint setting
+Tyler: Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store.
 
-Nikola: Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, this is the trace showing the timeout, and now we have a change that removes it while keeping the price lookup.
+Nikola: Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application.
 
-Tyler: We're deploying that application change now. The Java agent and exporter settings stay the same.
+Tyler: Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes.
 
 Nikola: The rollout is ready. Let's send another customer request and look at its trace.
 
@@ -74,10 +74,10 @@ Tyler: Here is the new request's waterfall. Expand Checkout and PricingEngine.ca
 
 Nikola: Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there.
 
-Tyler: This is the payoff: a customer symptom, an observed cause, a code change, and a fresh trace showing what changed.
+Tyler: This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared.
 
 The improvement across repeated requests
-Tyler: Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone.
+Tyler: Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait.
 
 Nikola: That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?
 
@@ -85,8 +85,6 @@ One fixed. Thirteen to equip.
 Nikola: We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?
 
 Tyler: In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen.
-
-Nikola: And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue.
 
 From language opt-in to a shared namespace policy
 Tyler: To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace.
@@ -146,11 +144,11 @@ Tyler: Over two years, that frees two hundred and forty-seven engineering hours.
 
 Nikola: These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams.
 
-Less waiting. More services ready.
-Tyler: We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change.
+OpenTelemetry. Ready to install.
+Tyler: We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace.
 
-Nikola: Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project.
+Nikola: Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project.
 
-Tyler: The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for.
+Tyler: OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers.
 
-Nikola: The demo shows the idea. We want an upstream home for this workflow, with the design still open. Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions.
+Nikola: Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions.

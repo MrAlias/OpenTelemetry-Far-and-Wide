@@ -17,1021 +17,1021 @@ Nikola: And I'm Nikola Grcevski.
 Nikola: Today we're following a slow customer checkout, from the first symptom to a fix.
 
 5
-00:00:10.400 --> 00:00:13.874
+00:00:10.400 --> 00:00:13.378
 Tyler: The application completes the request, but the customer is waiting.
 
 6
-00:00:13.874 --> 00:00:18.391
-Tyler: We'll follow that request across the system, add language detail, and change the
+00:00:13.378 --> 00:00:17.250
+Tyler: We'll follow that request across the system, add language detail, and remove the
 
 7
-00:00:18.391 --> 00:00:19.086
-Tyler: code responsible.
+00:00:17.250 --> 00:00:18.739
+Tyler: stale setting behind the delay.
 
 8
-00:00:19.086 --> 00:00:23.603
+00:00:18.739 --> 00:00:22.611
 Tyler: Then we'll use the OpenTelemetry Injector and a small demo operator to share
 
 9
-00:00:23.603 --> 00:00:25.340
+00:00:22.611 --> 00:00:24.100
 Tyler: that setup across the application.
 
 10
-00:00:25.660 --> 00:00:31.003
+00:00:24.420 --> 00:00:29.763
 Nikola: One customer problem, then a way for each of the teams in the organization to
 
 11
-00:00:31.003 --> 00:00:31.715
+00:00:29.763 --> 00:00:30.475
 Nikola: investigate theirs.
 
 12
-00:00:31.715 --> 00:00:33.140
+00:00:30.475 --> 00:00:31.900
 Nikola: Let's open the system.
 
 13
-00:00:34.450 --> 00:00:37.923
+00:00:33.210 --> 00:00:36.683
 Tyler: Here is our checkout application: eighteen services, with PostgreSQL and Redis.
 
 14
-00:00:37.923 --> 00:00:41.711
+00:00:36.683 --> 00:00:40.471
 Tyler: The Gateway hands the request to Checkout, which calls Inventory and four
 
 15
-00:00:41.711 --> 00:00:42.343
+00:00:40.471 --> 00:00:41.103
 Tyler: commerce branches.
 
 16
-00:00:42.343 --> 00:00:47.394
+00:00:41.103 --> 00:00:46.154
 Tyler: The map shows what can talk to what; the duration tells us the whole request is
 
 17
-00:00:47.394 --> 00:00:47.710
+00:00:46.154 --> 00:00:46.470
 Tyler: slow.
 
 18
-00:00:48.030 --> 00:00:51.210
+00:00:46.790 --> 00:00:49.970
 Nikola: Every team can have a different definition of healthy.
 
 19
-00:00:51.210 --> 00:00:54.390
+00:00:49.970 --> 00:00:53.150
 Nikola: Following the request gives us one shared starting point.
 
 20
-00:00:55.690 --> 00:00:58.474
+00:00:54.450 --> 00:00:57.234
 Tyler: First, OpenTelemetry eBPF Instrumentation, or OBI.
 
 21
-00:00:58.474 --> 00:01:02.650
+00:00:57.234 --> 00:01:01.410
 Tyler: It's a zero-code way to observe running Linux applications.
 
 22
-00:01:02.650 --> 00:01:07.754
+00:01:01.410 --> 00:01:06.514
 Tyler: It uses eBPF to watch application and network activity, then exports
 
 23
-00:01:07.754 --> 00:01:09.610
+00:01:06.514 --> 00:01:08.370
 Tyler: OpenTelemetry traces and metrics.
 
 24
-00:01:09.930 --> 00:01:14.120
+00:01:08.690 --> 00:01:12.880
 Nikola: We're getting a starting point across the application without asking each team
 
 25
-00:01:14.120 --> 00:01:16.913
+00:01:12.880 --> 00:01:15.673
 Nikola: to add a library or restart its service.
 
 26
-00:01:16.913 --> 00:01:20.404
+00:01:15.673 --> 00:01:19.164
 Nikola: That's a lot of visibility before the first instrumentation ticket.
 
 27
-00:01:20.404 --> 00:01:23.197
+00:01:19.164 --> 00:01:21.957
 Nikola: We showed this idea last year in Atlanta.
 
 28
-00:01:23.197 --> 00:01:25.990
+00:01:21.957 --> 00:01:24.750
 Nikola: Now OBI is version one and generally available.
 
 29
-00:01:26.310 --> 00:01:28.961
+00:01:25.070 --> 00:01:27.721
 Tyler: And this is more than a service map.
 
 30
-00:01:28.961 --> 00:01:32.276
+00:01:27.721 --> 00:01:31.036
 Tyler: OBI follows supported calls across service boundaries, including our HTTP,
 
 31
-00:01:32.276 --> 00:01:33.601
+00:01:31.036 --> 00:01:32.361
 Tyler: PostgreSQL, and Redis traffic.
 
 32
-00:01:33.601 --> 00:01:37.910
+00:01:32.361 --> 00:01:36.670
 Tyler: Let's deploy it on the nodes and let it discover the running applications.
 
 33
-00:01:38.230 --> 00:01:39.022
+00:01:36.990 --> 00:01:37.782
 Nikola: One deployment.
 
 34
-00:01:39.022 --> 00:01:40.605
+00:01:37.782 --> 00:01:39.365
 Nikola: Eighteen services to investigate.
 
 35
-00:01:40.605 --> 00:01:44.167
+00:01:39.365 --> 00:01:42.927
 Nikola: Much better odds than guessing which team to call.
 
 36
-00:01:44.167 --> 00:01:45.750
+00:01:42.927 --> 00:01:44.510
 Nikola: Let's open a request.
 
 37
-00:01:51.010 --> 00:01:54.042
+00:01:49.770 --> 00:01:52.802
 Nikola: Look what that one OBI deployment gave us.
 
 38
-00:01:54.042 --> 00:01:58.590
+00:01:52.802 --> 00:01:57.350
 Nikola: This is the slow request behind the opening number, followed across the
 
 39
-00:01:58.590 --> 00:01:58.969
+00:01:57.350 --> 00:01:57.729
 Nikola: application.
 
 40
-00:01:58.969 --> 00:02:04.275
+00:01:57.729 --> 00:02:03.035
 Nikola: Here are the HTTP calls and the PostgreSQL price query, before we've added a
 
 41
-00:02:04.275 --> 00:02:06.170
+00:02:03.035 --> 00:02:04.930
 Nikola: language agent to any service.
 
 42
-00:02:07.490 --> 00:02:09.614
+00:02:06.250 --> 00:02:08.374
 Tyler: Different languages, one request we can follow.
 
 43
-00:02:09.614 --> 00:02:13.861
+00:02:08.374 --> 00:02:12.621
 Tyler: We've gone from a customer waiting for seconds to a specific set of service
 
 44
-00:02:13.861 --> 00:02:14.772
+00:02:12.621 --> 00:02:13.532
 Tyler: calls and durations.
 
 45
-00:02:14.772 --> 00:02:17.806
+00:02:13.532 --> 00:02:16.566
 Tyler: That's a huge head start for such a small setup.
 
 46
-00:02:17.806 --> 00:02:19.626
+00:02:16.566 --> 00:02:18.386
 Tyler: The customer is still waiting, though.
 
 47
-00:02:19.626 --> 00:02:21.750
+00:02:18.386 --> 00:02:20.510
 Tyler: Let's find the part we can change.
 
 48
-00:02:23.050 --> 00:02:26.004
+00:02:21.810 --> 00:02:24.764
 Tyler: Watch the plain topology turn into an observed request path.
 
 49
-00:02:26.004 --> 00:02:30.139
+00:02:24.764 --> 00:02:28.899
 Tyler: We can now ask which calls happened, which services handled them, and where the
 
 50
-00:02:30.139 --> 00:02:30.730
+00:02:28.899 --> 00:02:29.490
 Tyler: time went.
 
 51
-00:02:31.050 --> 00:02:34.737
+00:02:29.810 --> 00:02:33.497
 Nikola: Here we're following the Cart branch through Catalog, Recommendations, and
 
 52
-00:02:34.737 --> 00:02:35.106
+00:02:33.497 --> 00:02:33.866
 Nikola: Promotions.
 
 53
-00:02:35.106 --> 00:02:39.530
+00:02:33.866 --> 00:02:38.290
 Nikola: This is one branch of the same request moving through the system.
 
 54
-00:02:40.850 --> 00:02:42.130
+00:02:39.610 --> 00:02:40.890
 Tyler: Start with the waterfall.
 
 55
-00:02:42.130 --> 00:02:45.970
+00:02:40.890 --> 00:02:44.730
 Tyler: Gateway's long span includes its wait for Checkout, and Checkout's span includes
 
 56
-00:02:45.970 --> 00:02:46.930
+00:02:44.730 --> 00:02:45.690
 Tyler: its downstream work.
 
 57
-00:02:46.930 --> 00:02:50.130
+00:02:45.690 --> 00:02:48.890
 Tyler: The longest parent span doesn't tell us what to fix.
 
 58
-00:02:50.450 --> 00:02:52.954
+00:02:49.210 --> 00:02:51.714
 Nikola: Look at this failed connection from Checkout instead.
 
 59
-00:02:52.954 --> 00:02:57.024
+00:02:51.714 --> 00:02:55.784
 Nikola: It consumes about two seconds before the successful product lookup and the other
 
 60
-00:02:57.024 --> 00:02:57.650
+00:02:55.784 --> 00:02:56.410
 Nikola: service calls.
 
 61
-00:02:59.170 --> 00:03:03.301
+00:02:57.930 --> 00:03:02.061
 Tyler: Now we have somewhere specific to investigate: why is Checkout spending time on
 
 62
-00:03:03.301 --> 00:03:04.572
+00:03:02.061 --> 00:03:03.332
 Tyler: a connection that fails?
 
 63
-00:03:04.572 --> 00:03:09.021
+00:03:03.332 --> 00:03:07.781
 Tyler: OBI has exposed the failed attempt; language detail can connect it to the method
 
 64
-00:03:09.021 --> 00:03:10.610
+00:03:07.781 --> 00:03:09.370
 Tyler: and fallback in our code.
 
 65
-00:03:10.930 --> 00:03:14.210
+00:03:09.690 --> 00:03:12.970
 Nikola: Let's open Checkout and follow that connection.
 
 66
-00:03:15.530 --> 00:03:17.090
+00:03:14.290 --> 00:03:15.850
 Tyler: We have source access here.
 
 67
-00:03:17.090 --> 00:03:18.338
+00:03:15.850 --> 00:03:17.098
 Tyler: Pricing runs before Inventory.
 
 68
-00:03:18.338 --> 00:03:23.018
+00:03:17.098 --> 00:03:21.778
 Tyler: We'll use the Java agent to time that method and expose the library calls inside
 
 69
-00:03:23.018 --> 00:03:23.330
+00:03:21.778 --> 00:03:22.090
 Tyler: it.
 
 70
-00:03:23.650 --> 00:03:25.702
+00:03:22.410 --> 00:03:24.462
 Nikola: This is OpenTelemetry's zero-code instrumentation.
 
 71
-00:03:25.702 --> 00:03:31.037
+00:03:24.462 --> 00:03:29.797
 Nikola: The agent supplies the instrumentation; we still need to make it available, add
 
 72
-00:03:31.037 --> 00:03:34.730
+00:03:29.797 --> 00:03:33.490
 Nikola: the startup setting, and configure where its data goes.
 
 73
-00:03:38.050 --> 00:03:39.446
+00:03:36.810 --> 00:03:38.206
 Tyler: Here's the deployment change.
 
 74
-00:03:39.446 --> 00:03:41.540
+00:03:38.206 --> 00:03:40.300
 Tyler: The application image stays the same.
 
 75
-00:03:41.540 --> 00:03:46.076
+00:03:40.300 --> 00:03:44.836
 Tyler: We provide the agent, set the service identity and exporter, and enable the
 
 76
-00:03:46.076 --> 00:03:46.774
+00:03:44.836 --> 00:03:45.534
 Tyler: pricing-method span.
 
 77
-00:03:46.774 --> 00:03:48.170
+00:03:45.534 --> 00:03:46.930
 Tyler: Then we roll Checkout.
 
 78
-00:03:48.490 --> 00:03:52.399
+00:03:47.250 --> 00:03:51.159
 Nikola: Zero code is useful, but hasn't made the release calendar disappear.
 
 79
-00:03:52.399 --> 00:03:57.375
+00:03:51.159 --> 00:03:56.135
 Nikola: Someone still needs the runtime knowledge, the settings, and a way to deploy the
 
 80
-00:03:57.375 --> 00:03:57.730
+00:03:56.135 --> 00:03:56.490
 Nikola: change.
 
 81
-00:03:59.050 --> 00:04:02.083
+00:03:57.810 --> 00:04:00.843
 Tyler: Here's a fresh request with the Java agent.
 
 82
-00:04:02.083 --> 00:04:02.841
+00:04:00.843 --> 00:04:01.601
 Tyler: Open PricingEngine.calculate.
 
 83
-00:04:02.841 --> 00:04:07.012
+00:04:01.601 --> 00:04:05.772
 Tyler: The long interval contains a failed HTTP connection, then a successful
 
 84
-00:04:07.012 --> 00:04:07.770
+00:04:05.772 --> 00:04:06.530
 Tyler: product-price lookup.
 
 85
-00:04:09.090 --> 00:04:11.092
+00:04:07.850 --> 00:04:09.852
 Nikola: Open the failed HTTP span.
 
 86
-00:04:11.092 --> 00:04:13.495
+00:04:09.852 --> 00:04:12.255
 Nikola: Its error type is Java's SocketTimeoutException.
 
 87
-00:04:13.495 --> 00:04:16.299
+00:04:12.255 --> 00:04:15.059
 Nikola: The exception event says, Connect timed out.
 
 88
-00:04:16.299 --> 00:04:18.301
+00:04:15.059 --> 00:04:17.061
 Nikola: That is a connection timeout.
 
 89
-00:04:18.301 --> 00:04:22.707
+00:04:17.061 --> 00:04:21.467
 Nikola: The product-price lookup after it succeeds, so Checkout completes, but the
 
 90
-00:04:22.707 --> 00:04:25.510
+00:04:21.467 --> 00:04:24.270
 Nikola: customer pays for the failed attempt first.
 
 91
-00:04:25.830 --> 00:04:27.388
+00:04:24.590 --> 00:04:26.156
 Tyler: OBI got us to Checkout.
 
 92
-00:04:27.388 --> 00:04:30.817
+00:04:26.156 --> 00:04:29.600
 Tyler: The language agent exposed the failed attempt and the working fallback.
 
 93
-00:04:30.817 --> 00:04:33.310
-Tyler: Now we have a code change to investigate.
+00:04:29.600 --> 00:04:33.670
+Tyler: Now let's find out why this instance is still calling that old address.
 
 94
-00:04:34.610 --> 00:04:35.422
-Tyler: There it is.
+00:04:34.970 --> 00:04:36.899
+Tyler: Checkout's resource attributes show LEGACY_PRICING_URL.
 
 95
-00:04:35.422 --> 00:04:38.127
-Tyler: Pricing still calls a legacy backend that no longer exists.
+00:04:36.899 --> 00:04:39.213
+Tyler: Its value matches the failing URL.
 
 96
-00:04:38.127 --> 00:04:41.914
-Tyler: The connection times out after two seconds, then we read the price from the
+00:04:39.213 --> 00:04:44.613
+Tyler: This instance is still configured to try a retired backend before it uses the
 
 97
-00:04:41.914 --> 00:04:42.726
-Tyler: current product store.
+00:04:44.613 --> 00:04:45.770
+Tyler: working product store.
 
 98
-00:04:42.726 --> 00:04:44.890
-Tyler: The fix is to use that store directly.
+00:04:46.090 --> 00:04:47.800
+Nikola: Instrumentation didn't remove that setting.
 
 99
-00:04:45.210 --> 00:04:46.738
-Nikola: Instrumentation didn't fix the code.
+00:04:47.800 --> 00:04:50.193
+Nikola: It gave us the evidence to act.
 
 100
-00:04:46.738 --> 00:04:48.267
-Nikola: It enabled us to act.
+00:04:50.193 --> 00:04:54.980
+Nikola: If we can collaborate with the owning team, we can bring a configuration pull
 
 101
-00:04:48.267 --> 00:04:52.852
-Nikola: If we can collaborate with the owning team, we can bring a pull request instead
+00:04:54.980 --> 00:05:00.109
+Nikola: request: here is the customer impact, here is the timeout, and here is the stale
 
 102
-00:04:52.852 --> 00:04:55.603
-Nikola: of a vague report that their service is slow.
+00:05:00.109 --> 00:05:01.135
+Nikola: setting to remove.
 
 103
-00:04:55.603 --> 00:05:00.188
-Nikola: Here is the customer impact, this is the trace showing the timeout, and now we
+00:05:01.135 --> 00:05:03.870
+Nikola: We can fix this without rebuilding the application.
 
 104
-00:05:00.188 --> 00:05:03.550
-Nikola: have a change that removes it while keeping the price lookup.
+00:05:04.190 --> 00:05:06.315
+Tyler: Remove LEGACY_PRICING_URL from the Deployment.
 
 105
-00:05:03.870 --> 00:05:05.902
-Tyler: We're deploying that application change now.
+00:05:06.315 --> 00:05:10.990
+Tyler: Kubernetes rolls Checkout with the same application image, Java agent, and
 
 106
-00:05:05.902 --> 00:05:08.950
-Tyler: The Java agent and exporter settings stay the same.
+00:05:10.990 --> 00:05:11.840
+Tyler: exporter settings.
 
 107
-00:05:23.750 --> 00:05:24.973
-Nikola: The rollout is ready.
+00:05:11.840 --> 00:05:14.390
+Tyler: Only the legacy endpoint setting changes.
 
 108
-00:05:24.973 --> 00:05:28.030
-Nikola: Let's send another customer request and look at its trace.
+00:05:34.550 --> 00:05:35.773
+Nikola: The rollout is ready.
 
 109
-00:05:29.180 --> 00:05:31.196
-Tyler: Here is the new request's waterfall.
+00:05:35.773 --> 00:05:38.830
+Nikola: Let's send another customer request and look at its trace.
 
 110
-00:05:31.196 --> 00:05:32.540
-Tyler: Expand Checkout and PricingEngine.calculate.
+00:05:40.020 --> 00:05:42.036
+Tyler: Here is the new request's waterfall.
 
 111
-00:05:32.540 --> 00:05:34.556
-Tyler: The product-price query is still here.
+00:05:42.036 --> 00:05:43.380
+Tyler: Expand Checkout and PricingEngine.calculate.
 
 112
-00:05:34.556 --> 00:05:39.260
-Tyler: The failed legacy call is gone, and the rest of the request starts sooner.
+00:05:43.380 --> 00:05:45.396
+Tyler: The product-price query is still here.
 
 113
-00:05:39.580 --> 00:05:43.700
-Nikola: Follow it through Inventory, the commerce branches, and the order write.
+00:05:45.396 --> 00:05:50.100
+Tyler: The failed legacy call is gone, and the rest of the request starts sooner.
 
 114
-00:05:43.700 --> 00:05:45.573
-Nikola: We kept the useful work.
+00:05:50.420 --> 00:05:54.540
+Nikola: Follow it through Inventory, the commerce branches, and the order write.
 
 115
-00:05:45.573 --> 00:05:50.442
-Nikola: The customer gets a faster checkout because we're no longer waiting for a
+00:05:54.540 --> 00:05:56.413
+Nikola: We kept the useful work.
 
 116
-00:05:50.442 --> 00:05:51.940
-Nikola: backend that isn't there.
+00:05:56.413 --> 00:06:01.282
+Nikola: The customer gets a faster checkout because we're no longer waiting for a
 
 117
-00:05:52.260 --> 00:05:56.790
-Tyler: This is the payoff: a customer symptom, an observed cause, a code change, and a
+00:06:01.282 --> 00:06:02.780
+Nikola: backend that isn't there.
 
 118
-00:05:56.790 --> 00:05:58.300
-Tyler: fresh trace showing what changed.
+00:06:03.100 --> 00:06:07.211
+Tyler: This is the payoff: a customer symptom, an observed cause, one configuration
 
 119
-00:05:59.610 --> 00:06:03.349
-Tyler: Across matched requests, the median checkout went from about two point two
+00:06:07.211 --> 00:06:10.980
+Tyler: change, and a fresh trace showing the failed call has disappeared.
 
 120
-00:06:03.349 --> 00:06:05.530
-Tyler: seconds to two hundred and twenty milliseconds.
+00:06:12.290 --> 00:06:16.078
+Tyler: Across matched requests, checkout falls from seconds to a fraction of a second.
 
 121
-00:06:05.530 --> 00:06:08.646
-Tyler: Pricing dropped from about two seconds to under four milliseconds.
+00:06:16.078 --> 00:06:19.283
+Tyler: Pricing no longer spends two seconds waiting for the retired backend.
 
 122
-00:06:08.646 --> 00:06:12.697
-Tyler: That supports the change we just followed in the waterfall: stop making the
+00:06:19.283 --> 00:06:23.362
+Tyler: The graph summarizes the same change we just followed in the waterfall: keep the
 
 123
-00:06:12.697 --> 00:06:15.190
-Tyler: customer wait for a backend that is gone.
+00:06:23.362 --> 00:06:25.110
+Tyler: useful work, remove the unnecessary wait.
 
 124
-00:06:15.510 --> 00:06:18.160
+00:06:25.430 --> 00:06:28.080
 Nikola: That summary supports the trace we just saw.
 
 125
-00:06:18.160 --> 00:06:21.472
+00:06:28.080 --> 00:06:31.392
 Nikola: It is a local demo comparison, not a production benchmark.
 
 126
-00:06:21.472 --> 00:06:26.110
+00:06:31.392 --> 00:06:36.030
 Nikola: Next, how do we make the same diagnostic detail available to the other teams?
 
 127
-00:06:27.410 --> 00:06:28.807
+00:06:37.330 --> 00:06:38.727
 Nikola: We've fixed this checkout.
 
 128
-00:06:28.807 --> 00:06:32.650
+00:06:38.727 --> 00:06:42.570
 Nikola: But getting to that answer needed runtime knowledge, configuration, access, and
 
 129
-00:06:32.650 --> 00:06:33.349
+00:06:42.570 --> 00:06:43.269
 Nikola: a deployment.
 
 130
-00:06:33.349 --> 00:06:37.890
+00:06:43.269 --> 00:06:47.810
 Nikola: How do the other teams get this detail without repeating all that setup?
 
 131
-00:06:38.210 --> 00:06:43.340
+00:06:48.130 --> 00:06:53.260
 Tyler: In this demo, thirteen more services use runtimes supported by the OTel
 
 132
-00:06:43.340 --> 00:06:43.768
+00:06:53.260 --> 00:06:53.688
 Tyler: Injector.
 
 133
-00:06:43.768 --> 00:06:47.188
+00:06:53.688 --> 00:06:57.108
 Tyler: The Go services will keep their OBI coverage.
 
 134
-00:06:47.188 --> 00:06:51.890
+00:06:57.108 --> 00:07:01.810
 Tyler: Our next step is to share the setup across those thirteen.
 
 135
-00:06:52.210 --> 00:06:54.570
-Nikola: And share the routine work around it.
-
-136
-00:06:54.570 --> 00:06:59.290
-Nikola: Not every team has our access, our runtime knowledge, or an empty release queue.
-
-137
-00:07:00.610 --> 00:07:04.204
+00:07:03.130 --> 00:07:06.724
 Tyler: To see what we're centralizing, here's the upstream Operator's opt-in
 
-138
-00:07:04.204 --> 00:07:04.564
+136
+00:07:06.724 --> 00:07:07.084
 Tyler: configuration.
 
-139
-00:07:04.564 --> 00:07:08.158
+137
+00:07:07.084 --> 00:07:10.678
 Tyler: Java and Python have different injection annotations, with an Instrumentation
 
-140
-00:07:08.158 --> 00:07:09.596
+138
+00:07:10.678 --> 00:07:12.116
 Tyler: resource supplying their settings.
 
-141
-00:07:09.596 --> 00:07:13.190
+139
+00:07:12.116 --> 00:07:15.710
 Tyler: You can put those annotations on workloads or a namespace.
 
-142
-00:07:13.510 --> 00:07:15.299
+140
+00:07:16.030 --> 00:07:17.819
 Nikola: That already saves work.
 
-143
-00:07:15.299 --> 00:07:20.665
+141
+00:07:17.819 --> 00:07:23.185
 Nikola: For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX.
 
-144
-00:07:20.665 --> 00:07:25.136
+142
+00:07:23.185 --> 00:07:27.656
 Nikola: It's a demo operator that combines central namespace selection, the
 
-145
-00:07:25.136 --> 00:07:27.372
+143
+00:07:27.656 --> 00:07:29.892
 Nikola: OpenTelemetry Injector, and managed rollouts.
 
-146
-00:07:27.372 --> 00:07:33.185
+144
+00:07:29.892 --> 00:07:35.705
 Nikola: We want to bring this capability upstream, whether in the existing Operator or
 
-147
-00:07:33.185 --> 00:07:34.080
+145
+00:07:35.705 --> 00:07:36.600
 Nikola: another form.
 
-148
-00:07:34.080 --> 00:07:37.210
+146
+00:07:36.600 --> 00:07:39.730
 Nikola: That path still needs design and agreement.
 
-149
-00:07:38.530 --> 00:07:40.978
+147
+00:07:41.050 --> 00:07:43.498
 Tyler: Here we install the demo controller once.
 
-150
-00:07:40.978 --> 00:07:43.076
+148
+00:07:43.498 --> 00:07:45.596
 Tyler: It builds on Jack Berg's prototype.
 
-151
-00:07:43.076 --> 00:07:45.873
+149
+00:07:45.596 --> 00:07:48.393
 Tyler: The controller selects workloads and manages their rollout.
 
-152
-00:07:45.873 --> 00:07:49.370
+150
+00:07:48.393 --> 00:07:51.890
 Tyler: The OpenTelemetry Injector handles supported runtimes and loads their agents.
 
-153
-00:07:49.690 --> 00:07:53.146
+151
+00:07:52.210 --> 00:07:55.666
 Nikola: The payload, exporter, and exclusions are shared settings.
 
-154
-00:07:53.146 --> 00:07:57.898
+152
+00:07:55.666 --> 00:08:00.418
 Nikola: Application owners don't each choose a language annotation and arrange a
 
-155
-00:07:57.898 --> 00:07:59.194
+153
+00:08:00.418 --> 00:08:01.714
 Nikola: separate instrumentation rollout.
 
-156
-00:07:59.194 --> 00:08:02.650
+154
+00:08:01.714 --> 00:08:05.170
 Nikola: Next comes the application choice: instrument this namespace.
 
-157
-00:08:03.970 --> 00:08:06.620
+155
+00:08:06.490 --> 00:08:09.140
 Nikola: Here is the selection rule: instrument demo-apps.
 
-158
-00:08:06.620 --> 00:08:08.891
+156
+00:08:09.140 --> 00:08:11.411
 Nikola: We select the application boundary once.
 
-159
-00:08:08.891 --> 00:08:13.813
+157
+00:08:11.411 --> 00:08:16.333
 Nikola: Unlike the language opt-in we just showed, this rule doesn't list languages or
 
-160
-00:08:13.813 --> 00:08:14.570
+158
+00:08:16.333 --> 00:08:17.090
 Nikola: individual services.
 
-161
-00:08:17.890 --> 00:08:21.697
+159
+00:08:20.410 --> 00:08:24.217
 Tyler: Apply that rule, and the controller rolls the selected workloads.
 
-162
-00:08:21.697 --> 00:08:24.742
+160
+00:08:24.217 --> 00:08:27.262
 Tyler: The Injector injects and supplies the OTel agents.
 
-163
-00:08:24.742 --> 00:08:28.930
+161
+00:08:27.262 --> 00:08:31.450
 Tyler: Compatible services deployed into the namespace later inherit the same policy.
 
-164
-00:08:43.680 --> 00:08:46.852
+162
+00:08:47.040 --> 00:08:50.212
 Nikola: Now all the supported services are lit up.
 
-165
-00:08:46.852 --> 00:08:51.213
+163
+00:08:50.212 --> 00:08:54.573
 Nikola: Checkout keeps its direct agent, thirteen more services gain language detail,
 
-166
-00:08:51.213 --> 00:08:53.988
+164
+00:08:54.573 --> 00:08:57.348
 Nikola: and the four Go services keep OBI.
 
-167
-00:08:53.988 --> 00:08:57.953
+165
+00:08:57.348 --> 00:09:01.313
 Nikola: The ongoing responsibility lives with the platform, instead of thirteen
 
-168
-00:08:57.953 --> 00:08:59.539
+166
+00:09:01.313 --> 00:09:02.899
 Nikola: application teams repeating it.
 
-169
-00:08:59.539 --> 00:09:01.521
+167
+00:09:02.899 --> 00:09:04.881
 Nikola: OBI is still running here.
 
-170
-00:09:01.521 --> 00:09:05.882
+168
+00:09:04.881 --> 00:09:09.242
 Nikola: It detects services already exporting traces through an OpenTelemetry SDK and
 
-171
-00:09:05.882 --> 00:09:07.072
+169
+00:09:09.242 --> 00:09:10.432
 Nikola: avoids duplicate tracing.
 
-172
-00:09:07.072 --> 00:09:10.640
+170
+00:09:10.432 --> 00:09:14.000
 Nikola: We didn't have to reconfigure OBI for every service.
 
-173
-00:09:11.970 --> 00:09:16.365
+171
+00:09:15.330 --> 00:09:19.725
 Tyler: Back in the application view, we're looking at a new request through the
 
-174
-00:09:16.365 --> 00:09:17.041
+172
+00:09:19.725 --> 00:09:20.401
 Tyler: instrumented fleet.
 
-175
-00:09:17.041 --> 00:09:21.436
+173
+00:09:20.401 --> 00:09:24.796
 Tyler: We still have the system view, and now we can open language-level observations
 
-176
-00:09:21.436 --> 00:09:22.450
+174
+00:09:24.796 --> 00:09:25.810
 Tyler: in more services.
 
-177
-00:09:22.770 --> 00:09:23.916
+175
+00:09:26.130 --> 00:09:27.276
 Nikola: Let's follow Catalog.
 
-178
-00:09:23.916 --> 00:09:27.737
+176
+00:09:27.276 --> 00:09:31.097
 Nikola: These are the Java agent's database spans from that service.
 
-179
-00:09:27.737 --> 00:09:33.086
+177
+00:09:31.097 --> 00:09:36.446
 Nikola: The same enrollment also covers the Node, Python, Ruby, and dot net services in
 
-180
-00:09:33.086 --> 00:09:33.850
+178
+00:09:36.446 --> 00:09:37.210
 Nikola: this application.
 
-181
-00:09:34.170 --> 00:09:38.257
+179
+00:09:37.530 --> 00:09:41.617
 Tyler: The namespace rule got us here without a separate instrumentation change from
 
-182
-00:09:38.257 --> 00:09:39.279
+180
+00:09:41.617 --> 00:09:42.639
 Tyler: each application team.
 
-183
-00:09:39.279 --> 00:09:40.642
+181
+00:09:42.639 --> 00:09:44.002
 Tyler: Checkout keeps its fix.
 
-184
-00:09:40.642 --> 00:09:45.069
+182
+00:09:44.002 --> 00:09:48.429
 Tyler: Now the other teams have the language detail ready for their next investigation
 
-185
-00:09:45.069 --> 00:09:45.410
+183
+00:09:48.429 --> 00:09:48.770
 Tyler: too.
 
-186
-00:09:46.730 --> 00:09:48.864
+184
+00:09:50.090 --> 00:09:52.224
 Tyler: Think about the direct setup we watched.
 
-187
-00:09:48.864 --> 00:09:51.912
+185
+00:09:52.224 --> 00:09:55.272
 Tyler: We knew the runtime, had access, and controlled the release.
 
-188
-00:09:51.912 --> 00:09:55.570
+186
+00:09:55.272 --> 00:09:58.930
 Tyler: How much happens before someone in a real organization can even begin?
 
-189
-00:09:55.890 --> 00:09:57.130
+187
+00:09:59.250 --> 00:10:00.490
 Nikola: Find an owner.
 
-190
-00:09:57.130 --> 00:09:58.370
+188
+00:10:00.490 --> 00:10:01.730
 Nikola: Explain the request.
 
-191
-00:09:58.370 --> 00:10:02.503
+189
+00:10:01.730 --> 00:10:05.863
 Nikola: A ticket, a meeting, access, review, and a release slot.
 
-192
-00:10:02.503 --> 00:10:05.810
+190
+00:10:05.863 --> 00:10:09.170
 Nikola: Then somebody switches away from their feature work.
 
-193
-00:10:06.130 --> 00:10:09.922
+191
+00:10:09.490 --> 00:10:13.282
 Tyler: One namespace choice can remove repeated enrollment changes and keep shared
 
-194
-00:10:09.922 --> 00:10:10.612
+192
+00:10:13.282 --> 00:10:13.972
 Tyler: settings consistent.
 
-195
-00:10:10.612 --> 00:10:13.370
+193
+00:10:13.972 --> 00:10:16.730
 Tyler: The saving is more than typing fewer commands.
 
-196
-00:10:13.690 --> 00:10:16.179
+194
+00:10:17.050 --> 00:10:19.539
 Nikola: It is fewer people arranging the same work.
 
-197
-00:10:16.179 --> 00:10:19.290
+195
+00:10:19.539 --> 00:10:22.650
 Nikola: Count their active effort separately from the time spent waiting.
 
-198
-00:10:20.610 --> 00:10:22.582
+196
+00:10:23.970 --> 00:10:25.942
 Tyler: And setup is only the first bill.
 
-199
-00:10:22.582 --> 00:10:23.709
+197
+00:10:25.942 --> 00:10:27.069
 Tyler: A new service arrives.
 
-200
-00:10:23.709 --> 00:10:25.118
+198
+00:10:27.069 --> 00:10:28.478
 Tyler: An agent needs an update.
 
-201
-00:10:25.118 --> 00:10:27.090
+199
+00:10:28.478 --> 00:10:30.450
 Tyler: A team needs to turn instrumentation off.
 
-202
-00:10:27.410 --> 00:10:30.464
+200
+00:10:30.770 --> 00:10:33.824
 Nikola: Compatible new services inherit the namespace choice.
 
-203
-00:10:30.464 --> 00:10:33.081
+201
+00:10:33.824 --> 00:10:36.441
 Nikola: Updates reuse the shared rollout path.
 
-204
-00:10:33.081 --> 00:10:37.008
+202
+00:10:36.441 --> 00:10:40.368
 Nikola: Configuration, documentation, and recovery instructions have one place to
 
-205
-00:10:37.008 --> 00:10:37.444
+203
+00:10:40.368 --> 00:10:40.804
 Nikola: improve.
 
-206
-00:10:37.444 --> 00:10:42.679
+204
+00:10:40.804 --> 00:10:46.039
 Nikola: A runtime change doesn't automatically mean a new onboarding project: OBI can
 
-207
-00:10:42.679 --> 00:10:47.478
+205
+00:10:46.039 --> 00:10:50.838
 Nikola: keep the baseline for supported traffic, while language-level detail depends on
 
-208
-00:10:47.478 --> 00:10:48.350
+206
+00:10:50.838 --> 00:10:51.710
 Nikola: the runtime.
 
-209
-00:10:48.670 --> 00:10:51.130
+207
+00:10:52.030 --> 00:10:54.490
 Tyler: That can reduce drift and repeated troubleshooting.
 
-210
-00:10:51.130 --> 00:10:53.590
+208
+00:10:54.490 --> 00:10:56.950
 Tyler: But the platform does not maintain itself.
 
-211
-00:10:53.910 --> 00:10:54.382
+209
+00:10:57.270 --> 00:10:57.742
 Nikola: Exactly.
 
-212
-00:10:54.382 --> 00:10:57.686
+210
+00:10:57.742 --> 00:11:01.046
 Nikola: Compatibility, rollout, and recovery still need people.
 
-213
-00:10:57.686 --> 00:11:00.990
+211
+00:11:01.046 --> 00:11:04.350
 Nikola: Their time goes into the calculation too.
 
-214
-00:11:02.290 --> 00:11:05.890
+212
+00:11:05.650 --> 00:11:09.250
 Nikola: This is a sketch of adoption, not measured rollout data.
 
-215
-00:11:05.890 --> 00:11:09.130
+213
+00:11:09.250 --> 00:11:12.490
 Nikola: Team-by-team ownership advances in steps: one service, then another.
 
-216
-00:11:09.130 --> 00:11:13.450
+214
+00:11:12.490 --> 00:11:16.810
 Nikola: Busy teams create a long tail that may never reach full coverage.
 
-217
-00:11:13.770 --> 00:11:15.482
+215
+00:11:17.130 --> 00:11:18.842
 Tyler: And the finish line moves.
 
-218
-00:11:15.482 --> 00:11:16.509
+216
+00:11:18.842 --> 00:11:19.869
 Tyler: New services arrive.
 
-219
-00:11:16.509 --> 00:11:20.617
+217
+00:11:19.869 --> 00:11:23.977
 Tyler: Someone rewrites a service from Java to Python, and the old instrumentation
 
-220
-00:11:20.617 --> 00:11:21.986
+218
+00:11:23.977 --> 00:11:25.346
 Tyler: setup no longer fits.
 
-221
-00:11:21.986 --> 00:11:25.410
+219
+00:11:25.346 --> 00:11:28.770
 Tyler: Coverage can drop while other teams are still catching up.
 
-222
-00:11:25.730 --> 00:11:28.147
+220
+00:11:29.090 --> 00:11:31.507
 Nikola: Central policy makes coverage the default.
 
-223
-00:11:28.147 --> 00:11:32.980
+221
+00:11:31.507 --> 00:11:36.340
 Nikola: One rollout reaches the eligible services in scope, and new compatible workloads
 
-224
-00:11:32.980 --> 00:11:33.785
+222
+00:11:36.340 --> 00:11:37.145
 Nikola: inherit it.
 
-225
-00:11:33.785 --> 00:11:37.410
+223
+00:11:37.145 --> 00:11:40.770
 Nikola: The platform still tests and maintains that shared path.
 
-226
-00:11:38.730 --> 00:11:41.437
+224
+00:11:42.090 --> 00:11:44.797
 Tyler: Let's keep the cost comparison in this demo.
 
-227
-00:11:41.437 --> 00:11:44.821
+225
+00:11:44.797 --> 00:11:48.181
 Tyler: Eighteen services, thirteen of them still needing language instrumentation after
 
-228
-00:11:44.821 --> 00:11:45.836
+226
+00:11:48.181 --> 00:11:49.196
 Tyler: our first example.
 
-229
-00:11:45.836 --> 00:11:49.558
+227
+00:11:49.196 --> 00:11:52.918
 Tyler: These steps show setup and two years of monthly agent updates.
 
-230
-00:11:49.558 --> 00:11:51.250
+228
+00:11:52.918 --> 00:11:54.610
 Tyler: Each jump is another release.
 
-231
-00:11:51.570 --> 00:11:55.268
+229
+00:11:54.930 --> 00:11:58.628
 Nikola: With distributed ownership, each service owner arranges the work.
 
-232
-00:11:55.268 --> 00:12:00.610
+230
+00:11:58.628 --> 00:12:03.970
 Nikola: With centralized control, we set up the namespace once and share each update.
 
-233
-00:12:00.610 --> 00:12:05.130
+231
+00:12:03.970 --> 00:12:08.490
 Nikola: Both lines include upkeep; the centralized path still costs engineering time.
 
-234
-00:12:05.450 --> 00:12:09.269
+232
+00:12:08.810 --> 00:12:12.629
 Tyler: Over two years, that frees two hundred and forty-seven engineering hours.
 
-235
-00:12:09.269 --> 00:12:13.436
+233
+00:12:12.629 --> 00:12:16.796
 Tyler: At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars.
 
-236
-00:12:13.436 --> 00:12:17.603
+234
+00:12:16.796 --> 00:12:20.963
 Tyler: From setup and monthly updates, in the same small application we've been
 
-237
-00:12:17.603 --> 00:12:17.950
+235
+00:12:20.963 --> 00:12:21.310
 Tyler: investigating.
 
-238
-00:12:18.270 --> 00:12:22.598
+236
+00:12:21.630 --> 00:12:25.958
 Nikola: These are assumed person-hours valued at a hundred dollars an hour, not a
 
-239
-00:12:22.598 --> 00:12:23.597
+237
+00:12:25.958 --> 00:12:26.957
 Nikola: measured cash saving.
 
-240
-00:12:23.597 --> 00:12:25.928
+238
+00:12:26.957 --> 00:12:29.288
 Nikola: Include your own compatibility and support costs.
 
-241
-00:12:25.928 --> 00:12:29.590
+239
+00:12:29.288 --> 00:12:32.950
 Nikola: We haven't priced the calendar time spent waiting for other teams.
 
-242
-00:12:30.890 --> 00:12:33.178
-Tyler: We started with a customer waiting for checkout.
+240
+00:12:34.250 --> 00:12:36.114
+Tyler: We started with a customer waiting.
 
-243
-00:12:33.178 --> 00:12:34.608
+241
+00:12:36.114 --> 00:12:37.668
 Tyler: OBI showed the failed connection.
 
+242
+00:12:37.668 --> 00:12:42.018
+Tyler: The Java agent tied it to pricing, and the resource attributes exposed a stale
+
+243
+00:12:42.018 --> 00:12:42.640
+Tyler: endpoint setting.
+
 244
-00:12:34.608 --> 00:12:37.468
-Tyler: The Java agent connected it to pricing and its fallback.
+00:12:42.640 --> 00:12:46.679
+Tyler: We removed that setting, rolled the same image, and checked the next request's
 
 245
-00:12:37.468 --> 00:12:41.186
-Tyler: We removed the stale backend attempt, then returned to the actual request trace
+00:12:46.679 --> 00:12:46.990
+Tyler: trace.
 
 246
-00:12:41.186 --> 00:12:42.330
-Tyler: to see the change.
-
-247
-00:12:42.650 --> 00:12:46.554
+00:12:47.310 --> 00:12:51.261
 Nikola: Then one namespace choice carried language instrumentation across the supported
 
-248
-00:12:46.554 --> 00:12:46.944
+247
+00:12:51.261 --> 00:12:51.656
 Nikola: services.
 
+248
+00:12:51.656 --> 00:12:56.793
+Nikola: RIO demonstrates that shared workflow; we want an upstream home for the idea.
+
 249
-00:12:46.944 --> 00:12:52.020
-Nikola: The next team can start with useful detail instead of starting another setup
+00:12:56.793 --> 00:13:01.930
+Nikola: The next team should start with useful detail, instead of another setup project.
 
 250
-00:12:52.020 --> 00:12:52.410
-Nikola: project.
+00:13:02.250 --> 00:13:05.254
+Tyler: OpenTelemetry has grown beyond APIs and SDKs.
 
 251
-00:12:52.730 --> 00:12:54.341
-Tyler: The customer gets a faster checkout.
+00:13:05.254 --> 00:13:09.974
+Tyler: It's instrumentation you can install: on a service, across a cluster.
 
 252
-00:12:54.341 --> 00:12:57.564
-Tyler: The teams get a shared way to investigate the next slow request.
+00:13:09.974 --> 00:13:14.694
+Tyler: From a customer waiting to a cause you can act on.
 
 253
-00:12:57.564 --> 00:13:00.250
-Tyler: That is what the traces and the automation were for.
+00:13:14.694 --> 00:13:15.552
+Tyler: Less setup.
 
 254
-00:13:00.570 --> 00:13:02.382
-Nikola: The demo shows the idea.
+00:13:15.552 --> 00:13:16.410
+Tyler: More answers.
 
 255
-00:13:02.382 --> 00:13:07.094
-Nikola: We want an upstream home for this workflow, with the design still open.
-
-256
-00:13:07.094 --> 00:13:08.181
+00:13:16.730 --> 00:13:17.930
 Nikola: Find the wait.
 
-257
-00:13:08.181 --> 00:13:09.268
+256
+00:13:17.930 --> 00:13:19.130
 Nikola: Fix the cause.
 
-258
-00:13:09.268 --> 00:13:11.080
+257
+00:13:19.130 --> 00:13:21.130
 Nikola: Make the next investigation easier.
 
+258
+00:13:21.130 --> 00:13:21.930
+Nikola: Thank you.
+
 259
-00:13:11.080 --> 00:13:12.530
+00:13:21.930 --> 00:13:23.530
 Nikola: Let's take your questions.

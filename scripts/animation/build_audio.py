@@ -53,6 +53,8 @@ cursor = 0
 def spoken(text, speaker):
     # Preserve visual spelling while making technical acronyms intelligible.
     for pattern, replacement in [
+        (r'\bLEGACY_PRICING_URL\b', 'legacy pricing U R L'),
+        (r'\bURL\b', 'U R L'),
         (r'PricingEngine\.calculate', 'Pricing Engine calculate'),
         (r'\bSocketTimeoutException\b', 'Socket Timeout Exception'),
         (r'\bRIO\b', 'Rio'), (r'\bOTelX\b', 'Oh tell ex'),

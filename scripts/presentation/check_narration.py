@@ -6,7 +6,7 @@ from faster_whisper import WhisperModel
 ROOT=Path(__file__).resolve().parents[2];WORK=ROOT/'.artifacts/animation'
 def normalized(text):
  text=text.lower()
- aliases=[('ree oh','rio'),('oh tell ex','otelx'),('otel x','otelx'),('oh tell x','otelx'),('open telemetry','opentelemetry'),('o bee','obi'),('oh bee','obi'),('o b i','obi'),('s d k','sdk'),('e b p f','ebpf'),('j d b c','jdbc'),('h t t p','http'),('dot net','dotnet'),('eighteen','18'),('fourteen','14'),('thirteen','13'),('one','1')]
+ aliases=[('u r l','url'),('ree oh','rio'),('oh tell ex','otelx'),('otel x','otelx'),('oh tell x','otelx'),('open telemetry','opentelemetry'),('o bee','obi'),('oh bee','obi'),('o b i','obi'),('s d k','sdk'),('e b p f','ebpf'),('j d b c','jdbc'),('h t t p','http'),('dot net','dotnet'),('eighteen','18'),('fourteen','14'),('thirteen','13'),('one','1')]
  for a,b in aliases:text=text.replace(a,b)
  return re.findall('[a-z0-9]+',text)
 def main():

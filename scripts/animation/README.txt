@@ -9,7 +9,7 @@ useful detail on one; a custom operator/injector addresses the remaining fleet;
 then the speakers examine coordination, adoption and cumulative setup/upkeep costs.
 RIO is a purpose-built demo for this talk. We want the capability upstream;
 the implementation and upstream path remain open.
-Trace and terminal views were recorded from the running demo. The actual missing-backend timeout and fallback are resolved with a code change;
+Trace and terminal views were recorded from the running demo. The actual missing-backend timeout and fallback are resolved by removing an optional endpoint setting and rolling the same image;
 show the post-fix waterfall before the matched-duration summary. Dollars use a
 separate hypothetical ownership/monthly-upkeep model, not measured savings.
 
@@ -165,6 +165,12 @@ Run node scripts/presentation/build_timeout_evidence.mjs before exporting.
 The slide and animation reflow literal error.type and exception.message values
 from java-trace-evidence.json alongside the actual failed span. Original Grafana
 attribute/event screenshots remain reviewable under public/demo-capture/.
-Run python3 scripts/presentation/capture_pricing_edit.py on the isolated display
-to record Vim editing a working copy. The saved result must exactly match the
-fixed Java source. Narration and all generated movies remain local and ignored.
+The Checkout launcher explicitly exposes LEGACY_PRICING_URL as a resource
+attribute. Remove that setting and roll the same image; do not rebuild or edit
+application code during the resolution. The new request waterfall precedes the
+matched summary. Full raw traces stay local; public snapshots keep only the
+presentation’s necessary fields.
+
+Run npm run slides:notes after script changes. The slide-script map places the
+complete dialogue in presenter notes and audits all chapters and recorded views.
+Narration and all generated movies remain local and ignored.

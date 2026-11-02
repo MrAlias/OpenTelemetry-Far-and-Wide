@@ -20,7 +20,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
         },
         {
           "speaker": "Nikola",
@@ -59,17 +59,17 @@ window.TALK = {
         },
         {
           "start": 10.4,
-          "end": 25.34,
+          "end": 24.1,
           "sampleStart": 249600,
-          "sampleEnd": 608160,
+          "sampleEnd": 578400,
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and change the code responsible. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
+          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
         },
         {
-          "start": 25.66,
-          "end": 33.14,
-          "sampleStart": 615840,
-          "sampleEnd": 795360,
+          "start": 24.42,
+          "end": 31.9,
+          "sampleStart": 586080,
+          "sampleEnd": 765600,
           "speaker": "Nikola",
           "text": "One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system."
         }
@@ -87,9 +87,9 @@ window.TALK = {
           "start": 10.4
         }
       ],
-      "duration": 33.8,
+      "duration": 32.56,
       "start": 0,
-      "end": 33.8,
+      "end": 32.56,
       "audio": "narration/01-promise.mp3"
     },
     {
@@ -129,8 +129,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 21.24,
-      "start": 33.8,
-      "end": 55.04,
+      "start": 32.56,
+      "end": 53.8,
       "audio": "narration/02-topology.mp3"
     },
     {
@@ -225,8 +225,8 @@ window.TALK = {
         }
       ],
       "duration": 55.32,
-      "start": 55.04,
-      "end": 110.36,
+      "start": 53.8,
+      "end": 109.12,
       "audio": "narration/03-install-obi.mp3"
     },
     {
@@ -285,8 +285,8 @@ window.TALK = {
         }
       ],
       "duration": 32.04,
-      "start": 110.36,
-      "end": 142.4,
+      "start": 109.12,
+      "end": 141.16,
       "audio": "narration/04-connected-trace.mp3"
     },
     {
@@ -329,8 +329,8 @@ window.TALK = {
       "buildTime": 3.15,
       "visualCues": [],
       "duration": 17.8,
-      "start": 142.4,
-      "end": 160.2,
+      "start": 141.16,
+      "end": 158.96,
       "audio": "narration/05-observed-path.mp3"
     },
     {
@@ -399,8 +399,8 @@ window.TALK = {
       "buildTime": 18.97,
       "visualCues": [],
       "duration": 34.68,
-      "start": 160.2,
-      "end": 194.88,
+      "start": 158.96,
+      "end": 193.64,
       "audio": "narration/06-local-time.mp3"
     },
     {
@@ -498,8 +498,8 @@ window.TALK = {
         }
       ],
       "duration": 43.52,
-      "start": 194.88,
-      "end": 238.4,
+      "start": 193.64,
+      "end": 237.16,
       "audio": "narration/07-direct-agent.mp3"
     },
     {
@@ -519,7 +519,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate."
+          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address."
         }
       ],
       "pauseAfter": {
@@ -569,11 +569,11 @@ window.TALK = {
         },
         {
           "start": 27.43,
-          "end": 34.91,
+          "end": 36.51,
           "sampleStart": 658320,
-          "sampleEnd": 837840,
+          "sampleEnd": 876240,
           "speaker": "Tyler",
-          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now we have a code change to investigate."
+          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address."
         }
       ],
       "visualCues": [
@@ -597,29 +597,29 @@ window.TALK = {
           "start": 27.43
         }
       ],
-      "duration": 35.56,
-      "start": 238.4,
-      "end": 273.96,
+      "duration": 37.16,
+      "start": 237.16,
+      "end": 274.32,
       "audio": "narration/08-new-detail.mp3"
     },
     {
       "id": "08-fix-pricing",
-      "kind": "pricing-fix",
-      "title": "Stop calling the retired backend",
+      "kind": "configuration-fix",
+      "title": "Remove the stale endpoint setting",
       "plannedDuration": 90,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly."
+          "text": "Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store."
         },
         {
           "speaker": "Nikola",
-          "text": "Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, this is the trace showing the timeout, and now we have a change that removes it while keeping the price lookup."
+          "text": "Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application."
         },
         {
           "speaker": "Tyler",
-          "text": "We're deploying that application change now. The Java agent and exporter settings stay the same."
+          "text": "Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes."
         },
         {
           "speaker": "Nikola",
@@ -628,9 +628,7 @@ window.TALK = {
       ],
       "visuals": [
         {
-          "type": "video",
-          "src": "demo-capture/edit-pricing-source.mp4",
-          "poster": "demo-capture/edit-pricing-before.png",
+          "type": "art",
           "at": 0
         },
         {
@@ -643,11 +641,12 @@ window.TALK = {
       "alignTurnAfterVisual": {
         "3": 1
       },
-      "purpose": "Show the actual Java source edit in Vim, retaining the working price lookup; offer a PR backed by the trace, then deploy the same fix.",
+      "purpose": "Show the real Checkout resource attribute identifying the stale endpoint. Remove that environment variable and roll the same image; bring the owning team a configuration PR backed by the customer trace.",
       "sources": [
-        "demo/apps/checkout/baseline/PricingEngine.java",
-        "demo/apps/checkout/fixes/PricingEngine.java",
+        "demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java",
+        "demo/apps/checkout/launch.sh",
         "demo/k8s/checkout-pricing-fixed.patch.yaml",
+        "public/demo-capture/java-trace-evidence.json",
         "presentation/data/resolution.json"
       ],
       "pauseAfter": {},
@@ -655,58 +654,55 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 10.93,
+          "end": 11.45,
           "sampleStart": 15600,
-          "sampleEnd": 262320,
+          "sampleEnd": 274800,
           "speaker": "Tyler",
-          "text": "There it is. Pricing still calls a legacy backend that no longer exists. The connection times out after two seconds, then we read the price from the current product store. The fix is to use that store directly."
+          "text": "Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store."
         },
         {
-          "start": 11.25,
-          "end": 29.59,
-          "sampleStart": 270000,
-          "sampleEnd": 710160,
+          "start": 11.77,
+          "end": 29.55,
+          "sampleStart": 282480,
+          "sampleEnd": 709200,
           "speaker": "Nikola",
-          "text": "Instrumentation didn't fix the code. It enabled us to act. If we can collaborate with the owning team, we can bring a pull request instead of a vague report that their service is slow. Here is the customer impact, this is the trace showing the timeout, and now we have a change that removes it while keeping the price lookup."
+          "text": "Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application."
         },
         {
-          "start": 29.91,
-          "end": 34.99,
-          "sampleStart": 717840,
-          "sampleEnd": 839760,
+          "start": 29.87,
+          "end": 40.07,
+          "sampleStart": 716880,
+          "sampleEnd": 961680,
           "speaker": "Tyler",
-          "text": "We're deploying that application change now. The Java agent and exporter settings stay the same."
+          "text": "Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes."
         },
         {
-          "start": 49.79,
-          "end": 54.07,
-          "sampleStart": 1194960,
-          "sampleEnd": 1297680,
+          "start": 60.23,
+          "end": 64.51,
+          "sampleStart": 1445520,
+          "sampleEnd": 1548240,
           "speaker": "Nikola",
           "text": "The rollout is ready. Let's send another customer request and look at its trace."
         }
       ],
       "visualCues": [
         {
-          "type": "video",
-          "src": "demo-capture/edit-pricing-source.mp4",
-          "poster": "demo-capture/edit-pricing-before.png",
+          "type": "art",
           "at": 0,
-          "start": 0,
-          "mediaDuration": 18.64
+          "start": 0
         },
         {
           "type": "video",
           "src": "demo-capture/fix-pricing-edited.mp4",
           "poster": "demo-capture/fix-pricing-edited-poster.png",
           "atCue": 2,
-          "start": 29.91,
-          "mediaDuration": 18.88
+          "start": 29.87,
+          "mediaDuration": 29.36
         }
       ],
-      "duration": 54.72,
-      "start": 273.96,
-      "end": 328.68,
+      "duration": 65.2,
+      "start": 274.32,
+      "end": 339.52,
       "audio": "narration/08-fix-pricing.mp3"
     },
     {
@@ -726,7 +722,7 @@ window.TALK = {
         },
         {
           "speaker": "Tyler",
-          "text": "This is the payoff: a customer symptom, an observed cause, a code change, and a fresh trace showing what changed."
+          "text": "This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared."
         }
       ],
       "purpose": "Return directly to a real Grafana waterfall after deployment; show the missing failed attempt and retained successful backend path before aggregate metrics.",
@@ -770,11 +766,11 @@ window.TALK = {
         },
         {
           "start": 23.58,
-          "end": 29.62,
+          "end": 31.46,
           "sampleStart": 565920,
-          "sampleEnd": 710880,
+          "sampleEnd": 755040,
           "speaker": "Tyler",
-          "text": "This is the payoff: a customer symptom, an observed cause, a code change, and a fresh trace showing what changed."
+          "text": "This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared."
         }
       ],
       "visualCues": [
@@ -795,9 +791,9 @@ window.TALK = {
           "mediaDuration": 10.12
         }
       ],
-      "duration": 30.28,
-      "start": 328.68,
-      "end": 358.96,
+      "duration": 32.12,
+      "start": 339.52,
+      "end": 371.64,
       "audio": "narration/08-customer-result.mp3"
     },
     {
@@ -809,7 +805,7 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone."
+          "text": "Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait."
         },
         {
           "speaker": "Nikola",
@@ -823,25 +819,25 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 16.23,
+          "end": 13.47,
           "sampleStart": 15600,
-          "sampleEnd": 389520,
+          "sampleEnd": 323280,
           "speaker": "Tyler",
-          "text": "Across matched requests, the median checkout went from about two point two seconds to two hundred and twenty milliseconds. Pricing dropped from about two seconds to under four milliseconds. That supports the change we just followed in the waterfall: stop making the customer wait for a backend that is gone."
+          "text": "Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait."
         },
         {
-          "start": 16.55,
-          "end": 27.15,
-          "sampleStart": 397200,
-          "sampleEnd": 651600,
+          "start": 13.79,
+          "end": 24.39,
+          "sampleStart": 330960,
+          "sampleEnd": 585360,
           "speaker": "Nikola",
           "text": "That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?"
         }
       ],
       "visualCues": [],
-      "duration": 27.8,
-      "start": 358.96,
-      "end": 386.76,
+      "duration": 25.04,
+      "start": 371.64,
+      "end": 396.68,
       "audio": "narration/08-result-summary.mp3"
     },
     {
@@ -858,10 +854,6 @@ window.TALK = {
         {
           "speaker": "Tyler",
           "text": "In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue."
         }
       ],
       "purpose": "Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.",
@@ -881,20 +873,12 @@ window.TALK = {
           "sampleEnd": 603120,
           "speaker": "Tyler",
           "text": "In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen."
-        },
-        {
-          "start": 25.45,
-          "end": 32.53,
-          "sampleStart": 610800,
-          "sampleEnd": 780720,
-          "speaker": "Nikola",
-          "text": "And share the routine work around it. Not every team has our access, our runtime knowledge, or an empty release queue."
         }
       ],
       "visualCues": [],
-      "duration": 33.2,
-      "start": 386.76,
-      "end": 419.96,
+      "duration": 25.8,
+      "start": 396.68,
+      "end": 422.48,
       "audio": "narration/09-the-rest.mp3"
     },
     {
@@ -938,8 +922,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 37.92,
-      "start": 419.96,
-      "end": 457.88,
+      "start": 422.48,
+      "end": 460.4,
       "audio": "narration/10-operator-opt-in.mp3"
     },
     {
@@ -1002,8 +986,8 @@ window.TALK = {
         }
       ],
       "duration": 25.44,
-      "start": 457.88,
-      "end": 483.32,
+      "start": 460.4,
+      "end": 485.84,
       "audio": "narration/10-install-operator.mp3"
     },
     {
@@ -1071,15 +1055,15 @@ window.TALK = {
           "text": "Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy."
         },
         {
-          "start": 40.36,
-          "end": 67.32,
-          "sampleStart": 968640,
-          "sampleEnd": 1615680,
+          "start": 41.2,
+          "end": 68.16,
+          "sampleStart": 988800,
+          "sampleEnd": 1635840,
           "speaker": "Nikola",
           "text": "Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service."
         }
       ],
-      "buildTime": 40.36,
+      "buildTime": 41.2,
       "visualCues": [
         {
           "type": "video",
@@ -1087,17 +1071,17 @@ window.TALK = {
           "poster": "demo-capture/instrument-namespace-edited-poster.png",
           "at": 0,
           "start": 0,
-          "mediaDuration": 39.36
+          "mediaDuration": 40.2
         },
         {
           "type": "art",
           "atCue": 2,
-          "start": 40.36
+          "start": 41.2
         }
       ],
-      "duration": 68.0,
-      "start": 483.32,
-      "end": 551.32,
+      "duration": 68.84,
+      "start": 485.84,
+      "end": 554.68,
       "audio": "narration/11-enroll-services.mp3"
     },
     {
@@ -1182,12 +1166,12 @@ window.TALK = {
           "atCue": 1,
           "focus": "waterfall",
           "start": 11.45,
-          "mediaDuration": 10.04
+          "mediaDuration": 10.0
         }
       ],
       "duration": 34.76,
-      "start": 551.32,
-      "end": 586.08,
+      "start": 554.68,
+      "end": 589.44,
       "audio": "narration/12-wider-result.mp3"
     },
     {
@@ -1251,8 +1235,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 33.88,
-      "start": 586.08,
-      "end": 619.96,
+      "start": 589.44,
+      "end": 623.32,
       "audio": "narration/13-hidden-cost.mp3"
     },
     {
@@ -1316,8 +1300,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 41.68,
-      "start": 619.96,
-      "end": 661.64,
+      "start": 623.32,
+      "end": 665.0,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
@@ -1373,8 +1357,8 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 36.44,
-      "start": 661.64,
-      "end": 698.08,
+      "start": 665.0,
+      "end": 701.44,
       "audio": "narration/15-adoption.mp3"
     },
     {
@@ -1443,73 +1427,73 @@ window.TALK = {
       ],
       "visualCues": [],
       "duration": 52.16,
-      "start": 698.08,
-      "end": 750.24,
+      "start": 701.44,
+      "end": 753.6,
       "audio": "narration/15-cost.mp3"
     },
     {
       "id": "16-close",
       "kind": "close",
-      "title": "Less waiting. More services ready.",
+      "title": "OpenTelemetry. Ready to install.",
       "plannedDuration": 50,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change."
+          "text": "We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace."
         },
         {
           "speaker": "Nikola",
-          "text": "Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project."
+          "text": "Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project."
         },
         {
           "speaker": "Tyler",
-          "text": "The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for."
+          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers."
         },
         {
           "speaker": "Nikola",
-          "text": "The demo shows the idea. We want an upstream home for this workflow, with the design still open. Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions."
         }
       ],
-      "purpose": "Close the customer-latency loop and the shared-workflow loop together; leave both outcomes visible during questions.",
+      "purpose": "Close with the measured customer improvement and namespace coverage: OpenTelemetry has grown beyond APIs and SDKs into instrumentation users can install for services and clusters. Leave the demo and RIO QR codes visible.",
       "cues": [
         {
           "start": 0.65,
-          "end": 12.09,
+          "end": 13.39,
           "sampleStart": 15600,
-          "sampleEnd": 290160,
+          "sampleEnd": 321360,
           "speaker": "Tyler",
-          "text": "We started with a customer waiting for checkout. OBI showed the failed connection. The Java agent connected it to pricing and its fallback. We removed the stale backend attempt, then returned to the actual request trace to see the change."
+          "text": "We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace."
         },
         {
-          "start": 12.41,
-          "end": 22.17,
-          "sampleStart": 297840,
-          "sampleEnd": 532080,
+          "start": 13.71,
+          "end": 28.33,
+          "sampleStart": 329040,
+          "sampleEnd": 679920,
           "speaker": "Nikola",
-          "text": "Then one namespace choice carried language instrumentation across the supported services. The next team can start with useful detail instead of starting another setup project."
+          "text": "Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project."
         },
         {
-          "start": 22.49,
-          "end": 30.01,
-          "sampleStart": 539760,
-          "sampleEnd": 720240,
+          "start": 28.65,
+          "end": 42.81,
+          "sampleStart": 687600,
+          "sampleEnd": 1027440,
           "speaker": "Tyler",
-          "text": "The customer gets a faster checkout. The teams get a shared way to investigate the next slow request. That is what the traces and the automation were for."
+          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers."
         },
         {
-          "start": 30.33,
-          "end": 42.29,
-          "sampleStart": 727920,
-          "sampleEnd": 1014960,
+          "start": 43.13,
+          "end": 49.93,
+          "sampleStart": 1035120,
+          "sampleEnd": 1198320,
           "speaker": "Nikola",
-          "text": "The demo shows the idea. We want an upstream home for this workflow, with the design still open. Find the wait. Fix the cause. Make the next investigation easier. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions."
         }
       ],
       "visualCues": [],
-      "duration": 42.96,
-      "start": 750.24,
-      "end": 793.2,
+      "duration": 50.6,
+      "start": 753.6,
+      "end": 804.2,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1578,16 +1562,16 @@ window.TALK = {
       "role": "Nikola, using his authorized synthetic voice"
     }
   },
-  "bigIdea": "Follow a slow customer request from broad visibility to a specific cause, fix and measure the wait, then share that investigation capability across the namespace.",
-  "scriptRevision": "2026-10-29-adoption-cost-and-upstream-direction",
+  "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
+  "scriptRevision": "2026-11-02-configuration-fix-and-readable-slide-scripts",
   "timing": "natural",
   "plannedDuration": 1260,
   "maxContentSeconds": 1320,
-  "storyRevision": "2026-10-27-two-second-timeout",
+  "storyRevision": "2026-11-02-configured-legacy-endpoint",
   "pronunciation": {
     "RIO": "rhee-o (Spanish río)",
     "OTelX": "oh-tell-X",
     "OBI": "Tyler: short Oh-bee, spoken as one word with no drawn-out Oh"
   },
-  "duration": 793.2
+  "duration": 804.2
 };
