@@ -238,7 +238,26 @@ selected application Pods; it has no separate Deployment.
 At this point, the apps still use OBI alone. We apply the instrumentation policy
 in the next step so the Java restart is a distinct part of the demo.
 
-## 6. Restart Java with instrumentation and compare
+## 6. Instrument all services with the RIO operator
+
+### Create the shared configuration and exclusions, like the OTEL exporter URL
+```sh
+kubectl apply -f demo/k8s/fleet-instrumentation-base.yaml
+```
+
+### Append the demo-apps namespace rule
+
+```sh
+kubectl patch demoinstr cluster \
+  --type=json \
+  --patch-file demo/k8s/instrument-demo-namespace.patch.yaml
+```
+
+### Wait for managed workload rollouts.
+kubectl wait --for=jsonpath='{.status.workloads[0].phase}'=Ready \
+  demoinstr/cluster --timeout=300s
+
+## 7. Restart Java with instrumentation and compare
 
 The [checkout policy](k8s/checkout-instrumentation.yaml) selects the namespace
 and workload in one cluster-wide `Instrumentation` resource:
