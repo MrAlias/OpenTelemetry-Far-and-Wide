@@ -9,7 +9,7 @@ kicker: The scaling question
 <!--
 **Nikola:**
 
-We got our answer, but we had to arrange the Java setup before we could get that detail. Could you do the same for the thirteen other supported services?
+We got our answer, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?
 
 **Tyler:**
 
@@ -132,7 +132,7 @@ action: Inject
 <!--
 **Nikola:**
 
-Here's the decision: instrument demo-apps. One namespace rule. We haven't named thirteen services or sorted them into language-specific lists.
+The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we previously showed, this rule doesn't list languages or individual services.
 -->
 
 ---
@@ -173,7 +173,7 @@ OBI is still running alongside them. It detects services already exporting trace
 
 **Nikola:**
 
-So when the next team has a slow request, the detail can already be there. The platform maintains the shared setup. The application team can start with its question.
+So when the next team has a slow request, the details will already be there. The platform maintains the shared setup. The application team can start with its question.
 -->
 
 ---

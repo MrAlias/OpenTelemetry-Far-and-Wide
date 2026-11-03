@@ -88,7 +88,7 @@ Live budget: 70 seconds.
 
 **Tyler:** That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
 
-**Nikola:** Let's open Checkout's code. We have a specific question for it now.
+**Nikola:** Let's open Checkout. We have a specific question for it now.
 
 ## 07 · Add Java zero-code instrumentation
 

@@ -44,7 +44,7 @@ Let's deploy it on the nodes. It discovers the running applications and follows 
 
 **Nikola:**
 
-One deployment. Now let's see how much of the customer's wait we can explain.
+Just a single deployment. Now let's see how much of the customer's wait we can explain.
 -->
 
 ---
@@ -58,7 +58,7 @@ kicker: The observed request
 <!--
 **Nikola:**
 
-Here's the order we've been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
+Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
 **Tyler:**
 
@@ -104,7 +104,7 @@ Gateway has a long span. So does Checkout. But both include time spent waiting o
 
 **Nikola:**
 
-Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer has already paid for that failed attempt with their time.
+Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
 
 **Tyler:**
 

@@ -29,7 +29,7 @@ We can inspect the source here. Pricing runs before Inventory. We'll use OpenTel
 
 **Nikola:**
 
-We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it.
+We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
 -->
 
 ---
@@ -48,7 +48,7 @@ Here's the deployment change. Same application image. Supply the agent, set the 
 
 **Nikola:**
 
-Keep those steps in mind. We managed them for one service we know. We'll come back to what happens when the other teams need the same thing.
+Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
 -->
 
 ---
@@ -66,7 +66,7 @@ Open PricingEngine.calculate. There's the failed HTTP call, followed by the succ
 
 **Nikola:**
 
-And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, Connect timed out. Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
+And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, "Connect timed out". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
 
 **Tyler:**
 
@@ -126,7 +126,7 @@ Here's the new trace. The product-price query is still there. The failed legacy 
 
 **Nikola:**
 
-Follow the rest of the order: Inventory, the commerce branches, and the order write. Everything the customer needed still happens. We removed the wait, and kept the work that completes the order.
+If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there. Nothing else changed.
 
 **Tyler:**
 
@@ -148,5 +148,5 @@ Across the matched requests, checkout goes from just over two seconds to about a
 
 **Nikola:**
 
-These are local demo measurements. The result to take away is the investigation: start with the customer, follow the request, make a change the evidence supports, and check a new request. Now let's make that possible for the next team too.
+That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?
 -->
