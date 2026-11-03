@@ -1,7 +1,7 @@
 # Presentation scene plan
 
 The editable visual review is [storyboard.html](../public/storyboard.html).
-Live content is 23 minutes, plus two minutes Q&A.
+Live content is 22 minutes 5 seconds, plus two minutes Q&A.
 The narrated review uses natural speech pace and can run shorter.
 Say **RIO** “rhee-o,” as in Spanish río, and **OTelX** “oh-tell-X.”
 
@@ -190,7 +190,7 @@ Live budget: 135 seconds.
 
 **Tyler:** Then check payload compatibility, permissions, existing agents and Collector access. Restart the workload, respect its release constraints, and confirm the instrumentation actually loads and exports.
 
-**Nikola:** The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration.
+**Nikola:** The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration.
 
 ## 14 · Install the namespace-driven controller
 
@@ -234,21 +234,7 @@ Live budget: 60 seconds.
 
 **Tyler:** We haven't fixed a problem in every service. We've given the other teams a way to start looking. Checkout keeps its fix, and the next investigation can begin closer to the answer.
 
-## 17 · The work around a deployment adds up
-
-Connect the demonstrated workflow to people, coordination and waiting.
-
-Live budget: 55 seconds.
-
-**Tyler:** Think about your last investigation that needed more instrumentation. How long was it between, I know what I need to see, and actually being able to see it?
-
-**Nikola:** There's the owner to find, access to arrange, a review, and a release. People are fitting that work around something else. While those conversations happen, the customer still has the slow checkout.
-
-**Tyler:** That's the work this namespace choice can remove from the next investigation. Agree on the shared setup once, and maintain it together. Each service doesn't need to reopen the whole conversation.
-
-**Nikola:** Count both the people doing that work and the time they spend waiting. We usually remember the few minutes spent typing the change. The rest is where a small instrumentation task can turn into a long interruption.
-
-## 18 · Reuse the workflow after day one
+## 17 · Reuse the workflow after day one
 
 Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
@@ -262,7 +248,7 @@ Live budget: 50 seconds.
 
 **Nikola:** Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
 
-## 19 · Make coverage the default
+## 18 · Make coverage the default
 
 Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.
 
@@ -274,7 +260,7 @@ Live budget: 50 seconds.
 
 **Nikola:** With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
 
-## 20 · The cost of team-by-team ownership
+## 19 · The cost of team-by-team ownership
 
 Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.
 
@@ -288,7 +274,7 @@ Live budget: 60 seconds.
 
 **Nikola:** Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
 
-## 21 · OpenTelemetry. Ready to install.
+## 20 · OpenTelemetry. Ready to install.
 
 Close with the measured customer improvement and namespace coverage: OpenTelemetry has grown beyond APIs and SDKs into instrumentation users can install for services and clusters. Leave the demo and RIO QR codes visible.
 

@@ -80,7 +80,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "One deployment. Now let's see how much of the customer's wait we can explain."
+          "text": "Just a single deployment. Now let's see how much of the customer's wait we can explain."
         }
       ],
       "visuals": [
@@ -111,7 +111,7 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "Here's the order we've been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point."
+          "text": "Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point."
         },
         {
           "speaker": "Tyler",
@@ -164,7 +164,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer has already paid for that failed attempt with their time."
+          "text": "Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt."
         },
         {
           "speaker": "Tyler",
@@ -194,7 +194,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps between, I need to understand this service, and actually having the detail to do it."
+          "text": "We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it."
         },
         {
           "speaker": "Tyler",
@@ -202,7 +202,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Keep those steps in mind. We managed them for one service we know. We'll come back to what happens when the other teams need the same thing."
+          "text": "Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing."
         }
       ],
       "pauseAfter": {
@@ -237,7 +237,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, Connect timed out. Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached."
+          "text": "And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, \"Connect timed out\". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached."
         },
         {
           "speaker": "Tyler",
@@ -336,7 +336,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "Follow the rest of the order: Inventory, the commerce branches, and the order write. Everything the customer needed still happens. We removed the wait, and kept the work that completes the order."
+          "text": "If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there. Nothing else changed."
         },
         {
           "speaker": "Tyler",
@@ -379,7 +379,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "These are local demo measurements. The result to take away is the investigation: start with the customer, follow the request, make a change the evidence supports, and check a new request. Now let's make that possible for the next team too."
+          "text": "That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?"
         }
       ],
       "purpose": "Summarize matched measured request durations only after the audience has seen the actual post-fix waterfall.",
@@ -396,7 +396,7 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "We got our answer, but we had to arrange the Java setup before we could get that detail. Could you do the same for the thirteen other supported services?"
+          "text": "We got our answer, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?"
         },
         {
           "speaker": "Tyler",
@@ -458,7 +458,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration."
+          "text": "The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration."
         }
       ],
       "purpose": "Show upstream OpenTelemetry Operator configuration growing for an illustrative Python API and .NET worker, then expose the process/startup limits and application-team coordination that more annotations cannot solve.",
@@ -516,7 +516,7 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "Here's the decision: instrument demo-apps. One namespace rule. We haven't named thirteen services or sorted them into language-specific lists."
+          "text": "The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we previously showed, this rule doesn't list languages or individual services."
         },
         {
           "speaker": "Tyler",
@@ -532,7 +532,7 @@
         },
         {
           "speaker": "Nikola",
-          "text": "So when the next team has a slow request, the detail can already be there. The platform maintains the shared setup. The application team can start with its question."
+          "text": "So when the next team has a slow request, the details will already be there. The platform maintains the shared setup. The application team can start with its question."
         }
       ],
       "visuals": [
@@ -604,32 +604,6 @@
         "docs/customer-resolution.md",
         "components/otel-injector-images/versions.json"
       ]
-    },
-    {
-      "id": "13-hidden-cost",
-      "kind": "savings",
-      "title": "The work around a deployment adds up",
-      "plannedDuration": 55,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "Think about your last investigation that needed more instrumentation. How long was it between, I know what I need to see, and actually being able to see it?"
-        },
-        {
-          "speaker": "Nikola",
-          "text": "There's the owner to find, access to arrange, a review, and a release. People are fitting that work around something else. While those conversations happen, the customer still has the slow checkout."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "That's the work this namespace choice can remove from the next investigation. Agree on the shared setup once, and maintain it together. Each service doesn't need to reopen the whole conversation."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Count both the people doing that work and the time they spend waiting. We usually remember the few minutes spent typing the change. The rest is where a small instrumentation task can turn into a long interruption."
-        }
-      ],
-      "purpose": "Connect the demonstrated workflow to people, coordination and waiting."
     },
     {
       "id": "14-lifecycle",
@@ -809,7 +783,7 @@
   "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
   "scriptRevision": "2026-11-02-customer-story-and-presenter-dialogue",
   "timing": "natural",
-  "plannedDuration": 1380,
+  "plannedDuration": 1325,
   "maxContentSeconds": 1380,
   "storyRevision": "2026-11-02-configured-legacy-endpoint",
   "pronunciation": {

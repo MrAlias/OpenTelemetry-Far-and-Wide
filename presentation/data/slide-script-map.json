@@ -245,16 +245,6 @@
   },
   {
     "file": "slides/05-takeaways.md",
-    "chapter": "13-hidden-cost",
-    "turns": [
-      0,
-      1,
-      2,
-      3
-    ]
-  },
-  {
-    "file": "slides/05-takeaways.md",
     "chapter": "14-lifecycle",
     "turns": [
       0,

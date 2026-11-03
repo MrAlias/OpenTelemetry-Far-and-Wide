@@ -78,7 +78,7 @@ try{
    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
   })()`);await wait(150);
  }
- for(let n=1;n<=27;n++){
+ for(let n=1;n<=scriptMap.length;n++){
   for(const clicks of Array.from({length:(scriptMap[n-1].noteClicks?.at(-1)?.at||0)+1},(_,i)=>i)){
    await navigate(n,clicks);
    const result=await evaluate(`(()=>{
@@ -140,15 +140,15 @@ try{
     })()`);
     if(config.step!==clicks||JSON.stringify(config.keys)!==JSON.stringify(expected)||config.startup!==(clicks===4)||config.payload!==(clicks>=1)||config.overflow.length||/\bRIO\b|\binjector\b/i.test(config.text))errors.push({slide:n,clicks,issue:'Upstream Operator walkthrough lost its configuration, scope or startup example',config});
    }
-   if(n===25){
-    const chart=await evaluate(`document.querySelector('[data-slidev-no="25"] [data-rollout-chart="adoption"]')?.innerHTML`);
+   if(n===24){
+    const chart=await evaluate(`document.querySelector('[data-slidev-no="24"] [data-rollout-chart="adoption"]')?.innerHTML`);
     if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
    }
-   if(n===26){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="26"] .slidev-layout').textContent`);
+   if(n===25){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="25"] .slidev-layout').textContent`);
     if(!text.includes('247 hours')||!text.includes('$24,700')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or hours callout missing'});
    }
-   if(n===14||n===27){
+   if(n===14||n===scriptMap.length){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
     if(!text?.includes((resolution.before.requestMedianMs/1000).toFixed(2))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
@@ -225,5 +225,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All 27 slides, measured results, all ten click transitions, video playback and click-aware presenter notes passed.');
+ console.log('All '+scriptMap.length+' slides, measured results, all ten click transitions, video playback and click-aware presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}

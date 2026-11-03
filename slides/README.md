@@ -9,9 +9,9 @@ hand-authored sections; the animation exporter does not generate them.
 | `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
 | `03-language-detail.md` | 8–14 | Explicit Java configuration, rollout and useful method detail |
 | `04-namespace.md` | 15–22 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 23–27 | Coordination, lifecycle, adoption, engineering hours and the close |
+| `05-takeaways.md` | 23–26 | Lifecycle, adoption, engineering hours and the close |
 
-The live budget is 23 minutes with two minutes for questions. Slide 16
+The live budget is 22 minutes 5 seconds with two minutes for questions. Slide 16
 uses about 2¼ minutes to walk through upstream Operator configuration and
 application-team coordination at a natural pace.
 Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
@@ -23,7 +23,7 @@ passage is highlighted as you advance, and the rest stays dimmed for context.
 `noteClicks` in the script map places each marker before a chapter turn; it
 does not add audience-facing content or change the transcript.
 Run `npm run slides:notes` after changing dialogue or click assignments. `npm run slides:audit`
-checks all 21 video chapters, all 27 slides, spoken-turn coverage and the
+checks all 20 video chapters, all 26 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,
 post-fix waterfall, full fleet waterfall and Catalog inspection.
 
@@ -99,7 +99,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slide 25 compares adoption paths; slide 26 compares cumulative setup and upkeep
+Slide 24 compares adoption paths; slide 25 compares cumulative setup and upkeep
 cost over 24 months for the existing 18-service demo. The adoption curves
 are conceptual, not measured rates or a rollout forecast; this is covered in
 the spoken notes rather than an on-slide label. Both charts use
@@ -120,8 +120,8 @@ including an already-centralized baseline with zero additional savings.
 Run `npm run savings:build` after changing the inputs. `npm run build` also
 refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at
-`/presentation/savings.html`. The current notes budget 23 minutes of live content;
-the existing coordination and lifecycle sections were shortened to make room.
+`/presentation/savings.html`. The current notes budget 22 minutes 5 seconds of live content;
+coordination and waiting are covered with the Operator configuration on slide 16.
 
 
 ## Customer payoff

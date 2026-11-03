@@ -138,8 +138,11 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 **Slide 16**
 
 - https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
-- https://github.com/otelx/rio
-- docs/technical-findings.md#identified-implementation
+- docs/operator-configuration.md — upstream configuration and startup constraints; coordination and waiting are operational inferences, not measured averages.
+- presentation/data/operator-complexity.json
+- presentation/examples/operator-reporting.yaml
+- docs/instrumentation-savings.md
+- https://sre.google/workbook/eliminating-toil/
 
 **Slide 17**
 
@@ -177,27 +180,22 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 
 **Slide 23**
 
-- docs/instrumentation-savings.md
-- https://sre.google/workbook/eliminating-toil/
-
-**Slide 24**
-
 - components/otel-injector-operator/README.md
 - docs/instrumentation-savings.md
 
-**Slide 25**
+**Slide 24**
 
 - presentation/rollout-charts.js — conceptual adoption trajectories, not observed data or a schedule; denominator is eligible services in the selected scope.
 - demo/k8s/instrument-demo-namespace.patch.yaml — shared selection mechanism.
 
-**Slide 26**
+**Slide 25**
 
 - presentation/rollout-charts.js — cumulative engineering hours, with 24 monthly update steps after initial setup.
 - presentation/data/savings-assumptions.json
 - presentation/savings-model.js
 - docs/instrumentation-savings.md — 247 engineering hours = 31 setup + 108 upkeep per year × 2; $24,700 at $100/hour. Monthly cost steps are $975 versus $75, with no adoption-delay credit.
 
-**Slide 27**
+**Slide 26**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
@@ -668,4 +666,4 @@ Slide 4 links the CNCF recording of [Debugging Your Cluster When It’s on Fire]
 
 The explicit setting capture follows the [process environment-variable attribute](https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/) and [Java resource-attribute configuration](https://opentelemetry.io/docs/languages/java/configuration/). The launcher exposes only the requested demo setting; no default Java-agent collection of all environment variables is claimed.
 
-`npm run slides:audit` verifies all 21 video chapters against the 27 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.
+`npm run slides:audit` verifies all 20 video chapters against the 26 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.

@@ -82,7 +82,7 @@ Then check payload compatibility, permissions, existing agents and Collector acc
 
 **Nikola:**
 
-The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours, especially when that team isn't available. The Operator handles the mutation; the platform team still has to discover the right configuration.
+The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration.
 -->
 
 ---

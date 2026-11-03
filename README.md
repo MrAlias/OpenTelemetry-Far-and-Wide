@@ -24,7 +24,7 @@ The **26-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
-voice model, or media rebuild. The live plan has 23 minutes of content and two minutes of questions.
+voice model, or media rebuild. The live plan has 22 minutes 5 seconds of content and two minutes of questions.
 
 ## Project structure
 
