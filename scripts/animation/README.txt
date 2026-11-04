@@ -44,7 +44,7 @@ scripts/animation/check_demo_watermarks.py  Both source and encoded voice checks
 scripts/animation/verify_media.py     Media, timing, profiles and reuse verification
 
 The generated timeline records measured speech duration plus authored pauses.
-The live rehearsal budget is 22 minutes 5 seconds, with two minutes for questions.
+The live rehearsal budget is 20 minutes 50 seconds, with two minutes for questions.
 A shorter natural read is fine. If the read exceeds 22 minutes, edit the script;
 never stretch, accelerate or slow speech to hit a duration. The opening starts “Welcome everyone,” introduces both full names and uses a
 0.6-second visual lead-in with natural handoffs; no authored dramatic pauses.
@@ -161,7 +161,7 @@ Customer story
 --------------
 The measured pricing fix and matched latency recheck precede the fleet-scale
 setup challenge. See docs/customer-resolution.md and presentation/data/resolution.json.
-The live plan is 22 minutes 5 seconds; the natural recorded read may be shorter.
+The live plan is 20 minutes 50 seconds; the natural recorded read may be shorter.
 Never substitute calculated or invented timings for actual captured requests.
 
 Timeout evidence and code edit

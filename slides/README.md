@@ -6,31 +6,36 @@ hand-authored sections; the animation exporter does not generate them.
 | File | Slides | Purpose |
 | --- | --- | --- |
 | `01-opening.md` | 2 | The visible slow request and the promise |
-| `02-investigation.md` | 3–7 | Topology, OBI, actual trace and earned service selection |
-| `03-language-detail.md` | 8–14 | Explicit Java configuration, rollout and useful method detail |
-| `04-namespace.md` | 15–22 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 23–26 | Lifecycle, adoption, engineering hours and the close |
+| `02-investigation.md` | 3–5 | Topology, OBI and the live trace investigation |
+| `03-language-detail.md` | 6–12 | Explicit Java configuration, rollout and useful method detail |
+| `04-namespace.md` | 13–20 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 21–24 | Lifecycle, adoption, engineering hours and the close |
 
-The live budget is 22 minutes 5 seconds with two minutes for questions. Slide 16
+The live budget is 20 minutes 50 seconds with two minutes for questions. Slide 14
 uses about 2¼ minutes to walk through upstream Operator configuration and
 application-team coordination at a natural pace.
 Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
 its full dialogue, tagged Tyler or Nikola, for reading while presenting.
 `../scripts/animation/talk.json` is the script source;
 `../presentation/data/slide-script-map.json` assigns every turn once, in order.
-The six click-build slides use native `[click]` markers: the matching
+The four click-build slides use native `[click]` markers: the matching
 passage is highlighted as you advance, and the rest stays dimmed for context.
 `noteClicks` in the script map places each marker before a chapter turn; it
 does not add audience-facing content or change the transcript.
 Run `npm run slides:notes` after changing dialogue or click assignments. `npm run slides:audit`
-checks all 20 video chapters, all 26 slides, spoken-turn coverage and the
+checks all 18 video chapters, all 24 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,
 post-fix waterfall, full fleet waterfall and Catalog inspection.
 
 References remain in `../docs/presentation-research.md`; demo commands are in
 `../demo/README.md`. Slide 4 links the previous talk’s CNCF recording. Slides
-4, 6, 7, 8, 16 and 20 have purposeful click builds. Slide 16 has five
+4, 5, 14 and 18 have purposeful click builds. Slide 14 has five
 steps; each has its own highlighted dialogue in presenter notes.
+
+Slide 5 is a bookmark for the live Grafana investigation. Its captured waterfall
+and one highlight are the fallback; skip the topology replay and trace tutorial.
+Slide 6 inspects deployment configuration, then slide 7 installs the Java agent.
+The source-inspection recording is intentionally omitted.
 
 Terminal recordings play manually using their native controls. They are muted,
 run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback
@@ -99,7 +104,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slide 24 compares adoption paths; slide 25 compares cumulative setup and upkeep
+Slide 22 compares adoption paths; slide 23 compares cumulative setup and upkeep
 cost over 24 months for the existing 18-service demo. The adoption curves
 are conceptual, not measured rates or a rollout forecast; this is covered in
 the spoken notes rather than an on-slide label. Both charts use
@@ -120,13 +125,13 @@ including an already-centralized baseline with zero additional savings.
 Run `npm run savings:build` after changing the inputs. `npm run build` also
 refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at
-`/presentation/savings.html`. The current notes budget 22 minutes 5 seconds of live content;
-coordination and waiting are covered with the Operator configuration on slide 16.
+`/presentation/savings.html`. The current notes budget 20 minutes 50 seconds of live content;
+coordination and waiting are covered with the Operator configuration on slide 14.
 
 
 ## Customer payoff
 
-Slides 11–14 resolve the customer problem: identify the stale endpoint setting,
+Slides 9–12 resolve the customer problem: identify the stale endpoint setting,
 remove it and roll the same image, show the actual post-fix waterfall, then compare
 matched request medians. `../presentation/data/resolution.json` holds all 60 request timings and
 controls. `CustomerResult.vue` uses the same evidence as the animation. The

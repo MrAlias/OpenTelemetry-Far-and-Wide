@@ -9,7 +9,7 @@ kicker: The investigation
 <!--
 **Tyler:**
 
-You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer.
+Imagine, you've clicked "Place Order". Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. In this presentation, we'll first show you how install OpenTelemetry eBPF Instrumentation to identify the issue source.
 
 **Nikola:**
 

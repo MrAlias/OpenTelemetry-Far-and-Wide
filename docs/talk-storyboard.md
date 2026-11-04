@@ -1,7 +1,7 @@
 # Presentation scene plan
 
 The editable visual review is [storyboard.html](../public/storyboard.html).
-Live content is 22 minutes 5 seconds, plus two minutes Q&A.
+Live content is 20 minutes 50 seconds, plus two minutes Q&A.
 The narrated review uses natural speech pace and can run shorter.
 Say **RIO** “rhee-o,” as in Spanish río, and **OTelX** “oh-tell-X.”
 
@@ -28,7 +28,7 @@ Live budget: 60 seconds.
 
 **Nikola:** And I'm Nikola Grcevski.
 
-**Tyler:** You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer.
+**Tyler:** Imagine, you've clicked "Place Order". Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. In this presentation, we'll first show you how install OpenTelemetry eBPF Instrumentation to identify the issue source.
 
 **Nikola:** Then we'll tackle the other problem: getting eighteen services ready for that investigation. We'll use the OpenTelemetry Injector and our demo Kubernetes operator so every team doesn't have to repeat the setup. First, let's follow that order.
 
@@ -38,7 +38,7 @@ Orient in the actual application without selecting a culprit.
 
 Live budget: 40 seconds.
 
-**Tyler:** This is where the order goes. Gateway, Checkout, Inventory, then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Somewhere along that route, we're losing the customer's time.
+**Tyler:** Here's an overview of where the order goes. Our application starts at Gateway, and continues to Checkout, Inventory, and then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Our customer's frustration is being caused by something in this chaos.
 
 **Nikola:** The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
 
@@ -48,75 +48,55 @@ Introduce OBI before its acronym is used: eBPF observations of running Linux app
 
 Live budget: 70 seconds.
 
-**Tyler:** We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported application traffic from Linux using eBPF, then gives us OpenTelemetry traces and metrics. We can start with the applications that are already running. No application code changes, and no application restarts.
+**Tyler:** To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts.
 
 **Nikola:** That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available.
 
-**Tyler:** Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
+**Tyler:** Let's deploy it to the nodes. Once running, OBI discovers the services running on the node, and starts generating telemetry about the services operation and the calls between them. For the customer order request, that includes HTTP calls and the PostgreSQL and Redis traffic.
 
 **Nikola:** Just a single deployment. Now let's see how much of the customer's wait we can explain.
 
-## 04 · One request across the application
+## 04 · Find the two-second wait
 
-Give the connected-trace statement its own actual waterfall exemplar.
+In live Grafana, find the failed two-second Checkout connection and ask why it precedes a successful price lookup. Keep one actual waterfall as the slide fallback; skip trace anatomy and the topology detour.
 
-Live budget: 55 seconds.
+Live budget: 85 seconds.
 
 **Nikola:** Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
-**Tyler:** And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about.
-
-## 05 · Follow the cart branch of this request
-
-Transform orientation into an observed path, using the captured request.
-
-Live budget: 35 seconds.
-
-**Tyler:** These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram.
-
-**Nikola:** That's useful when the first team you call says, we don't call that service. Maybe not directly. The request still went there, and now both teams can look at the same evidence.
-
-## 06 · Find the failed connection on the request path
-
-Select Checkout from the actual failed CONNECT span; use language detail to identify the calling method, timeout exception and working fallback.
-
-Live budget: 70 seconds.
-
-**Tyler:** Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
+**Tyler:** Look how the question we are investigating changed now that we have data. We are no longer asking "Why is our application slow?". Now we can focus specifically where this particular request was slow and ask "Why is this one service slow?" Let's find out.
 
 **Nikola:** Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
 
-**Tyler:** That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
+**Tyler:** Our investigation question can now be even more specific. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing.
 
-**Nikola:** Let's open Checkout. We have a specific question for it now.
+## 05 · Add Java zero-code instrumentation
 
-## 07 · Add Java zero-code instrumentation
-
-Show actual source-informed configuration and the real direct-agent installation.
+Inspect deployment configuration, attach the Java agent and restart the same application image. The named pricing method comes from the prepared demo configuration, not from OBI or a source-code inspection.
 
 Live budget: 120 seconds.
 
-**Tyler:** We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
+**Tyler:** Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart.
 
 **Nikola:** We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
 
-**Tyler:** Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
+**Tyler:** Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing.
 
 **Nikola:** Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
 
-## 08 · A failed attempt before a working fallback
+## 06 · A failed attempt before a working fallback
 
 Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.
 
 Live budget: 60 seconds.
 
-**Tyler:** Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish.
+**Tyler:** Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
 
 **Nikola:** And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, "Connect timed out". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
 
 **Tyler:** Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
 
-## 09 · Remove the stale endpoint setting
+## 07 · Remove the stale endpoint setting
 
 Show the real Checkout resource attribute identifying the stale endpoint. Remove that environment variable and roll the same image; bring the owning team a configuration PR backed by the customer trace.
 
@@ -130,7 +110,7 @@ Live budget: 90 seconds.
 
 **Nikola:** The rollout is ready. Let's go back to the customer. What does the next order look like?
 
-## 10 · The next checkout skips the failed call
+## 08 · The next checkout skips the failed call
 
 Return directly to a real Grafana waterfall after deployment; show the missing failed attempt and retained successful backend path before aggregate metrics.
 
@@ -142,7 +122,7 @@ Live budget: 50 seconds.
 
 **Tyler:** That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
 
-## 11 · The improvement across repeated requests
+## 09 · The improvement across repeated requests
 
 Summarize matched measured request durations only after the audience has seen the actual post-fix waterfall.
 
@@ -152,7 +132,7 @@ Live budget: 35 seconds.
 
 **Nikola:** That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?
 
-## 12 · One fixed. Thirteen to equip.
+## 10 · One fixed. Thirteen to equip.
 
 Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.
 
@@ -162,7 +142,7 @@ Live budget: 40 seconds.
 
 **Tyler:** I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
 
-## 13 · The annotation is the easy part
+## 11 · The annotation is the easy part
 
 Show upstream OpenTelemetry Operator configuration growing for an illustrative Python API and .NET worker, then expose the process/startup limits and application-team coordination that more annotations cannot solve.
 
@@ -192,7 +172,7 @@ Live budget: 135 seconds.
 
 **Nikola:** The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration.
 
-## 14 · Install the namespace-driven controller
+## 12 · Install the namespace-driven controller
 
 Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.
 
@@ -206,7 +186,7 @@ Live budget: 90 seconds.
 
 **Nikola:** We prepare the shared payload, exporter, and exclusions here. Then the application owner gets a simpler decision: instrument this namespace. They can ask for coverage without first turning it into a separate project with every service owner.
 
-## 15 · Instrument this namespace
+## 13 · Instrument this namespace
 
 Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.
 
@@ -222,7 +202,7 @@ Live budget: 105 seconds.
 
 **Nikola:** So when the next team has a slow request, the details will already be there. The platform maintains the shared setup. The application team can start with its question.
 
-## 16 · Open language detail in more services
+## 14 · Open language detail in more services
 
 Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.
 
@@ -234,7 +214,7 @@ Live budget: 60 seconds.
 
 **Tyler:** We haven't fixed a problem in every service. We've given the other teams a way to start looking. Checkout keeps its fix, and the next investigation can begin closer to the answer.
 
-## 17 · Reuse the workflow after day one
+## 15 · Reuse the workflow after day one
 
 Cover onboarding, updates, consistency, recovery, training and shared upkeep.
 
@@ -248,7 +228,7 @@ Live budget: 50 seconds.
 
 **Nikola:** Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
 
-## 18 · Make coverage the default
+## 16 · Make coverage the default
 
 Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.
 
@@ -260,7 +240,7 @@ Live budget: 50 seconds.
 
 **Nikola:** With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
 
-## 19 · The cost of team-by-team ownership
+## 17 · The cost of team-by-team ownership
 
 Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.
 
@@ -274,7 +254,7 @@ Live budget: 60 seconds.
 
 **Nikola:** Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
 
-## 20 · OpenTelemetry. Ready to install.
+## 18 · OpenTelemetry. Ready to install.
 
 Close with the measured customer improvement and namespace coverage: OpenTelemetry has grown beyond APIs and SDKs into instrumentation users can install for services and clusters. Leave the demo and RIO QR codes visible.
 

@@ -1,6 +1,6 @@
 # What the upstream Operator still needs to know
 
-Slide 16 uses an illustrative `reporting-api` pod to examine the upstream
+Slide 14 uses an illustrative `reporting-api` pod to examine the upstream
 OpenTelemetry Operator. It does not describe Injector or RIO behavior and does
 not claim the example is part of the recorded demo. Annotation keys on the
 slide share the displayed `instrumentation.opentelemetry.io/` prefix.
@@ -73,6 +73,6 @@ workload, Operator installation, application image or security policy changes.
 
 The slide uses five click transitions and twelve short speaker turns. The
 full dialogue remains in the generated notes, with one marker per build.
-RIO's existing introduction moves to slide 17, outside this upstream Operator
+RIO's existing introduction moves to slide 15, outside this upstream Operator
 sequence, and explicitly retains application compatibility/startup constraints.
-The revised content budget is 22 minutes 5 seconds plus two minutes for questions.
+The revised content budget is 20 minutes 50 seconds plus two minutes for questions.

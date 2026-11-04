@@ -44,28 +44,6 @@
     "chapter": "04-connected-trace",
     "turns": [
       0,
-      1
-    ]
-  },
-  {
-    "file": "slides/02-investigation.md",
-    "chapter": "05-observed-path",
-    "turns": [
-      0,
-      1
-    ],
-    "noteClicks": [
-      {
-        "at": 1,
-        "turn": 0
-      }
-    ]
-  },
-  {
-    "file": "slides/02-investigation.md",
-    "chapter": "06-local-time",
-    "turns": [
-      0,
       1,
       2,
       3
@@ -73,7 +51,7 @@
     "noteClicks": [
       {
         "at": 1,
-        "turn": 1
+        "turn": 2
       }
     ]
   },
@@ -83,12 +61,6 @@
     "turns": [
       0,
       1
-    ],
-    "noteClicks": [
-      {
-        "at": 1,
-        "turn": 1
-      }
     ]
   },
   {

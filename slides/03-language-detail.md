@@ -1,31 +1,25 @@
 ---
 kicker: Add useful detail
-clicks: 1
-mediaAt: 1
 ---
 
-# Inside Checkout
+# Add Java detail to Checkout
 
-<div v-if="$clicks === 0" class="code-focus">
+<div class="code-focus">
 
 ```yaml
 JAVA_TOOL_OPTIONS: >-
   -javaagent:/java-agent/opentelemetry-javaagent.jar
 OTEL_SERVICE_NAME: checkout
-OTEL_INSTRUMENTATION_METHODS_INCLUDE: >-
-  demo.checkout.PricingEngine[calculate]
+OTEL_EXPORTER_OTLP_ENDPOINT: >-
+  http://lgtm.observability.svc.cluster.local:4318
 ```
 
 </div>
 
-<DemoClip v-else src="inspect-java-setup-edited.mp4" poster="inspect-java-setup-edited-poster.png" label="Actual inspection of the Java-agent setup and method configuration" />
-
 <!--
 **Tyler:**
 
-We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
-
-[click]
+Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart.
 
 **Nikola:**
 
@@ -44,7 +38,7 @@ evidence: true
 <!--
 **Tyler:**
 
-Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
+Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing.
 
 **Nikola:**
 
@@ -62,7 +56,7 @@ kicker: The useful result
 <!--
 **Tyler:**
 
-Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish.
+Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
 
 **Nikola:**
 

@@ -7,54 +7,44 @@ Tyler: Welcome everyone. I'm Tyler Yahn.
 
 Nikola: And I'm Nikola Grcevski.
 
-Tyler: You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer.
+Tyler: Imagine, you've clicked "Place Order". Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. In this presentation, we'll first show you how install OpenTelemetry eBPF Instrumentation to identify the issue source.
 
 Nikola: Then we'll tackle the other problem: getting eighteen services ready for that investigation. We'll use the OpenTelemetry Injector and our demo Kubernetes operator so every team doesn't have to repeat the setup. First, let's follow that order.
 
 One application, many places to look
-Tyler: This is where the order goes. Gateway, Checkout, Inventory, then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Somewhere along that route, we're losing the customer's time.
+Tyler: Here's an overview of where the order goes. Our application starts at Gateway, and continues to Checkout, Inventory, and then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Our customer's frustration is being caused by something in this chaos.
 
 Nikola: The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
 
 Meet OBI
-Tyler: We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported application traffic from Linux using eBPF, then gives us OpenTelemetry traces and metrics. We can start with the applications that are already running. No application code changes, and no application restarts.
+Tyler: To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts.
 
 Nikola: That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available.
 
-Tyler: Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic.
+Tyler: Let's deploy it to the nodes. Once running, OBI discovers the services running on the node, and starts generating telemetry about the services operation and the calls between them. For the customer order request, that includes HTTP calls and the PostgreSQL and Redis traffic.
 
 Nikola: Just a single deployment. Now let's see how much of the customer's wait we can explain.
 
-One request across the application
+Find the two-second wait
 Nikola: Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
 
-Tyler: And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about.
-
-Follow the cart branch of this request
-Tyler: These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram.
-
-Nikola: That's useful when the first team you call says, we don't call that service. Maybe not directly. The request still went there, and now both teams can look at the same evidence.
-
-Find the failed connection on the request path
-Tyler: Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with.
+Tyler: Look how the question we are investigating changed now that we have data. We are no longer asking "Why is our application slow?". Now we can focus specifically where this particular request was slow and ask "Why is this one service slow?" Let's find out.
 
 Nikola: Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
 
-Tyler: That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code.
-
-Nikola: Let's open Checkout. We have a specific question for it now.
+Tyler: Our investigation question can now be even more specific. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing.
 
 Add Java zero-code instrumentation
-Tyler: We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method.
+Tyler: Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart.
 
 Nikola: We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
 
-Tyler: Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question.
+Tyler: Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing.
 
 Nikola: Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
 
 A failed attempt before a working fallback
-Tyler: Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish.
+Tyler: Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
 
 Nikola: And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, "Connect timed out". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
 

@@ -61,9 +61,9 @@ try{
    if(await evaluate(`!!document.querySelector('[data-slidev-no="${n}"] .slidev-layout h1')`))break;
    if(i===299){const debug=await evaluate('({url:location.href,ready:document.readyState,text:document.body.innerText.slice(0,1600)})');throw Error('Slide '+n+' did not render: '+JSON.stringify(debug));}await wait(100);
   }
-  if(n===16){
+  if(n===14){
    for(let i=0;i<100;i++){
-    if(await evaluate(`Number(document.querySelector('[data-slidev-no="16"] [data-operator-step]')?.dataset.operatorStep)===${clicks}`))break;
+    if(await evaluate(`Number(document.querySelector('[data-slidev-no="14"] [data-operator-step]')?.dataset.operatorStep)===${clicks}`))break;
     if(i===99)throw Error('Operator example did not reach click '+clicks);
     await wait(50);
    }
@@ -99,7 +99,7 @@ try{
    })()`);
    if(result.overflow.length||result.collisions.length)errors.push(result);
    if(result.images.some(i=>!i.loaded))errors.push({slide:n,images:result.images});
-   if([3,6,15,20].includes(n)){
+   if([3,13,18].includes(n)){
     if(result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
     const stores=await evaluate(`(()=>{
      const s=document.querySelector('[data-slidev-no="${n}"] .service-topology');
@@ -112,43 +112,42 @@ try{
       }).map(node=>node.dataset.service)};
     })()`);
     const expected=['checkout:postgres','catalog:postgres','stock-planner:postgres','loyalty:postgres','receipts:postgres','cart:redis','recommendations:redis','promotions:redis'].sort();
-    if(stores.languages!==18||stores.durations!==(n===6&&clicks===1?18:0))errors.push({slide:n,clicks,issue:'Map must preserve all languages and show request durations alongside them when observed',stores});
+    if(stores.languages!==18||stores.durations!==0)errors.push({slide:n,clicks,issue:'Map must preserve all languages and show request durations alongside them when observed',stores});
     if(JSON.stringify(stores.nodes)!==JSON.stringify(['postgres','redis'])||JSON.stringify(stores.edges)!==JSON.stringify(expected)||stores.labelOverflow.length)errors.push({slide:n,clicks,issue:'Shared stores must have their real client links and readable node labels',stores});
    }
-   if(n===6&&result.branchLinks!==(clicks?5:0))errors.push({slide:n,issue:'Observed branch click did not update'});
-   if(n===7&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
-   if(n===20&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
-   if(n===10||n===11){
+   if(n===5&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
+   if(n===18&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
+   if(n===8||n===9){
     const captured=await evaluate(`(()=>{const f=document.querySelector('[data-slidev-no="${n}"] figure');return {images:f?.querySelectorAll('svg image').length,redrawn:!!f?.querySelector('dl,code,svg text'),trace:f?.dataset.traceId,span:f?.dataset.spanId}})()`);
     if(captured.images!==2||captured.redrawn||!captured.trace||!captured.span)errors.push({slide:n,issue:'Attribute proof must use two linked dashboard screenshot views with trace/span identity',captured});
    }
-   if(n===10){
-    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="10"] .timeout-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
+   if(n===8){
+    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="8"] .timeout-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
     if(!text?.includes('java.net.SocketTimeoutException')||!text?.includes('Connect timed out'))errors.push({slide:n,issue:'Timeout screenshot lacks accessible error evidence'});
    }
-   if(n===11){
-    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="11"] .configuration-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
+   if(n===9){
+    const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="9"] .configuration-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
     if(!text?.includes('LEGACY_PRICING_URL')||!text.includes('192.0.2.42'))errors.push({slide:n,issue:'Configuration screenshot lacks the recorded setting'});
    }
-   if(n===16){
+   if(n===14){
     const expected=operatorExample.annotations.filter(row=>row.at<=clicks).map(row=>row.key);
     const config=await evaluate(`(()=>{
-     const s=document.querySelector('[data-slidev-no="16"] .operator-configuration');
+     const s=document.querySelector('[data-slidev-no="14"] .operator-configuration');
      return {step:Number(s?.dataset.operatorStep),keys:[...s.querySelectorAll('[data-annotation]')].map(e=>e.dataset.annotation),
       text:s.textContent,startup:!!s.querySelector('[data-startup-example]'),payload:!!s.querySelector('[data-python-payload]'),
       overflow:[...s.querySelectorAll('code')].filter(e=>e.scrollWidth>e.clientWidth+2).map(e=>e.textContent)};
     })()`);
     if(config.step!==clicks||JSON.stringify(config.keys)!==JSON.stringify(expected)||config.startup!==(clicks===4)||config.payload!==(clicks>=1)||config.overflow.length||/\bRIO\b|\binjector\b/i.test(config.text))errors.push({slide:n,clicks,issue:'Upstream Operator walkthrough lost its configuration, scope or startup example',config});
    }
-   if(n===24){
-    const chart=await evaluate(`document.querySelector('[data-slidev-no="24"] [data-rollout-chart="adoption"]')?.innerHTML`);
+   if(n===22){
+    const chart=await evaluate(`document.querySelector('[data-slidev-no="22"] [data-rollout-chart="adoption"]')?.innerHTML`);
     if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
    }
-   if(n===25){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="25"] .slidev-layout').textContent`);
+   if(n===23){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="23"] .slidev-layout').textContent`);
     if(!text.includes('247 hours')||!text.includes('$24,700')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or hours callout missing'});
    }
-   if(n===14||n===scriptMap.length){
+   if(n===12||n===scriptMap.length){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
     if(!text?.includes((resolution.before.requestMedianMs/1000).toFixed(2))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
@@ -158,16 +157,16 @@ try{
   }
  }
  await writeFile(path.join(work,'render-report.json'),JSON.stringify({errors,slides},null,2)+'\n');
- await navigate(19);
- const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="19"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
+ await navigate(17);
+ const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="17"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
  console.log('Video check '+JSON.stringify(video));
  if(video.time<.5||video.error||!video.muted||video.rate!==1)errors.push({video});
  // Use Slidev's real Next key, so the onSlideLeave lifecycle runs on the existing video element.
- await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="19"] video')`);
+ await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="17"] video')`);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
- await cdp.call('Page.navigate',{url:route('/presenter/18')},sessionId);await wait(500);
+ await cdp.call('Page.navigate',{url:route('/presenter/16')},sessionId);await wait(500);
  for(let i=0;i<100;i++){if(await evaluate(`document.body.innerText.includes(${JSON.stringify(namespaceNote)})`))break;await wait(100);}
  const presenter=await evaluate(`({notes:document.body.innerText.includes(${JSON.stringify(namespaceNote)}),text:document.body.innerText.slice(-1500)})`);
  if(!presenter.notes)errors.push({issue:'Presenter notes missing',presenter});
@@ -225,5 +224,5 @@ try{
  const calculatorPng=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);await writeFile(path.join(work,'calculator-mobile.png'),Buffer.from(calculatorPng.data,'base64'));
  await writeFile(path.join(work,'slide-report.json'),JSON.stringify({errors,slides,video,pausedOnLeave:paused,presenterNotes:presenter.notes,calculator,mobile},null,2)+'\n');
  if(errors.length)throw Error('Slide checks failed: '+JSON.stringify(errors));
- console.log('All '+scriptMap.length+' slides, measured results, all ten click transitions, video playback and click-aware presenter notes passed.');
+ console.log('All '+scriptMap.length+' slides, measured results, all '+scriptMap.reduce((sum,entry)=>sum+(entry.noteClicks?.at(-1)?.at||0),0)+' click transitions, video playback and click-aware presenter notes passed.');
 }finally{await writeFile(path.join(work,'browser.log'),browserLog);await writeFile(path.join(work,'runtime-events.json'),JSON.stringify(cdp.events,null,2));try{await cdp.call('Browser.close')}catch{}browser.kill();}

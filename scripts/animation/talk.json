@@ -20,7 +20,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "You've clicked Place order. Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. We're going to find that wait, remove it, and show you what changed for the customer."
+          "text": "Imagine, you've clicked \"Place Order\". Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. In this presentation, we'll first show you how install OpenTelemetry eBPF Instrumentation to identify the issue source."
         },
         {
           "speaker": "Nikola",
@@ -50,7 +50,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "This is where the order goes. Gateway, Checkout, Inventory, then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Somewhere along that route, we're losing the customer's time."
+          "text": "Here's an overview of where the order goes. Our application starts at Gateway, and continues to Checkout, Inventory, and then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Our customer's frustration is being caused by something in this chaos."
         },
         {
           "speaker": "Nikola",
@@ -68,7 +68,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We'll use OpenTelemetry eBPF Instrumentation, or OBI. It watches supported application traffic from Linux using eBPF, then gives us OpenTelemetry traces and metrics. We can start with the applications that are already running. No application code changes, and no application restarts."
+          "text": "To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts."
         },
         {
           "speaker": "Nikola",
@@ -76,7 +76,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "Let's deploy it on the nodes. It discovers the running applications and follows supported calls between them. For this order, that includes HTTP calls and the PostgreSQL and Redis traffic."
+          "text": "Let's deploy it to the nodes. Once running, OBI discovers the services running on the node, and starts generating telemetry about the services operation and the calls between them. For the customer order request, that includes HTTP calls and the PostgreSQL and Redis traffic."
         },
         {
           "speaker": "Nikola",
@@ -104,9 +104,9 @@
     },
     {
       "id": "04-connected-trace",
-      "kind": "screen",
-      "title": "One request across the application",
-      "plannedDuration": 55,
+      "kind": "trace-focus",
+      "title": "Find the two-second wait",
+      "plannedDuration": 85,
       "lead": "Nikola",
       "turns": [
         {
@@ -115,52 +115,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "And look how the question changes. We came in knowing that checkout felt slow. Now we can follow where this particular request spent its time. Let's find the wait we can do something about."
-        }
-      ],
-      "pauseAfter": {
-        "0": 1
-      },
-      "visuals": [
-        {
-          "type": "image",
-          "src": "demo-capture/connected-trace.png",
-          "at": 0,
-          "focus": "waterfall"
-        }
-      ],
-      "purpose": "Give the connected-trace statement its own actual waterfall exemplar."
-    },
-    {
-      "id": "05-observed-path",
-      "kind": "observed",
-      "title": "Follow the cart branch of this request",
-      "plannedDuration": 35,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "These highlighted calls actually happened in our request. Follow this branch from Cart through Catalog, Recommendations, and Promotions. Now we can see the route the order took, instead of relying on the architecture diagram."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "That's useful when the first team you call says, we don't call that service. Maybe not directly. The request still went there, and now both teams can look at the same evidence."
-        }
-      ],
-      "buildAtCue": 0,
-      "buildDelay": 2.5,
-      "purpose": "Transform orientation into an observed path, using the captured request."
-    },
-    {
-      "id": "06-local-time",
-      "kind": "trace-focus",
-      "title": "Find the failed connection on the request path",
-      "plannedDuration": 70,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "Gateway has a long span. So does Checkout. But both include time spent waiting on other services. If we just hand the longest span to a team, we're handing them the same mystery we started with."
+          "text": "Look how the question we are investigating changed now that we have data. We are no longer asking \"Why is our application slow?\". Now we can focus specifically where this particular request was slow and ask \"Why is this one service slow?\" Let's find out."
         },
         {
           "speaker": "Nikola",
@@ -168,18 +123,17 @@
         },
         {
           "speaker": "Tyler",
-          "text": "That's our lead. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing in its code."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Let's open Checkout. We have a specific question for it now."
+          "text": "Our investigation question can now be even more specific. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing."
         }
       ],
-      "buildAfter": 1,
-      "pauseAfter": {
-        "1": 1.2
-      },
-      "purpose": "Select Checkout from the actual failed CONNECT span; use language detail to identify the calling method, timeout exception and working fallback."
+      "visuals": [
+        {
+          "type": "art",
+          "at": 0
+        }
+      ],
+      "purpose": "In live Grafana, find the failed two-second Checkout connection and ask why it precedes a successful price lookup. Keep one actual waterfall as the slide fallback; skip trace anatomy and the topology detour.",
+      "buildAfter": 2
     },
     {
       "id": "07-direct-agent",
@@ -190,7 +144,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We can inspect the source here. Pricing runs before Inventory. We'll use OpenTelemetry's Java agent to add detail around that method and see the library calls inside it. The agent loads when Java starts, so we don't have to add instrumentation code to the method."
+          "text": "Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart."
         },
         {
           "speaker": "Nikola",
@@ -198,7 +152,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "Here's the deployment change. Same application image. Supply the agent, set the service name and exporter, select the pricing method, and roll Checkout. Let's see whether that work answers our question."
+          "text": "Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing."
         },
         {
           "speaker": "Nikola",
@@ -211,18 +165,12 @@
       "visuals": [
         {
           "type": "video",
-          "src": "demo-capture/inspect-java-setup-edited.mp4",
-          "poster": "demo-capture/inspect-java-setup-edited-poster.png",
-          "at": 0
-        },
-        {
-          "type": "video",
           "src": "demo-capture/install-java-agent-edited.mp4",
           "poster": "demo-capture/install-java-agent-edited-poster.png",
           "atCue": 2
         }
       ],
-      "purpose": "Show actual source-informed configuration and the real direct-agent installation."
+      "purpose": "Inspect deployment configuration, attach the Java agent and restart the same application image. The named pricing method comes from the prepared demo configuration, not from OBI or a source-code inspection."
     },
     {
       "id": "08-new-detail",
@@ -233,7 +181,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Open PricingEngine.calculate. There's the failed HTTP call, followed by the successful product-price lookup. The Java detail puts the wait inside the pricing method, and shows the fallback that lets the order finish."
+          "text": "Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish."
         },
         {
           "speaker": "Nikola",
@@ -783,7 +731,7 @@
   "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
   "scriptRevision": "2026-11-02-customer-story-and-presenter-dialogue",
   "timing": "natural",
-  "plannedDuration": 1325,
+  "plannedDuration": 1250,
   "maxContentSeconds": 1380,
   "storyRevision": "2026-11-02-configured-legacy-endpoint",
   "pronunciation": {

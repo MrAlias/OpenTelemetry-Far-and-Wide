@@ -76,30 +76,21 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 **Slide 5**
 
 - public/demo-capture/capture-summary.json
+- public/demo-capture/obi-trace-evidence.json
 - presentation/data/request.json
 
 **Slide 6**
 
-- presentation/data/topology.json
-- presentation/data/request.json
-
-**Slide 7**
-
-- public/demo-capture/obi-trace-evidence.json
-- presentation/data/request.json
-
-**Slide 8**
-
 - demo/k8s/checkout-direct-agent.patch.yaml
-- demo/apps/checkout/src/main/java/demo/checkout/Checkout.java
+- demo/k8s/applications.yaml
 - https://opentelemetry.io/docs/zero-code/java/agent/
 
-**Slide 9**
+**Slide 7**
 
 - demo/k8s/checkout-direct-agent.patch.yaml
 - docs/fleet-demo-handoff.md
 
-**Slide 10**
+**Slide 8**
 
 - public/demo-capture/java-trace-evidence.json
 - presentation/data/timeout-evidence.json
@@ -107,35 +98,35 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 - https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/
 - demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java
 
-**Slide 11**
+**Slide 9**
 
 - demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java
 - demo/apps/checkout/launch.sh
 
-**Slide 12**
+**Slide 10**
 
 - demo/k8s/checkout-pricing-fixed.patch.yaml
 - demo/apps/checkout/Dockerfile
 - docs/customer-resolution.md
 
-**Slide 13**
+**Slide 11**
 
 - public/demo-capture/fixed-request-evidence.json
 - public/demo-capture/fixed-request-trace.png
 - presentation/data/resolution.json
 
-**Slide 14**
+**Slide 12**
 
 - presentation/data/resolution.json
 - scripts/presentation/measure_resolution.py
 - docs/customer-resolution.md
 
-**Slide 15**
+**Slide 13**
 
 - presentation/data/topology.json
 - components/otel-injector-images/versions.json
 
-**Slide 16**
+**Slide 14**
 
 - https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
 - docs/operator-configuration.md — upstream configuration and startup constraints; coordination and waiting are operational inferences, not measured averages.
@@ -144,58 +135,58 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 - docs/instrumentation-savings.md
 - https://sre.google/workbook/eliminating-toil/
 
-**Slide 17**
+**Slide 15**
 
 - components/otel-injector-operator/README.md
 - components/otel-injector-images/README.md
 - docs/technical-findings.md#identified-implementation
 
-**Slide 18**
+**Slide 16**
 
 - demo/k8s/fleet-instrumentation-base.yaml
 - demo/k8s/instrument-demo-namespace.patch.yaml
 - public/demo-capture/capture-summary.json
 
-**Slide 19**
+**Slide 17**
 
 - demo/k8s/instrument-demo-namespace.patch.yaml
 - public/demo-capture/capture-summary.json
 
-**Slide 20**
+**Slide 18**
 
 - public/demo-capture/capture-summary.json
 - presentation/data/capture.json
 - presentation/data/topology.json
 
-**Slide 21**
+**Slide 19**
 
 - public/demo-capture/fixed-fleet-overview.png
 - public/demo-capture/fixed-fleet-trace-evidence.json
 
-**Slide 22**
+**Slide 20**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
 - components/otel-injector-images/versions.json
 
-**Slide 23**
+**Slide 21**
 
 - components/otel-injector-operator/README.md
 - docs/instrumentation-savings.md
 
-**Slide 24**
+**Slide 22**
 
 - presentation/rollout-charts.js — conceptual adoption trajectories, not observed data or a schedule; denominator is eligible services in the selected scope.
 - demo/k8s/instrument-demo-namespace.patch.yaml — shared selection mechanism.
 
-**Slide 25**
+**Slide 23**
 
 - presentation/rollout-charts.js — cumulative engineering hours, with 24 monthly update steps after initial setup.
 - presentation/data/savings-assumptions.json
 - presentation/savings-model.js
 - docs/instrumentation-savings.md — 247 engineering hours = 31 setup + 108 upkeep per year × 2; $24,700 at $100/hour. Monthly cost steps are $975 versus $75, with no adoption-delay credit.
 
-**Slide 26**
+**Slide 24**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
@@ -666,4 +657,4 @@ Slide 4 links the CNCF recording of [Debugging Your Cluster When It’s on Fire]
 
 The explicit setting capture follows the [process environment-variable attribute](https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/) and [Java resource-attribute configuration](https://opentelemetry.io/docs/languages/java/configuration/). The launcher exposes only the requested demo setting; no default Java-agent collection of all environment variables is claimed.
 
-`npm run slides:audit` verifies all 20 video chapters against the 26 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.
+`npm run slides:audit` verifies all 18 video chapters against the 24 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.
