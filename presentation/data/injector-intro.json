@@ -1,0 +1,18 @@
+{
+  "title": "OpenTelemetry Injector",
+  "url": "https://github.com/open-telemetry/opentelemetry-injector",
+  "qr": "qr-injector.svg",
+  "runtimes": [
+    "Java",
+    "Node.js",
+    "Python",
+    ".NET",
+    "Ruby"
+  ],
+  "sourceCommit": "5a8eebec8ebfdfebd7537ced600ed7546a99e513",
+  "sources": [
+    "https://github.com/open-telemetry/opentelemetry-injector/blob/5a8eebec8ebfdfebd7537ced600ed7546a99e513/README.md",
+    "components/otel-injector-images/README.md"
+  ],
+  "scope": "The shared library acts inside each application process at startup. The demo bundles and enables the listed language agents; the library alone does not supply those payloads or the Kubernetes rollout workflow."
+}

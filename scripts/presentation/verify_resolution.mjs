@@ -1,5 +1,6 @@
 // Check measured evidence, independently recomputing summaries and story controls.
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
 const root = new URL('../../', import.meta.url)
 const data = JSON.parse(await readFile(new URL('presentation/data/resolution.json', root)))
@@ -72,4 +73,19 @@ for(const phase of ['before','after']) {
  assert.equal(timeout.length,phase==='before'?1:0)
  assert(rows.some(s=>s.name.includes('SELECT')&&s.name.includes('products')))
 }
-console.log('Customer resolution verified: 60 successful matched requests, unchanged image and instrumentation, stale environment setting and actual timeout removed; successful price lookup retained, and complete story sequence.')
+const metrics=JSON.parse(await readFile(new URL('presentation/data/metric-comparison.json',root)))
+const dashboard=JSON.parse(await readFile(new URL(metrics.dashboard,root)))
+for (const phase of ['before','after']) {
+ const capture=metrics[phase]
+ assert.equal(capture.windowSeconds,120)
+ assert.equal(capture.toUnixSeconds-capture.fromUnixSeconds,120)
+ assert.equal(Number(capture.prometheusResponse.data.result[0].value[1]),capture.meanSeconds)
+ assert(capture.visibleText.includes(capture.displayValue))
+ assert.equal(dashboard.panels.find(panel=>panel.id===capture.panelId).targets[0].expr,capture.query)
+ const png=await readFile(new URL('public/presentation/images/'+capture.image,root))
+ assert.equal(createHash('sha256').update(png).digest('hex'),capture.sha256)
+ assert.equal(png.readUInt32BE(16),capture.width);assert.equal(png.readUInt32BE(20),capture.height)
+}
+assert.equal(metrics.before.query.replace(/@ [\d.]+/g,'@ TIME'),metrics.after.query.replace(/@ [\d.]+/g,'@ TIME'))
+assert(metrics.before.meanSeconds>metrics.after.meanSeconds)
+console.log('Customer resolution verified: 60 matched requests, unchanged image and instrumentation, timeout removed, successful lookup retained; Grafana metric captures match their Prometheus evidence and dashboard queries.')

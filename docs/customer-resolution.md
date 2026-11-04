@@ -86,3 +86,22 @@ JVM, database and scheduling variation remain. This is a local seeded
 missing-dependency demo, not a production benchmark. No labor, revenue or outage
 saving is inferred from these timings; the separate labor-capacity model makes
 its own assumptions and gives no per-investigation credit.
+
+## Grafana metric captures on slide 12
+
+The before/after panels are actual Grafana screenshots of OBI's Prometheus
+`http_server_request_duration_seconds` histogram counters for Gateway's
+`GET /checkout` requests. Both use a 120-second window from the retained
+November 2 runs. The query divides the increase in duration sum by the
+increase in request count: **2.214 seconds before, 164.991 milliseconds after**.
+The screenshots display **2.21 s** and **165 ms**.
+
+These are metric means over their time windows, including warmup traffic.
+They are distinct from the 30-request trace medians of 2.2247 seconds and
+184.943 milliseconds retained in the closing callback. Neither the sample
+ledger nor its measurement controls changed.
+
+`presentation/data/metric-comparison.json` records the exact queries, windows,
+Prometheus responses, native capture text and image checksums. The reproducible
+Grafana dashboard is `presentation/dashboards/checkout-metrics.json`. Import it
+into the demo's Grafana instance while the historical Prometheus data exists.

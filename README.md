@@ -20,11 +20,11 @@ Open the URL printed by Slidev. Use `/presenter/` for the full slide-by-slide di
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-The **24-slide deck is editable Slidev source** in [slides.md](slides.md) and
+The **25-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
-voice model, or media rebuild. The live plan has 20 minutes 50 seconds of content and two minutes of questions.
+voice model, or media rebuild. The live plan has 21 minutes 35 seconds of content and two minutes of questions.
 
 ## Project structure
 
@@ -84,7 +84,7 @@ and comparison; open `/presentation/savings.html` for the editable calculator.
 
 ## Storyboard and narrated review
 
-The [visual storyboard](public/storyboard.html) retains the 18-scene customer-to-resolution arc.
+The [visual storyboard](public/storyboard.html) retains the 19-scene customer-to-resolution arc.
 Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
 use the serving computer's address. Its stills work offline; recorded video
 links use local generated capture files.

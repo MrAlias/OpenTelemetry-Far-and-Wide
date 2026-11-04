@@ -42,6 +42,14 @@
         +capturedPanel(c,c.setting,80,185+c.context[3]*width/c.context[2]+24,width,'resource-setting')
         +text(80,650,'Same address as the failed HTTP span.',28,C.muted);
     }
+    case 'injector-intro':{
+      const project=window.INJECTOR_RESOURCE;
+      const graphic=window.renderInjectorDiagram({runtimes:project.runtimes,palette:{ink:C.ink,muted:C.muted,line:C.line,surface:C.panel,accent:C.blue,agent:C.green}}).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
+      return '<g transform="translate(64 185) scale(1.005)">'+graphic+'</g>'
+        +`<a href="${project.url}"><g transform="translate(924 220) scale(${280/project.size})">${project.markup}</g>`
+        +text(1064,545,'Project + docs',26,C.ink,'text-anchor="middle"')
+        +text(1064,580,'opentelemetry-injector',19,C.muted,'text-anchor="middle"')+'</a>';
+    }
     case 'operator-opt-in':{
       const c=window.OPERATOR_CONFIGURATION,step=scene.operatorStep??5;
       const rows=c.annotations.filter(row=>row.at<=step);
@@ -69,9 +77,13 @@
     case 'complete':return fleet('complete')+center(655,'14 language agents · 4 Go OBI baselines · latency still needs investigation',26,C.green);
     case 'savings':return text(80,245,'Request for visibility',30,C.blue)+text(1200,245,'Useful telemetry',30,C.green,'text-anchor="end"')+arrow(80,305,1195,305)+list(['Agree and coordinate','Configure and deploy','Wait and switch context','Validate and recover'],{x:95,y:380,size:33,gap:67})+text(680,400,'People doing the work',31,C.depth)+text(680,470,'Time waiting between steps',31,C.depth)+text(680,555,'Measure both clocks separately',26,C.muted);
     case 'lifecycle':return list(['New compatible service → inherit namespace selection','Agent update → reuse the rollout and checks','Configuration change → reduce drift and rework','Failure → reuse a tested recovery path'],{size:31,gap:78})+center(635,'Include platform maintenance, compatibility, and blast radius',27,C.depth);
-    case 'latency-result':{
-      const r=window.RESOLUTION,b=Math.round(r.before.requestMedianMs),a=Math.round(r.after.requestMedianMs),max=Math.max(b,a);
-      return text(75,200,'Customer request · median duration',28,C.muted)+[['Before the fix',b,C.depth],['After the fix',a,C.green]].map(([label,value,color],i)=>{const y=260+i*100;return text(75,y+29,label,31)+`<rect x="345" y="${y}" width="640" height="43" fill="${C.panel}"/><rect x="345" y="${y}" width="${640*value/max}" height="43" fill="${color}"/>`+text(1200,y+34,duration(value),38,color,'text-anchor="end"')}).join('')+text(75,490,'PricingEngine.calculate',29,C.ink,'font-family="monospace"')+text(75,540,duration(r.before.pricingMedianMs)+' → '+r.after.pricingMedianMs.toFixed(2)+' ms',43,C.green)+lines(75,620,['Matched warmed requests · same instrumentation · local demo','The successful price lookup and checkout path remain.'],24,C.muted);
+    case 'latency-result':case 'metric-comparison':{
+      return ['before','after'].map((phase,i)=>{
+        const src='presentation/images/customer-'+phase+'-metric.png';
+        const href=window.EVIDENCE_IMAGES?.[src]||src,x=64+i*588;
+        return text(x,205,phase==='before'?'Before fix':'After fix',29)
+          +`<image href="${escape(href)}" x="${x}" y="230" width="560" height="379.1667"/>`;
+      }).join('');
     }
     case 'adoption':case 'cost-timeline':{
       const chart=window.renderRolloutChart(scene.kind==='adoption'?'adoption':'cost',{ink:C.ink,muted:C.muted,grid:C.line,central:C.green,distributed:C.blue,emphasis:C.depth});

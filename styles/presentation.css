@@ -72,15 +72,10 @@
 .slidev-layout.talk-cover h1 { font-size:92px; font-weight:600; line-height:1.02; letter-spacing:-.05em; margin:135px 0 0; max-width:950px; }
 .slidev-layout.talk-cover footer { position:absolute; bottom:76px; font-size:31px; }
 .slidev-layout.talk-cover footer span { color:var(--accent); padding:0 12px; }
-.slidev-layout .customer-result { margin:54px 0 0; }
-.slidev-layout .result-label { color:var(--muted); font-size:23px!important; margin-bottom:35px; }
-.slidev-layout .request-comparison { display:grid; grid-template-columns:135px 1fr 310px; gap:30px; align-items:center; margin:35px 0 58px; font-size:27px; }
-.slidev-layout .duration-track { height:10px; background:var(--surface); }
-.slidev-layout .duration-track > div { height:100%; background:var(--duration); }
-.slidev-layout .after .duration-track > div { background:var(--agent); }
-.slidev-layout .request-comparison strong { text-align:right; font-size:86px; font-weight:500; letter-spacing:-.04em; }
-.slidev-layout .request-comparison small { font-size:38px; letter-spacing:0; }
-.slidev-layout .after strong { color:var(--agent); font-size:106px; }
+.slidev-layout .customer-result { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px; margin:44px 0 0; }
+.slidev-layout .customer-result figure { margin:0; }
+.slidev-layout .customer-result figcaption { font-size:29px; margin:0 0 16px; }
+.slidev-layout .customer-result img { display:block; width:100%; height:auto; border-radius:6px; }
 .slidev-layout .customer-callback { display:flex; align-items:center; justify-content:space-between; margin:65px 0 0; }
 .slidev-layout .closing-latency { font-size:74px; font-weight:500; color:var(--agent); letter-spacing:-.04em; }
 .slidev-layout .closing-latency > span { color:var(--muted); font-size:48px; }
@@ -98,6 +93,12 @@
 .slidev-layout .obi-recording-label { font-size:22px; color:var(--muted); margin-bottom:18px; }
 .slidev-layout .obi-previous-talk img { display:block; width:256px; height:256px; background:white; }
 .slidev-layout .obi-previous-talk strong { font-size:25px; font-weight:500; line-height:1.35; margin-top:22px; }
+.slidev-layout .injector-intro { display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:48px; align-items:center; margin-top:40px; }
+.slidev-layout .injector-startup svg { display:block; width:100%; height:auto; }
+.slidev-layout .injector-project a { display:flex; flex-direction:column; align-items:center; color:var(--ink); text-decoration:none; border:0; }
+.slidev-layout .injector-project img { display:block; width:280px; height:280px; background:white; border-radius:3px; }
+.slidev-layout .injector-project strong { font-size:26px; font-weight:500; margin-top:22px; }
+.slidev-layout .injector-project span { font-size:19px; color:var(--muted); margin-top:9px; }
 .slidev-layout .ownership-flow { display:block; width:100%; height:520px; }
 .slidev-layout .operator-configuration { display:grid; grid-template-columns:720px 384px; gap:48px; margin-top:36px; }
 .slidev-layout .operator-scope { font-size:21px!important; color:var(--muted); margin:0 0 30px; }

@@ -19,7 +19,7 @@ OTEL_EXPORTER_OTLP_ENDPOINT: >-
 <!--
 **Tyler:**
 
-Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart.
+To do that, we'll first show how this looks using the traditional OpenTelemetry's Java agent to get HTTP and database spans from inside the service. Here we can see the update needed for Checkout's Deployment configuration. The agent loads when Java starts, so this is a deployment change and a restart.
 
 **Nikola:**
 
@@ -38,7 +38,7 @@ evidence: true
 <!--
 **Tyler:**
 
-Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing.
+Let's roll out the patch. The patch supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Checkout is restarted with the same application image. Now let's see what that failed connection was doing.
 
 **Nikola:**
 
@@ -56,7 +56,7 @@ kicker: The useful result
 <!--
 **Tyler:**
 
-Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
+Back in Grafana, we can look at the details of a problematic Checkout span for PricingEngine.calculate. It contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
 
 **Nikola:**
 
@@ -64,7 +64,7 @@ And here's why we can call it a timeout. The error type is SocketTimeoutExceptio
 
 **Tyler:**
 
-Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
+Perfect, our telemetry is already providing value. Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
 -->
 
 ---
@@ -138,7 +138,7 @@ kicker: The repeated-request result
 <!--
 **Tyler:**
 
-Across the matched requests, checkout goes from just over two seconds to about a hundred and eighty-five milliseconds. That's the wait we started with, gone from the customer's experience. The chart summarizes the change we just followed in the waterfall.
+OBI's request-duration metrics show the average checkout falling from about two-point-two seconds to a hundred and sixty-five milliseconds. This validates the fix. The customer is no longer waiting for a retired backend to time out. The instrumentation gave us enough context to find the problem, and to validate the fix.
 
 **Nikola:**
 

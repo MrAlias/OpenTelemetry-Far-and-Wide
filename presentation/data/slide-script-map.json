@@ -123,6 +123,13 @@
   },
   {
     "file": "slides/04-namespace.md",
+    "chapter": "09-injector-intro",
+    "turns": [
+      0
+    ]
+  },
+  {
+    "file": "slides/04-namespace.md",
     "chapter": "10-operator-opt-in",
     "turns": [
       0,

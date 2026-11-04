@@ -1,0 +1,67 @@
+{
+  "source": "Actual Prometheus OBI HTTP server request-duration histogram counters, rendered by Grafana",
+  "statistic": "Arithmetic mean: increase(sum) / increase(count)",
+  "scope": "gateway, GET /checkout; equal 120-second windows from the previously recorded before/after runs. Histogram counters include the request traffic in each window, including warmups; these are not the 30-request trace medians used in the closing callback.",
+  "before": {
+    "fromUnixSeconds": 1793632555.496,
+    "toUnixSeconds": 1793632675.496,
+    "windowSeconds": 120,
+    "query": "sum(increase(http_server_request_duration_seconds_sum{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632675.496)) / sum(increase(http_server_request_duration_seconds_count{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632675.496))",
+    "meanSeconds": 2.2140328674090903,
+    "prometheusResponse": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {},
+            "value": [
+              1793632675.496,
+              "2.2140328674090903"
+            ]
+          }
+        ]
+      }
+    },
+    "image": "customer-before-metric.png",
+    "panelId": 1,
+    "sha256": "d9bc8b3db6b976bf0aa812b1c45cc2dc8fb0d501989b16acf89f7ecf5be4dd7c",
+    "width": 768,
+    "height": 520,
+    "captureUrl": "http://127.0.0.1:13000/d-solo/far-wide-measured-metrics/checkout-latency-before-and-after-the-fix?panelId=1&theme=dark&from=2026-11-02T15:15:55.496Z&to=2026-11-02T15:22:55.663Z&timezone=utc",
+    "visibleText": "Powered by\nBefore fix \u00b7 mean checkout duration\nGateway \u00b7 GET /checkout \u00b7 mean\n2.21 s",
+    "displayValue": "2.21 s"
+  },
+  "after": {
+    "fromUnixSeconds": 1793632855.663,
+    "toUnixSeconds": 1793632975.663,
+    "windowSeconds": 120,
+    "query": "sum(increase(http_server_request_duration_seconds_sum{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632975.663)) / sum(increase(http_server_request_duration_seconds_count{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632975.663))",
+    "meanSeconds": 0.16499098010000013,
+    "prometheusResponse": {
+      "status": "success",
+      "data": {
+        "resultType": "vector",
+        "result": [
+          {
+            "metric": {},
+            "value": [
+              1793632975.663,
+              "0.16499098010000013"
+            ]
+          }
+        ]
+      }
+    },
+    "image": "customer-after-metric.png",
+    "panelId": 2,
+    "sha256": "c3a007f124da59e523f1eb9f66ede9aa3584013923177871602c59fc471072b0",
+    "width": 768,
+    "height": 520,
+    "captureUrl": "http://127.0.0.1:13000/d-solo/far-wide-measured-metrics/checkout-latency-before-and-after-the-fix?panelId=2&theme=dark&from=2026-11-02T15:15:55.496Z&to=2026-11-02T15:22:55.663Z&timezone=utc",
+    "visibleText": "Powered by\nAfter fix \u00b7 mean checkout duration\nGateway \u00b7 GET /checkout \u00b7 mean\n165 ms",
+    "displayValue": "165 ms"
+  },
+  "capturedAt": "2026-11-04T19:15:47.265788+00:00",
+  "dashboard": "presentation/dashboards/checkout-metrics.json"
+}

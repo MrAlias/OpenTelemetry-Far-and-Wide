@@ -8,10 +8,10 @@ hand-authored sections; the animation exporter does not generate them.
 | `01-opening.md` | 2 | The visible slow request and the promise |
 | `02-investigation.md` | 3–5 | Topology, OBI and the live trace investigation |
 | `03-language-detail.md` | 6–12 | Explicit Java configuration, rollout and useful method detail |
-| `04-namespace.md` | 13–20 | Repetition, upstream opt-in, custom controller and one namespace rule |
-| `05-takeaways.md` | 21–24 | Lifecycle, adoption, engineering hours and the close |
+| `04-namespace.md` | 13–21 | Repetition, upstream opt-in, custom controller and one namespace rule |
+| `05-takeaways.md` | 22–25 | Lifecycle, adoption, engineering hours and the close |
 
-The live budget is 20 minutes 50 seconds with two minutes for questions. Slide 14
+The live budget is 21 minutes 35 seconds with two minutes for questions. Slide 15
 uses about 2¼ minutes to walk through upstream Operator configuration and
 application-team coordination at a natural pace.
 Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
@@ -23,14 +23,22 @@ passage is highlighted as you advance, and the rest stays dimmed for context.
 `noteClicks` in the script map places each marker before a chapter turn; it
 does not add audience-facing content or change the transcript.
 Run `npm run slides:notes` after changing dialogue or click assignments. `npm run slides:audit`
-checks all 18 video chapters, all 24 slides, spoken-turn coverage and the
+checks all 19 video chapters, all 25 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,
 post-fix waterfall, full fleet waterfall and Catalog inspection.
 
 References remain in `../docs/presentation-research.md`; demo commands are in
 `../demo/README.md`. Slide 4 links the previous talk’s CNCF recording. Slides
-4, 5, 14 and 18 have purposeful click builds. Slide 14 has five
+4, 5, 15 and 19 have purposeful click builds. Slide 15 has five
 steps; each has its own highlighted dialogue in presenter notes.
+
+Slide 14 introduces the upstream Injector with a startup diagram and its project QR.
+The language list reflects the agents bundled in this demo; the Injector library
+is separate from the payload and the Kubernetes rollout mechanism.
+The sequence is a scaling question, an Injector preview, the upstream Operator
+baseline, then the RIO demo and namespace policy. The preview explicitly leads
+into the baseline comparison. Namespace opt-in already exists upstream; the
+demo explores sharing the bundle, runtime choices and rollout work.
 
 Slide 5 is a bookmark for the live Grafana investigation. Its captured waterfall
 and one highlight are the fallback; skip the topology replay and trace tutorial.
@@ -104,7 +112,7 @@ animation or regenerating its rehearsal frames cannot overwrite this deck.
 
 ## Dollar examples
 
-Slide 22 compares adoption paths; slide 23 compares cumulative setup and upkeep
+Slide 23 compares adoption paths; slide 24 compares cumulative setup and upkeep
 cost over 24 months for the existing 18-service demo. The adoption curves
 are conceptual, not measured rates or a rollout forecast; this is covered in
 the spoken notes rather than an on-slide label. Both charts use
@@ -125,15 +133,19 @@ including an already-centralized baseline with zero additional savings.
 Run `npm run savings:build` after changing the inputs. `npm run build` also
 refreshes these results automatically.
 It refreshes the video data and the editable browser calculator at
-`/presentation/savings.html`. The current notes budget 20 minutes 50 seconds of live content;
-coordination and waiting are covered with the Operator configuration on slide 14.
+`/presentation/savings.html`. The current notes budget 21 minutes 35 seconds of live content;
+coordination and waiting are covered with the Operator configuration on slide 15.
 
 
 ## Customer payoff
 
 Slides 9–12 resolve the customer problem: identify the stale endpoint setting,
 remove it and roll the same image, show the actual post-fix waterfall, then compare
-matched request medians. `../presentation/data/resolution.json` holds all 60 request timings and
+real Grafana metric captures side by side. The panels show mean Gateway request
+duration from OBI over equal two-minute windows: 2.21 s and 165 ms.
+`../presentation/data/metric-comparison.json` retains their queries and provenance.
+The closing callback uses the original matched-request medians.
+`../presentation/data/resolution.json` holds all 60 request timings and
 controls. `CustomerResult.vue` uses the same evidence as the animation. The
 closing slide recalls both the faster request and namespace-wide readiness.
 

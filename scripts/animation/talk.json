@@ -68,11 +68,11 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts."
+          "text": "To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts are required."
         },
         {
           "speaker": "Nikola",
-          "text": "That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now version one and generally available."
+          "text": "That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now v1.0.0 and generally available."
         },
         {
           "speaker": "Tyler",
@@ -144,7 +144,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here's Checkout's Deployment configuration. We'll use OpenTelemetry's Java agent to get HTTP and database spans from inside the service. The agent loads when Java starts, so this is a deployment change and a restart."
+          "text": "To do that, we'll first show how this looks using the traditional OpenTelemetry's Java agent to get HTTP and database spans from inside the service. Here we can see the update needed for Checkout's Deployment configuration. The agent loads when Java starts, so this is a deployment change and a restart."
         },
         {
           "speaker": "Nikola",
@@ -152,7 +152,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "Here's the patch. It supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Roll Checkout with the same application image. Now let's see what that failed connection was doing."
+          "text": "Let's roll out the patch. The patch supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Checkout is restarted with the same application image. Now let's see what that failed connection was doing."
         },
         {
           "speaker": "Nikola",
@@ -181,7 +181,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Back in Grafana, expand Checkout's spans. PricingEngine.calculate contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish."
+          "text": "Back in Grafana, we can look at the details of a problematic Checkout span for PricingEngine.calculate. It contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish."
         },
         {
           "speaker": "Nikola",
@@ -189,7 +189,7 @@
         },
         {
           "speaker": "Tyler",
-          "text": "Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address."
+          "text": "Perfect, our telemetry is already providing value. Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address."
         }
       ],
       "pauseAfter": {
@@ -316,23 +316,28 @@
     },
     {
       "id": "08-result-summary",
-      "kind": "latency-result",
-      "title": "The improvement across repeated requests",
+      "kind": "metric-comparison",
+      "title": "The wait is gone",
       "plannedDuration": 35,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Across the matched requests, checkout goes from just over two seconds to about a hundred and eighty-five milliseconds. That's the wait we started with, gone from the customer's experience. The chart summarizes the change we just followed in the waterfall."
+          "text": "OBI's request-duration metrics show the average checkout falling from about two-point-two seconds to a hundred and sixty-five milliseconds. This validates the fix. The customer is no longer waiting for a retired backend to time out. The instrumentation gave us enough context to find the problem, and to validate the fix."
         },
         {
           "speaker": "Nikola",
           "text": "That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?"
         }
       ],
-      "purpose": "Summarize matched measured request durations only after the audience has seen the actual post-fix waterfall.",
+      "purpose": "Show actual Grafana screenshots of OBI mean Gateway GET /checkout duration before and after the fix, using equal 120-second windows. These metric means are distinct from the matched-request trace medians retained for the closing callback.",
       "sources": [
-        "presentation/data/resolution.json"
+        "presentation/data/metric-comparison.json",
+        "presentation/dashboards/checkout-metrics.json"
+      ],
+      "evidenceImages": [
+        "presentation/images/customer-before-metric.png",
+        "presentation/images/customer-after-metric.png"
       ]
     },
     {
@@ -344,14 +349,33 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "We got our answer, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?"
+          "text": "We have our fix, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?"
         },
         {
           "speaker": "Tyler",
-          "text": "I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners."
+          "text": "I was hoping you would ask. We know how to do this one service at a time. Now we need a way to make that useful across the application, without thirteen separate instrumentation projects."
         }
       ],
       "purpose": "Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup."
+    },
+    {
+      "id": "09-injector-intro",
+      "kind": "injector-intro",
+      "title": "OpenTelemetry Injector",
+      "plannedDuration": 45,
+      "lead": "Tyler",
+      "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "To help scale this work, we'll use the OpenTelemetry Injector. It's a shared library that runs when a compatible process starts, detects the runtime, and loads the matching language agent. We prepare the library and agents together so teams can use a shared setup.\n\nThat's the mechanism for the thirteen supported services; the four Go services keep OBI.\n\nBut the Injector isn't a Kubernetes rollout controller. Before we show how we're going to deploy it, let's look at the established approach with the upstream OpenTelemetry Operator. What would the platform still have to configure?"
+        }
+      ],
+      "purpose": "Preview the Injector as the shared runtime-loading mechanism, then explicitly introduce the upstream Operator as the established Kubernetes approach to compare before the RIO demo.",
+      "sources": [
+        "presentation/data/injector-intro.json",
+        "presentation/injector-diagram.js",
+        "https://github.com/open-telemetry/opentelemetry-injector"
+      ]
     },
     {
       "id": "10-operator-opt-in",
@@ -362,7 +386,7 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We can opt in a workload or a namespace with the upstream OpenTelemetry Operator. It handles agent injection. Now take a Python API owned by another team. What does the platform need to know?"
+          "text": "The Operator can inject language agents, and it supports opting in a workload or an entire namespace. That's a useful starting point. Let's walk through a Python API owned by another team and see what the platform still needs to know."
         },
         {
           "speaker": "Nikola",
@@ -406,10 +430,10 @@
         },
         {
           "speaker": "Nikola",
-          "text": "The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration."
+          "text": "The typing takes minutes. Finding the owner, checking the image and arranging a release can mean hours of work and days of waiting. The Operator handles injection; we still have to supply and maintain the runtime choices. Can we prepare more of that once, instead of reopening it for every service?"
         }
       ],
-      "purpose": "Show upstream OpenTelemetry Operator configuration growing for an illustrative Python API and .NET worker, then expose the process/startup limits and application-team coordination that more annotations cannot solve.",
+      "purpose": "Walk through the upstream Operator baseline, including existing namespace opt-in, to show the runtime decisions, application constraints and coordination work a shared setup must address.",
       "sources": [
         "docs/operator-configuration.md",
         "presentation/data/operator-complexity.json"
@@ -424,19 +448,19 @@
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Now let's demonstrate a different way to share the repeatable work. This installation is RIO, the Runtime Instrumentation Operator in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. It isn't the upstream Operator."
+          "text": "That's why this demo uses the Injector with RIO, rather than the upstream Operator. We package the supported agents together, let the Injector choose at process startup, and use RIO to select workloads and manage the rollout. RIO is the Runtime Instrumentation Operator in OTelX, purpose-built for this talk."
         },
         {
           "speaker": "Nikola",
-          "text": "We'd like this workflow to find an upstream home, in the Operator or another form. That needs community agreement. It also doesn't remove application compatibility or startup constraints."
+          "text": "The upstream Operator already supports namespace selection. The difference we're exploring is how much runtime configuration can live in the shared setup. We'd like this workflow to find an upstream home, in the Operator or another form. RIO demonstrates that idea; its upstream path is still open."
         },
         {
           "speaker": "Tyler",
-          "text": "Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service."
+          "text": "Let's install the controller. It builds on Jack Berg's prototype. The platform prepares the agent bundle, exporter and exclusions once; RIO handles selection and rollouts. The Injector loads the matching agent in each compatible process."
         },
         {
           "speaker": "Nikola",
-          "text": "We prepare the shared payload, exporter, and exclusions here. Then the application owner gets a simpler decision: instrument this namespace. They can ask for coverage without first turning it into a separate project with every service owner."
+          "text": "Compatibility tests, startup constraints and exceptions still need owners. The platform maintains that shared path. Once it's ready, an application team can ask for coverage without figuring out a separate language-agent installation for every service."
         }
       ],
       "visuals": [
@@ -447,7 +471,7 @@
           "at": 0
         }
       ],
-      "purpose": "Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.",
+      "purpose": "Explain why this demo chooses the Injector plus RIO after the Operator comparison. Show the shared bundle, runtime selection and rollout responsibilities, retain compatibility work, and keep the upstream path open.",
       "sources": [
         "components/otel-injector-operator/README.md",
         "components/otel-injector-images/README.md",
@@ -464,7 +488,7 @@
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we previously showed, this rule doesn't list languages or individual services."
+          "text": "Instrument demo-apps. One namespace rule. We haven't listed the thirteen services or assigned an agent to each one. The Injector handles the runtime choice within the supported bundle, and RIO handles getting it into the selected workloads."
         },
         {
           "speaker": "Tyler",
@@ -731,7 +755,7 @@
   "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
   "scriptRevision": "2026-11-02-customer-story-and-presenter-dialogue",
   "timing": "natural",
-  "plannedDuration": 1250,
+  "plannedDuration": 1295,
   "maxContentSeconds": 1380,
   "storyRevision": "2026-11-02-configured-legacy-endpoint",
   "pronunciation": {

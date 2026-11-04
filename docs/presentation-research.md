@@ -117,6 +117,8 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 
 **Slide 12**
 
+- presentation/data/metric-comparison.json — actual OBI Prometheus metric means in equal 120-second windows, with screenshot checksums.
+- presentation/dashboards/checkout-metrics.json — native Grafana stat panels used for the captures.
 - presentation/data/resolution.json
 - scripts/presentation/measure_resolution.py
 - docs/customer-resolution.md
@@ -128,6 +130,13 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 
 **Slide 14**
 
+- https://github.com/open-telemetry/opentelemetry-injector — shared library, startup mechanism and bundled-agent requirements.
+- presentation/data/injector-intro.json — pinned source and project QR target.
+- presentation/injector-diagram.js — shared editable diagram.
+- components/otel-injector-images/README.md — five agent runtimes enabled in this demo.
+
+**Slide 15**
+
 - https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/
 - docs/operator-configuration.md — upstream configuration and startup constraints; coordination and waiting are operational inferences, not measured averages.
 - presentation/data/operator-complexity.json
@@ -135,58 +144,58 @@ Demo commands remain in `demo/README.md` and `docs/fleet-demo-handoff.md`.
 - docs/instrumentation-savings.md
 - https://sre.google/workbook/eliminating-toil/
 
-**Slide 15**
+**Slide 16**
 
 - components/otel-injector-operator/README.md
 - components/otel-injector-images/README.md
 - docs/technical-findings.md#identified-implementation
 
-**Slide 16**
+**Slide 17**
 
 - demo/k8s/fleet-instrumentation-base.yaml
 - demo/k8s/instrument-demo-namespace.patch.yaml
 - public/demo-capture/capture-summary.json
 
-**Slide 17**
+**Slide 18**
 
 - demo/k8s/instrument-demo-namespace.patch.yaml
 - public/demo-capture/capture-summary.json
 
-**Slide 18**
+**Slide 19**
 
 - public/demo-capture/capture-summary.json
 - presentation/data/capture.json
 - presentation/data/topology.json
 
-**Slide 19**
+**Slide 20**
 
 - public/demo-capture/fixed-fleet-overview.png
 - public/demo-capture/fixed-fleet-trace-evidence.json
 
-**Slide 20**
+**Slide 21**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
 - components/otel-injector-images/versions.json
 
-**Slide 21**
+**Slide 22**
 
 - components/otel-injector-operator/README.md
 - docs/instrumentation-savings.md
 
-**Slide 22**
+**Slide 23**
 
 - presentation/rollout-charts.js — conceptual adoption trajectories, not observed data or a schedule; denominator is eligible services in the selected scope.
 - demo/k8s/instrument-demo-namespace.patch.yaml — shared selection mechanism.
 
-**Slide 23**
+**Slide 24**
 
 - presentation/rollout-charts.js — cumulative engineering hours, with 24 monthly update steps after initial setup.
 - presentation/data/savings-assumptions.json
 - presentation/savings-model.js
 - docs/instrumentation-savings.md — 247 engineering hours = 31 setup + 108 upkeep per year × 2; $24,700 at $100/hour. Monthly cost steps are $975 versus $75, with no adoption-delay credit.
 
-**Slide 24**
+**Slide 25**
 
 - presentation/data/resolution.json
 - docs/customer-resolution.md
@@ -657,4 +666,4 @@ Slide 4 links the CNCF recording of [Debugging Your Cluster When It’s on Fire]
 
 The explicit setting capture follows the [process environment-variable attribute](https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/) and [Java resource-attribute configuration](https://opentelemetry.io/docs/languages/java/configuration/). The launcher exposes only the requested demo setting; no default Java-agent collection of all environment variables is claimed.
 
-`npm run slides:audit` verifies all 18 video chapters against the 24 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.
+`npm run slides:audit` verifies all 19 video chapters against the 25 slides, assigns each spoken turn once, and checks the video’s recorded evidence is represented. It found the missing full-fleet waterfall; that view now precedes Catalog inspection. Speaker notes contain the full dialogue at the presenters’ request; sources remain here.

@@ -9,11 +9,29 @@ kicker: The scaling question
 <!--
 **Nikola:**
 
-We got our answer, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?
+We have our fix, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?
 
 **Tyler:**
 
-I was hoping you wouldn't ask. Each of those thirteen services can use the OpenTelemetry Injector. The four Go services keep OBI. We need a way to share the setup, so this doesn't become thirteen more jobs for the service owners.
+I was hoping you would ask. We know how to do this one service at a time. Now we need a way to make that useful across the application, without thirteen separate instrumentation projects.
+-->
+
+---
+kicker: Upstream OpenTelemetry Injector
+---
+
+# OpenTelemetry Injector
+
+<InjectorIntro />
+
+<!--
+**Tyler:**
+
+To help scale this work, we'll use the OpenTelemetry Injector. It's a shared library that runs when a compatible process starts, detects the runtime, and loads the matching language agent. We prepare the library and agents together so teams can use a shared setup.
+
+That's the mechanism for the thirteen supported services; the four Go services keep OBI.
+
+But the Injector isn't a Kubernetes rollout controller. Before we show how we're going to deploy it, let's look at the established approach with the upstream OpenTelemetry Operator. What would the platform still have to configure?
 -->
 
 ---
@@ -28,7 +46,7 @@ clicks: 5
 <!--
 **Tyler:**
 
-We can opt in a workload or a namespace with the upstream OpenTelemetry Operator. It handles agent injection. Now take a Python API owned by another team. What does the platform need to know?
+The Operator can inject language agents, and it supports opting in a workload or an entire namespace. That's a useful starting point. Let's walk through a Python API owned by another team and see what the platform still needs to know.
 
 **Nikola:**
 
@@ -82,7 +100,7 @@ Then check payload compatibility, permissions, existing agents and Collector acc
 
 **Nikola:**
 
-The typing takes minutes. Finding the owner, inspecting the image and arranging a release can take hours. That's engineering effort plus time spent waiting: a ten-minute change can take days to reach production when another team owns the release. The Operator handles injection; we still have to discover the right configuration.
+The typing takes minutes. Finding the owner, checking the image and arranging a release can mean hours of work and days of waiting. The Operator handles injection; we still have to supply and maintain the runtime choices. Can we prepare more of that once, instead of reopening it for every service?
 -->
 
 ---
@@ -97,19 +115,19 @@ evidence: true
 <!--
 **Tyler:**
 
-Now let's demonstrate a different way to share the repeatable work. This installation is RIO, the Runtime Instrumentation Operator in OTelX. It's a demo operator built for this talk, using the OpenTelemetry Injector. It isn't the upstream Operator.
+That's why this demo uses the Injector with RIO, rather than the upstream Operator. We package the supported agents together, let the Injector choose at process startup, and use RIO to select workloads and manage the rollout. RIO is the Runtime Instrumentation Operator in OTelX, purpose-built for this talk.
 
 **Nikola:**
 
-We'd like this workflow to find an upstream home, in the Operator or another form. That needs community agreement. It also doesn't remove application compatibility or startup constraints.
+The upstream Operator already supports namespace selection. The difference we're exploring is how much runtime configuration can live in the shared setup. We'd like this workflow to find an upstream home, in the Operator or another form. RIO demonstrates that idea; its upstream path is still open.
 
 **Tyler:**
 
-Install the demo controller once. It builds on Jack Berg's prototype. The controller selects the workloads and manages their rollout. The Injector recognizes supported runtimes and loads the agents. Those are the pieces we otherwise had to arrange for each service.
+Let's install the controller. It builds on Jack Berg's prototype. The platform prepares the agent bundle, exporter and exclusions once; RIO handles selection and rollouts. The Injector loads the matching agent in each compatible process.
 
 **Nikola:**
 
-We prepare the shared payload, exporter, and exclusions here. Then the application owner gets a simpler decision: instrument this namespace. They can ask for coverage without first turning it into a separate project with every service owner.
+Compatibility tests, startup constraints and exceptions still need owners. The platform maintains that shared path. Once it's ready, an application team can ask for coverage without figuring out a separate language-agent installation for every service.
 -->
 
 ---
@@ -132,7 +150,7 @@ action: Inject
 <!--
 **Nikola:**
 
-The selection rule is simple: instrument demo-apps in a declarative way. Unlike the language opt-in we previously showed, this rule doesn't list languages or individual services.
+Instrument demo-apps. One namespace rule. We haven't listed the thirteen services or assigned an agent to each one. The Injector handles the runtime choice within the supported bundle, and RIO handles getting it into the selected workloads.
 -->
 
 ---

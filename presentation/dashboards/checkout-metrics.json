@@ -1,0 +1,137 @@
+{
+  "uid": "far-wide-measured-metrics",
+  "title": "Checkout latency before and after the fix",
+  "schemaVersion": 41,
+  "version": 0,
+  "tags": [
+    "far-and-wide"
+  ],
+  "timezone": "utc",
+  "time": {
+    "from": "2026-11-02T15:15:55.496000Z",
+    "to": "2026-11-02T15:22:55.663000Z"
+  },
+  "refresh": "",
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Before fix \u00b7 mean checkout duration",
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(http_server_request_duration_seconds_sum{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632675.496)) / sum(increase(http_server_request_duration_seconds_count{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632675.496))",
+          "instant": true,
+          "range": false,
+          "legendFormat": "Gateway \u00b7 GET /checkout \u00b7 mean"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 2,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "wideLayout": false,
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 150,
+          "titleSize": 25
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "After fix \u00b7 mean checkout duration",
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(http_server_request_duration_seconds_sum{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632975.663)) / sum(increase(http_server_request_duration_seconds_count{service_name=\"gateway\",http_route=\"/checkout\"}[120s] @ 1793632975.663))",
+          "instant": true,
+          "range": false,
+          "legendFormat": "Gateway \u00b7 GET /checkout \u00b7 mean"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "wideLayout": false,
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 150,
+          "titleSize": 25
+        }
+      }
+    }
+  ]
+}
