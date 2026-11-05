@@ -1,0 +1,15 @@
+# Apply after loading far-wide-demo-obi:local into the demo's kind cluster.
+spec:
+  template:
+    spec:
+      containers:
+        - name: obi
+          image: far-wide-demo-obi:local
+          imagePullPolicy: Never
+          env:
+            - name: OTEL_EBPF_LOG_LEVEL
+              value: DEBUG
+            - name: OTEL_EBPF_BPF_DEBUG
+              value: 'true'
+            - name: OTEL_EBPF_TRACE_PRINTER
+              value: json
