@@ -364,6 +364,14 @@ Next, fix the environment variables to remove the legacy service:
 kubectl patch deployment/checkout -n demo-apps --type=strategic --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
 ```
 
+The init container copies the Java JAR from the prepared payload image. The
+patch supplies `JAVA_TOOL_OPTIONS`, service identity and exporter settings. It
+also configures `demo.checkout.PricingEngine[calculate]` explicitly with
+`OTEL_INSTRUMENTATION_METHODS_INCLUDE`. The agent's regular HTTP/JDBC/Hibernate
+instrumentation supplies the related client and persistence observations.
+Agent metrics/logs are disabled here; OBI supplies the broad HTTP metrics.
+This is direct startup configuration, not the later namespace controller.
+
 ## 7. Build and deploy the operator and Injector
 
 [RIO](https://github.com/otelx/rio) is the demo operator purpose-built for this talk; we want this capability to find an upstream home. The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
