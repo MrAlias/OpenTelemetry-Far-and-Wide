@@ -1,5 +1,10 @@
 # Executable coexistence demo specification
 
+Historical research/proof reference. For the current 18-service, two-second
+retired-endpoint presentation, use the [live run sheet](../demo/README.md#live-run-sheet)
+and [current customer resolution](customer-resolution.md). The earlier sleep,
+router and candidate versions below describe their original experiment.
+
 Version: 2026-10-06. This specification implements the first proof gate from
 [technical findings](technical-findings.md). Results belong in the accompanying
 proof report; expected behavior here is not a claim that the experiment passed.

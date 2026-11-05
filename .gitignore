@@ -43,3 +43,7 @@ npm-debug.log*
 public/slides/
 public/demo-capture/*.png.json
 public/demo-capture/*.png.requests.json
+
+# Reviewed silent fleet fallback (validated by slides:assets).
+!public/presentation/clips/fleet-mixed-detail.mp4
+!public/presentation/clips/fleet-mixed-detail.webm

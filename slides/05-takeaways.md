@@ -9,19 +9,11 @@ kicker: After day one
 <!--
 **Tyler:**
 
-Now an agent release arrives next month. Do all thirteen service owners need another task and another rollout? And what happens when a new service appears?
+An agent update next month shouldn't mean another setup project for thirteen teams. The platform can update the shared bundle and use the same rollout path. Eligible new services inherit the namespace policy.
 
 **Nikola:**
 
-The shared approach gives us a place to handle that work together. Compatible new services inherit the policy. Agent updates use the shared rollout path. Settings and recovery instructions have one place to improve.
-
-**Tyler:**
-
-A service can still change runtimes, or need an exception. OBI can keep the baseline for supported traffic, while the available language detail depends on the runtime. Someone still has to look after those cases.
-
-**Nikola:**
-
-Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
+Compatibility tests, exceptions and recovery remain real work. We centralize ownership of that shared path. The saving is avoiding the routine setup and updates being arranged independently over and over.
 -->
 
 ---
@@ -35,15 +27,11 @@ kicker: Adoption across the organization
 <!--
 **Nikola:**
 
-This is a sketch of what that can mean for coverage. One team gets instrumentation done. Another has a release freeze. A third is busy with something else. Months can pass with the application only partly covered.
+This is a sketch of language-agent adoption across eligible services. With team-by-team work, one team finishes; another has a release freeze. Add a service or rewrite one in another language, and the gap can open again.
 
 **Tyler:**
 
-And the application doesn't wait for the project to finish. Add a service, or rewrite one from Java to Python, and coverage can fall again. The finish line moves while the teams are still catching up.
-
-**Nikola:**
-
-With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
+The centralized path covers the eligible services in one rollout, before that first team-by-team increment. New compatible services inherit it. We still maintain the shared path, but routine enrollment doesn't wait for a separate project in every team.
 -->
 
 ---
@@ -51,7 +39,7 @@ kicker: The cost of repeated setup and upkeep
 titleHidden: true
 ---
 
-# The cost of team-by-team ownership
+# The cost of repeated setup and upkeep
 
 <RolloutComparison mode="cost" />
 
@@ -60,19 +48,15 @@ titleHidden: true
 <!--
 **Tyler:**
 
-Here's what repeating the work can cost in our eighteen-service example. After Checkout, thirteen services still need language instrumentation. These steps cover their setup and two years of monthly agent updates. Every jump is another release to handle.
+Here's an example for this same eighteen-service application: the thirteen remaining agent setups and two years of monthly updates. Each step is another release to handle. Distributed owners repeat that work; the centralized path shares the setup and update rollouts.
 
 **Nikola:**
 
-On the distributed path, the service owners arrange that work separately. On the centralized path, we set up the namespace once and share each update. That lower line still includes maintaining the shared approach.
+The modeled difference is two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. Time for the next customer problem.
 
 **Tyler:**
 
-The difference is two hundred and forty-seven engineering hours over two years. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. That's time people could spend on the next customer problem, rather than repeating this setup and upkeep.
-
-**Nikola:**
-
-Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
+These are assumed setup and rollout hours, not measured cash savings or a complete platform budget. Put your own support and testing costs into the worksheet. We haven't priced the calendar time waiting for other teams.
 -->
 
 ---
@@ -91,17 +75,17 @@ kicker: Make the next investigation easier
 <!--
 **Tyler:**
 
-Remember the customer waiting at the start? OBI helped us find the failed connection. The Java agent showed the pricing call and its fallback. The resource attributes exposed the retired endpoint setting. Remove that setting, roll the same image, and the next trace shows the wait has gone.
+We started with a customer waiting for an order. OBI showed the failed connection. Java detail named the pricing operation. We found the old endpoint setting, removed it, and opened a new trace to see the wait disappear.
 
 **Nikola:**
 
-Then one namespace choice made language detail available across the supported services. RIO demonstrates the shared workflow we'd like to bring upstream. The next team should be able to open a trace and start investigating, without repeating our setup first.
+Then one namespace choice added language detail across the supported fleet. The next team shouldn't have to repeat our setup before investigating. RIO demonstrates the shared workflow we'd like to bring upstream.
 
 **Tyler:**
 
-OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service, or across a cluster, and use to find what's keeping a customer waiting. That's what makes all this setup worthwhile: we can get from their problem to something we can fix.
+OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service or across a cluster, then use to find what's keeping a customer waiting—and do something about it.
 
 **Nikola:**
 
-Find the wait, fix the cause, and make the next investigation easier. Thank you. Let's take your questions.
+Find the wait. Fix the cause. Make the next investigation easier. Thank you.
 -->

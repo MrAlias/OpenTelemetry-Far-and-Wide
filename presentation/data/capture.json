@@ -1,13 +1,13 @@
 {
-  "source": "Actual isolated local demo; configuration-only resolution recorded November 2, 2026",
+  "source": "Actual isolated demo; OBI v1.0.0 and namespace workflow re-recorded November 4, 2026. Metric comparisons retain their recorded measurement windows.",
   "baseline": {
-    "traceId": "48ade2ae7239986f28f19e112ae411b4",
-    "rootDurationMs": 2262.799707,
-    "checkoutDurationMs": 2261.247951,
-    "failedConnectionMs": 2001.840843,
-    "failedConnectionRowY": 500,
-    "checkoutSpanId": "4wJ17eUdUuw=",
-    "spanCount": 121,
+    "traceId": "566750bef0724ca483ad9258188b4112",
+    "rootDurationMs": 2129.024152,
+    "checkoutDurationMs": 2128.16575,
+    "failedConnectionMs": 2002.011111,
+    "failedConnectionRowY": 567.4609375,
+    "checkoutSpanId": "T4G5dnKlWEM=",
+    "spanCount": 82,
     "services": [
       "cart",
       "catalog",
@@ -20,21 +20,21 @@
       "loyalty",
       "notifications",
       "payments",
-      "postgres",
       "promotions",
       "receipts",
       "recommendations",
-      "redis",
       "shipping",
       "stock-planner",
       "tax",
       "warehouse"
-    ]
+    ],
+    "sourceImageWidth": 1024,
+    "sourceImageHeight": 576
   },
   "fleetTrace": {
-    "traceID": "6c6d48d2a8cc4395b149313d657f7e9c",
+    "traceID": "2747373ae3e044749ddc62f3ca657217",
     "fixedCheckout": true,
-    "pricingMs": 1.210481,
+    "pricingMs": 2.737748,
     "sdkServices": [
       "cart",
       "catalog",
@@ -52,11 +52,13 @@
       "tax"
     ],
     "obiOnlyServices": [
+      "currency",
       "gateway",
       "shipping",
-      "warehouse",
-      "currency"
-    ]
+      "warehouse"
+    ],
+    "durationMs": 171.61844,
+    "posterFrameSeconds": 6
   },
   "languageSdkServices": {
     "cart": [
@@ -166,7 +168,7 @@
           ]
         }
       },
-      "fullPolicyGeneration": 10,
+      "fullPolicyGeneration": 2,
       "obiServices": [
         "currency",
         "gateway",
@@ -185,23 +187,21 @@
         "loyalty",
         "notifications",
         "payments",
-        "postgres",
         "promotions",
         "receipts",
         "recommendations",
-        "redis",
         "shipping",
         "stock-planner",
         "tax",
         "warehouse"
       ]
     },
-    "recorded": "2026-11-02",
-    "observedGeneration": 10
+    "recorded": "2026-11-04",
+    "observedGeneration": 2
   },
   "javaDetail": {
-    "traceId": "26abea5ca66f7e87389d931bfecdf3d0",
-    "pricingMs": 2010.278399,
+    "traceId": "03f92a74331b453ab16e5e86ce2cdd5b",
+    "pricingMs": 2005.213016,
     "fault": "Stale optional endpoint setting; real connection timeout, then successful PostgreSQL fallback",
     "evidence": "public/demo-capture/java-trace-evidence.json"
   },
@@ -212,9 +212,76 @@
   },
   "configurationFix": {
     "variable": "LEGACY_PRICING_URL",
-    "sameImageId": "sha256:084182a7922adebd0970b37ac18e9ce9a563381321e2494d0726f8dd466dafdf",
+    "sameImageId": "sha256:bf6cc38485cd8f538c25ec9fb34f2c9497ad0e56361de015dd69199e074848df",
     "command": "kubectl set env deployment/checkout -n demo-apps LEGACY_PRICING_URL-",
     "resourceAttribute": "process.environment_variable.LEGACY_PRICING_URL",
     "recording": "public/demo-capture/fix-pricing-edited.mp4"
+  },
+  "fixedRequest": {
+    "sdkServices": [
+      "checkout"
+    ],
+    "obiServices": [
+      "cart",
+      "catalog",
+      "currency",
+      "customer-profile",
+      "fraud",
+      "gateway",
+      "inventory",
+      "loyalty",
+      "notifications",
+      "payments",
+      "promotions",
+      "receipts",
+      "recommendations",
+      "shipping",
+      "stock-planner",
+      "tax",
+      "warehouse"
+    ],
+    "spanCount": 91,
+    "services": [
+      "cart",
+      "catalog",
+      "checkout",
+      "currency",
+      "customer-profile",
+      "fraud",
+      "gateway",
+      "inventory",
+      "loyalty",
+      "notifications",
+      "payments",
+      "promotions",
+      "receipts",
+      "recommendations",
+      "shipping",
+      "stock-planner",
+      "tax",
+      "warehouse"
+    ],
+    "stage": "fixed",
+    "traceId": "97ab7f5ff00d4b63ae6502ed5439b430",
+    "capturedAt": 1793837439.3551958,
+    "durationMs": 103.775227,
+    "orderId": 802,
+    "requestStartedUnixNano": 1793837431586368318,
+    "context": "kind-far-wide-recording",
+    "obiImage": "otel/ebpf-instrument:v1.0.0",
+    "pricingMs": 3.107507,
+    "recording": "public/demo-capture/fixed-request-detail.mp4",
+    "visualCrop": {
+      "x": 0,
+      "y": 256,
+      "width": 1024,
+      "height": 320,
+      "method": "Crop native Grafana screencast; keep full source in local archive, no redrawn fields"
+    }
+  },
+  "obiParentLinkQualification": {
+    "version": "otel/ebpf-instrument:v1.0.0",
+    "observed": "All 18 application services present; some pre-SDK .NET server observations lack parent spans. Final mixed-agent trace has one connected graph.",
+    "status": "Await full-topology fix/build from collaborator; isolated header/all test is not a verified resolution."
   }
 }

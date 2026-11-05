@@ -1,6 +1,6 @@
 # What the upstream Operator still needs to know
 
-Slide 15 uses an illustrative `reporting-api` pod to examine the upstream
+Slide 14 uses an illustrative `reporting-api` pod to examine the upstream
 OpenTelemetry Operator. It does not describe Injector or RIO behavior and does
 not claim the example is part of the recorded demo. Annotation keys on the
 slide share the displayed `instrumentation.opentelemetry.io/` prefix.
@@ -12,7 +12,11 @@ Research checked November 2, 2026 against Operator commit
 `614a0378b14276a4dbea8d575b4a5825e3c3538a`. Confirm behavior against the version
 actually deployed; current GitHub documentation and the website can differ.
 
-## Six builds and the work behind them
+The primary talk uses three grouped states (image, containers, ownership) in
+90 seconds. The complete six-state example below remains technical reference;
+it is not six separate stage explanations.
+
+## Six reference states and the work behind them
 
 1. **Language opt-in.** Upstream supports workload and namespace annotations.
    Do not imply namespace-level opt-in is missing. An `Instrumentation` resource
@@ -71,8 +75,8 @@ show why additional YAML cannot resolve every application constraint. This
 avoids making unsupported combinations look configurable. No live demo
 workload, Operator installation, application image or security policy changes.
 
-The slide uses five click transitions and twelve short speaker turns. The
-full dialogue remains in the generated notes, with one marker per build.
-RIO's existing introduction moves to slide 16, outside this upstream Operator
-sequence, and explicitly retains application compatibility/startup constraints.
-The revised content budget is 21 minutes 35 seconds plus two minutes for questions.
+The primary slide uses two click transitions and four speaker turns. Full
+dialogue remains in the notes, with one marker per visible state. The Injector
+mechanism follows on slide 15 and RIO on slide 16; compatibility/startup
+constraints remain explicit. The content budget is 20 minutes 45 seconds plus
+75 seconds of live flexibility and three minutes for recovery/questions.

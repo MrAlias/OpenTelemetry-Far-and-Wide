@@ -3,7 +3,7 @@ import {spawn} from 'node:child_process';
 import {readFile,writeFile,mkdir,readdir,access} from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-const root=process.cwd(), work=path.join(root,'.artifacts/slides');
+const root=process.cwd(), work=path.join(root,process.env.SLIDEV_THEME==='dark'?'.artifacts/slides-dark':'.artifacts/slides');
 await mkdir(path.join(work,'tmp'),{recursive:true});
 await mkdir(path.join(work,'renders'),{recursive:true});
 const resolution=JSON.parse(await readFile(path.join(root,'presentation/data/resolution.json'),'utf8'));
@@ -53,6 +53,7 @@ try{
  const {sessionId}=await cdp.call('Target.attachToTarget',{targetId,flatten:true});
  await cdp.call('Page.enable',{},sessionId);await cdp.call('Runtime.enable',{},sessionId);await cdp.call('Network.enable',{},sessionId);
  await cdp.call('Emulation.setDeviceMetricsOverride',{width:1280,height:720,deviceScaleFactor:1,mobile:false},sessionId);
+ await cdp.call('Emulation.setEmulatedMedia',{features:[{name:'prefers-color-scheme',value:process.env.SLIDEV_THEME||'light'}]},sessionId);
  const evaluate=async expression=>{const r=await cdp.call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true},sessionId);if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
  const wait=ms=>new Promise(r=>setTimeout(r,ms));
  const route=(p)=>origin+(process.env.SLIDEV_ROUTER==='hash'?'/#':'')+p;
@@ -62,9 +63,9 @@ try{
    if(await evaluate(`!!document.querySelector('[data-slidev-no="${n}"] .slidev-layout h1')`))break;
    if(i===299){const debug=await evaluate('({url:location.href,ready:document.readyState,text:document.body.innerText.slice(0,1600)})');throw Error('Slide '+n+' did not render: '+JSON.stringify(debug));}await wait(100);
   }
-  if(n===15){
+  if(n===14){
    for(let i=0;i<100;i++){
-    if(await evaluate(`Number(document.querySelector('[data-slidev-no="15"] [data-operator-step]')?.dataset.operatorStep)===${clicks}`))break;
+    if(await evaluate(`Number(document.querySelector('[data-slidev-no="14"] [data-operator-step]')?.dataset.operatorStep)===${[1,2,5][clicks]}`))break;
     if(i===99)throw Error('Operator example did not reach click '+clicks);
     await wait(50);
    }
@@ -77,7 +78,8 @@ try{
    const sources=[...slide.querySelectorAll('img,image')].map(e=>e.getAttribute('href')||e.getAttribute('src')).filter(Boolean);
    await Promise.all(sources.map(async src=>{const image=new Image();image.src=new URL(src,location.href).href;await image.decode();if(!image.naturalWidth)throw Error('Missing evidence '+src)}));
    await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-  })()`);await wait(150);
+  })()`);await wait(450);
+  await evaluate(`(async()=>{for(const v of document.querySelectorAll('[data-slidev-no="${n}"] video')){await Promise.race([new Promise(r=>v.addEventListener('loadeddata',r,{once:true})),new Promise(r=>setTimeout(r,5000))]);}})()`);
  }
  for(let n=1;n<=scriptMap.length;n++){
   for(const clicks of Array.from({length:(scriptMap[n-1].noteClicks?.at(-1)?.at||0)+1},(_,i)=>i)){
@@ -100,7 +102,7 @@ try{
    })()`);
    if(result.overflow.length||result.collisions.length)errors.push(result);
    if(result.images.some(i=>!i.loaded))errors.push({slide:n,images:result.images});
-   if([3,13,19].includes(n)){
+   if([3,13].includes(n)){
     if(result.services!==18)errors.push({slide:n,issue:'Topology must contain eighteen services'});
     const stores=await evaluate(`(()=>{
      const s=document.querySelector('[data-slidev-no="${n}"] .service-topology');
@@ -116,8 +118,8 @@ try{
     if(stores.languages!==18||stores.durations!==0)errors.push({slide:n,clicks,issue:'Map must preserve all languages and show request durations alongside them when observed',stores});
     if(JSON.stringify(stores.nodes)!==JSON.stringify(['postgres','redis'])||JSON.stringify(stores.edges)!==JSON.stringify(expected)||stores.labelOverflow.length)errors.push({slide:n,clicks,issue:'Shared stores must have their real client links and readable node labels',stores});
    }
+   if(n===19 && (clicks===0 ? result.agents!==14||result.services!==18||result.video : !result.video||result.services!==0))errors.push({slide:n,clicks,issue:'Fleet fallback must move from fourteen agents/four OBI services to the native mixed trace clip'});
    if(n===5&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
-   if(n===19&&result.agents!==(clicks?14:1))errors.push({slide:n,issue:'Namespace lighting did not update'});
    if(n===8||n===9){
     const captured=await evaluate(`(()=>{const f=document.querySelector('[data-slidev-no="${n}"] figure');return {images:f?.querySelectorAll('svg image').length,redrawn:!!f?.querySelector('dl,code,svg text'),trace:f?.dataset.traceId,span:f?.dataset.spanId}})()`);
     if(captured.images!==2||captured.redrawn||!captured.trace||!captured.span)errors.push({slide:n,issue:'Attribute proof must use two linked dashboard screenshot views with trace/span identity',captured});
@@ -130,30 +132,31 @@ try{
     const text=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="9"] .configuration-evidence svg')).map(e=>e.getAttribute('aria-label')).join(' ')`);
     if(!text?.includes('LEGACY_PRICING_URL')||!text.includes('192.0.2.42'))errors.push({slide:n,issue:'Configuration screenshot lacks the recorded setting'});
    }
-   if(n===14){
+   if(n===15){
     const intro=await evaluate(`(()=>{
-     const s=document.querySelector('[data-slidev-no="14"] .injector-intro');
+     const s=document.querySelector('[data-slidev-no="15"] .injector-intro');
      return {url:s?.querySelector('a')?.href,qr:s?.querySelector('img')?.getAttribute('src'),
       diagram:s?.querySelector('svg')?.getAttribute('aria-label'),text:s?.textContent};
     })()`);
     if(intro.url!=='https://github.com/open-telemetry/opentelemetry-injector'||!intro.qr?.endsWith('qr-injector.svg')||!intro.diagram?.includes('inside that process')||!intro.text?.includes('libotelinject.so'))errors.push({slide:n,issue:'Injector intro needs its upstream QR and in-process startup diagram',intro});
    }
-   if(n===15){
-    const expected=operatorExample.annotations.filter(row=>row.at<=clicks).map(row=>row.key);
+   if(n===14){
+    const actualStep=[1,2,5][clicks];
+    const expected=operatorExample.annotations.filter(row=>row.at<=actualStep).map(row=>row.key);
     const config=await evaluate(`(()=>{
-     const s=document.querySelector('[data-slidev-no="15"] .operator-configuration');
+     const s=document.querySelector('[data-slidev-no="14"] .operator-configuration');
      return {step:Number(s?.dataset.operatorStep),keys:[...s.querySelectorAll('[data-annotation]')].map(e=>e.dataset.annotation),
       text:s.textContent,startup:!!s.querySelector('[data-startup-example]'),payload:!!s.querySelector('[data-python-payload]'),
       overflow:[...s.querySelectorAll('code')].filter(e=>e.scrollWidth>e.clientWidth+2).map(e=>e.textContent)};
     })()`);
-    if(config.step!==clicks||JSON.stringify(config.keys)!==JSON.stringify(expected)||config.startup!==(clicks===4)||config.payload!==(clicks>=1)||config.overflow.length||/\bRIO\b|\binjector\b/i.test(config.text))errors.push({slide:n,clicks,issue:'Upstream Operator walkthrough lost its configuration, scope or startup example',config});
+    if(config.step!==actualStep||JSON.stringify(config.keys)!==JSON.stringify(expected)||config.startup!==false||config.payload!==true||config.overflow.length||/\bRIO\b|\binjector\b/i.test(config.text))errors.push({slide:n,clicks,issue:'Upstream Operator walkthrough lost its configuration, scope or startup example',config});
    }
-   if(n===23){
-    const chart=await evaluate(`document.querySelector('[data-slidev-no="23"] [data-rollout-chart="adoption"]')?.innerHTML`);
+   if(n===21){
+    const chart=await evaluate(`document.querySelector('[data-slidev-no="21"] [data-rollout-chart="adoption"]')?.innerHTML`);
     if(!chart?.includes('data-adoption-series="centralized"')||!chart?.includes('data-adoption-series="distributed"'))errors.push({slide:n,issue:'Adoption comparison missing'});
    }
-   if(n===24){
-    const text=await evaluate(`document.querySelector('[data-slidev-no="24"] .slidev-layout').textContent`);
+   if(n===22){
+    const text=await evaluate(`document.querySelector('[data-slidev-no="22"] .slidev-layout').textContent`);
     if(!text.includes('247 hours')||!text.includes('$24,700')||!text.includes('Months'))errors.push({slide:n,issue:'Cumulative cost comparison or hours callout missing'});
    }
    if(n===12){
@@ -167,7 +170,7 @@ try{
    }
    if(n===scriptMap.length){
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
-    if(!text?.includes((resolution.before.requestMedianMs/1000).toFixed(2))||!text?.includes(String(Math.round(resolution.after.requestMedianMs)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
+    if(!text?.includes(metricEvidence.before.meanSeconds.toFixed(2))||!text?.includes(String(Math.round(metricEvidence.after.meanSeconds*1000)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
    const png=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
    await writeFile(path.join(work,'renders',`${String(n).padStart(2,'0')}-${clicks}.png`),Buffer.from(png.data,'base64'));slides.push(result);
@@ -175,6 +178,14 @@ try{
   }
  }
  await writeFile(path.join(work,'render-report.json'),JSON.stringify({errors,slides},null,2)+'\n');
+ const fallbackPlayback=[];
+ for(const [slide,clicks] of [[4,1],[7,0],[10,0],[11,0],[16,0],[18,0],[19,1]]) {
+  await navigate(slide,clicks);
+  const played=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="${slide}"] video');let error=null;try{await v.play();await new Promise(r=>setTimeout(r,650))}catch(e){error=e.message}const result={slide:${slide},src:v.currentSrc,time:v.currentTime,muted:v.muted,rate:v.playbackRate,error:v.error?.message||error};v.pause();return result})()`);
+  fallbackPlayback.push(played);
+  if(played.time<.3||played.error||!played.muted||played.rate!==1)errors.push({issue:'Fallback did not play at native speed',played});
+ }
+ await writeFile(path.join(work,'fallback-playback.json'),JSON.stringify(fallbackPlayback,null,2)+'\n');
  await navigate(18);
  const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="18"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
  console.log('Video check '+JSON.stringify(video));

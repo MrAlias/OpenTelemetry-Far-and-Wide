@@ -1,5 +1,5 @@
 {
-  "traceId": "510355971a511b41b4f69c35e2230f19",
+  "traceId": "566750bef0724ca483ad9258188b4112",
   "highlightedBranch": [
     "gateway",
     "checkout",
@@ -9,24 +9,24 @@
     "promotions"
   ],
   "serverDurationMs": {
-    "cart": 64.61117,
-    "promotions": 3.780576,
-    "customer-profile": 4.682218,
-    "recommendations": 8.954271,
-    "receipts": 17.034731,
-    "checkout": 2168.790273,
-    "catalog": 48.045209,
-    "currency": 0.257492,
-    "tax": 2.039093,
-    "shipping": 24.218595,
-    "gateway": 2169.686263,
-    "stock-planner": 21.64535,
-    "warehouse": 23.317351,
-    "notifications": 19.453017,
-    "loyalty": 2.162971,
-    "inventory": 2.81124,
-    "payments": 15.32598,
-    "fraud": 10.244893
+    "gateway": 2129.024152,
+    "checkout": 2128.16575,
+    "inventory": 0.566682,
+    "cart": 52.623983,
+    "catalog": 40.565303,
+    "recommendations": 17.544133,
+    "promotions": 10.009161,
+    "tax": 1.632223,
+    "currency": 0.19521,
+    "shipping": 22.048393,
+    "warehouse": 21.318153,
+    "stock-planner": 19.770027,
+    "payments": 13.252779,
+    "fraud": 9.264362,
+    "customer-profile": 5.8762,
+    "loyalty": 4.480183,
+    "notifications": 25.405025,
+    "receipts": 22.654286
   },
-  "failedConnectionMs": 2001.549574
+  "failedConnectionMs": 2002.011111
 }

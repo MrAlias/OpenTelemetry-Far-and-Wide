@@ -108,11 +108,19 @@ Each monthly release steps up by $975 versus $75; costs hold flat between
 releases. No adoption-delay saving is priced. The same renderer drives both
 slides and animation: presentation/rollout-charts.js.
 
-November 2 revision: optional LEGACY_PRICING_URL, explicitly captured as a
-process.environment_variable resource attribute. Remove the setting and roll
-the same image; show the actual new waterfall before the repeated-request
-summary. Public snapshots omit unneeded host/process metadata and stack traces.
-The 27-slide deck now includes the full fleet waterfall before Catalog detail.
-Full dialogue is mapped once across slide notes from the same script.
+November 4 rehearsal revision:
+The 23-slide deck and 19-scene review share the shortened dialogue. Actual
+OBI v1.0.0, direct Java, same-image configuration fix, controller installation
+and namespace rollout were recorded in the dedicated kind demo. The fleet
+result opens Cart’s Ruby instrumentation and Currency’s Go/OBI attributes.
+One namespace rule enrolls thirteen additional services; Checkout retains its
+direct agent and four Go services retain OBI. Datastore-server observations
+are excluded, with application-side database observations retained.
+The closing repeats the captured Grafana means, 2.21 s and 165 ms; the separate
+matched-request medians retain their historical measurement provenance.
+Live content budget: 20:45, with 1:15 flex and 3:00 recovery/questions.
+Native speech pace is preserved; the recorded read can be shorter.
+The bundled RIO workflow is a talk-specific prototype, not the upstream
+Operator or an official released RIO installation manifest.
 Previous talk: https://www.youtube.com/watch?v=Jy0d9QXZXrQ
 Process attribute: https://opentelemetry.io/docs/specs/semconv/registry/attributes/process/

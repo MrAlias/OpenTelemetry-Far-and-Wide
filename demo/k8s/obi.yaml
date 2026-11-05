@@ -43,10 +43,17 @@ metadata:
   namespace: obi-system
 data:
   obi.yaml: |
-    # Config v1, supported by the pinned OBI release below.
+    # Config v1, supported by the pinned OBI v1.0.0 release below.
     discovery:
       instrument:
         - k8s_namespace: demo-apps
+      # Keep application-side DB client spans; omit separate datastore-server
+      # observations that cannot join every language SDK request context.
+      exclude_instrument:
+        - k8s_pod_labels:
+            app: postgres
+        - k8s_pod_labels:
+            app: redis
     ebpf:
       context_propagation: headers
     metrics:
@@ -82,7 +89,7 @@ spec:
         - operator: Exists
       containers:
         - name: obi
-          image: otel/ebpf-instrument:v0.15.2
+          image: otel/ebpf-instrument:v1.0.0
           args: [--config=/config/obi.yaml]
           securityContext:
             privileged: true

@@ -5,7 +5,7 @@ const asset = (image: string) => `${import.meta.env.BASE_URL}presentation/images
 </script>
 <template>
   <figure class="trace-evidence" :aria-label="label">
-    <svg viewBox="0 230 1280 470" role="img" :aria-label="label">
+    <svg viewBox="0 280 1280 440" role="img" :aria-label="label">
       <image :href="asset(image)" width="1280" height="720" />
       <g v-if="highlight" class="trace-highlight">
         <rect x="510" :y="capture.baseline.failedConnectionRowY" :width="750 * capture.baseline.failedConnectionMs / capture.baseline.rootDurationMs" height="30" fill="#ffbf71" opacity="0.35" />

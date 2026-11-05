@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise real HTTP/SQL/Redis work and validate every edge in the demo flow."""
 import json
+import os
 import sys
 import urllib.request
 
@@ -58,7 +59,7 @@ def check_flow(result):
 
 
 if __name__ == "__main__":
-    endpoint = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8080/checkout"
+    endpoint = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("DEMO_GATEWAY", "http://localhost:8080").rstrip("/") + "/checkout"
     results = []
     for _ in range(2):
         with urllib.request.urlopen(endpoint, timeout=15) as response:

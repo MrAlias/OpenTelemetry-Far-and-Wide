@@ -1,5 +1,5 @@
 ---
-kicker: Add useful detail
+kicker: One service, directly
 ---
 
 # Add Java detail to Checkout
@@ -19,34 +19,34 @@ OTEL_EXPORTER_OTLP_ENDPOINT: >-
 <!--
 **Tyler:**
 
-To do that, we'll first show how this looks using the traditional OpenTelemetry's Java agent to get HTTP and database spans from inside the service. Here we can see the update needed for Checkout's Deployment configuration. The agent loads when Java starts, so this is a deployment change and a restart.
+Here's the direct setup. Supply the Java agent, tell Java to load it, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method.
 
 **Nikola:**
 
-We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
+We know this service and have access to its deployment. Even then, somebody has to arrange the agent and startup settings. Java loads the agent when it starts, so this requires a rollout.
 -->
 
 ---
-kicker: Live demo · Java agent
+kicker: Add language detail
 evidence: true
 ---
 
 # Roll Checkout with the Java agent
 
-<DemoClip src="install-java-agent-edited.mp4" poster="install-java-agent-edited-poster.png" label="Actual Java agent deployment patch, rollout and startup log" />
+<DemoClip src="install-java-agent-edited.mp4" poster="install-java-agent-edited-poster.png" label="Actual direct Java agent patch and Checkout rollout; application image retained" />
 
 <!--
 **Tyler:**
 
-Let's roll out the patch. The patch supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Checkout is restarted with the same application image. Now let's see what that failed connection was doing.
+Let's apply the prepared patch. The payload image is already available; this step changes the Deployment, not the application image.
 
 **Nikola:**
 
-Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
+Now we send fresh traffic. Adding instrumentation hasn't fixed the delay. It should explain it.
 -->
 
 ---
-kicker: The useful result
+kicker: Explain the wait
 ---
 
 # The failed call timed out
@@ -56,15 +56,15 @@ kicker: The useful result
 <!--
 **Tyler:**
 
-Back in Grafana, we can look at the details of a problematic Checkout span for PricingEngine.calculate. It contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
+The new trace has PricingEngine.calculate, the method we configured. Inside it: the failed HTTP call, then the successful product-price query. We can now name the operation and see its fallback.
 
 **Nikola:**
 
-And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, "Connect timed out". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
+The span says SocketTimeoutException. Its exception event says Connect timed out. Two seconds trying the wrong address, then the fallback gets the price.
 
 **Tyler:**
 
-Perfect, our telemetry is already providing value. Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
+So the order works. We just make the customer wait for a backend that isn't answering. Let's look at the setting behind that address.
 -->
 
 ---
@@ -78,53 +78,52 @@ kicker: The cause
 <!--
 **Tyler:**
 
-There it is: LEGACY_PRICING_URL, in Checkout's resource attributes. Its value matches the failing call. This instance is still configured to try a retired backend before it uses the working product store. An old setting is adding a wait to every order.
+We expose this deployment setting as a resource attribute: LEGACY_PRICING_URL. Its value matches the failed call. We know this backend was retired; this instance still tries it before the working product store.
 
 **Nikola:**
 
-Think about the conversation we can have with the owning team now. Customers are losing two seconds here. This connection times out. Here's a configuration PR that removes the unused endpoint. The instrumentation gave us enough context to help with a fix, instead of just sending another team a slow-service alert.
+Now we can help the owning team with more than a slow-service alert. Customers are losing two seconds here; here's the trace and a configuration PR that removes the old setting. We can bring them a fix based on what the application is actually doing.
 -->
 
 ---
-kicker: Live demo · application fix
+kicker: Resolve the customer problem
 evidence: true
 ---
 
 # Remove the setting. Roll the same image.
 
-<DemoClip src="fix-pricing-edited.mp4" poster="fix-pricing-edited-poster.png" label="Actual removal of LEGACY_PRICING_URL, followed by Checkout rollout with the same image and instrumentation" />
+<DemoClip src="fix-pricing-edited.mp4" poster="fix-pricing-edited-poster.png" label="Actual removal of LEGACY_PRICING_URL and rollout of the same image" />
 
 <!--
 **Tyler:**
 
-Let's make that change. Remove LEGACY_PRICING_URL from the Deployment and roll Checkout. Same application image, same Java agent, same exporter. We don't need an application rebuild to stop calling the retired backend.
+Let's remove the setting and roll Checkout. Same application image, same Java agent, same exporter. No rebuild.
 
 **Nikola:**
 
-The rollout is ready. Let's go back to the customer. What does the next order look like?
+The rollout is ready. Back to the customer: let's send a new order and open its trace.
 -->
 
 ---
 kicker: Back to the customer
-evidence: true
 ---
 
 # The next checkout skips the failed call
 
-<DemoClip src="fixed-request-detail.mp4" poster="fixed-request-trace.png" label="Actual post-fix Grafana waterfall: failed legacy call gone, product lookup and complete checkout path retained" />
+<DemoClip class="trace-clip" src="fixed-request-detail.mp4" poster="fixed-request-trace.png" label="Actual new post-fix request waterfall: failed attempt absent, successful price lookup and order path retained" />
 
 <!--
 **Tyler:**
 
-Here's the new trace. The product-price query is still there. The failed legacy call is gone. Pricing can get on with finding the price, without waiting for that old connection to time out first.
+Here's the new waterfall. The failed legacy call is gone. The product-price query is still there, and the order continues through the application.
 
 **Nikola:**
 
-If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there. Nothing else changed.
+That's better. The customer gets their order without waiting for a backend we've already turned off.
 
 **Tyler:**
 
-That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
+We didn't make the timeout less visible. We removed the unnecessary call. Let's compare the request-duration metrics too.
 -->
 
 ---
@@ -138,9 +137,9 @@ kicker: The repeated-request result
 <!--
 **Tyler:**
 
-OBI's request-duration metrics show the average checkout falling from about two-point-two seconds to a hundred and sixty-five milliseconds. This validates the fix. The customer is no longer waiting for a retired backend to time out. The instrumentation gave us enough context to find the problem, and to validate the fix.
+These captured Grafana windows show the average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds. They're a repeated-request comparison, alongside the fresh trace we just opened.
 
 **Nikola:**
 
-That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?
+A customer gets their two seconds back. Good. Now what about the other teams?
 -->

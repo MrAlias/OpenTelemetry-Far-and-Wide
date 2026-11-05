@@ -18,6 +18,13 @@ RAW.mkdir(parents=True, exist_ok=True)
 OUT.mkdir(parents=True, exist_ok=True)
 talk = json.loads((ROOT / 'scripts/animation/talk.json').read_text())
 assert talk['timing'] == 'natural'
+assert sum(c['plannedDuration'] for c in talk['chapters']) == talk['plannedDuration']
+# Validate authored timing before loading either large voice model.
+for chapter in talk['chapters']:
+    for turn, visual_index in chapter.get('alignTurnAfterVisual', {}).items():
+        visual = chapter['visuals'][visual_index]
+        assert visual['type'] == 'video', (chapter['id'], 'Result alignment must name a video')
+        assert visual.get('atCue', 0) < int(turn) < len(chapter['turns'])
 voice_provenance = {}
 skill_casts = {}
 skill_paths = {}
@@ -127,7 +134,7 @@ for chapter in talk['chapters']:
     raw_paths = []
     native = []
     turns = chapter['turns']
-    assert {turn['speaker'] for turn in turns} == set(talk['speakers']), chapter['id']
+    assert {turn['speaker'] for turn in turns} <= set(talk['speakers']), chapter['id']
     for i, turn in enumerate(turns):
         speaker, text = turn['speaker'], turn['text']
         path = skill_paths[(speaker,chapter['id'],i)]

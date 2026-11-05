@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import previous from '../../presentation/data/previous-talk.json'
+const qr = `${import.meta.env.BASE_URL}presentation/${previous.qr}`
+</script>
 <template>
   <section class="obi-intro" aria-label="OpenTelemetry eBPF Instrumentation observes supported running Linux applications without application edits or restarts">
     <div class="obi-overview">
@@ -17,10 +21,10 @@
       <div class="obi-zero"><span><strong>0</strong> code edits</span><span><strong>0</strong> restarts</span></div>
     </div>
     <aside class="obi-previous-talk">
-      <a href="https://www.youtube.com/watch?v=Jy0d9QXZXrQ" target="_blank" rel="noopener noreferrer" aria-label="Watch our previous CNCF talk: Debugging Your Cluster When It’s on Fire">
-        <span class="obi-recording-label">Atlanta · 2025</span>
-        <img src="/presentation/qr-previous-talk.svg" width="256" height="256" alt="QR code for our previous CNCF talk">
-        <strong>Debugging Your Cluster<br>When It’s on Fire</strong>
+      <a :href="previous.url" target="_blank" rel="noopener noreferrer" aria-label="Watch our previous CNCF talk: Debugging Your Cluster When It’s on Fire">
+        <span class="obi-recording-label">{{ previous.location }} · {{ previous.year }}</span>
+        <img :src="qr" width="256" height="256" alt="QR code for our previous CNCF talk">
+        <strong>{{ previous.lines[0] }}<br>{{ previous.lines[1] }}</strong>
       </a>
     </aside>
   </section>

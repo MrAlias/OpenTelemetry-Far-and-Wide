@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import evidence from '../../presentation/data/resolution.json'
 import metrics from '../../presentation/data/metric-comparison.json'
 defineProps<{ compact?: boolean }>()
-const before = evidence.before.requestMedianMs
-const after = evidence.after.requestMedianMs
+const before = metrics.before.meanSeconds * 1000
+const after = metrics.after.meanSeconds * 1000
 const panels = [
   { label: 'Before fix', phase: 'before', ...metrics.before },
   { label: 'After fix', phase: 'after', ...metrics.after },
@@ -14,7 +13,7 @@ const label = (ms: number) => `${duration(ms).number} ${duration(ms).unit}`
 </script>
 <template>
   <div v-if="compact" class="customer-callback" data-customer-result="closing">
-    <strong class="closing-latency">{{ label(before) }} <span>→</span> {{ label(after) }}</strong>
+    <strong class="closing-latency" aria-label="Mean checkout duration before and after the fix">{{ label(before) }} <span>→</span> {{ label(after) }}</strong>
     <div class="closing-scope"><strong>1 namespace</strong><span>14 agents + 4 with OBI</span></div>
   </div>
   <div v-else class="customer-result" data-customer-result="metric-captures">

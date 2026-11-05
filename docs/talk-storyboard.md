@@ -1,8 +1,10 @@
 # Presentation scene plan
 
 The editable visual review is [storyboard.html](../public/storyboard.html).
-Live content is 21 minutes 35 seconds, plus two minutes Q&A.
-The narrated review uses natural speech pace and can run shorter.
+Live content is 20 minutes 45 seconds, with 75 seconds of live flexibility
+and three minutes for recovery/questions.
+The script uses natural speech. Silent fallback recordings support the live
+sequence. The local narrated review is regenerated from this same script.
 Say **RIO** “rhee-o,” as in Spanish río, and **OTelX** “oh-tell-X.”
 
 Begin with a customer waiting. OBI reveals a failed connection; Java detail
@@ -22,93 +24,93 @@ result and hypothetical labor-capacity scenarios are separate evidence.
 
 Open a customer problem and promise a measured resolution, then make that investigation capability repeatable across the namespace.
 
-Live budget: 60 seconds.
+Live budget: 45 seconds.
 
 **Tyler:** Welcome everyone. I'm Tyler Yahn.
 
 **Nikola:** And I'm Nikola Grcevski.
 
-**Tyler:** Imagine, you've clicked "Place Order". Now you're waiting. Did it work? Should you click again? Our checkout completes the order, but it makes the customer wait more than two seconds. In this presentation, we'll first show you how install OpenTelemetry eBPF Instrumentation to identify the issue source.
+**Tyler:** Imagine you've clicked Place Order. Now you're waiting. Did it work? Should you click again? Our checkout succeeds, but the customer waits more than two seconds. We're going to find that wait and remove it.
 
-**Nikola:** Then we'll tackle the other problem: getting eighteen services ready for that investigation. We'll use the OpenTelemetry Injector and our demo Kubernetes operator so every team doesn't have to repeat the setup. First, let's follow that order.
+**Nikola:** Then we'll make the same diagnostic detail available to the other teams, without repeating the agent setup for every service. First, let's follow the order.
 
-## 02 · One application, many places to look
+## 02 · 18 services. One customer request.
 
 Orient in the actual application without selecting a culprit.
 
-Live budget: 40 seconds.
+Live budget: 30 seconds.
 
-**Tyler:** Here's an overview of where the order goes. Our application starts at Gateway, and continues to Checkout, Inventory, and then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Our customer's frustration is being caused by something in this chaos.
+**Tyler:** The request enters through Gateway, reaches Checkout and Inventory, then fans out through the commerce services. Eighteen applications, plus PostgreSQL and Redis. We know the route; we don't yet know which part is making the customer wait.
 
-**Nikola:** The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
+**Nikola:** And the customer shouldn't need to know. Let's see the request before we choose a service to investigate.
 
-## 03 · Meet OBI
+## 03 · OBI
 
 Introduce OBI before its acronym is used: eBPF observations of running Linux applications, zero app changes/restarts, traces and metrics. Show deployment only after explaining its value.
 
-Live budget: 70 seconds.
+Live budget: 85 seconds.
 
-**Tyler:** To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts are required.
+**Tyler:** We'll start with OpenTelemetry eBPF Instrumentation, or OBI. Deploy it on the Linux nodes and it generates OpenTelemetry traces and metrics for supported applications. No application code changes and no application restarts. That's a pretty good way to meet eighteen services you haven't instrumented yet.
 
-**Nikola:** That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now v1.0.0 and generally available.
+**Nikola:** If you joined us in Atlanta last year, you'll recognize the idea. OBI is now version one and generally available. The previous talk is linked here. Today, we're using that broad view as the starting point for an investigation.
 
-**Tyler:** Let's deploy it to the nodes. Once running, OBI discovers the services running on the node, and starts generating telemetry about the services operation and the calls between them. For the customer order request, that includes HTTP calls and the PostgreSQL and Redis traffic.
+**Tyler:** Let's deploy OBI and send an order. The application keeps running while we add visibility.
 
-**Nikola:** Just a single deployment. Now let's see how much of the customer's wait we can explain.
+**Nikola:** One deployment on the nodes. Let's open the request we just sent.
 
 ## 04 · Find the two-second wait
 
-In live Grafana, find the failed two-second Checkout connection and ask why it precedes a successful price lookup. Keep one actual waterfall as the slide fallback; skip trace anatomy and the topology detour.
+In live Grafana, find the failed two-second Checkout connection and ask why a successful order makes that attempt. Keep one actual waterfall as fallback; skip trace anatomy and the topology detour.
 
-Live budget: 85 seconds.
+Live budget: 50 seconds.
 
-**Nikola:** Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
+**Nikola:** Here's that order in Grafana. We can follow the service calls and database work without changing those applications.
 
-**Tyler:** Look how the question we are investigating changed now that we have data. We are no longer asking "Why is our application slow?". Now we can focus specifically where this particular request was slow and ask "Why is this one service slow?" Let's find out.
+**Tyler:** Now look inside Checkout. Where does most of the customer's wait go?
 
-**Nikola:** Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
+**Nikola:** This failed connection takes about two seconds. The order still completes, but the customer waits for a failed attempt first.
 
-**Tyler:** Our investigation question can now be even more specific. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing.
+**Tyler:** Why is Checkout making that call? OBI has shown us where to look. Let's add the Java agent to connect the failed call to the work inside the service.
 
-## 05 · Add Java zero-code instrumentation
+## 05 · Add Java detail to Checkout
 
 Inspect deployment configuration, attach the Java agent and restart the same application image. The named pricing method comes from the prepared demo configuration, not from OBI or a source-code inspection.
 
 Live budget: 120 seconds.
 
-**Tyler:** To do that, we'll first show how this looks using the traditional OpenTelemetry's Java agent to get HTTP and database spans from inside the service. Here we can see the update needed for Checkout's Deployment configuration. The agent loads when Java starts, so this is a deployment change and a restart.
+**Tyler:** Here's the direct setup. Supply the Java agent, tell Java to load it, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method.
 
-**Nikola:** We do still have to get the agent into the workload, tell Java to load it, and set up where the data goes. Those are the steps required, I need to understand this service, and actually having enough information to do it.
+**Nikola:** We know this service and have access to its deployment. Even then, somebody has to arrange the agent and startup settings. Java loads the agent when it starts, so this requires a rollout.
 
-**Tyler:** Let's roll out the patch. The patch supplies the agent, sets the service name and exporter, and adds a span around the pricing method named in our demo configuration. Checkout is restarted with the same application image. Now let's see what that failed connection was doing.
+**Tyler:** Let's apply the prepared patch. The payload image is already available; this step changes the Deployment, not the application image.
 
-**Nikola:** Keep those steps in mind. We made this happen for one service we know. We'll come back to what happens when the other teams need the same thing.
+**Nikola:** Now we send fresh traffic. Adding instrumentation hasn't fixed the delay. It should explain it.
 
-## 06 · A failed attempt before a working fallback
+## 06 · The failed call timed out
 
 Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.
 
-Live budget: 60 seconds.
+Live budget: 65 seconds.
 
-**Tyler:** Back in Grafana, we can look at the details of a problematic Checkout span for PricingEngine.calculate. It contains the failed HTTP call, followed by the successful product-price lookup. Now we can see which operation is making the call, and the fallback that lets the order finish.
+**Tyler:** The new trace has PricingEngine.calculate, the method we configured. Inside it: the failed HTTP call, then the successful product-price query. We can now name the operation and see its fallback.
 
-**Nikola:** And here's why we can call it a timeout. The error type is SocketTimeoutException. The exception event says, "Connect timed out". Checkout spends two seconds trying to connect, then finds the price another way. The customer gets an order, with two seconds of unnecessary waiting attached.
+**Nikola:** The span says SocketTimeoutException. Its exception event says Connect timed out. Two seconds trying the wrong address, then the fallback gets the price.
 
-**Tyler:** Perfect, our telemetry is already providing value. Now we have something better than, Checkout is slow. We have the call, the reason it failed, and the path that worked. Let's find out why this instance is still trying that old address.
+**Tyler:** So the order works. We just make the customer wait for a backend that isn't answering. Let's look at the setting behind that address.
 
 ## 07 · Remove the stale endpoint setting
 
 Show the real Checkout resource attribute identifying the stale endpoint. Remove that environment variable and roll the same image; bring the owning team a configuration PR backed by the customer trace.
 
-Live budget: 90 seconds.
+Live budget: 110 seconds.
 
-**Tyler:** There it is: LEGACY_PRICING_URL, in Checkout's resource attributes. Its value matches the failing call. This instance is still configured to try a retired backend before it uses the working product store. An old setting is adding a wait to every order.
+**Tyler:** We expose this deployment setting as a resource attribute: LEGACY_PRICING_URL. Its value matches the failed call. We know this backend was retired; this instance still tries it before the working product store.
 
-**Nikola:** Think about the conversation we can have with the owning team now. Customers are losing two seconds here. This connection times out. Here's a configuration PR that removes the unused endpoint. The instrumentation gave us enough context to help with a fix, instead of just sending another team a slow-service alert.
+**Nikola:** Now we can help the owning team with more than a slow-service alert. Customers are losing two seconds here; here's the trace and a configuration PR that removes the old setting. We can bring them a fix based on what the application is actually doing.
 
-**Tyler:** Let's make that change. Remove LEGACY_PRICING_URL from the Deployment and roll Checkout. Same application image, same Java agent, same exporter. We don't need an application rebuild to stop calling the retired backend.
+**Tyler:** Let's remove the setting and roll Checkout. Same application image, same Java agent, same exporter. No rebuild.
 
-**Nikola:** The rollout is ready. Let's go back to the customer. What does the next order look like?
+**Nikola:** The rollout is ready. Back to the customer: let's send a new order and open its trace.
 
 ## 08 · The next checkout skips the failed call
 
@@ -116,73 +118,55 @@ Return directly to a real Grafana waterfall after deployment; show the missing f
 
 Live budget: 50 seconds.
 
-**Tyler:** Here's the new trace. The product-price query is still there. The failed legacy call is gone. Pricing can get on with finding the price, without waiting for that old connection to time out first.
+**Tyler:** Here's the new waterfall. The failed legacy call is gone. The product-price query is still there, and the order continues through the application.
 
-**Nikola:** If we follow the request through Inventory, the commerce branches, and the order write. We can see that the customer gets a faster checkout because we're no longer waiting for a backend that isn't there. Nothing else changed.
+**Nikola:** That's better. The customer gets their order without waiting for a backend we've already turned off.
 
-**Tyler:** That's the moment we wanted. The same checkout has a shorter path through it, and we can show exactly why. Let's see whether that improvement holds across more requests.
+**Tyler:** We didn't make the timeout less visible. We removed the unnecessary call. Let's compare the request-duration metrics too.
 
 ## 09 · The wait is gone
 
-Show actual Grafana screenshots of OBI mean Gateway GET /checkout duration before and after the fix, using equal 120-second windows. These metric means are distinct from the matched-request trace medians retained for the closing callback.
+Show actual Grafana screenshots of mean Gateway GET /checkout duration over equal 120-second windows. Repeat these means in the closing; retain the separate matched-request medians as measurement evidence.
 
-Live budget: 35 seconds.
+Live budget: 30 seconds.
 
-**Tyler:** OBI's request-duration metrics show the average checkout falling from about two-point-two seconds to a hundred and sixty-five milliseconds. This validates the fix. The customer is no longer waiting for a retired backend to time out. The instrumentation gave us enough context to find the problem, and to validate the fix.
+**Tyler:** These captured Grafana windows show the average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds. They're a repeated-request comparison, alongside the fresh trace we just opened.
 
-**Nikola:** That summary supports the trace we just saw, this was quite useful. Now, how do we make the same diagnostic detail available to the other teams?
+**Nikola:** A customer gets their two seconds back. Good. Now what about the other teams?
 
-## 10 · One fixed. Thirteen to equip.
+## 10 · What about the other 13?
 
 Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.
 
-Live budget: 40 seconds.
+Live budget: 30 seconds.
 
-**Nikola:** We have our fix, but we had to arrange the Java agent setup before we could get those details. Could you do the same for the thirteen other supported services?
+**Nikola:** We arranged the Java setup for Checkout because we knew the service and had access. Thirteen other services can use language agents. Who's arranging those?
 
-**Tyler:** I was hoping you would ask. We know how to do this one service at a time. Now we need a way to make that useful across the application, without thirteen separate instrumentation projects.
+**Tyler:** I'd rather not schedule thirteen versions of that meeting. We'll use the OpenTelemetry Injector. First, let's look at what the established Kubernetes Operator workflow still needs from the platform and application teams.
 
-## 11 · OpenTelemetry Injector
-
-Preview the Injector as the shared runtime-loading mechanism, then explicitly introduce the upstream Operator as the established Kubernetes approach to compare before the RIO demo.
-
-Live budget: 45 seconds.
-
-**Tyler:** To help scale this work, we'll use the OpenTelemetry Injector. It's a shared library that runs when a compatible process starts, detects the runtime, and loads the matching language agent. We prepare the library and agents together so teams can use a shared setup.
-
-That's the mechanism for the thirteen supported services; the four Go services keep OBI.
-
-But the Injector isn't a Kubernetes rollout controller. Before we show how we're going to deploy it, let's look at the established approach with the upstream OpenTelemetry Operator. What would the platform still have to configure?
-
-## 12 · The annotation is the easy part
+## 11 · The annotation is the easy part
 
 Walk through the upstream Operator baseline, including existing namespace opt-in, to show the runtime decisions, application constraints and coordination work a shared setup must address.
 
-Live budget: 135 seconds.
+Live budget: 90 seconds.
 
-**Tyler:** The Operator can inject language agents, and it supports opting in a workload or an entire namespace. That's a useful starting point. Let's walk through a Python API owned by another team and see what the platform still needs to know.
+**Tyler:** The upstream OpenTelemetry Operator can inject agents, with opt-in on a workload or a namespace. But the platform still needs application facts. This Python image uses musl; its Python version and native packages must match the payload.
 
-**Nikola:** Which Python, which base image, and who has the Dockerfile? That's where I'd start.
+**Nikola:** Which image, which runtime, who has the Dockerfile? The application team usually knows. The annotation doesn't answer those questions.
 
-**Tyler:** This image uses musl, so we add the Python platform setting. Native wheels also depend on the Python version. Dot net has a runtime identifier; Ruby has separate support and enablement checks.
+**Tyler:** Add a dot net worker and we also need per-container language mappings and its runtime settings. If a container starts multiple languages, or an entrypoint ignores the injected environment, more YAML alone won't make that work.
 
-**Nikola:** So the value comes from the application's image. It isn't something the platform team can safely guess.
+**Nikola:** That's where a small deployment change can turn into hours of investigation and days waiting for an owner or release. The Operator helps with injection. We'd like to prepare more of the routine runtime setup once, and share it.
 
-**Tyler:** Now the pod also has a dot net worker. We name which container gets Python and which gets dot net, and choose the worker's runtime. Multi-instrumentation must be enabled in the Operator.
+## 12 · OpenTelemetry Injector
 
-**Nikola:** And those are container names. They tell us nothing about the processes running inside.
+After the upstream Operator comparison, explain the Injector shared library and prepared agents inside compatible application processes. Separate runtime startup from Kubernetes workload management.
 
-**Tyler:** Suppose api starts both Python and Node. The Operator's multi-instrumentation feature doesn't support two language instrumentations inside one container. We need the application team to inspect that startup or change the packaging.
+Live budget: 60 seconds.
 
-**Nikola:** Another annotation isn't going to answer that.
+**Tyler:** The Injector is the shared library in this diagram. It runs inside a compatible process at startup and loads the matching language agent. We prepare the library and supported agents together, instead of having every service team assemble a language-specific installation.
 
-**Tyler:** Or Python starts in isolated mode, with site initialization disabled. The Operator sets PYTHONPATH, but this process ignores that environment and skips the startup hook. The pod can be healthy without the agent loading.
-
-**Nikola:** Now we need the actual entrypoint. A namespace policy can't make the program honor that hook.
-
-**Tyler:** Then check payload compatibility, permissions, existing agents and Collector access. Restart the workload, respect its release constraints, and confirm the instrumentation actually loads and exports.
-
-**Nikola:** The typing takes minutes. Finding the owner, checking the image and arranging a release can mean hours of work and days of waiting. The Operator handles injection; we still have to supply and maintain the runtime choices. Can we prepare more of that once, instead of reopening it for every service?
+**Nikola:** It works at process startup; it doesn't manage Kubernetes workloads. We still need a controller to select the workloads and arrange the rollout.
 
 ## 13 · Install the namespace-driven controller
 
@@ -190,92 +174,78 @@ Explain why this demo chooses the Injector plus RIO after the Operator compariso
 
 Live budget: 90 seconds.
 
-**Tyler:** That's why this demo uses the Injector with RIO, rather than the upstream Operator. We package the supported agents together, let the Injector choose at process startup, and use RIO to select workloads and manage the rollout. RIO is the Runtime Instrumentation Operator in OTelX, purpose-built for this talk.
+**Tyler:** For this talk, that controller is RIO: the Runtime Instrumentation Operator in OTelX. This demo uses the bundled prototype of that workflow, building on Jack Berg's work. RIO selects Kubernetes workloads and handles rollout; the Injector loads agents inside the processes.
 
-**Nikola:** The upstream Operator already supports namespace selection. The difference we're exploring is how much runtime configuration can live in the shared setup. We'd like this workflow to find an upstream home, in the Operator or another form. RIO demonstrates that idea; its upstream path is still open.
+**Nikola:** The idea we'd like to bring upstream is less routine runtime configuration for each team. RIO demonstrates it; the eventual upstream home is still open. Compatibility and unusual startup behavior still need owners.
 
-**Tyler:** Let's install the controller. It builds on Jack Berg's prototype. The platform prepares the agent bundle, exporter and exclusions once; RIO handles selection and rollouts. The Injector loads the matching agent in each compatible process.
-
-**Nikola:** Compatibility tests, startup constraints and exceptions still need owners. The platform maintains that shared path. Once it's ready, an application team can ask for coverage without figuring out a separate language-agent installation for every service.
+**Tyler:** Let's install the controller. We've prepared the agent bundle, exporter and exclusions. No application namespace is enrolled yet.
 
 ## 14 · Instrument this namespace
 
 Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.
 
-Live budget: 105 seconds.
+Live budget: 90 seconds.
 
-**Nikola:** Instrument demo-apps. One namespace rule. We haven't listed the thirteen services or assigned an agent to each one. The Injector handles the runtime choice within the supported bundle, and RIO handles getting it into the selected workloads.
+**Nikola:** Instrument demo-apps. That's the selection: one namespace. We haven't listed thirteen services or assigned a language to each one. The prepared bundle supplies the supported runtime choices.
 
-**Tyler:** Apply it, and the controller rolls the selected workloads. The Injector supplies the agents for supported runtimes. If another compatible service is deployed here later, it inherits the policy. That team doesn't need to arrange its own instrumentation rollout first.
+**Tyler:** Apply it. RIO performs the rolling restarts for the selected workloads. Checkout keeps its existing direct agent, and the four Go services keep OBI. Compatible new workloads in this namespace inherit the policy.
 
-**Nikola:** There they are. Checkout keeps its direct agent. Thirteen more services gain language detail. And the four Go services keep OBI. We didn't have to visit each service to make that happen.
+## 15 · Language detail. OBI alongside it.
 
-**Tyler:** OBI is still running alongside them. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI service by service as those agents arrived.
+Keep one fleet result: fourteen language agents plus four Go/OBI services. Open actual Cart Ruby-agent detail and Currency OBI resource attributes in the same fresh request; skip replay after successful live proof.
 
-**Nikola:** So when the next team has a slow request, the details will already be there. The platform maintains the shared setup. The application team can start with its question.
+Live budget: 90 seconds.
 
-## 15 · Open language detail in more services
+**Tyler:** Fourteen services now have language agents. The four Go services retain OBI. Let's open the result in a fresh order.
 
-Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.
+**Nikola:** Open Cart in this fresh request. These are Ruby-agent observations; we didn't arrange a separate Ruby installation for its team. Now open Currency: that Go service still uses OBI. Fourteen language agents, including Checkout, and four services with OBI.
 
-Live budget: 60 seconds.
+**Tyler:** As the SDKs start exporting, OBI recognizes them and steps back from tracing those processes. We leave it running for the services that still need it.
 
-**Tyler:** Let's check a fresh order. We can still follow it across the application. Now more of those services have the detail we had to set up by hand for Checkout.
+**Nikola:** So the next team can start with its question. Useful detail is already there. That is the result of the namespace rollout.
 
-**Nikola:** Open Catalog. These are database spans from its Java agent. The same enrollment covers the Node, Python, Ruby, and dot net services. If a team needs to understand a database call, it can open that detail instead of first asking how to install an agent.
+## 16 · Maintain once. Roll out together.
 
-**Tyler:** We haven't fixed a problem in every service. We've given the other teams a way to start looking. Checkout keeps its fix, and the next investigation can begin closer to the answer.
+Explain shared onboarding and monthly update ownership, with compatibility, exceptions and recovery still maintained by people.
 
-## 16 · Reuse the workflow after day one
+Live budget: 45 seconds.
 
-Cover onboarding, updates, consistency, recovery, training and shared upkeep.
+**Tyler:** An agent update next month shouldn't mean another setup project for thirteen teams. The platform can update the shared bundle and use the same rollout path. Eligible new services inherit the namespace policy.
 
-Live budget: 50 seconds.
-
-**Tyler:** Now an agent release arrives next month. Do all thirteen service owners need another task and another rollout? And what happens when a new service appears?
-
-**Nikola:** The shared approach gives us a place to handle that work together. Compatible new services inherit the policy. Agent updates use the shared rollout path. Settings and recovery instructions have one place to improve.
-
-**Tyler:** A service can still change runtimes, or need an exception. OBI can keep the baseline for supported traffic, while the available language detail depends on the runtime. Someone still has to look after those cases.
-
-**Nikola:** Yes. The platform owns compatibility checks, updates, and recovery. We include that work in the cost. The saving comes from avoiding the same job being repeated across teams.
+**Nikola:** Compatibility tests, exceptions and recovery remain real work. We centralize ownership of that shared path. The saving is avoiding the routine setup and updates being arranged independently over and over.
 
 ## 17 · Make coverage the default
 
 Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.
 
-Live budget: 50 seconds.
+Live budget: 45 seconds.
 
-**Nikola:** This is a sketch of what that can mean for coverage. One team gets instrumentation done. Another has a release freeze. A third is busy with something else. Months can pass with the application only partly covered.
+**Nikola:** This is a sketch of language-agent adoption across eligible services. With team-by-team work, one team finishes; another has a release freeze. Add a service or rewrite one in another language, and the gap can open again.
 
-**Tyler:** And the application doesn't wait for the project to finish. Add a service, or rewrite one from Java to Python, and coverage can fall again. The finish line moves while the teams are still catching up.
+**Tyler:** The centralized path covers the eligible services in one rollout, before that first team-by-team increment. New compatible services inherit it. We still maintain the shared path, but routine enrollment doesn't wait for a separate project in every team.
 
-**Nikola:** With the namespace policy, one rollout covers the eligible services in scope, and compatible new workloads inherit it. We still test and maintain that shared path. But each team doesn't have to find room for another onboarding project before its service is covered.
-
-## 18 · The cost of team-by-team ownership
+## 18 · The cost of repeated setup and upkeep
 
 Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.
 
 Live budget: 60 seconds.
 
-**Tyler:** Here's what repeating the work can cost in our eighteen-service example. After Checkout, thirteen services still need language instrumentation. These steps cover their setup and two years of monthly agent updates. Every jump is another release to handle.
+**Tyler:** Here's an example for this same eighteen-service application: the thirteen remaining agent setups and two years of monthly updates. Each step is another release to handle. Distributed owners repeat that work; the centralized path shares the setup and update rollouts.
 
-**Nikola:** On the distributed path, the service owners arrange that work separately. On the centralized path, we set up the namespace once and share each update. That lower line still includes maintaining the shared approach.
+**Nikola:** The modeled difference is two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. Time for the next customer problem.
 
-**Tyler:** The difference is two hundred and forty-seven engineering hours over two years. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. That's time people could spend on the next customer problem, rather than repeating this setup and upkeep.
-
-**Nikola:** Those are assumed hours for this example, not measured cash savings. Put in your own setup and support costs. We haven't put a dollar value on the calendar time spent waiting for another team's release.
+**Tyler:** These are assumed setup and rollout hours, not measured cash savings or a complete platform budget. Put your own support and testing costs into the worksheet. We haven't priced the calendar time waiting for other teams.
 
 ## 19 · OpenTelemetry. Ready to install.
 
 Close with the measured customer improvement and namespace coverage: OpenTelemetry has grown beyond APIs and SDKs into instrumentation users can install for services and clusters. Leave the demo and RIO QR codes visible.
 
-Live budget: 50 seconds.
+Live budget: 60 seconds.
 
-**Tyler:** Remember the customer waiting at the start? OBI helped us find the failed connection. The Java agent showed the pricing call and its fallback. The resource attributes exposed the retired endpoint setting. Remove that setting, roll the same image, and the next trace shows the wait has gone.
+**Tyler:** We started with a customer waiting for an order. OBI showed the failed connection. Java detail named the pricing operation. We found the old endpoint setting, removed it, and opened a new trace to see the wait disappear.
 
-**Nikola:** Then one namespace choice made language detail available across the supported services. RIO demonstrates the shared workflow we'd like to bring upstream. The next team should be able to open a trace and start investigating, without repeating our setup first.
+**Nikola:** Then one namespace choice added language detail across the supported fleet. The next team shouldn't have to repeat our setup before investigating. RIO demonstrates the shared workflow we'd like to bring upstream.
 
-**Tyler:** OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service, or across a cluster, and use to find what's keeping a customer waiting. That's what makes all this setup worthwhile: we can get from their problem to something we can fix.
+**Tyler:** OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service or across a cluster, then use to find what's keeping a customer waiting—and do something about it.
 
-**Nikola:** Find the wait, fix the cause, and make the next investigation easier. Thank you. Let's take your questions.
+**Nikola:** Find the wait. Fix the cause. Make the next investigation easier. Thank you.

@@ -1,5 +1,5 @@
 window.DEMO_EVIDENCE = {
-  "traceId": "48ade2ae7239986f28f19e112ae411b4",
+  "traceId": "566750bef0724ca483ad9258188b4112",
   "highlightedBranch": [
     "gateway",
     "checkout",
@@ -9,28 +9,26 @@ window.DEMO_EVIDENCE = {
     "promotions"
   ],
   "serverDurationMs": {
-    "redis": 0.024036,
-    "cart": 143.627714,
-    "promotions": 5.715027,
-    "catalog": 105.842622,
-    "checkout": 2261.247951,
-    "postgres": 0.286873,
-    "notifications": 27.668925,
-    "customer-profile": 15.591653,
-    "receipts": 20.955458,
-    "recommendations": 15.806537,
-    "stock-planner": 16.37189,
-    "shipping": 18.538411,
-    "gateway": 2262.799707,
-    "currency": 0.211832,
-    "tax": 7.254165,
-    "warehouse": 17.823926,
-    "loyalty": 6.03754,
-    "inventory": 3.717846,
-    "fraud": 21.739899,
-    "payments": 26.347497
+    "gateway": 2129.024152,
+    "checkout": 2128.16575,
+    "inventory": 0.566682,
+    "cart": 52.623983,
+    "catalog": 40.565303,
+    "recommendations": 17.544133,
+    "promotions": 10.009161,
+    "tax": 1.632223,
+    "currency": 0.19521,
+    "shipping": 22.048393,
+    "warehouse": 21.318153,
+    "stock-planner": 19.770027,
+    "payments": 13.252779,
+    "fraud": 9.264362,
+    "customer-profile": 5.8762,
+    "loyalty": 4.480183,
+    "notifications": 25.405025,
+    "receipts": 22.654286
   },
-  "failedConnectionMs": 2001.840843,
+  "failedConnectionMs": 2002.011111,
   "source": "public/demo-capture/obi-trace-evidence.json",
-  "failedConnectionRowY": 500
+  "failedConnectionRowY": 567.4609375
 };

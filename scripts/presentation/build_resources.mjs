@@ -7,7 +7,9 @@ const resources = [
 ]
 const injector = JSON.parse(await readFile(new URL('../../presentation/data/injector-intro.json', import.meta.url)))
 const injectorResource = {label:'Project + docs', url:injector.url, file:injector.qr, runtimes:injector.runtimes}
-for (const resource of [...resources, injectorResource]) {
+const previous = JSON.parse(await readFile(new URL('../../presentation/data/previous-talk.json', import.meta.url)))
+const previousResource = {...previous, file:previous.qr}
+for (const resource of [...resources, injectorResource, previousResource]) {
   const svg = await readFile(new URL('../../public/presentation/' + resource.file, import.meta.url), 'utf8')
   resource.size = Number(svg.match(/viewBox="0 0 (\d+) /)[1])
   resource.markup = svg.slice(svg.indexOf('>', svg.indexOf('<svg')) + 1, svg.lastIndexOf('</svg>'))
@@ -17,5 +19,6 @@ const diagram = await readFile(new URL('../../presentation/injector-diagram.js',
 await writeFile(new URL('../../public/animation/resources.js', import.meta.url),
   '// Generated from the deck QR vectors; do not edit.\nwindow.CLOSING_RESOURCES = ' + JSON.stringify(resources) + ';\n'
   + 'window.INJECTOR_RESOURCE = ' + JSON.stringify(injectorResource) + ';\n'
+  + 'window.PREVIOUS_TALK_RESOURCE = ' + JSON.stringify(previousResource) + ';\n'
   + '(()=>{\n' + diagram.replace(/^export /gm, '') + '\nwindow.renderInjectorDiagram=renderInjectorDiagram;\n})();\n')
 console.log('Packaged the closing resource QR codes for the review player')

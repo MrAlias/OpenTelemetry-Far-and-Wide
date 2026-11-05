@@ -1,12 +1,15 @@
 # OpenTelemetry Far and Wide
 
+For the live session, use the [presentation run sheet](demo/README.md#live-run-sheet), including preparation, fresh trace selection and silent fallbacks.
+
+
 Tyler Yahn and Nikola Grcevski · Observability Day · KubeCon + CloudNativeCon
 North America 2026.
 
 A 25-minute talk: use OBI to find where a request spends time, add Java zero-code
-detail on one service, then select a namespace to carry instrumentation across
-supported services. A real pricing change resolves the obsolete backend attempt,
-and matched requests measure the customer result. The closing slides explain coordination and lifecycle savings
+detail on one service, and remove the stale endpoint setting behind the wait.
+Show the new waterfall and measured result, then select a namespace to share
+language-agent instrumentation across supported services. The closing slides explain coordination and lifecycle savings
 and how to measure them.
 
 ## Run the Slidev presentation
@@ -20,11 +23,11 @@ Open the URL printed by Slidev. Use `/presenter/` for the full slide-by-slide di
 `npm run present` opens the deck in a browser. `npm run build` creates the static
 site in `dist/`; `npm run export` creates a PDF in `.artifacts/slides/`.
 
-The **25-slide deck is editable Slidev source** in [slides.md](slides.md) and
+The **23-slide deck is editable Slidev source** in [slides.md](slides.md) and
 [slides/](slides/README.md), with reusable Vue components and custom layouts.
 Actual dashboard stills and short terminal recordings are checked in alongside
 the slides, so a fresh checkout can present without a demo cluster, synthetic
-voice model, or media rebuild. The live plan has 21 minutes 35 seconds of content and two minutes of questions.
+voice model, or media rebuild. The live plan has 20 minutes 45 seconds of content, 75 seconds of live flexibility and three minutes for recovery/questions.
 
 ## Project structure
 
@@ -57,16 +60,15 @@ media behavior, checks, exports and deployment under a URL prefix.
 **[RIO — Runtime Instrumentation Operator](https://github.com/otelx/rio)** is a demo operator purpose-built for this talk. It demonstrates centralized namespace selection and rollout with the OpenTelemetry Injector. We want this functionality to find an upstream home, possibly in the OpenTelemetry Operator or another form; that direction is not an agreed upstream roadmap. This repository retains the recorded demo implementation.
 
 The [demo walkthrough](demo/README.md) runs eighteen services, PostgreSQL and
-Redis. OBI supplies the baseline. The opening 2.17 s request contains a failed
+Redis. OBI supplies the baseline. The captured 2.13 s request contains a failed
 Checkout connection around two seconds. Java-agent detail ties the failed HTTP call
 to pricing and its successful PostgreSQL fallback. These are actual local
 exemplars, not performance benchmarks.
 
 The [customer resolution](docs/customer-resolution.md) removes the obsolete
 backend attempt while retaining the current product-price lookup. The actual
-post-fix waterfall comes first; an aggregate comparison follows. Matched warmed
-request medians are 2.21 s → 220 ms with identical instrumentation. Pricing
-medians are 2.01 s → 3.71 ms. The newly built default image retains the timeout
+post-fix waterfall comes first; an aggregate comparison follows. The captured OBI metric means are 2.21 s → 165 ms; slide 12 and the closing use
+that same statistic. Separate matched-request trace medians are 2.22 s → 185 ms. The newly built default image retains the timeout
 baseline for rehearsal; the historical proof keeps its older fixture.
 
 The custom controller and OpenTelemetry Injector then enroll thirteen additional
@@ -75,8 +77,8 @@ and four Go services with OBI appear in the fresh request. Upstream already
 supports language-specific workload or namespace opt-in; the custom integration
 combines central selection, runtime handling and managed rollout.
 
-Use the [live handoff](docs/fleet-demo-handoff.md) for the exact direct-agent and
-namespace sequence. The original [proof harness](demo/proof/README.md) is historical
+Use the [live run sheet](demo/README.md#live-run-sheet) for the exact direct-agent and
+namespace sequence; the [capture handoff](docs/fleet-demo-handoff.md) records its evidence and boundaries. The original [proof harness](demo/proof/README.md) is historical
 and separate. The closing dollar figures are hypothetical engineering-capacity
 values, not measured savings or a smaller telemetry bill. The
 [savings model and inventory](docs/instrumentation-savings.md) define the inputs
@@ -87,7 +89,7 @@ and comparison; open `/presentation/savings.html` for the editable calculator.
 The [visual storyboard](public/storyboard.html) retains the 19-scene customer-to-resolution arc.
 Run `npm run storyboard:serve` and open `/storyboard.html`; a reachable phone can
 use the serving computer's address. Its stills work offline; recorded video
-links use local generated capture files.
+links use the versioned silent deck clips.
 
 The optional [animated review](public/animation.html) uses Tyler's and Nikola's
 separate authorized synthetic voice profiles at native pace. Full generated
