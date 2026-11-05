@@ -6,7 +6,8 @@ WORK=ROOT/'.artifacts/demo-capture'
 
 def run_job(path):
     job=json.loads(path.read_text());work=path.parent
-    env={**os.environ,'KUBECONFIG':str(WORK/'kubeconfig'),'TMPDIR':str(WORK/'tmp'),'TERM':'xterm-256color'}
+    env={**os.environ,'KUBECONFIG':os.environ.get('KUBECONFIG',str(WORK/'kubeconfig')),'TMPDIR':str(WORK/'tmp'),'TERM':'xterm-256color'}
+    env.update({k:v for k,v in job.get('env',{}).items() if k in {'DEMO_CONTEXT','DEMO_GATEWAY','DEMO_TEMPO','DEMO_GRAFANA'}})
     print('\033[2J\033[H\033[1;36mOpenTelemetry Far and Wide\033[0m\n',flush=True)
     (work/'ready').touch()
     while not (work/'go').exists():time.sleep(.1)
@@ -44,7 +45,7 @@ def capture(path):
     for flag in ['ready','go','done']:(work/flag).unlink(missing_ok=True)
     target=work/'job.json';target.write_text(json.dumps(job,indent=2)+'\n')
     auth=WORK/'xauthority';env={**os.environ,'DISPLAY':'127.0.0.1:91.0','XAUTHORITY':str(auth),'TMPDIR':str(WORK/'tmp')}
-    video=ROOT/'public/demo-capture'/f'{name}.mp4';video.parent.mkdir(parents=True,exist_ok=True)
+    video=work/'take.mp4';video.parent.mkdir(parents=True,exist_ok=True)
     terminal=None;recorder=None
     with (work/'terminal.log').open('wb') as terminal_log,(work/'ffmpeg.log').open('wb') as capture_log:
         try:

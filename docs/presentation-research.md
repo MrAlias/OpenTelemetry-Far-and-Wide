@@ -1,18 +1,18 @@
-# Current use of this research · October 22, 2026
+# Current use of this research · November 4, 2026
 
-The [current scene plan](talk-storyboard.md) applies the sources below to a new
-fleet story: brief introduction; OBI discovers slow services across approximately
-15 services; direct agent setup proves detail on one; the custom operator handles
-the repeated setup for the remaining eligible fleet; slides make the savings
-inspectable. Earlier scene allocations and selective-depth/upgrade/removal
-examples below are retained research history, not the current running order.
+The [current scene plan](talk-storyboard.md) applies the sources below to the
+23-slide presentation: customer wait, OBI investigation, direct Java detail,
+configuration fix, fresh waterfall and captured metric comparison, then shared
+namespace rollout and useful fleet detail. The application has eighteen services,
+plus PostgreSQL and Redis. The [live run sheet](../demo/README.md#live-run-sheet)
+is the current command and timing guide: 20:45 content, 1:15 flexibility and
+3:00 recovery/questions inside the 25-minute slot.
 
-The audience should leave able to distinguish broad investigation, useful runtime
-detail, and the cost of arranging that detail repeatedly. The demonstration must
-earn each step with visible evidence. Use the [savings inventory](instrumentation-savings.md)
-for the broader coordination and lifecycle argument, not an assumed reduction in
-telemetry volume. The [visual storyboard](../public/storyboard.html) contains the
-current timing and purposeful reveals.
+The demonstration earns each step with visible evidence. Use the
+[savings inventory](instrumentation-savings.md) for coordination and lifecycle
+arguments, not an assumed reduction in telemetry volume. Earlier scene allocations
+and selective-depth/upgrade/removal examples below are retained research history.
+The [visual storyboard](../public/storyboard.html) contains the current dialogue.
 
 ---
 
@@ -20,8 +20,8 @@ current timing and purposeful reveals.
 
 Research checked on October 19, 2026. This guide applies presentation research
 and experienced speakers' advice to Tyler Yahn and Nikola Grcevski's
-25-minute Observability Day session. The current plan reserves **21 minutes of
-content, one minute of recovery time, and three minutes of Q&A**, as detailed in
+25-minute Observability Day session. The current plan reserves **20 minutes 45 seconds of
+content, 75 seconds of live flexibility, and three minutes for recovery/questions**, as detailed in
 the [storyboard](talk-storyboard.md). This allocation is our planning choice,
 not a confirmed organizer requirement.
 

@@ -1,7 +1,7 @@
 {
   "source": "Actual Prometheus OBI HTTP server request-duration histogram counters, rendered by Grafana",
   "statistic": "Arithmetic mean: increase(sum) / increase(count)",
-  "scope": "gateway, GET /checkout; equal 120-second windows from the previously recorded before/after runs. Histogram counters include the request traffic in each window, including warmups; these are not the 30-request trace medians used in the closing callback.",
+  "scope": "gateway, GET /checkout; equal 120-second windows from the previously recorded before/after runs. Histogram counters include the request traffic in each window, including warmups; the closing callback uses these same means. The separate 30-request trace medians remain reproduction evidence.",
   "before": {
     "fromUnixSeconds": 1793632555.496,
     "toUnixSeconds": 1793632675.496,

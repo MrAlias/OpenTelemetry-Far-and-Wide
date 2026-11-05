@@ -17,7 +17,7 @@ def assemble(name,takes):
   vf=f"drawtext=fontfile='{font}':textfile='{text}':fontcolor=white:fontsize=34:x=(w-tw)/2:y=(h-th)/2"
   run(['ffmpeg','-y','-f','lavfi','-i','color=c=0x081725:s=1280x720:r=25','-t','1.4','-vf',vf,'-an','-c:v','libx264','-preset','veryfast','-crf','18','-threads','2','-pix_fmt','yuv420p',str(target)]);segments.append(target);ledger.append({'transition':'After waiting for readiness','duration':1.4})
  for take,limit in takes:
-  raw=OUT/(take+'.mp4');meta=json.loads((WORK/'terminal'/take/'recording.json').read_text());job=json.loads((WORK/'terminal'/take/'job.json').read_text());length=duration(raw);base=meta.get('captureStartedAt',meta['capturedAt']-length)
+  meta=json.loads((WORK/'terminal'/take/'recording.json').read_text());raw=ROOT/meta['video'];job=json.loads((WORK/'terminal'/take/'job.json').read_text());length=duration(raw);base=meta.get('captureStartedAt',meta['capturedAt']-length)
   for i,event in enumerate(meta['commands'][:limit]):
    if event['exitCode']:raise RuntimeError('A failed command cannot be presented as a successful installation')
    before=job['commands'][i].get('readBeforeSeconds',2);after=job['commands'][i].get('holdAfterSeconds',3)
@@ -32,5 +32,5 @@ def assemble(name,takes):
  (work/'edit.json').write_text(json.dumps({'output':str(target.relative_to(ROOT)),'seconds':duration(target),'segments':ledger,'playbackRate':1.0},indent=2)+'\n');print(name,round(duration(target),2),'seconds',flush=True)
 if __name__=='__main__':
  import sys
- targets={'fix-pricing':[('fix-pricing',4)],'instrument-namespace':[('instrument-namespace',6)],'install-obi':[('install-obi',3)],'inspect-java-setup':[('inspect-java-setup',2)],'install-java-agent':[('install-java-agent',2)],'install-operator':[('install-operator',2)],'enroll-fleet':[('enroll-fleet',4)]}
+ targets={'fix-pricing':[('fix-pricing',1)],'instrument-namespace':[('instrument-namespace',1)],'install-obi':[('install-obi',1)],'inspect-java-setup':[('inspect-java-setup',2)],'install-java-agent':[('install-java-agent',1)],'install-operator':[('install-operator',2)],'enroll-fleet':[('enroll-fleet',4)]}
  for name in sys.argv[1:] or targets:assemble(name,targets[name])

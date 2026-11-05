@@ -1,13 +1,13 @@
 window.TALK = {
   "title": "OpenTelemetry Far and Wide",
   "voice": "Tyler Yahn's and Nikola Grcevski's authorized synthetic voices; not a recording of the presenters",
-  "status": "Draft narration in authorized synthetic voices; actual demo timeout/fallback and waterfall captures. Monthly centralized-ownership cost scenario uses explicit hypothetical labor inputs.",
+  "status": "Rehearsal-edited draft with actual silent demo captures. Narration uses the separate authorized synthetic voices of Tyler Yahn and Nikola Grcevski; speech remains at its native pace. Live action budget: 20 minutes 45 seconds.",
   "chapters": [
     {
       "id": "01-promise",
       "kind": "title",
       "title": "OpenTelemetry Far and Wide",
-      "plannedDuration": 60,
+      "plannedDuration": 45,
       "lead": "Tyler",
       "turns": [
         {
@@ -16,18 +16,17 @@ window.TALK = {
         },
         {
           "speaker": "Nikola",
-          "text": "And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix."
+          "text": "And I'm Nikola Grcevski."
         },
         {
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
+          "text": "Imagine you've clicked Place Order. Now you're waiting. Did it work? Should you click again? Our checkout succeeds, but the customer waits more than two seconds. We're going to find that wait and remove it."
         },
         {
           "speaker": "Nikola",
-          "text": "One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system."
+          "text": "Then we'll make the same diagnostic detail available to the other teams, without repeating the agent setup for every service. First, let's follow the order."
         }
       ],
-      "leadInSeconds": 0.6,
       "visuals": [
         {
           "at": 0,
@@ -35,11 +34,12 @@ window.TALK = {
         },
         {
           "type": "image",
-          "src": "demo-capture/request-latency.png",
+          "src": "presentation/images/request-latency.png",
           "atCue": 2
         }
       ],
       "purpose": "Open a customer problem and promise a measured resolution, then make that investigation capability repeatable across the namespace.",
+      "leadInSeconds": 0.6,
       "cues": [
         {
           "start": 0.6,
@@ -51,27 +51,27 @@ window.TALK = {
         },
         {
           "start": 3.32,
-          "end": 10.08,
+          "end": 5.72,
           "sampleStart": 79680,
-          "sampleEnd": 241920,
+          "sampleEnd": 137280,
           "speaker": "Nikola",
-          "text": "And I'm Nikola Grcevski. Today we're following a slow customer checkout, from the first symptom to a fix."
+          "text": "And I'm Nikola Grcevski."
         },
         {
-          "start": 10.4,
-          "end": 24.1,
-          "sampleStart": 249600,
-          "sampleEnd": 578400,
+          "start": 6.04,
+          "end": 16.48,
+          "sampleStart": 144960,
+          "sampleEnd": 395520,
           "speaker": "Tyler",
-          "text": "The application completes the request, but the customer is waiting. We'll follow that request across the system, add language detail, and remove the stale setting behind the delay. Then we'll use the OpenTelemetry Injector and a small demo operator to share that setup across the application."
+          "text": "Imagine you've clicked Place Order. Now you're waiting. Did it work? Should you click again? Our checkout succeeds, but the customer waits more than two seconds. We're going to find that wait and remove it."
         },
         {
-          "start": 24.42,
-          "end": 31.9,
-          "sampleStart": 586080,
-          "sampleEnd": 765600,
+          "start": 16.8,
+          "end": 25.72,
+          "sampleStart": 403200,
+          "sampleEnd": 617280,
           "speaker": "Nikola",
-          "text": "One customer problem, then a way for each of the teams in the organization to investigate theirs. Let's open the system."
+          "text": "Then we'll make the same diagnostic detail available to the other teams, without repeating the agent setup for every service. First, let's follow the order."
         }
       ],
       "visualCues": [
@@ -82,79 +82,79 @@ window.TALK = {
         },
         {
           "type": "image",
-          "src": "demo-capture/request-latency.png",
+          "src": "presentation/images/request-latency.png",
           "atCue": 2,
-          "start": 10.4
+          "start": 6.04
         }
       ],
-      "duration": 32.56,
+      "duration": 26.4,
       "start": 0,
-      "end": 32.56,
+      "end": 26.4,
       "audio": "narration/01-promise.mp3"
     },
     {
       "id": "02-topology",
       "kind": "topology",
-      "title": "One application, many places to look",
-      "plannedDuration": 40,
+      "title": "18 services. One customer request.",
+      "plannedDuration": 30,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow."
+          "text": "The request enters through Gateway, reaches Checkout and Inventory, then fans out through the commerce services. Eighteen applications, plus PostgreSQL and Redis. We know the route; we don't yet know which part is making the customer wait."
         },
         {
           "speaker": "Nikola",
-          "text": "Every team can have a different definition of healthy. Following the request gives us one shared starting point."
+          "text": "And the customer shouldn't need to know. Let's see the request before we choose a service to investigate."
         }
       ],
       "purpose": "Orient in the actual application without selecting a culprit.",
       "cues": [
         {
           "start": 0.65,
-          "end": 13.91,
+          "end": 12.89,
           "sampleStart": 15600,
-          "sampleEnd": 333840,
+          "sampleEnd": 309360,
           "speaker": "Tyler",
-          "text": "Here is our checkout application: eighteen services, with PostgreSQL and Redis. The Gateway hands the request to Checkout, which calls Inventory and four commerce branches. The map shows what can talk to what; the duration tells us the whole request is slow."
+          "text": "The request enters through Gateway, reaches Checkout and Inventory, then fans out through the commerce services. Eighteen applications, plus PostgreSQL and Redis. We know the route; we don't yet know which part is making the customer wait."
         },
         {
-          "start": 14.23,
-          "end": 20.59,
-          "sampleStart": 341520,
-          "sampleEnd": 494160,
+          "start": 13.21,
+          "end": 18.85,
+          "sampleStart": 317040,
+          "sampleEnd": 452400,
           "speaker": "Nikola",
-          "text": "Every team can have a different definition of healthy. Following the request gives us one shared starting point."
+          "text": "And the customer shouldn't need to know. Let's see the request before we choose a service to investigate."
         }
       ],
       "visualCues": [],
-      "duration": 21.24,
-      "start": 32.56,
-      "end": 53.8,
+      "duration": 19.52,
+      "start": 26.4,
+      "end": 45.92,
       "audio": "narration/02-topology.mp3"
     },
     {
       "id": "03-install-obi",
       "kind": "obi-intro",
-      "title": "Meet OBI",
-      "plannedDuration": 70,
+      "title": "OBI",
+      "plannedDuration": 85,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics."
+          "text": "We'll start with OpenTelemetry eBPF Instrumentation, or OBI. Deploy it on the Linux nodes and it generates OpenTelemetry traces and metrics for supported applications. No application code changes and no application restarts. That's a pretty good way to meet eighteen services you haven't instrumented yet."
         },
         {
           "speaker": "Nikola",
-          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available."
+          "text": "If you joined us in Atlanta last year, you'll recognize the idea. OBI is now version one and generally available. The previous talk is linked here. Today, we're using that broad view as the starting point for an investigation."
         },
         {
           "speaker": "Tyler",
-          "text": "And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications."
+          "text": "Let's deploy OBI and send an order. The application keeps running while we add visibility."
         },
         {
           "speaker": "Nikola",
-          "text": "One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request."
+          "text": "One deployment on the nodes. Let's open the request we just sent."
         }
       ],
       "visuals": [
@@ -164,49 +164,52 @@ window.TALK = {
         },
         {
           "type": "video",
-          "src": "demo-capture/install-obi-edited.mp4",
-          "poster": "demo-capture/install-obi-edited-poster.png",
+          "src": "presentation/clips/install-obi-edited.mp4",
+          "poster": "presentation/images/install-obi-edited-poster.png",
           "atCue": 2
         }
       ],
       "purpose": "Introduce OBI before its acronym is used: eBPF observations of running Linux applications, zero app changes/restarts, traces and metrics. Show deployment only after explaining its value.",
-      "previewVisualIndex": 0,
       "sources": [
         "https://opentelemetry.io/docs/zero-code/obi/",
         "demo/k8s/obi.yaml"
       ],
+      "previewVisualIndex": 0,
+      "alignTurnAfterVisual": {
+        "3": 1
+      },
       "cues": [
         {
           "start": 0.65,
-          "end": 14.57,
+          "end": 16.39,
           "sampleStart": 15600,
-          "sampleEnd": 349680,
+          "sampleEnd": 393360,
           "speaker": "Tyler",
-          "text": "First, OpenTelemetry eBPF Instrumentation, or OBI. It's a zero-code way to observe running Linux applications. It uses eBPF to watch application and network activity, then exports OpenTelemetry traces and metrics."
+          "text": "We'll start with OpenTelemetry eBPF Instrumentation, or OBI. Deploy it on the Linux nodes and it generates OpenTelemetry traces and metrics for supported applications. No application code changes and no application restarts. That's a pretty good way to meet eighteen services you haven't instrumented yet."
         },
         {
-          "start": 14.89,
-          "end": 30.95,
-          "sampleStart": 357360,
-          "sampleEnd": 742800,
+          "start": 16.71,
+          "end": 29.39,
+          "sampleStart": 401040,
+          "sampleEnd": 705360,
           "speaker": "Nikola",
-          "text": "We're getting a starting point across the application without asking each team to add a library or restart its service. That's a lot of visibility before the first instrumentation ticket. We showed this idea last year in Atlanta. Now OBI is version one and generally available."
+          "text": "If you joined us in Atlanta last year, you'll recognize the idea. OBI is now version one and generally available. The previous talk is linked here. Today, we're using that broad view as the starting point for an investigation."
         },
         {
-          "start": 31.27,
-          "end": 42.87,
-          "sampleStart": 750480,
-          "sampleEnd": 1028880,
+          "start": 29.71,
+          "end": 33.83,
+          "sampleStart": 713040,
+          "sampleEnd": 811920,
           "speaker": "Tyler",
-          "text": "And this is more than a service map. OBI follows supported calls across service boundaries, including our HTTP, PostgreSQL, and Redis traffic. Let's deploy it on the nodes and let it discover the running applications."
+          "text": "Let's deploy OBI and send an order. The application keeps running while we add visibility."
         },
         {
-          "start": 43.19,
-          "end": 50.71,
-          "sampleStart": 1036560,
-          "sampleEnd": 1217040,
+          "start": 36.95,
+          "end": 41.63,
+          "sampleStart": 886800,
+          "sampleEnd": 999120,
           "speaker": "Nikola",
-          "text": "One deployment. Eighteen services to investigate. Much better odds than guessing which team to call. Let's open a request."
+          "text": "One deployment on the nodes. Let's open the request we just sent."
         }
       ],
       "visualCues": [
@@ -217,330 +220,216 @@ window.TALK = {
         },
         {
           "type": "video",
-          "src": "demo-capture/install-obi-edited.mp4",
-          "poster": "demo-capture/install-obi-edited-poster.png",
+          "src": "presentation/clips/install-obi-edited.mp4",
+          "poster": "presentation/images/install-obi-edited-poster.png",
           "atCue": 2,
-          "start": 31.27,
-          "mediaDuration": 22.04
+          "start": 29.71,
+          "mediaDuration": 6.24
         }
       ],
-      "duration": 55.32,
-      "start": 53.8,
-      "end": 109.12,
+      "duration": 42.28,
+      "start": 45.92,
+      "end": 88.2,
       "audio": "narration/03-install-obi.mp3"
     },
     {
       "id": "04-connected-trace",
-      "kind": "screen",
-      "title": "One request across the application",
-      "plannedDuration": 55,
+      "kind": "trace-focus",
+      "title": "Find the two-second wait",
+      "plannedDuration": 50,
       "lead": "Nikola",
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service."
+          "text": "Here's that order in Grafana. We can follow the service calls and database work without changing those applications."
         },
         {
           "speaker": "Tyler",
-          "text": "Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change."
+          "text": "Now look inside Checkout. Where does most of the customer's wait go?"
+        },
+        {
+          "speaker": "Nikola",
+          "text": "This failed connection takes about two seconds. The order still completes, but the customer waits for a failed attempt first."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Why is Checkout making that call? OBI has shown us where to look. Let's add the Java agent to connect the failed call to the work inside the service."
         }
       ],
-      "pauseAfter": {
-        "0": 1
-      },
       "visuals": [
         {
-          "type": "image",
-          "src": "demo-capture/connected-trace.png",
-          "at": 0,
-          "focus": "waterfall"
+          "type": "art",
+          "at": 0
         }
       ],
-      "purpose": "Give the connected-trace statement its own actual waterfall exemplar.",
+      "purpose": "In live Grafana, find the failed two-second Checkout connection and ask why a successful order makes that attempt. Keep one actual waterfall as fallback; skip trace anatomy and the topology detour.",
+      "buildAfter": 1,
       "cues": [
         {
           "start": 0.65,
-          "end": 15.81,
+          "end": 7.93,
           "sampleStart": 15600,
-          "sampleEnd": 379440,
+          "sampleEnd": 190320,
           "speaker": "Nikola",
-          "text": "Look what that one OBI deployment gave us. This is the slow request behind the opening number, followed across the application. Here are the HTTP calls and the PostgreSQL price query, before we've added a language agent to any service."
+          "text": "Here's that order in Grafana. We can follow the service calls and database work without changing those applications."
         },
         {
-          "start": 17.13,
-          "end": 31.39,
-          "sampleStart": 411120,
-          "sampleEnd": 753360,
+          "start": 8.25,
+          "end": 11.57,
+          "sampleStart": 198000,
+          "sampleEnd": 277680,
           "speaker": "Tyler",
-          "text": "Different languages, one request we can follow. We've gone from a customer waiting for seconds to a specific set of service calls and durations. That's a huge head start for such a small setup. The customer is still waiting, though. Let's find the part we can change."
+          "text": "Now look inside Checkout. Where does most of the customer's wait go?"
+        },
+        {
+          "start": 11.89,
+          "end": 18.37,
+          "sampleStart": 285360,
+          "sampleEnd": 440880,
+          "speaker": "Nikola",
+          "text": "This failed connection takes about two seconds. The order still completes, but the customer waits for a failed attempt first."
+        },
+        {
+          "start": 18.69,
+          "end": 26.25,
+          "sampleStart": 448560,
+          "sampleEnd": 630000,
+          "speaker": "Tyler",
+          "text": "Why is Checkout making that call? OBI has shown us where to look. Let's add the Java agent to connect the failed call to the work inside the service."
         }
       ],
+      "buildTime": 11.89,
       "visualCues": [
         {
-          "type": "image",
-          "src": "demo-capture/connected-trace.png",
+          "type": "art",
           "at": 0,
-          "focus": "waterfall",
           "start": 0
         }
       ],
-      "duration": 32.04,
-      "start": 109.12,
-      "end": 141.16,
+      "duration": 26.92,
+      "start": 88.2,
+      "end": 115.12,
       "audio": "narration/04-connected-trace.mp3"
     },
     {
-      "id": "05-observed-path",
-      "kind": "observed",
-      "title": "Follow the cart branch of this request",
-      "plannedDuration": 35,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system."
-        }
-      ],
-      "buildAtCue": 0,
-      "buildDelay": 2.5,
-      "purpose": "Transform orientation into an observed path, using the captured request.",
-      "cues": [
-        {
-          "start": 0.65,
-          "end": 8.33,
-          "sampleStart": 15600,
-          "sampleEnd": 199920,
-          "speaker": "Tyler",
-          "text": "Watch the plain topology turn into an observed request path. We can now ask which calls happened, which services handled them, and where the time went."
-        },
-        {
-          "start": 8.65,
-          "end": 17.13,
-          "sampleStart": 207600,
-          "sampleEnd": 411120,
-          "speaker": "Nikola",
-          "text": "Here we're following the Cart branch through Catalog, Recommendations, and Promotions. This is one branch of the same request moving through the system."
-        }
-      ],
-      "buildTime": 3.15,
-      "visualCues": [],
-      "duration": 17.8,
-      "start": 141.16,
-      "end": 158.96,
-      "audio": "narration/05-observed-path.mp3"
-    },
-    {
-      "id": "06-local-time",
-      "kind": "trace-focus",
-      "title": "Find the failed connection on the request path",
-      "plannedDuration": 70,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Let's open Checkout and follow that connection."
-        }
-      ],
-      "buildAfter": 1,
-      "pauseAfter": {
-        "1": 1.2
-      },
-      "purpose": "Select Checkout from the actual failed CONNECT span; use language detail to identify the calling method, timeout exception and working fallback.",
-      "cues": [
-        {
-          "start": 0.65,
-          "end": 9.93,
-          "sampleStart": 15600,
-          "sampleEnd": 238320,
-          "speaker": "Tyler",
-          "text": "Start with the waterfall. Gateway's long span includes its wait for Checkout, and Checkout's span includes its downstream work. The longest parent span doesn't tell us what to fix."
-        },
-        {
-          "start": 10.25,
-          "end": 17.45,
-          "sampleStart": 246000,
-          "sampleEnd": 418800,
-          "speaker": "Nikola",
-          "text": "Look at this failed connection from Checkout instead. It consumes about two seconds before the successful product lookup and the other service calls."
-        },
-        {
-          "start": 18.97,
-          "end": 30.41,
-          "sampleStart": 455280,
-          "sampleEnd": 729840,
-          "speaker": "Tyler",
-          "text": "Now we have somewhere specific to investigate: why is Checkout spending time on a connection that fails? OBI has exposed the failed attempt; language detail can connect it to the method and fallback in our code."
-        },
-        {
-          "start": 30.73,
-          "end": 34.01,
-          "sampleStart": 737520,
-          "sampleEnd": 816240,
-          "speaker": "Nikola",
-          "text": "Let's open Checkout and follow that connection."
-        }
-      ],
-      "buildTime": 18.97,
-      "visualCues": [],
-      "duration": 34.68,
-      "start": 158.96,
-      "end": 193.64,
-      "audio": "narration/06-local-time.mp3"
-    },
-    {
       "id": "07-direct-agent",
-      "kind": "terminal",
-      "title": "Add Java zero-code instrumentation",
+      "kind": "java-setup",
+      "title": "Add Java detail to Checkout",
       "plannedDuration": 120,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We have source access here. Pricing runs before Inventory. We'll use the Java agent to time that method and expose the library calls inside it."
+          "text": "Here's the direct setup. Supply the Java agent, tell Java to load it, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method."
         },
         {
           "speaker": "Nikola",
-          "text": "This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes."
+          "text": "We know this service and have access to its deployment. Even then, somebody has to arrange the agent and startup settings. Java loads the agent when it starts, so this requires a rollout."
         },
         {
           "speaker": "Tyler",
-          "text": "Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout."
+          "text": "Let's apply the prepared patch. The payload image is already available; this step changes the Deployment, not the application image."
         },
         {
           "speaker": "Nikola",
-          "text": "Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change."
+          "text": "Now we send fresh traffic. Adding instrumentation hasn't fixed the delay. It should explain it."
         }
       ],
-      "pauseAfter": {
-        "1": 3
-      },
       "visuals": [
         {
-          "type": "video",
-          "src": "demo-capture/inspect-java-setup-edited.mp4",
-          "poster": "demo-capture/inspect-java-setup-edited-poster.png",
+          "type": "art",
           "at": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/install-java-agent-edited.mp4",
-          "poster": "demo-capture/install-java-agent-edited-poster.png",
+          "src": "presentation/clips/install-java-agent-edited.mp4",
+          "poster": "presentation/images/install-java-agent-edited-poster.png",
           "atCue": 2
         }
       ],
-      "purpose": "Show actual source-informed configuration and the real direct-agent installation.",
+      "purpose": "Inspect deployment configuration, attach the Java agent and restart the same application image. The named pricing method comes from the prepared demo configuration, not from OBI or a source-code inspection.",
+      "alignTurnAfterVisual": {
+        "3": 1
+      },
+      "previewVisualIndex": 0,
       "cues": [
         {
           "start": 0.65,
-          "end": 8.45,
+          "end": 15.83,
           "sampleStart": 15600,
-          "sampleEnd": 202800,
+          "sampleEnd": 379920,
           "speaker": "Tyler",
-          "text": "We have source access here. Pricing runs before Inventory. We'll use the Java agent to time that method and expose the library calls inside it."
+          "text": "Here's the direct setup. Supply the Java agent, tell Java to load it, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method."
         },
         {
-          "start": 8.77,
-          "end": 19.85,
-          "sampleStart": 210480,
-          "sampleEnd": 476400,
+          "start": 16.15,
+          "end": 26.39,
+          "sampleStart": 387600,
+          "sampleEnd": 633360,
           "speaker": "Nikola",
-          "text": "This is OpenTelemetry's zero-code instrumentation. The agent supplies the instrumentation; we still need to make it available, add the startup setting, and configure where its data goes."
+          "text": "We know this service and have access to its deployment. Even then, somebody has to arrange the agent and startup settings. Java loads the agent when it starts, so this requires a rollout."
         },
         {
-          "start": 23.17,
-          "end": 33.29,
-          "sampleStart": 556080,
-          "sampleEnd": 798960,
+          "start": 26.71,
+          "end": 33.15,
+          "sampleStart": 641040,
+          "sampleEnd": 795600,
           "speaker": "Tyler",
-          "text": "Here's the deployment change. The application image stays the same. We provide the agent, set the service identity and exporter, and enable the pricing-method span. Then we roll Checkout."
+          "text": "Let's apply the prepared patch. The payload image is already available; this step changes the Deployment, not the application image."
         },
         {
-          "start": 33.61,
-          "end": 42.85,
-          "sampleStart": 806640,
-          "sampleEnd": 1028400,
+          "start": 38.71,
+          "end": 44.19,
+          "sampleStart": 929040,
+          "sampleEnd": 1060560,
           "speaker": "Nikola",
-          "text": "Zero code is useful, but hasn't made the release calendar disappear. Someone still needs the runtime knowledge, the settings, and a way to deploy the change."
+          "text": "Now we send fresh traffic. Adding instrumentation hasn't fixed the delay. It should explain it."
         }
       ],
       "visualCues": [
         {
-          "type": "video",
-          "src": "demo-capture/inspect-java-setup-edited.mp4",
-          "poster": "demo-capture/inspect-java-setup-edited-poster.png",
+          "type": "art",
           "at": 0,
-          "start": 0,
-          "mediaDuration": 16.16
+          "start": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/install-java-agent-edited.mp4",
-          "poster": "demo-capture/install-java-agent-edited-poster.png",
+          "src": "presentation/clips/install-java-agent-edited.mp4",
+          "poster": "presentation/images/install-java-agent-edited-poster.png",
           "atCue": 2,
-          "start": 23.17,
-          "mediaDuration": 17.88
+          "start": 26.71,
+          "mediaDuration": 11.0
         }
       ],
-      "duration": 43.52,
-      "start": 193.64,
-      "end": 237.16,
+      "duration": 44.84,
+      "start": 115.12,
+      "end": 159.96,
       "audio": "narration/07-direct-agent.mp3"
     },
     {
       "id": "08-new-detail",
       "kind": "timeout-evidence",
-      "title": "A failed attempt before a working fallback",
-      "plannedDuration": 60,
+      "title": "The failed call timed out",
+      "plannedDuration": 65,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup."
+          "text": "The new trace has PricingEngine.calculate, the method we configured. Inside it: the failed HTTP call, then the successful product-price query. We can now name the operation and see its fallback."
         },
         {
           "speaker": "Nikola",
-          "text": "Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first."
+          "text": "The span says SocketTimeoutException. Its exception event says Connect timed out. Two seconds trying the wrong address, then the fallback gets the price."
         },
         {
           "speaker": "Tyler",
-          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address."
+          "text": "So the order works. We just make the customer wait for a backend that isn't answering. Let's look at the setting behind that address."
         }
       ],
-      "pauseAfter": {
-        "0": 1
-      },
       "visuals": [
         {
-          "type": "image",
-          "src": "demo-capture/java-detail-poster.png",
-          "at": 0,
-          "focus": "waterfall"
-        },
-        {
           "type": "art",
-          "atCue": 1
-        },
-        {
-          "type": "image",
-          "src": "demo-capture/java-detail-poster.png",
-          "atCue": 2,
-          "focus": "waterfall"
+          "at": 0
         }
       ],
       "purpose": "Show the actual HTTP span error.type and exception event before calling the failure a timeout; return to the successful price lookup.",
@@ -549,81 +438,66 @@ window.TALK = {
         "https://opentelemetry.io/docs/specs/semconv/http/http-spans/",
         "https://opentelemetry.io/docs/specs/semconv/exceptions/exceptions-spans/"
       ],
-      "previewVisualIndex": 1,
       "cues": [
         {
           "start": 0.65,
-          "end": 9.37,
+          "end": 11.65,
           "sampleStart": 15600,
-          "sampleEnd": 224880,
+          "sampleEnd": 279600,
           "speaker": "Tyler",
-          "text": "Here's a fresh request with the Java agent. Open PricingEngine.calculate. The long interval contains a failed HTTP connection, then a successful product-price lookup."
+          "text": "The new trace has PricingEngine.calculate, the method we configured. Inside it: the failed HTTP call, then the successful product-price query. We can now name the operation and see its fallback."
         },
         {
-          "start": 10.69,
-          "end": 27.11,
-          "sampleStart": 256560,
-          "sampleEnd": 650640,
+          "start": 11.97,
+          "end": 21.53,
+          "sampleStart": 287280,
+          "sampleEnd": 516720,
           "speaker": "Nikola",
-          "text": "Open the failed HTTP span. Its error type is Java's SocketTimeoutException. The exception event says, Connect timed out. That is a connection timeout. The product-price lookup after it succeeds, so Checkout completes, but the customer pays for the failed attempt first."
+          "text": "The span says SocketTimeoutException. Its exception event says Connect timed out. Two seconds trying the wrong address, then the fallback gets the price."
         },
         {
-          "start": 27.43,
-          "end": 36.51,
-          "sampleStart": 658320,
-          "sampleEnd": 876240,
+          "start": 21.85,
+          "end": 28.01,
+          "sampleStart": 524400,
+          "sampleEnd": 672240,
           "speaker": "Tyler",
-          "text": "OBI got us to Checkout. The language agent exposed the failed attempt and the working fallback. Now let's find out why this instance is still calling that old address."
+          "text": "So the order works. We just make the customer wait for a backend that isn't answering. Let's look at the setting behind that address."
         }
       ],
       "visualCues": [
         {
-          "type": "image",
-          "src": "demo-capture/java-detail-poster.png",
-          "at": 0,
-          "focus": "waterfall",
-          "start": 0
-        },
-        {
           "type": "art",
-          "atCue": 1,
-          "start": 10.69
-        },
-        {
-          "type": "image",
-          "src": "demo-capture/java-detail-poster.png",
-          "atCue": 2,
-          "focus": "waterfall",
-          "start": 27.43
+          "at": 0,
+          "start": 0
         }
       ],
-      "duration": 37.16,
-      "start": 237.16,
-      "end": 274.32,
+      "duration": 28.68,
+      "start": 159.96,
+      "end": 188.64,
       "audio": "narration/08-new-detail.mp3"
     },
     {
       "id": "08-fix-pricing",
       "kind": "configuration-fix",
       "title": "Remove the stale endpoint setting",
-      "plannedDuration": 90,
+      "plannedDuration": 110,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store."
+          "text": "We expose this deployment setting as a resource attribute: LEGACY_PRICING_URL. Its value matches the failed call. We know this backend was retired; this instance still tries it before the working product store."
         },
         {
           "speaker": "Nikola",
-          "text": "Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application."
+          "text": "Now we can help the owning team with more than a slow-service alert. Customers are losing two seconds here; here's the trace and a configuration PR that removes the old setting. We can bring them a fix based on what the application is actually doing."
         },
         {
           "speaker": "Tyler",
-          "text": "Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes."
+          "text": "Let's remove the setting and roll Checkout. Same application image, same Java agent, same exporter. No rebuild."
         },
         {
           "speaker": "Nikola",
-          "text": "The rollout is ready. Let's send another customer request and look at its trace."
+          "text": "The rollout is ready. Back to the customer: let's send a new order and open its trace."
         }
       ],
       "visuals": [
@@ -633,14 +507,11 @@ window.TALK = {
         },
         {
           "type": "video",
-          "src": "demo-capture/fix-pricing-edited.mp4",
-          "poster": "demo-capture/fix-pricing-edited-poster.png",
+          "src": "presentation/clips/fix-pricing-edited.mp4",
+          "poster": "presentation/images/fix-pricing-edited-poster.png",
           "atCue": 2
         }
       ],
-      "alignTurnAfterVisual": {
-        "3": 1
-      },
       "purpose": "Show the real Checkout resource attribute identifying the stale endpoint. Remove that environment variable and roll the same image; bring the owning team a configuration PR backed by the customer trace.",
       "sources": [
         "demo/apps/checkout/src/main/java/demo/checkout/PricingEngine.java",
@@ -649,40 +520,42 @@ window.TALK = {
         "public/demo-capture/java-trace-evidence.json",
         "presentation/data/resolution.json"
       ],
-      "pauseAfter": {},
+      "alignTurnAfterVisual": {
+        "3": 1
+      },
       "previewVisualIndex": 0,
       "cues": [
         {
           "start": 0.65,
-          "end": 11.45,
+          "end": 12.61,
           "sampleStart": 15600,
-          "sampleEnd": 274800,
+          "sampleEnd": 302640,
           "speaker": "Tyler",
-          "text": "Checkout's resource attributes show LEGACY_PRICING_URL. Its value matches the failing URL. This instance is still configured to try a retired backend before it uses the working product store."
+          "text": "We expose this deployment setting as a resource attribute: LEGACY_PRICING_URL. Its value matches the failed call. We know this backend was retired; this instance still tries it before the working product store."
         },
         {
-          "start": 11.77,
-          "end": 29.55,
-          "sampleStart": 282480,
-          "sampleEnd": 709200,
+          "start": 12.93,
+          "end": 26.59,
+          "sampleStart": 310320,
+          "sampleEnd": 638160,
           "speaker": "Nikola",
-          "text": "Instrumentation didn't remove that setting. It gave us the evidence to act. If we can collaborate with the owning team, we can bring a configuration pull request: here is the customer impact, here is the timeout, and here is the stale setting to remove. We can fix this without rebuilding the application."
+          "text": "Now we can help the owning team with more than a slow-service alert. Customers are losing two seconds here; here's the trace and a configuration PR that removes the old setting. We can bring them a fix based on what the application is actually doing."
         },
         {
-          "start": 29.87,
-          "end": 40.07,
-          "sampleStart": 716880,
-          "sampleEnd": 961680,
+          "start": 26.91,
+          "end": 33.11,
+          "sampleStart": 645840,
+          "sampleEnd": 794640,
           "speaker": "Tyler",
-          "text": "Remove LEGACY_PRICING_URL from the Deployment. Kubernetes rolls Checkout with the same application image, Java agent, and exporter settings. Only the legacy endpoint setting changes."
+          "text": "Let's remove the setting and roll Checkout. Same application image, same Java agent, same exporter. No rebuild."
         },
         {
-          "start": 60.23,
-          "end": 64.51,
-          "sampleStart": 1445520,
-          "sampleEnd": 1548240,
+          "start": 38.91,
+          "end": 44.07,
+          "sampleStart": 933840,
+          "sampleEnd": 1057680,
           "speaker": "Nikola",
-          "text": "The rollout is ready. Let's send another customer request and look at its trace."
+          "text": "The rollout is ready. Back to the customer: let's send a new order and open its trace."
         }
       ],
       "visualCues": [
@@ -693,16 +566,16 @@ window.TALK = {
         },
         {
           "type": "video",
-          "src": "demo-capture/fix-pricing-edited.mp4",
-          "poster": "demo-capture/fix-pricing-edited-poster.png",
+          "src": "presentation/clips/fix-pricing-edited.mp4",
+          "poster": "presentation/images/fix-pricing-edited-poster.png",
           "atCue": 2,
-          "start": 29.87,
-          "mediaDuration": 29.36
+          "start": 26.91,
+          "mediaDuration": 11.0
         }
       ],
-      "duration": 65.2,
-      "start": 274.32,
-      "end": 339.52,
+      "duration": 44.72,
+      "start": 188.64,
+      "end": 233.36,
       "audio": "narration/08-fix-pricing.mp3"
     },
     {
@@ -714,15 +587,15 @@ window.TALK = {
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here is the new request's waterfall. Expand Checkout and PricingEngine.calculate. The product-price query is still here. The failed legacy call is gone, and the rest of the request starts sooner."
+          "text": "Here's the new waterfall. The failed legacy call is gone. The product-price query is still there, and the order continues through the application."
         },
         {
           "speaker": "Nikola",
-          "text": "Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there."
+          "text": "That's better. The customer gets their order without waiting for a backend we've already turned off."
         },
         {
           "speaker": "Tyler",
-          "text": "This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared."
+          "text": "We didn't make the timeout less visible. We removed the unnecessary call. Let's compare the request-duration metrics too."
         }
       ],
       "purpose": "Return directly to a real Grafana waterfall after deployment; show the missing failed attempt and retained successful backend path before aggregate metrics.",
@@ -731,226 +604,352 @@ window.TALK = {
         "scripts/presentation/measure_resolution.py",
         "docs/customer-resolution.md"
       ],
-      "leadInSeconds": 0.5,
       "visuals": [
         {
           "type": "image",
-          "src": "demo-capture/fixed-request-trace.png",
-          "at": 0,
-          "focus": "waterfall"
+          "src": "presentation/images/fixed-request-trace.png",
+          "at": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fixed-request-detail.mp4",
-          "poster": "demo-capture/fixed-request-trace.png",
-          "atCue": 1,
-          "focus": "waterfall"
+          "src": "presentation/clips/fixed-request-detail.mp4",
+          "poster": "presentation/images/fixed-request-trace.png",
+          "atCue": 1
         }
       ],
       "cues": [
         {
-          "start": 0.5,
-          "end": 10.58,
-          "sampleStart": 12000,
-          "sampleEnd": 253920,
+          "start": 0.65,
+          "end": 7.17,
+          "sampleStart": 15600,
+          "sampleEnd": 172080,
           "speaker": "Tyler",
-          "text": "Here is the new request's waterfall. Expand Checkout and PricingEngine.calculate. The product-price query is still here. The failed legacy call is gone, and the rest of the request starts sooner."
+          "text": "Here's the new waterfall. The failed legacy call is gone. The product-price query is still there, and the order continues through the application."
         },
         {
-          "start": 10.9,
-          "end": 23.26,
-          "sampleStart": 261600,
-          "sampleEnd": 558240,
+          "start": 7.49,
+          "end": 13.13,
+          "sampleStart": 179760,
+          "sampleEnd": 315120,
           "speaker": "Nikola",
-          "text": "Follow it through Inventory, the commerce branches, and the order write. We kept the useful work. The customer gets a faster checkout because we're no longer waiting for a backend that isn't there."
+          "text": "That's better. The customer gets their order without waiting for a backend we've already turned off."
         },
         {
-          "start": 23.58,
-          "end": 31.46,
-          "sampleStart": 565920,
-          "sampleEnd": 755040,
+          "start": 13.45,
+          "end": 19.77,
+          "sampleStart": 322800,
+          "sampleEnd": 474480,
           "speaker": "Tyler",
-          "text": "This is the payoff: a customer symptom, an observed cause, one configuration change, and a fresh trace showing the failed call has disappeared."
+          "text": "We didn't make the timeout less visible. We removed the unnecessary call. Let's compare the request-duration metrics too."
         }
       ],
       "visualCues": [
         {
           "type": "image",
-          "src": "demo-capture/fixed-request-trace.png",
+          "src": "presentation/images/fixed-request-trace.png",
           "at": 0,
-          "focus": "waterfall",
           "start": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fixed-request-detail.mp4",
-          "poster": "demo-capture/fixed-request-trace.png",
+          "src": "presentation/clips/fixed-request-detail.mp4",
+          "poster": "presentation/images/fixed-request-trace.png",
           "atCue": 1,
-          "focus": "waterfall",
-          "start": 10.9,
-          "mediaDuration": 10.12
+          "start": 7.49,
+          "mediaDuration": 8.88
         }
       ],
-      "duration": 32.12,
-      "start": 339.52,
-      "end": 371.64,
+      "duration": 20.44,
+      "start": 233.36,
+      "end": 253.8,
       "audio": "narration/08-customer-result.mp3"
     },
     {
       "id": "08-result-summary",
-      "kind": "latency-result",
-      "title": "The improvement across repeated requests",
-      "plannedDuration": 35,
+      "kind": "metric-comparison",
+      "title": "The wait is gone",
+      "plannedDuration": 30,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait."
+          "text": "These captured Grafana windows show the average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds. They're a repeated-request comparison, alongside the fresh trace we just opened."
         },
         {
           "speaker": "Nikola",
-          "text": "That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?"
+          "text": "A customer gets their two seconds back. Good. Now what about the other teams?"
         }
       ],
-      "purpose": "Summarize matched measured request durations only after the audience has seen the actual post-fix waterfall.",
+      "purpose": "Show actual Grafana screenshots of mean Gateway GET /checkout duration over equal 120-second windows. Repeat these means in the closing; retain the separate matched-request medians as measurement evidence.",
       "sources": [
-        "presentation/data/resolution.json"
+        "presentation/data/metric-comparison.json",
+        "presentation/dashboards/checkout-metrics.json"
+      ],
+      "evidenceImages": [
+        "presentation/images/customer-before-metric.png",
+        "presentation/images/customer-after-metric.png"
       ],
       "cues": [
         {
           "start": 0.65,
-          "end": 13.47,
+          "end": 12.25,
           "sampleStart": 15600,
-          "sampleEnd": 323280,
+          "sampleEnd": 294000,
           "speaker": "Tyler",
-          "text": "Across matched requests, checkout falls from seconds to a fraction of a second. Pricing no longer spends two seconds waiting for the retired backend. The graph summarizes the same change we just followed in the waterfall: keep the useful work, remove the unnecessary wait."
+          "text": "These captured Grafana windows show the average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds. They're a repeated-request comparison, alongside the fresh trace we just opened."
         },
         {
-          "start": 13.79,
-          "end": 24.39,
-          "sampleStart": 330960,
-          "sampleEnd": 585360,
+          "start": 12.57,
+          "end": 17.21,
+          "sampleStart": 301680,
+          "sampleEnd": 413040,
           "speaker": "Nikola",
-          "text": "That summary supports the trace we just saw. It is a local demo comparison, not a production benchmark. Next, how do we make the same diagnostic detail available to the other teams?"
+          "text": "A customer gets their two seconds back. Good. Now what about the other teams?"
         }
       ],
       "visualCues": [],
-      "duration": 25.04,
-      "start": 371.64,
-      "end": 396.68,
+      "duration": 17.88,
+      "start": 253.8,
+      "end": 271.68,
       "audio": "narration/08-result-summary.mp3"
     },
     {
       "id": "09-the-rest",
       "kind": "scale",
-      "title": "One fixed. Thirteen to equip.",
-      "plannedDuration": 40,
+      "title": "What about the other 13?",
+      "plannedDuration": 30,
       "lead": "Nikola",
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?"
+          "text": "We arranged the Java setup for Checkout because we knew the service and had access. Thirteen other services can use language agents. Who's arranging those?"
         },
         {
           "speaker": "Tyler",
-          "text": "In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen."
+          "text": "I'd rather not schedule thirteen versions of that meeting. We'll use the OpenTelemetry Injector. First, let's look at what the established Kubernetes Operator workflow still needs from the platform and application teams."
         }
       ],
       "purpose": "Turn the resolved customer delay into the second tension: make the same diagnostic detail available to the other teams without repeating the direct setup.",
       "cues": [
         {
           "start": 0.65,
-          "end": 11.13,
+          "end": 11.05,
           "sampleStart": 15600,
-          "sampleEnd": 267120,
+          "sampleEnd": 265200,
           "speaker": "Nikola",
-          "text": "We've fixed this checkout. But getting to that answer needed runtime knowledge, configuration, access, and a deployment. How do the other teams get this detail without repeating all that setup?"
+          "text": "We arranged the Java setup for Checkout because we knew the service and had access. Thirteen other services can use language agents. Who's arranging those?"
         },
         {
-          "start": 11.45,
-          "end": 25.13,
-          "sampleStart": 274800,
-          "sampleEnd": 603120,
+          "start": 11.37,
+          "end": 22.37,
+          "sampleStart": 272880,
+          "sampleEnd": 536880,
           "speaker": "Tyler",
-          "text": "In this demo, thirteen more services use runtimes supported by the OTel Injector. The Go services will keep their OBI coverage. Our next step is to share the setup across those thirteen."
+          "text": "I'd rather not schedule thirteen versions of that meeting. We'll use the OpenTelemetry Injector. First, let's look at what the established Kubernetes Operator workflow still needs from the platform and application teams."
         }
       ],
       "visualCues": [],
-      "duration": 25.8,
-      "start": 396.68,
-      "end": 422.48,
+      "duration": 23.04,
+      "start": 271.68,
+      "end": 294.72,
       "audio": "narration/09-the-rest.mp3"
     },
     {
       "id": "10-operator-opt-in",
       "kind": "operator-opt-in",
-      "title": "From language opt-in to a shared namespace policy",
-      "plannedDuration": 45,
+      "title": "The annotation is the easy part",
+      "plannedDuration": 90,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace."
+          "text": "The upstream OpenTelemetry Operator can inject agents, with opt-in on a workload or a namespace. But the platform still needs application facts. This Python image uses musl; its Python version and native packages must match the payload."
         },
         {
           "speaker": "Nikola",
-          "text": "That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement."
+          "text": "Which image, which runtime, who has the Dockerfile? The application team usually knows. The annotation doesn't answer those questions."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Add a dot net worker and we also need per-container language mappings and its runtime settings. If a container starts multiple languages, or an entrypoint ignores the injected environment, more YAML alone won't make that work."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "That's where a small deployment change can turn into hours of investigation and days waiting for an owner or release. The Operator helps with injection. We'd like to prepare more of the routine runtime setup once, and share it."
         }
       ],
-      "purpose": "Put upstream opt-in in context, then explain RIO as a talk-specific demonstration of functionality we want upstream; no agreed implementation or roadmap.",
+      "purpose": "Walk through the upstream Operator baseline, including existing namespace opt-in, to show the runtime decisions, application constraints and coordination work a shared setup must address.",
       "sources": [
-        "https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/",
-        "https://github.com/otelx/rio"
+        "docs/operator-configuration.md",
+        "presentation/data/operator-complexity.json"
+      ],
+      "visuals": [
+        {
+          "type": "art",
+          "artwork": {
+            "operatorStep": 1
+          },
+          "at": 0
+        },
+        {
+          "type": "art",
+          "atCue": 2,
+          "artwork": {
+            "operatorStep": 2
+          }
+        },
+        {
+          "type": "art",
+          "atCue": 3,
+          "artwork": {
+            "operatorStep": 5
+          }
+        }
       ],
       "cues": [
         {
           "start": 0.65,
-          "end": 13.23,
+          "end": 16.45,
           "sampleStart": 15600,
-          "sampleEnd": 317520,
+          "sampleEnd": 394800,
           "speaker": "Tyler",
-          "text": "To see what we're centralizing, here's the upstream Operator's opt-in configuration. Java and Python have different injection annotations, with an Instrumentation resource supplying their settings. You can put those annotations on workloads or a namespace."
+          "text": "The upstream OpenTelemetry Operator can inject agents, with opt-in on a workload or a namespace. But the platform still needs application facts. This Python image uses musl; its Python version and native packages must match the payload."
         },
         {
-          "start": 13.55,
-          "end": 37.25,
-          "sampleStart": 325200,
-          "sampleEnd": 894000,
+          "start": 16.77,
+          "end": 24.41,
+          "sampleStart": 402480,
+          "sampleEnd": 585840,
           "speaker": "Nikola",
-          "text": "That already saves work. For this talk, we built RIO, the Runtime Instrumentation Operator, in OTelX. It's a demo operator that combines central namespace selection, the OpenTelemetry Injector, and managed rollouts. We want to bring this capability upstream, whether in the existing Operator or another form. That path still needs design and agreement."
+          "text": "Which image, which runtime, who has the Dockerfile? The application team usually knows. The annotation doesn't answer those questions."
+        },
+        {
+          "start": 24.73,
+          "end": 36.49,
+          "sampleStart": 593520,
+          "sampleEnd": 875760,
+          "speaker": "Tyler",
+          "text": "Add a dot net worker and we also need per-container language mappings and its runtime settings. If a container starts multiple languages, or an entrypoint ignores the injected environment, more YAML alone won't make that work."
+        },
+        {
+          "start": 36.81,
+          "end": 50.73,
+          "sampleStart": 883440,
+          "sampleEnd": 1217520,
+          "speaker": "Nikola",
+          "text": "That's where a small deployment change can turn into hours of investigation and days waiting for an owner or release. The Operator helps with injection. We'd like to prepare more of the routine runtime setup once, and share it."
         }
       ],
-      "visualCues": [],
-      "duration": 37.92,
-      "start": 422.48,
-      "end": 460.4,
+      "visualCues": [
+        {
+          "type": "art",
+          "artwork": {
+            "operatorStep": 1
+          },
+          "at": 0,
+          "start": 0
+        },
+        {
+          "type": "art",
+          "atCue": 2,
+          "artwork": {
+            "operatorStep": 2
+          },
+          "start": 24.73
+        },
+        {
+          "type": "art",
+          "atCue": 3,
+          "artwork": {
+            "operatorStep": 5
+          },
+          "start": 36.81
+        }
+      ],
+      "duration": 51.4,
+      "start": 294.72,
+      "end": 346.12,
       "audio": "narration/10-operator-opt-in.mp3"
     },
     {
-      "id": "10-install-operator",
-      "kind": "terminal",
-      "title": "Install the namespace-driven controller",
+      "id": "09-injector-intro",
+      "kind": "injector-intro",
+      "title": "OpenTelemetry Injector",
       "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents."
+          "text": "The Injector is the shared library in this diagram. It runs inside a compatible process at startup and loads the matching language agent. We prepare the library and supported agents together, instead of having every service team assemble a language-specific installation."
         },
         {
           "speaker": "Nikola",
-          "text": "The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace."
+          "text": "It works at process startup; it doesn't manage Kubernetes workloads. We still need a controller to select the workloads and arrange the rollout."
+        }
+      ],
+      "purpose": "After the upstream Operator comparison, explain the Injector shared library and prepared agents inside compatible application processes. Separate runtime startup from Kubernetes workload management.",
+      "sources": [
+        "presentation/data/injector-intro.json",
+        "presentation/injector-diagram.js",
+        "https://github.com/open-telemetry/opentelemetry-injector"
+      ],
+      "cues": [
+        {
+          "start": 0.65,
+          "end": 15.03,
+          "sampleStart": 15600,
+          "sampleEnd": 360720,
+          "speaker": "Tyler",
+          "text": "The Injector is the shared library in this diagram. It runs inside a compatible process at startup and loads the matching language agent. We prepare the library and supported agents together, instead of having every service team assemble a language-specific installation."
+        },
+        {
+          "start": 15.35,
+          "end": 23.03,
+          "sampleStart": 368400,
+          "sampleEnd": 552720,
+          "speaker": "Nikola",
+          "text": "It works at process startup; it doesn't manage Kubernetes workloads. We still need a controller to select the workloads and arrange the rollout."
+        }
+      ],
+      "visualCues": [],
+      "duration": 23.68,
+      "start": 346.12,
+      "end": 369.8,
+      "audio": "narration/09-injector-intro.mp3"
+    },
+    {
+      "id": "10-install-operator",
+      "kind": "controller-intro",
+      "title": "Install the namespace-driven controller",
+      "plannedDuration": 90,
+      "lead": "Tyler",
+      "turns": [
+        {
+          "speaker": "Tyler",
+          "text": "For this talk, that controller is RIO: the Runtime Instrumentation Operator in OTelX. This demo uses the bundled prototype of that workflow, building on Jack Berg's work. RIO selects Kubernetes workloads and handles rollout; the Injector loads agents inside the processes."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "The idea we'd like to bring upstream is less routine runtime configuration for each team. RIO demonstrates it; the eventual upstream home is still open. Compatibility and unusual startup behavior still need owners."
+        },
+        {
+          "speaker": "Tyler",
+          "text": "Let's install the controller. We've prepared the agent bundle, exporter and exclusions. No application namespace is enrolled yet."
         }
       ],
       "visuals": [
         {
-          "type": "video",
-          "src": "demo-capture/install-operator-edited.mp4",
-          "poster": "demo-capture/install-operator-edited-poster.png",
+          "type": "art",
           "at": 0
+        },
+        {
+          "type": "video",
+          "src": "presentation/clips/install-operator-edited.mp4",
+          "poster": "presentation/images/install-operator-edited-poster.png",
+          "atCue": 2
         }
       ],
-      "purpose": "Install the talk-specific controller and shared Injector settings once; demonstrate the workflow rather than recommend RIO as a production dependency.",
+      "purpose": "Explain why this demo chooses the Injector plus RIO after the Operator comparison. Show the shared bundle, runtime selection and rollout responsibilities, retain compatibility work, and keep the upstream path open.",
       "sources": [
         "components/otel-injector-operator/README.md",
         "components/otel-injector-images/README.md",
@@ -960,78 +959,78 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 11.49,
+          "end": 16.55,
           "sampleStart": 15600,
-          "sampleEnd": 275760,
+          "sampleEnd": 397200,
           "speaker": "Tyler",
-          "text": "Here we install the demo controller once. It builds on Jack Berg's prototype. The controller selects workloads and manages their rollout. The OpenTelemetry Injector handles supported runtimes and loads their agents."
+          "text": "For this talk, that controller is RIO: the Runtime Instrumentation Operator in OTelX. This demo uses the bundled prototype of that workflow, building on Jack Berg's work. RIO selects Kubernetes workloads and handles rollout; the Injector loads agents inside the processes."
         },
         {
-          "start": 11.81,
-          "end": 24.77,
-          "sampleStart": 283440,
-          "sampleEnd": 594480,
+          "start": 16.87,
+          "end": 29.75,
+          "sampleStart": 404880,
+          "sampleEnd": 714000,
           "speaker": "Nikola",
-          "text": "The payload, exporter, and exclusions are shared settings. Application owners don't each choose a language annotation and arrange a separate instrumentation rollout. Next comes the application choice: instrument this namespace."
+          "text": "The idea we'd like to bring upstream is less routine runtime configuration for each team. RIO demonstrates it; the eventual upstream home is still open. Compatibility and unusual startup behavior still need owners."
+        },
+        {
+          "start": 30.07,
+          "end": 36.71,
+          "sampleStart": 721680,
+          "sampleEnd": 881040,
+          "speaker": "Tyler",
+          "text": "Let's install the controller. We've prepared the agent bundle, exporter and exclusions. No application namespace is enrolled yet."
         }
       ],
       "visualCues": [
         {
-          "type": "video",
-          "src": "demo-capture/install-operator-edited.mp4",
-          "poster": "demo-capture/install-operator-edited-poster.png",
+          "type": "art",
           "at": 0,
-          "start": 0,
-          "mediaDuration": 14.2
+          "start": 0
+        },
+        {
+          "type": "video",
+          "src": "presentation/clips/install-operator-edited.mp4",
+          "poster": "presentation/images/install-operator-edited-poster.png",
+          "atCue": 2,
+          "start": 30.07,
+          "mediaDuration": 10.6
         }
       ],
-      "duration": 25.44,
-      "start": 460.4,
-      "end": 485.84,
+      "duration": 42.68,
+      "start": 369.8,
+      "end": 412.48,
       "audio": "narration/10-install-operator.mp3"
     },
     {
       "id": "11-enroll-services",
-      "kind": "namespace-result",
+      "kind": "namespace-rule",
       "title": "Instrument this namespace",
-      "plannedDuration": 105,
+      "plannedDuration": 90,
       "lead": "Nikola",
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services."
+          "text": "Instrument demo-apps. That's the selection: one namespace. We haven't listed thirteen services or assigned a language to each one. The prepared bundle supplies the supported runtime choices."
         },
         {
           "speaker": "Tyler",
-          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service."
+          "text": "Apply it. RIO performs the rolling restarts for the selected workloads. Checkout keeps its existing direct agent, and the four Go services keep OBI. Compatible new workloads in this namespace inherit the policy."
         }
       ],
       "visuals": [
         {
-          "type": "video",
-          "src": "demo-capture/instrument-namespace-edited.mp4",
-          "poster": "demo-capture/instrument-namespace-edited-poster.png",
+          "type": "art",
           "at": 0
         },
         {
-          "type": "art",
-          "atCue": 2
+          "type": "video",
+          "src": "presentation/clips/instrument-namespace-edited.mp4",
+          "poster": "presentation/images/namespace-rule.png",
+          "atCue": 1
         }
       ],
       "purpose": "Show the actual single namespace selection and automatic rollout, then light the actual covered fleet using the captured result.",
-      "pauseAfter": {
-        "0": 3,
-        "1": 3
-      },
-      "buildAtCue": 2,
-      "buildDelay": 0,
-      "alignTurnAfterVisual": {
-        "2": 0
-      },
       "sources": [
         "demo/k8s/fleet-instrumentation-base.yaml",
         "demo/k8s/instrument-demo-namespace.patch.yaml",
@@ -1040,288 +1039,193 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 11.25,
+          "end": 11.93,
           "sampleStart": 15600,
-          "sampleEnd": 270000,
+          "sampleEnd": 286320,
           "speaker": "Nikola",
-          "text": "Here is the selection rule: instrument demo-apps. We select the application boundary once. Unlike the language opt-in we just showed, this rule doesn't list languages or individual services."
+          "text": "Instrument demo-apps. That's the selection: one namespace. We haven't listed thirteen services or assigned a language to each one. The prepared bundle supplies the supported runtime choices."
         },
         {
-          "start": 14.57,
-          "end": 25.61,
-          "sampleStart": 349680,
-          "sampleEnd": 614640,
+          "start": 12.25,
+          "end": 24.01,
+          "sampleStart": 294000,
+          "sampleEnd": 576240,
           "speaker": "Tyler",
-          "text": "Apply that rule, and the controller rolls the selected workloads. The Injector injects and supplies the OTel agents. Compatible services deployed into the namespace later inherit the same policy."
-        },
-        {
-          "start": 41.2,
-          "end": 68.16,
-          "sampleStart": 988800,
-          "sampleEnd": 1635840,
-          "speaker": "Nikola",
-          "text": "Now all the supported services are lit up. Checkout keeps its direct agent, thirteen more services gain language detail, and the four Go services keep OBI. The ongoing responsibility lives with the platform, instead of thirteen application teams repeating it. OBI is still running here. It detects services already exporting traces through an OpenTelemetry SDK and avoids duplicate tracing. We didn't have to reconfigure OBI for every service."
+          "text": "Apply it. RIO performs the rolling restarts for the selected workloads. Checkout keeps its existing direct agent, and the four Go services keep OBI. Compatible new workloads in this namespace inherit the policy."
         }
       ],
-      "buildTime": 41.2,
       "visualCues": [
         {
-          "type": "video",
-          "src": "demo-capture/instrument-namespace-edited.mp4",
-          "poster": "demo-capture/instrument-namespace-edited-poster.png",
+          "type": "art",
           "at": 0,
-          "start": 0,
-          "mediaDuration": 40.2
+          "start": 0
         },
         {
-          "type": "art",
-          "atCue": 2,
-          "start": 41.2
+          "type": "video",
+          "src": "presentation/clips/instrument-namespace-edited.mp4",
+          "poster": "presentation/images/namespace-rule.png",
+          "atCue": 1,
+          "start": 12.25,
+          "mediaDuration": 11.0
         }
       ],
-      "duration": 68.84,
-      "start": 485.84,
-      "end": 554.68,
+      "duration": 25.28,
+      "start": 412.48,
+      "end": 437.76,
       "audio": "narration/11-enroll-services.mp3"
     },
     {
       "id": "12-wider-result",
-      "kind": "screen",
-      "title": "Open language detail in more services",
-      "plannedDuration": 60,
+      "kind": "namespace-result",
+      "title": "Language detail. OBI alongside it.",
+      "plannedDuration": 90,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services."
+          "text": "Fourteen services now have language agents. The four Go services retain OBI. Let's open the result in a fresh order."
         },
         {
           "speaker": "Nikola",
-          "text": "Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application."
+          "text": "Open Cart in this fresh request. These are Ruby-agent observations; we didn't arrange a separate Ruby installation for its team. Now open Currency: that Go service still uses OBI. Fourteen language agents, including Checkout, and four services with OBI."
         },
         {
           "speaker": "Tyler",
-          "text": "The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too."
+          "text": "As the SDKs start exporting, OBI recognizes them and steps back from tracing those processes. We leave it running for the services that still need it."
+        },
+        {
+          "speaker": "Nikola",
+          "text": "So the next team can start with its question. Useful detail is already there. That is the result of the namespace rollout."
         }
       ],
       "visuals": [
         {
-          "type": "image",
-          "src": "demo-capture/fixed-fleet-overview.png",
-          "at": 0,
-          "focus": "waterfall"
+          "type": "art",
+          "at": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fixed-fleet-detail.mp4",
-          "poster": "demo-capture/fixed-fleet-overview.png",
-          "atCue": 1,
-          "focus": "waterfall"
+          "src": "presentation/clips/fleet-mixed-detail.mp4",
+          "poster": "presentation/images/fleet-mixed-detail.png",
+          "atCue": 1
         }
       ],
-      "purpose": "Use the actual fleet trace, then inspect Catalog rather than returning only to Checkout.",
+      "purpose": "Keep one fleet result: fourteen language agents plus four Go/OBI services. Open actual Cart Ruby-agent detail and Currency OBI resource attributes in the same fresh request; skip replay after successful live proof.",
       "sources": [
         "presentation/data/resolution.json",
         "docs/customer-resolution.md",
         "components/otel-injector-images/versions.json"
       ],
+      "previewVisualIndex": 0,
       "cues": [
         {
           "start": 0.65,
-          "end": 11.13,
+          "end": 7.25,
           "sampleStart": 15600,
-          "sampleEnd": 267120,
+          "sampleEnd": 174000,
           "speaker": "Tyler",
-          "text": "Back in the application view, we're looking at a new request through the instrumented fleet. We still have the system view, and now we can open language-level observations in more services."
+          "text": "Fourteen services now have language agents. The four Go services retain OBI. Let's open the result in a fresh order."
         },
         {
-          "start": 11.45,
-          "end": 22.53,
-          "sampleStart": 274800,
-          "sampleEnd": 540720,
+          "start": 7.57,
+          "end": 24.51,
+          "sampleStart": 181680,
+          "sampleEnd": 588240,
           "speaker": "Nikola",
-          "text": "Let's follow Catalog. These are the Java agent's database spans from that service. The same enrollment also covers the Node, Python, Ruby, and dot net services in this application."
+          "text": "Open Cart in this fresh request. These are Ruby-agent observations; we didn't arrange a separate Ruby installation for its team. Now open Currency: that Go service still uses OBI. Fourteen language agents, including Checkout, and four services with OBI."
         },
         {
-          "start": 22.85,
-          "end": 34.09,
-          "sampleStart": 548400,
-          "sampleEnd": 818160,
+          "start": 24.83,
+          "end": 32.83,
+          "sampleStart": 595920,
+          "sampleEnd": 787920,
           "speaker": "Tyler",
-          "text": "The namespace rule got us here without a separate instrumentation change from each application team. Checkout keeps its fix. Now the other teams have the language detail ready for their next investigation too."
+          "text": "As the SDKs start exporting, OBI recognizes them and steps back from tracing those processes. We leave it running for the services that still need it."
+        },
+        {
+          "start": 33.15,
+          "end": 40.63,
+          "sampleStart": 795600,
+          "sampleEnd": 975120,
+          "speaker": "Nikola",
+          "text": "So the next team can start with its question. Useful detail is already there. That is the result of the namespace rollout."
         }
       ],
       "visualCues": [
         {
-          "type": "image",
-          "src": "demo-capture/fixed-fleet-overview.png",
+          "type": "art",
           "at": 0,
-          "focus": "waterfall",
           "start": 0
         },
         {
           "type": "video",
-          "src": "demo-capture/fixed-fleet-detail.mp4",
-          "poster": "demo-capture/fixed-fleet-overview.png",
+          "src": "presentation/clips/fleet-mixed-detail.mp4",
+          "poster": "presentation/images/fleet-mixed-detail.png",
           "atCue": 1,
-          "focus": "waterfall",
-          "start": 11.45,
-          "mediaDuration": 10.0
+          "start": 7.57,
+          "mediaDuration": 19.04
         }
       ],
-      "duration": 34.76,
-      "start": 554.68,
-      "end": 589.44,
+      "duration": 41.28,
+      "start": 437.76,
+      "end": 479.04,
       "audio": "narration/12-wider-result.mp3"
-    },
-    {
-      "id": "13-hidden-cost",
-      "kind": "savings",
-      "title": "The work around a deployment adds up",
-      "plannedDuration": 55,
-      "lead": "Tyler",
-      "turns": [
-        {
-          "speaker": "Tyler",
-          "text": "Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?"
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "It is fewer people arranging the same work. Count their active effort separately from the time spent waiting."
-        }
-      ],
-      "purpose": "Connect the demonstrated workflow to people, coordination and waiting.",
-      "cues": [
-        {
-          "start": 0.65,
-          "end": 9.49,
-          "sampleStart": 15600,
-          "sampleEnd": 227760,
-          "speaker": "Tyler",
-          "text": "Think about the direct setup we watched. We knew the runtime, had access, and controlled the release. How much happens before someone in a real organization can even begin?"
-        },
-        {
-          "start": 9.81,
-          "end": 19.73,
-          "sampleStart": 235440,
-          "sampleEnd": 473520,
-          "speaker": "Nikola",
-          "text": "Find an owner. Explain the request. A ticket, a meeting, access, review, and a release slot. Then somebody switches away from their feature work."
-        },
-        {
-          "start": 20.05,
-          "end": 27.29,
-          "sampleStart": 481200,
-          "sampleEnd": 654960,
-          "speaker": "Tyler",
-          "text": "One namespace choice can remove repeated enrollment changes and keep shared settings consistent. The saving is more than typing fewer commands."
-        },
-        {
-          "start": 27.61,
-          "end": 33.21,
-          "sampleStart": 662640,
-          "sampleEnd": 797040,
-          "speaker": "Nikola",
-          "text": "It is fewer people arranging the same work. Count their active effort separately from the time spent waiting."
-        }
-      ],
-      "visualCues": [],
-      "duration": 33.88,
-      "start": 589.44,
-      "end": 623.32,
-      "audio": "narration/13-hidden-cost.mp3"
     },
     {
       "id": "14-lifecycle",
       "kind": "lifecycle",
-      "title": "Reuse the workflow after day one",
-      "plannedDuration": 50,
+      "title": "Maintain once. Roll out together.",
+      "plannedDuration": 45,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off."
+          "text": "An agent update next month shouldn't mean another setup project for thirteen teams. The platform can update the shared bundle and use the same rollout path. Eligible new services inherit the namespace policy."
         },
         {
           "speaker": "Nikola",
-          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime."
-        },
-        {
-          "speaker": "Tyler",
-          "text": "That can reduce drift and repeated troubleshooting. But the platform does not maintain itself."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too."
+          "text": "Compatibility tests, exceptions and recovery remain real work. We centralize ownership of that shared path. The saving is avoiding the routine setup and updates being arranged independently over and over."
         }
       ],
-      "purpose": "Cover onboarding, updates, consistency, recovery, training and shared upkeep.",
+      "purpose": "Explain shared onboarding and monthly update ownership, with compatibility, exceptions and recovery still maintained by people.",
       "cues": [
         {
           "start": 0.65,
-          "end": 7.13,
+          "end": 11.97,
           "sampleStart": 15600,
-          "sampleEnd": 171120,
+          "sampleEnd": 287280,
           "speaker": "Tyler",
-          "text": "And setup is only the first bill. A new service arrives. An agent needs an update. A team needs to turn instrumentation off."
+          "text": "An agent update next month shouldn't mean another setup project for thirteen teams. The platform can update the shared bundle and use the same rollout path. Eligible new services inherit the namespace policy."
         },
         {
-          "start": 7.45,
-          "end": 28.39,
-          "sampleStart": 178800,
-          "sampleEnd": 681360,
+          "start": 12.29,
+          "end": 25.33,
+          "sampleStart": 294960,
+          "sampleEnd": 607920,
           "speaker": "Nikola",
-          "text": "Compatible new services inherit the namespace choice. Updates reuse the shared rollout path. Configuration, documentation, and recovery instructions have one place to improve. A runtime change doesn't automatically mean a new onboarding project: OBI can keep the baseline for supported traffic, while language-level detail depends on the runtime."
-        },
-        {
-          "start": 28.71,
-          "end": 33.63,
-          "sampleStart": 689040,
-          "sampleEnd": 807120,
-          "speaker": "Tyler",
-          "text": "That can reduce drift and repeated troubleshooting. But the platform does not maintain itself."
-        },
-        {
-          "start": 33.95,
-          "end": 41.03,
-          "sampleStart": 814800,
-          "sampleEnd": 984720,
-          "speaker": "Nikola",
-          "text": "Exactly. Compatibility, rollout, and recovery still need people. Their time goes into the calculation too."
+          "text": "Compatibility tests, exceptions and recovery remain real work. We centralize ownership of that shared path. The saving is avoiding the routine setup and updates being arranged independently over and over."
         }
       ],
       "visualCues": [],
-      "duration": 41.68,
-      "start": 623.32,
-      "end": 665.0,
+      "duration": 26.0,
+      "start": 479.04,
+      "end": 505.04,
       "audio": "narration/14-lifecycle.mp3"
     },
     {
       "id": "15-adoption",
       "kind": "adoption",
       "title": "Make coverage the default",
-      "plannedDuration": 50,
+      "plannedDuration": 45,
       "lead": "Nikola",
       "turns": [
         {
           "speaker": "Nikola",
-          "text": "This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage."
+          "text": "This is a sketch of language-agent adoption across eligible services. With team-by-team work, one team finishes; another has a release freeze. Add a service or rewrite one in another language, and the gap can open again."
         },
         {
           "speaker": "Tyler",
-          "text": "And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path."
+          "text": "The centralized path covers the eligible services in one rollout, before that first team-by-team increment. New compatible services inherit it. We still maintain the shared path, but routine enrollment doesn't wait for a separate project in every team."
         }
       ],
       "purpose": "Compare one central enrollment and inherited coverage with a team-by-team long tail; explain aloud that the paths are conceptual, not observed adoption data.",
@@ -1332,57 +1236,45 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 11.81,
+          "end": 14.25,
           "sampleStart": 15600,
-          "sampleEnd": 283440,
+          "sampleEnd": 342000,
           "speaker": "Nikola",
-          "text": "This is a sketch of adoption, not measured rollout data. Team-by-team ownership advances in steps: one service, then another. Busy teams create a long tail that may never reach full coverage."
+          "text": "This is a sketch of language-agent adoption across eligible services. With team-by-team work, one team finishes; another has a release freeze. Add a service or rewrite one in another language, and the gap can open again."
         },
         {
-          "start": 12.13,
-          "end": 23.77,
-          "sampleStart": 291120,
-          "sampleEnd": 570480,
+          "start": 14.57,
+          "end": 27.03,
+          "sampleStart": 349680,
+          "sampleEnd": 648720,
           "speaker": "Tyler",
-          "text": "And the finish line moves. New services arrive. Someone rewrites a service from Java to Python, and the old instrumentation setup no longer fits. Coverage can drop while other teams are still catching up."
-        },
-        {
-          "start": 24.09,
-          "end": 35.77,
-          "sampleStart": 578160,
-          "sampleEnd": 858480,
-          "speaker": "Nikola",
-          "text": "Central policy makes coverage the default. One rollout reaches the eligible services in scope, and new compatible workloads inherit it. The platform still tests and maintains that shared path."
+          "text": "The centralized path covers the eligible services in one rollout, before that first team-by-team increment. New compatible services inherit it. We still maintain the shared path, but routine enrollment doesn't wait for a separate project in every team."
         }
       ],
       "visualCues": [],
-      "duration": 36.44,
-      "start": 665.0,
-      "end": 701.44,
+      "duration": 27.68,
+      "start": 505.04,
+      "end": 532.72,
       "audio": "narration/15-adoption.mp3"
     },
     {
       "id": "15-cost",
       "kind": "cost-timeline",
-      "title": "The cost of team-by-team ownership",
+      "title": "The cost of repeated setup and upkeep",
       "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release."
+          "text": "Here's an example for this same eighteen-service application: the thirteen remaining agent setups and two years of monthly updates. Each step is another release to handle. Distributed owners repeat that work; the centralized path shares the setup and update rollouts."
         },
         {
           "speaker": "Nikola",
-          "text": "With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time."
+          "text": "The modeled difference is two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. Time for the next customer problem."
         },
         {
           "speaker": "Tyler",
-          "text": "Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating."
-        },
-        {
-          "speaker": "Nikola",
-          "text": "These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams."
+          "text": "These are assumed setup and rollout hours, not measured cash savings or a complete platform budget. Put your own support and testing costs into the worksheet. We haven't priced the calendar time waiting for other teams."
         }
       ],
       "purpose": "Keep the cumulative setup/upkeep comparison in the same 18-service demo. Step up at each monthly release: 9.75 distributed hours versus 0.75 central hours. Over two years, show 266.5 versus 19.5 hours and emphasize 247 engineering hours freed, with their $24,700 assumed labor value secondary.",
@@ -1394,106 +1286,98 @@ window.TALK = {
       "cues": [
         {
           "start": 0.65,
-          "end": 13.17,
+          "end": 14.91,
           "sampleStart": 15600,
-          "sampleEnd": 316080,
+          "sampleEnd": 357840,
           "speaker": "Tyler",
-          "text": "Let's keep the cost comparison in this demo. Eighteen services, thirteen of them still needing language instrumentation after our first example. These steps show setup and two years of monthly agent updates. Each jump is another release."
+          "text": "Here's an example for this same eighteen-service application: the thirteen remaining agent setups and two years of monthly updates. Each step is another release to handle. Distributed owners repeat that work; the centralized path shares the setup and update rollouts."
         },
         {
-          "start": 13.49,
-          "end": 27.05,
-          "sampleStart": 323760,
-          "sampleEnd": 649200,
+          "start": 15.23,
+          "end": 25.19,
+          "sampleStart": 365520,
+          "sampleEnd": 604560,
           "speaker": "Nikola",
-          "text": "With distributed ownership, each service owner arranges the work. With centralized control, we set up the namespace once and share each update. Both lines include upkeep; the centralized path still costs engineering time."
+          "text": "The modeled difference is two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars of capacity. Time for the next customer problem."
         },
         {
-          "start": 27.37,
-          "end": 39.87,
-          "sampleStart": 656880,
-          "sampleEnd": 956880,
+          "start": 25.51,
+          "end": 35.95,
+          "sampleStart": 612240,
+          "sampleEnd": 862800,
           "speaker": "Tyler",
-          "text": "Over two years, that frees two hundred and forty-seven engineering hours. At a hundred dollars an hour, that's twenty-four thousand seven hundred dollars. From setup and monthly updates, in the same small application we've been investigating."
-        },
-        {
-          "start": 40.19,
-          "end": 51.51,
-          "sampleStart": 964560,
-          "sampleEnd": 1236240,
-          "speaker": "Nikola",
-          "text": "These are assumed person-hours valued at a hundred dollars an hour, not a measured cash saving. Include your own compatibility and support costs. We haven't priced the calendar time spent waiting for other teams."
+          "text": "These are assumed setup and rollout hours, not measured cash savings or a complete platform budget. Put your own support and testing costs into the worksheet. We haven't priced the calendar time waiting for other teams."
         }
       ],
       "visualCues": [],
-      "duration": 52.16,
-      "start": 701.44,
-      "end": 753.6,
+      "duration": 36.6,
+      "start": 532.72,
+      "end": 569.32,
       "audio": "narration/15-cost.mp3"
     },
     {
       "id": "16-close",
       "kind": "close",
       "title": "OpenTelemetry. Ready to install.",
-      "plannedDuration": 50,
+      "plannedDuration": 60,
       "lead": "Tyler",
       "turns": [
         {
           "speaker": "Tyler",
-          "text": "We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace."
+          "text": "We started with a customer waiting for an order. OBI showed the failed connection. Java detail named the pricing operation. We found the old endpoint setting, removed it, and opened a new trace to see the wait disappear."
         },
         {
           "speaker": "Nikola",
-          "text": "Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project."
+          "text": "Then one namespace choice added language detail across the supported fleet. The next team shouldn't have to repeat our setup before investigating. RIO demonstrates the shared workflow we'd like to bring upstream."
         },
         {
           "speaker": "Tyler",
-          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers."
+          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service or across a cluster, then use to find what's keeping a customer waiting—and do something about it."
         },
         {
           "speaker": "Nikola",
-          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you."
         }
       ],
       "purpose": "Close with the measured customer improvement and namespace coverage: OpenTelemetry has grown beyond APIs and SDKs into instrumentation users can install for services and clusters. Leave the demo and RIO QR codes visible.",
       "cues": [
         {
           "start": 0.65,
-          "end": 13.39,
+          "end": 12.41,
           "sampleStart": 15600,
-          "sampleEnd": 321360,
+          "sampleEnd": 297840,
           "speaker": "Tyler",
-          "text": "We started with a customer waiting. OBI showed the failed connection. The Java agent tied it to pricing, and the resource attributes exposed a stale endpoint setting. We removed that setting, rolled the same image, and checked the next request's trace."
+          "text": "We started with a customer waiting for an order. OBI showed the failed connection. Java detail named the pricing operation. We found the old endpoint setting, removed it, and opened a new trace to see the wait disappear."
         },
         {
-          "start": 13.71,
-          "end": 28.33,
-          "sampleStart": 329040,
-          "sampleEnd": 679920,
+          "start": 12.73,
+          "end": 25.29,
+          "sampleStart": 305520,
+          "sampleEnd": 606960,
           "speaker": "Nikola",
-          "text": "Then one namespace choice carried language instrumentation across the supported services. RIO demonstrates that shared workflow; we want an upstream home for the idea. The next team should start with useful detail, instead of another setup project."
+          "text": "Then one namespace choice added language detail across the supported fleet. The next team shouldn't have to repeat our setup before investigating. RIO demonstrates the shared workflow we'd like to bring upstream."
         },
         {
-          "start": 28.65,
-          "end": 42.81,
-          "sampleStart": 687600,
-          "sampleEnd": 1027440,
+          "start": 25.61,
+          "end": 36.93,
+          "sampleStart": 614640,
+          "sampleEnd": 886320,
           "speaker": "Tyler",
-          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install: on a service, across a cluster. From a customer waiting to a cause you can act on. Less setup. More answers."
+          "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service or across a cluster, then use to find what's keeping a customer waiting—and do something about it."
         },
         {
-          "start": 43.13,
-          "end": 49.93,
-          "sampleStart": 1035120,
-          "sampleEnd": 1198320,
+          "start": 37.25,
+          "end": 41.61,
+          "sampleStart": 894000,
+          "sampleEnd": 998640,
           "speaker": "Nikola",
-          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you. Let's take your questions."
+          "text": "Find the wait. Fix the cause. Make the next investigation easier. Thank you."
         }
       ],
       "visualCues": [],
-      "duration": 50.6,
-      "start": 753.6,
-      "end": 804.2,
+      "duration": 42.28,
+      "start": 569.32,
+      "end": 611.6,
       "audio": "narration/16-close.mp3"
     }
   ],
@@ -1563,15 +1447,15 @@ window.TALK = {
     }
   },
   "bigIdea": "Install visibility, follow the slow request to its stale configuration, fix it without rebuilding, then share that capability across the namespace.",
-  "scriptRevision": "2026-11-02-configuration-fix-and-readable-slide-scripts",
+  "scriptRevision": "2026-11-04-live-path-and-fresh-evidence",
   "timing": "natural",
-  "plannedDuration": 1260,
+  "plannedDuration": 1245,
   "maxContentSeconds": 1320,
-  "storyRevision": "2026-11-02-configured-legacy-endpoint",
+  "storyRevision": "2026-11-04-live-path-and-fresh-evidence",
   "pronunciation": {
     "RIO": "rhee-o (Spanish río)",
     "OTelX": "oh-tell-X",
     "OBI": "Tyler: short Oh-bee, spoken as one word with no drawn-out Oh"
   },
-  "duration": 804.2
+  "duration": 611.6
 };

@@ -3,13 +3,13 @@ set -euo pipefail
 umask 077
 component=$(cd -- "$(dirname -- "$0")/.." && pwd)
 root=$(cd -- "$component/../.." && pwd)
-demo_context=$(kubectl config current-context)
+demo_context=${DEMO_CONTEXT:-$(kubectl config current-context)}
 config_id=$(python3 -c 'import hashlib,os,sys; print(hashlib.sha256((os.environ.get("KUBECONFIG", "") + "\0" + sys.argv[1]).encode()).hexdigest()[:16])' "$demo_context")
 artifacts="$root/.artifacts/injector-components/install/$config_id"
 mkdir -p "$artifacts"
 export TMPDIR="$artifacts"
 kubectl() { command kubectl --context="$demo_context" --cache-dir="$artifacts/kubectl-cache" "$@"; }
-printf 'Installing the demo Injector operator in context %s\n' "$demo_context"
+printf 'Installing the bundled RIO demo controller in context %s\n' "$demo_context"
 image=${1:-otel-injector-operator:demo}
 kubectl apply -f "$component/config/crd.yaml"
 kubectl wait --for=condition=Established crd/instrumentations.demo.opentelemetry.io --timeout=60s

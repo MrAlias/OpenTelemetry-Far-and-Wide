@@ -1,3 +1,26 @@
+# Current application · November 4 rehearsal edit
+
+The primary deck now has 23 slides and a 20:45 content budget, with 75 seconds
+of live flexibility and three minutes for recovery/questions. It retains the
+customer fix and namespace payoff, groups the upstream Operator comparison
+into 90 seconds, puts the full Injector mechanism after that comparison, and
+uses one fresh Ruby-agent/Go-OBI fleet view. The captured metric means also
+supply the closing callback; separate trace medians remain reproduction evidence.
+
+The current dialogue is in `scripts/animation/talk.json` and the slide notes.
+The November 4 edit uses the manually reviewed notes as its starting point.
+Fresh OBI v1.0.0, direct-agent, configuration-fix and namespace recordings
+replace stage-time preparation. The local synthesized review is regenerated from the current script; keep
+older recordings archived rather than presenting them as this revision.
+
+The existing research still applies: one central idea, visible problem-to-result
+evidence, short conversational exchanges, useful inspection time and natural
+delivery. No speaking-speed changes are used to meet the limit. The demo
+run sheet separates preflight, live actions and fallback switches; technical
+identity/rollout checks stay in preparation rather than audience exposition.
+
+---
+
 # Current application · fleet story, October 22, 2026
 
 The dialogue now serves one idea: use OBI timing to choose an investigation,

@@ -1,9 +1,9 @@
 {
   "source": "public/demo-capture/java-trace-evidence.json",
-  "traceId": "26abea5ca66f7e87389d931bfecdf3d0",
-  "spanId": "db4cc8d8ad24054a",
+  "traceId": "03f92a74331b453ab16e5e86ce2cdd5b",
+  "spanId": "4b22aa0f2da30e4d",
   "name": "GET",
-  "durationMs": 2002.943857,
+  "durationMs": 2002.591729,
   "errorType": "java.net.SocketTimeoutException",
   "url": "http://192.0.2.42:8080/price",
   "exceptionType": "java.net.SocketTimeoutException",

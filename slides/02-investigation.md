@@ -9,11 +9,11 @@ kicker: The application
 <!--
 **Tyler:**
 
-Here's an overview of where the order goes. Our application starts at Gateway, and continues to Checkout, Inventory, and then the commerce branches. Eighteen services, plus PostgreSQL and Redis. Our customer's frustration is being caused by something in this chaos.
+The request enters through Gateway, reaches Checkout and Inventory, then fans out through the commerce services. Eighteen applications, plus PostgreSQL and Redis. We know the route; we don't yet know which part is making the customer wait.
 
 **Nikola:**
 
-The person placing the order doesn't care which service owns the delay. They just want their order to go through. Let's get a view of the whole request before we choose where to look.
+And the customer shouldn't need to know. Let's see the request before we choose a service to investigate.
 -->
 
 ---
@@ -25,53 +25,53 @@ mediaAt: 1
 # OBI
 
 <OBIIntro v-if="$clicks === 0" />
-<DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Actual OBI installation and readiness recording" />
+<DemoClip v-else src="install-obi-edited.mp4" poster="install-obi-edited-poster.png" label="Recorded OBI v1.0.0 deployment and readiness; normal playback speed" />
 
 <!--
 **Tyler:**
 
-To start the investigation, we'll install OpenTelemetry eBPF Instrumentation, or OBI, on our nodes. OBI instruments applications running on Linux using eBPF. It will automatically generate OpenTelemetry traces and metrics for those applications. OBI is zero-code instrumentation. No application code changes, and no application restarts are required.
+We'll start with OpenTelemetry eBPF Instrumentation, or OBI. Deploy it on the Linux nodes and it generates OpenTelemetry traces and metrics for supported applications. No application code changes and no application restarts. That's a pretty good way to meet eighteen services you haven't instrumented yet.
 
 **Nikola:**
 
-That changes how quickly we can start helping. We don't have to get an instrumentation change through every service first. If you joined us in Atlanta last year, you'll remember this idea. OBI is now v1.0.0 and generally available.
+If you joined us in Atlanta last year, you'll recognize the idea. OBI is now version one and generally available. The previous talk is linked here. Today, we're using that broad view as the starting point for an investigation.
 
 [click]
 
 **Tyler:**
 
-Let's deploy it to the nodes. Once running, OBI discovers the services running on the node, and starts generating telemetry about the services operation and the calls between them. For the customer order request, that includes HTTP calls and the PostgreSQL and Redis traffic.
+Let's deploy OBI and send an order. The application keeps running while we add visibility.
 
 **Nikola:**
 
-Just a single deployment. Now let's see how much of the customer's wait we can explain.
+One deployment on the nodes. Let's open the request we just sent.
 -->
 
 ---
-kicker: Live demo · find the wait
+kicker: Find the wait
 clicks: 1
 ---
 
 # Find the two-second wait
 
-<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI waterfall with a failed Checkout CONNECT span near two seconds" />
+<TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI request waterfall; highlight the failed Checkout connection" />
 
 <!--
 **Nikola:**
 
-Here's the order the customer has been waiting for. We can follow its service calls and its PostgreSQL price query in one trace. Nobody had to edit those applications to get us this starting point.
+Here's that order in Grafana. We can follow the service calls and database work without changing those applications.
 
 **Tyler:**
 
-Look how the question we are investigating changed now that we have data. We are no longer asking "Why is our application slow?". Now we can focus specifically where this particular request was slow and ask "Why is this one service slow?" Let's find out.
+Now look inside Checkout. Where does most of the customer's wait go?
 
 [click]
 
 **Nikola:**
 
-Look at this failed connection from Checkout. About two seconds go here. Then the price lookup succeeds and the rest of the order carries on. The request is successful, but the customer had to wait because of that failed attempt.
+This failed connection takes about two seconds. The order still completes, but the customer waits for a failed attempt first.
 
 **Tyler:**
 
-Our investigation question can now be even more specific. Why does Checkout try a connection that fails before it does the work that succeeds? We need to connect this call to what Checkout is doing.
+Why is Checkout making that call? OBI has shown us where to look. Let's add the Java agent to connect the failed call to the work inside the service.
 -->

@@ -35,7 +35,7 @@ const svg = (label, body, p) => `<svg viewBox="0 0 1152 470" role="img" aria-lab
 
 export function renderAdoptionChart(palette = {}) {
   const p = { ...light, ...palette }, x = t => 95 + t * 8.45, y = percent => 390 - percent * 2.9
-  let body = text(95, 33, 'Eligible services covered', 25, p.muted)
+  let body = text(95, 33, 'Language-agent adoption', 25, p.muted)
   for (const value of [0, 50, 100]) {
     body += `<path d="M95 ${y(value)}H940" stroke="${p.grid}" stroke-width="1.5"/>`
     body += text(76, y(value) + 8, value + '%', 24, p.muted, 'text-anchor="end"')
@@ -49,7 +49,7 @@ export function renderAdoptionChart(palette = {}) {
   body += `<path d="M570 310L${x(65)} ${y(59) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   body += `<path d="M820 310L${x(87)} ${y(58) + 10}" fill="none" stroke="${p.muted}" stroke-width="1.5"/>`
   body += text(517.5, 430, 'time', 24, p.muted, 'text-anchor="middle"')
-  return svg('Eligible service coverage over time: centralized rollout reaches full coverage; team-by-team adoption has a long tail and can lose coverage as services change.', body, p)
+  return svg('Language-agent adoption among eligible services over time: centralized rollout reaches full coverage; team-by-team adoption has a long tail and can lose coverage as services change.', body, p)
 }
 
 export function renderCostChart(model, palette = {}) {

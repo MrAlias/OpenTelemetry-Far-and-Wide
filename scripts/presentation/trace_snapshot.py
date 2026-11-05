@@ -19,6 +19,9 @@ def public_snapshot(trace):
                 assert value in SERVICES, 'Unexpected service in demo evidence'
             elif key in {'service.namespace','k8s.namespace.name'}:
                 assert value == 'demo-apps'
+            elif key in {'telemetry.sdk.language','telemetry.sdk.name','telemetry.sdk.version',
+                         'telemetry.distro.name','telemetry.distro.version','otel.scope.name'}:
+                pass
             elif key == LEGACY_KEY:
                 assert value == LEGACY_URL, 'Only the requested demo setting is public'
             else:

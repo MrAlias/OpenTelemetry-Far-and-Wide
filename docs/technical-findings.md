@@ -1,5 +1,10 @@
 # OpenTelemetry Far and Wide: technical findings
 
+Historical research/proof reference. For the current 18-service, two-second
+retired-endpoint presentation, use the [live run sheet](../demo/README.md#live-run-sheet)
+and [current customer resolution](customer-resolution.md). The earlier sleep,
+router and candidate versions below describe their original experiment.
+
 Research date: 2026-10-05. This answers the preparation questions and records
 the decisions that will shape the demo specification. It is a source review,
 not a report of a working deployment. No cluster experiment, performance

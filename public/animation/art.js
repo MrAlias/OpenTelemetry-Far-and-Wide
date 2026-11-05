@@ -11,14 +11,6 @@
   const fleet=(mode='plain',progress=1)=>window.renderDemoTopology({mode,progress,palette:C});
   const duration=ms=>ms>=1000?(ms/1000).toFixed(2)+' s':Math.round(ms)+' ms';
   const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(v);
-  function localTrace(detail=0){
-    const names=['Gateway','Checkout',detail>0?'PricingEngine.calculate':'Unexplained local work','Inventory call',detail>0?'Hibernate / JDBC':'Persistence question','Commerce calls'];let s='';
-    names.forEach((name,i)=>{const y=225+i*58,internal=i===2||i===4;
-      s+=text(75,y+24,name,internal?24:27,internal?C.depth:C.ink);
-      s+=`<rect x="410" y="${y}" width="790" height="27" fill="${C.panel}"/>`;
-      if(!internal||detail>0)s+=`<rect x="${410+[0,32,85,355,420,520][i]}" y="${y}" width="${[770,710,260*detail,55,90*detail,160][i]}" height="27" rx="3" fill="${internal?C.depth:C.blue}" opacity="${internal?detail:1}"/>`;
-    });return s;
-  }
   function list(items,{x=85,y=270,size=33,gap=70,color=C.ink}={}){return items.map((s,i)=>text(x,y+i*gap,s,size,color)).join('');}
   function capturedPanel(capture, region, x, y, width, id) {
     const [left,top,w,h]=region, scale=width/w;
@@ -27,10 +19,18 @@
   }
   function content(scene,p){switch(scene.kind){
     case 'title':return lines(70,270,['OpenTelemetry','Far and Wide'],88)+text(75,485,'Tyler Yahn · Nikola Grcevski',32,C.muted)+lines(75,565,['Find the wait. Fix the cause.','Make the next investigation easier.'],33,C.blue);
-    case 'observed':return fleet('observed',p)+center(655,p>0?'Cart branch · captured server durations':'A topology shows possible calls; the request shows observed calls',25,C.blue);
-    case 'trace-focus':return `<image href="${window.EVIDENCE_IMAGES?.['demo-capture/connected-trace.png']||'demo-capture/connected-trace.png'}" x="0" y="0" width="1280" height="720"/>`+(p>0?`<rect x="513" y="${window.DEMO_EVIDENCE.failedConnectionRowY}" width="${750*window.DEMO_EVIDENCE.failedConnectionMs/window.DEMO_EVIDENCE.serverDurationMs.gateway}" height="30" fill="${C.depth}" opacity="${.35*p}"/><path d="M700 ${window.DEMO_EVIDENCE.failedConnectionRowY} L700 388" stroke="${C.depth}" stroke-width="3"/><rect x="530" y="330" width="470" height="58" rx="8" fill="${C.bg}" stroke="${C.depth}"/>`+text(765,368,(window.DEMO_EVIDENCE.failedConnectionMs/1000).toFixed(2)+' s · failed connection',25,C.depth,'text-anchor="middle"'):'');
+    case 'trace-focus':return '<svg x="0" y="180" width="1280" height="480" viewBox="0 280 1280 440">'+`<image href="${window.EVIDENCE_IMAGES?.['demo-capture/connected-trace.png']||'demo-capture/connected-trace.png'}" width="1280" height="720"/>`+(p>0?`<rect x="513" y="${window.DEMO_EVIDENCE.failedConnectionRowY}" width="${750*window.DEMO_EVIDENCE.failedConnectionMs/window.DEMO_EVIDENCE.serverDurationMs.gateway}" height="30" fill="${C.depth}" opacity="${.35*p}"/><path d="M700 ${window.DEMO_EVIDENCE.failedConnectionRowY} L700 388" stroke="${C.depth}" stroke-width="3"/><rect x="530" y="330" width="470" height="58" rx="8" fill="${C.bg}" stroke="${C.depth}"/>`+text(765,368,(window.DEMO_EVIDENCE.failedConnectionMs/1000).toFixed(2)+' s · failed connection',25,C.depth,'text-anchor="middle"'):'')+'</svg>';
+    case 'java-setup':return `<rect x="65" y="210" width="1150" height="365" rx="6" fill="${C.panel}"/>`+lines(100,270,['JAVA_TOOL_OPTIONS: >-', '  -javaagent:/java-agent/opentelemetry-javaagent.jar','OTEL_SERVICE_NAME: checkout','OTEL_EXPORTER_OTLP_ENDPOINT: >-', '  http://lgtm.observability.svc.cluster.local:4318'],29,C.ink,'font-family="monospace" xml:space="preserve"');
+    case 'namespace-rule':return `<rect x="95" y="235" width="1090" height="320" rx="6" fill="${C.panel}"/>`+lines(150,325,['selector:','  namespaces: [demo-apps]','action: Inject'],46,C.blue,'font-family="monospace" xml:space="preserve"');
     case 'screen':case 'terminal':return '';
-    case 'obi-intro':return text(75,210,'OpenTelemetry eBPF Instrumentation',32,C.blue)+lines(75,300,['Start with the applications','you already have.'],52)+lines(75,485,['No application code changes','No application restarts','OpenTelemetry traces and metrics'],30,C.ink)+text(75,665,'Deploy on the nodes · discover supported Linux workloads',26,C.muted);
+    case 'obi-intro':{
+      const r=window.PREVIOUS_TALK_RESOURCE;
+      let g=text(75,180,'OpenTelemetry eBPF Instrumentation',30,C.blue);
+      g+='<g transform="translate(65 225)">'+text(380,38,'Running applications',25,C.muted,'text-anchor="middle"');
+      g+=[160,380,600].map(x=>`<path d="M${x} 155V222" fill="none" stroke="${C.line}" stroke-width="2"/><rect x="${x-72}" y="73" width="144" height="84" rx="7" fill="${C.panel}" stroke="${C.line}" stroke-width="2"/><path d="M${x-22} 102L${x-36} 115L${x-22} 128M${x+22} 102L${x+36} 115L${x+22} 128M${x+8} 94L${x-8} 136" fill="none" stroke="${C.ink}" stroke-width="3"/>`).join('');
+      g+=`<rect x="67" y="220" width="626" height="73" rx="6" fill="${C.panel}" stroke="${C.blue}" stroke-width="2"/>`+text(104,266,'OBI / eBPF',29,C.blue)+text(651,265,'Linux',24,C.muted,'text-anchor="end"')+arrow(380,293,380,333)+text(380,370,'Traces + metrics',28,C.ink,'text-anchor="middle"')+'</g>';
+      return g+text(250,675,'0',52)+text(295,675,'code edits',24,C.muted)+text(500,675,'0',52)+text(545,675,'restarts',24,C.muted)+`<a href="${r.url}">`+text(1060,205,r.location+' · '+r.year,25,C.muted,'text-anchor="middle"')+`<g transform="translate(930 235) scale(${260/r.size})">${r.markup}</g>`+r.lines.map((line,i)=>text(1060,540+i*36,line,26,C.ink,'text-anchor="middle"')).join('')+'</a>';
+    }
     case 'timeout-evidence':{
       const c=window.ATTRIBUTE_CAPTURES.timeout, width=980;
       return capturedPanel(c,c.attributes,150,190,width,'timeout-attributes')
@@ -53,30 +53,26 @@
     case 'operator-opt-in':{
       const c=window.OPERATOR_CONFIGURATION,step=scene.operatorStep??5;
       const rows=c.annotations.filter(row=>row.at<=step);
-      return text(75,190,'Upstream OpenTelemetry Operator · reporting-api',25,C.blue)
-        +text(75,240,c.annotationPrefix,19,C.muted,'font-family="monospace"')
-        +rows.map((row,i)=>text(75,292+i*43,row.key+': "'+row.value+'"',25,row.at===step?C.blue:C.ink,'font-family="monospace"')).join('')
-        +text(850,220,c.steps[step],27,C.ink)
-        +box(850,260,350,86,'App team','Image + startup')+arrow(1025,346,1025,380)
-        +box(850,380,350,86,'Platform','Payload + configuration')+arrow(1025,466,1025,500)
-        +box(850,500,350,86,'Release','Restart + trace')
-        +text(75,566,c.pythonPayload.field,18,C.muted)+text(75,596,c.pythonPayload.image,23,C.blue,'font-family="monospace"')
-        +text(75,635,c.startup,25,C.depth,'font-family="monospace"')
-        +text(75,680,'Pod mutation still needs application facts.',25,C.muted);
+      let diagram='';
+      if(step===1){diagram=`<rect x="850" y="250" width="350" height="340" rx="6" fill="none" stroke="${C.line}" stroke-width="2"/>`+text(875,285,'Pod',22,C.muted)+box(930,315,190,105,'api','Python 3.12')+`<path d="M1025 420V455M940 455H1110M940 455V490M1110 455V490" fill="none" stroke="${C.line}" stroke-width="2"/>`+box(875,490,130,58,'glibc','',C.line)+box(1045,490,130,58,'musl','',C.green)}
+      else if(step===2){diagram=`<rect x="850" y="250" width="350" height="340" rx="6" fill="none" stroke="${C.line}" stroke-width="2"/>`+text(875,285,'Pod',22,C.muted)+box(865,320,155,175,'api','Python')+box(1030,320,155,175,'worker','.NET',C.green)}
+      else{diagram=box(850,260,350,86,'App team','Image + startup')+arrow(1025,346,1025,380)+box(850,380,350,86,'Platform','Payload + configuration')+arrow(1025,466,1025,500)+box(850,500,350,86,'Release','Restart + trace')}
+      return text(75,190,'Upstream OpenTelemetry Operator · reporting-api',25,C.blue)+text(75,240,c.annotationPrefix,19,C.muted,'font-family="monospace"')+rows.map((row,i)=>text(75,292+i*43,row.key+': "'+row.value+'"',25,row.at===step?C.blue:C.ink,'font-family="monospace"')).join('')+text(850,220,c.steps[step],27)+diagram+text(75,566,c.pythonPayload.field,18,C.muted)+text(75,596,c.pythonPayload.image,23,C.blue,'font-family="monospace"');
     }
+    case 'controller-intro':return box(90,255,470,110,'RIO demo controller','Select workloads + manage rollout')+arrow(560,310,710,310)+box(710,255,470,110,'Injector','Load agent inside each process')+center(500,'Prepared bundle · shared exporter · compatible workloads',30,C.blue)+center(585,'Purpose-built prototype · upstream home remains open',26);
     case 'namespace-result':return text(75,163,'selector.namespaces: [demo-apps]',29,C.blue,'font-family="monospace"')+fleet(p>0?'deploy':'one',p)+center(655,'14 language agents · 4 Go services with OBI · one namespace choice',26,C.green);
     case 'topology':return fleet()+center(655,'18 application services · one successful checkout visits the full tree',27);
-    case 'obi':return fleet('obi',p)+center(655,p>0?'Follow gateway → checkout → the commerce branches':'Apply OBI · send a checkout request',28,C.blue);
-    case 'slow':return fleet('slow',p)+center(655,p>0?'Inspect Checkout after accounting for its downstream work':'Compare the observed timing before selecting a service',27,p>0?C.depth:C.muted);
-    case 'question':return localTrace()+center(610,'What can the language agent explain inside the boundary?',29,C.depth);
-    case 'manual':return list(['1   Choose and provide the supported agent','2   Configure startup, identity, and export','3   Deploy · wait for readiness','4   Generate traffic · verify useful linked spans'],{gap:78,size:32})+center(635,'Knowing how and having access still leave work to do',28,C.depth);
-    case 'detail':return localTrace(p)+center(610,p>0?'New observation · correct parent links · healthy requests':'Keep the baseline framing; inspect a fresh request',29,p>0?C.depth:C.muted);
     case 'scale':return fleet('one')+center(655,'1 agent configured · 13 more eligible · 4 Go services keep OBI',28,C.depth);
-    case 'operator':return box(360,230,560,90,'Custom operator','Shared selection and runtime handling')+arrow(640,320,640,370)+box(360,380,560,90,'Injector','Arrange the supported language agent',C.depth)+center(550,'Upstream already supports language auto-injection',28)+center(610,'Custom prototype · upstream already supports auto-injection',25);
-    case 'deploy':return fleet(p>0?'deploy':'one',p)+center(655,p>0?'Verify 14 language agents; retain the Go OBI baseline':'Enroll 13 eligible services; exclude existing direct setup',28,p>0?C.green:C.muted);
-    case 'complete':return fleet('complete')+center(655,'14 language agents · 4 Go OBI baselines · latency still needs investigation',26,C.green);
-    case 'savings':return text(80,245,'Request for visibility',30,C.blue)+text(1200,245,'Useful telemetry',30,C.green,'text-anchor="end"')+arrow(80,305,1195,305)+list(['Agree and coordinate','Configure and deploy','Wait and switch context','Validate and recover'],{x:95,y:380,size:33,gap:67})+text(680,400,'People doing the work',31,C.depth)+text(680,470,'Time waiting between steps',31,C.depth)+text(680,555,'Measure both clocks separately',26,C.muted);
-    case 'lifecycle':return list(['New compatible service → inherit namespace selection','Agent update → reuse the rollout and checks','Configuration change → reduce drift and rework','Failure → reuse a tested recovery path'],{size:31,gap:78})+center(635,'Include platform maintenance, compatibility, and blast radius',27,C.depth);
+    case 'lifecycle':{
+      let g='<g transform="translate(64 130)">';
+      const events=['New service','Agent update','Configuration','Recovery'];
+      events.forEach((event,i)=>{const y=105+i*100;g+=`<path d="M300 ${y}H360Q395 ${y} 415 255H455" fill="none" stroke="${C.line}" stroke-width="2"/><circle cx="46" cy="${y}" r="18" fill="${C.panel}" stroke="${C.line}" stroke-width="2"/><path d="M38 ${y}H54M46 ${y-8}V${y+8}" stroke="${C.blue}" stroke-width="2"/>`+text(85,y+9,event,27)});
+      g+=`<circle cx="545" cy="255" r="88" fill="${C.panel}" stroke="${C.green}" stroke-width="3"/><path d="M520 222A35 35 0 1 1 515 267M515 244V267H538" fill="none" stroke="${C.green}" stroke-width="3"/>`+text(545,305,'Platform',24,C.ink,'text-anchor="middle"')+`<path d="M635 255H712M712 125V374" fill="none" stroke="${C.green}" stroke-width="2"/>`;
+      const nodes=Array.from({length:13},(_,i)=>({x:i===12?922.5:795+(i%4)*85,y:125+Math.floor(i/4)*83}));
+      g+=nodes.map(({x,y})=>`<path d="M712 255V${y}H${x-27}" fill="none" stroke="${C.green}" stroke-width="2" opacity=".45"/>`).join('');
+      g+=nodes.map(({x,y})=>`<g transform="translate(${x} ${y})"><rect x="-26" y="-23" width="52" height="46" rx="5" fill="${C.panel}" stroke="${C.green}" stroke-width="2"/><path d="M-13 -6L-19 0L-13 6M13 -6L19 0L13 6M4 -10L-4 10" fill="none" stroke="${C.green}" stroke-width="2"/></g>`).join('');
+      return g+text(922,65,'13 services',26,C.muted,'text-anchor="middle"')+'</g>';
+    }
     case 'latency-result':case 'metric-comparison':{
       return ['before','after'].map((phase,i)=>{
         const src='presentation/images/customer-'+phase+'-metric.png';
@@ -88,21 +84,22 @@
     case 'adoption':case 'cost-timeline':{
       const chart=window.renderRolloutChart(scene.kind==='adoption'?'adoption':'cost',{ink:C.ink,muted:C.muted,grid:C.line,central:C.green,distributed:C.blue,emphasis:C.depth});
       const inner=chart.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
-      return '<g transform="translate(64 155)">'+inner+'</g>'+(scene.kind==='cost-timeline'?text(75,675,'18-service demo · setup + monthly updates · $100/hour',25,C.muted):'');
+      return '<g transform="translate(64 '+(scene.kind==='cost-timeline'?110:155)+')">'+inner+'</g>'+(scene.kind==='cost-timeline'?text(75,675,'18 services · monthly updates',25,C.muted):'');
     }
-    case 'close':return text(75,265,duration(window.RESOLUTION.before.requestMedianMs)+' → '+duration(window.RESOLUTION.after.requestMedianMs),76,C.green)+text(75,325,'Customer request · matched median',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+window.CLOSING_RESOURCES.map((r,i)=>`<a href="${r.url}"><g transform="translate(${790+i*215} 235) scale(${195/r.size})">${r.markup}</g>`+text(887.5+i*215,470,r.label,24,C.ink,'text-anchor="middle"')+'</a>').join('')+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
+    case 'close':return text(75,265,duration(window.METRIC_COMPARISON.before.meanSeconds*1000)+' → '+duration(window.METRIC_COMPARISON.after.meanSeconds*1000),76,C.green)+text(75,325,'Customer request · captured mean',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+window.CLOSING_RESOURCES.map((r,i)=>`<a href="${r.url}"><g transform="translate(${790+i*215} 235) scale(${195/r.size})">${r.markup}</g>`+text(887.5+i*215,470,r.label,24,C.ink,'text-anchor="middle"')+'</a>').join('')+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
     default:throw new Error('Unknown artwork kind: '+scene.kind);
   }}
   window.renderArtwork=(scene,seconds,{final=false,reduceMotion=false}={})=>{
     const events=scene.visualCues||scene.visuals||[];
     const visual=[...events].reverse().find(v=>(v.start??v.at??0)<=seconds)||events[0];
     if(visual&&visual.type!=='art'){const src=visual.type==='video'?visual.poster:visual.src;const href=window.EVIDENCE_IMAGES?.[src]||src;return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${visual.focus==='waterfall'?'0 230 1280 470':'0 0 1280 720'}"><rect width="1280" height="720" fill="${C.bg}"/><image href="${escape(href)}" width="1280" height="720" preserveAspectRatio="xMidYMid meet"/></svg>`;}
+    scene={...scene,...visual?.artwork};
     const hasBuild=Number.isFinite(scene.buildTime),t=Math.max(0,Math.min(1,(seconds-scene.buildTime)/1.6));
     const p=hasBuild?(final?1:reduceMotion?Number(seconds>=scene.buildTime):t*t*(3-2*t)):1;
     return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="${escape(scene.title)}" style="font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">`+
       `<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10" fill="none" stroke="${C.line}" stroke-width="1.5"/></marker></defs>`+
-      `<rect width="1280" height="720" fill="${C.bg}"/>`+text(70,40,'OPENTELEMETRY FAR AND WIDE',18,C.muted)+
-      (scene.kind==='title'?'':lines(70,105,wrap(scene.title),46))+content(scene,p)+
+      `<rect width="1280" height="720" fill="${C.bg}"/>`+(scene.kind==='cost-timeline'?'':text(70,40,'OPENTELEMETRY FAR AND WIDE',18,C.muted))+
+      (['title','cost-timeline'].includes(scene.kind)?'':lines(70,105,wrap(scene.title),46))+content(scene,p)+
       ''+'</svg>';
   };
 })();

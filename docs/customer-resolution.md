@@ -1,6 +1,7 @@
 # Resolve the customer’s waiting time
 
-The live plan is 21 minutes, one minute flex and three for questions. The opening
+The live plan is 20 minutes 45 seconds, 75 seconds of live flexibility and three
+minutes for recovery/questions. The opening
 welcomes everyone and introduces Tyler Yahn and Nikola Grcevski. Narration uses
 natural speech; the complete dialogue also appears in each slide’s speaker notes.
 
@@ -8,7 +9,7 @@ natural speech; the complete dialogue also appears in each slide’s speaker not
 
 1. Begin with an actual opaque request duration in Grafana.
 2. Deploy OBI and follow the request across the application. A failed Checkout
-   CONNECT takes about two seconds before the successful price lookup. Parent
+   CONNECT takes about two seconds before the order continues. Parent
    spans include children; investigate the failed attempt, not the longest parent.
 3. Add Java zero-code instrumentation. `PricingEngine.calculate` contains the
    failed HTTP client span and then a successful PostgreSQL price lookup. Show
@@ -26,8 +27,8 @@ natural speech; the complete dialogue also appears in each slide’s speaker not
    the current price lookup, order write and downstream work remain.
 7. Show the repeated-request summary after that trace. It summarizes the local
    observation; installing instrumentation did not itself remove the wait.
-8. Select the namespace with the RIO demo and Injector. Show the full observed
-   fleet waterfall before opening Catalog’s database detail.
+8. Select the namespace with the RIO demo and Injector. Show a fresh fleet request with Cart’s Ruby detail and Currency’s retained
+   Go/OBI observation, then return directly to the upkeep/adoption slides.
 
 ## Explicit capture of one setting
 
@@ -98,7 +99,8 @@ The screenshots display **2.21 s** and **165 ms**.
 
 These are metric means over their time windows, including warmup traffic.
 They are distinct from the 30-request trace medians of 2.2247 seconds and
-184.943 milliseconds retained in the closing callback. Neither the sample
+184.943 milliseconds retained as independent evidence. The closing callback now
+uses the same 2.21 s / 165 ms metric means as slide 12. Neither the sample
 ledger nor its measurement controls changed.
 
 `presentation/data/metric-comparison.json` records the exact queries, windows,

@@ -2,6 +2,7 @@
 import argparse
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -38,6 +39,6 @@ for index, job in enumerate(jobs, 1):
         print(f"Cached {index}/{len(jobs)}: {job['chapter']} turn {job['turn']}", flush=True)
         continue
     sys.argv = [str(args.skill / 'scripts/narrate.py'), '--text-file', job['text_file'],
-                '--output', job['output'], '--reference', args.reference or json.loads((args.skill/'profile.json').read_text())['default_reference'], '--threads', '4']
+                '--output', job['output'], '--reference', args.reference or json.loads((args.skill/'profile.json').read_text())['default_reference'], '--threads', os.environ.get('DEMO_VOICE_THREADS','4')]
     skill.main()
     print(f"Finished {index}/{len(jobs)}: {job['chapter']} turn {job['turn']}", flush=True)

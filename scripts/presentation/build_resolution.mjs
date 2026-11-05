@@ -10,5 +10,5 @@ for (const phase of ['before','after']) {
 }
 if (!data.controls.sameInstrumentation || data.after.requestMedianMs >= data.before.requestMedianMs) throw Error('No matched customer resolution')
 await copyFile(input,new URL('../../public/presentation/resolution.json',import.meta.url))
-await writeFile(new URL('../../public/animation/resolution-data.js',import.meta.url),'window.RESOLUTION = '+JSON.stringify(data,null,2)+';\n')
+await writeFile(new URL('../../public/animation/resolution-data.js',import.meta.url),'window.RESOLUTION = '+JSON.stringify(data,null,2)+';\nwindow.METRIC_COMPARISON = '+await readFile(new URL('../../presentation/data/metric-comparison.json',import.meta.url),'utf8')+';\n')
 console.log(`Measured customer result: ${data.before.requestMedianMs.toFixed(1)} → ${data.after.requestMedianMs.toFixed(1)} ms; ${data.before.sampleCount} requests/version`)

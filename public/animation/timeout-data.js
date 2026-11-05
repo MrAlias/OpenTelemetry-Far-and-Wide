@@ -1,9 +1,9 @@
 window.TIMEOUT_EVIDENCE = {
   "source": "public/demo-capture/java-trace-evidence.json",
-  "traceId": "26abea5ca66f7e87389d931bfecdf3d0",
-  "spanId": "db4cc8d8ad24054a",
+  "traceId": "03f92a74331b453ab16e5e86ce2cdd5b",
+  "spanId": "4b22aa0f2da30e4d",
   "name": "GET",
-  "durationMs": 2002.943857,
+  "durationMs": 2002.591729,
   "errorType": "java.net.SocketTimeoutException",
   "url": "http://192.0.2.42:8080/price",
   "exceptionType": "java.net.SocketTimeoutException",
@@ -13,9 +13,9 @@ window.TIMEOUT_EVIDENCE = {
   "provenance": "Literal fields from the captured HTTP client span and its exception event. The screenshot shows the same span."
 };
 window.ATTRIBUTE_CAPTURES = {
-  "traceId": "26abea5ca66f7e87389d931bfecdf3d0",
-  "spanId": "db4cc8d8ad24054a",
-  "captured": "2026-11-02",
+  "traceId": "03f92a74331b453ab16e5e86ce2cdd5b",
+  "spanId": "4b22aa0f2da30e4d",
+  "captured": "2026-11-04",
   "provenance": "Actual Grafana dashboard screenshots. Native panels were expanded/collapsed and scrolled; no field text was reconstructed. View boxes enlarge the recorded pixels.",
   "timeout": {
     "image": "java-timeout-proof.png",
@@ -31,9 +31,9 @@ window.ATTRIBUTE_CAPTURES = {
       103,
       626,
       642,
-      120
+      116
     ],
-    "sha256": "1897d19ad6e1e0a69b30f1888e54a37ea85500345244a3dbd0fa51e5f6d461b6",
+    "sha256": "05a01f41e61eddc206172f9d9a579f47a7863713adc5cf2a11989a12416c03c3",
     "deviceScaleFactor": 2
   },
   "configuration": {
@@ -48,11 +48,11 @@ window.ATTRIBUTE_CAPTURES = {
     ],
     "setting": [
       768,
-      694,
+      690,
       626,
-      30
+      38
     ],
-    "sha256": "1083880de251558660150b61426005983a7e2791c056e75ac9e7f8b699f244cc",
+    "sha256": "80b065dd263406222eb94a8606472408f8696a1a1c2bb119fdc5cc11dee45b58",
     "deviceScaleFactor": 2
   }
 };

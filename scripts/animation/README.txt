@@ -20,7 +20,7 @@ uses the default October 7 OBI reference. Tyler relayed a positive assessment of
 Nikola's sample likeness on October 22, 2026. Both retain native PerTh marks.
 
 For live use, narration is optional. The player supports silent chapters and
-three 20-second explainers. Each short clip gives context, shows a substantive
+a short build explainer. Each short clip gives context, shows a substantive
 change and holds the result. The storyboard remains the current live plan;
 the animation does not have to become the presentation format.
 
@@ -28,7 +28,7 @@ Editable sources
 ----------------
 public/storyboard.html               Authoritative standalone visual storyboard
 scripts/animation/talk.json           Speaker-tagged script, profiles and cues
-public/animation/art.js               Shared vector compositions and three builds
+public/animation/art.js               Shared vector compositions and evidence builds
 presentation/rollout-charts.js        Shared adoption/cumulative-effort renderer
 scripts/presentation/build_rollout_charts.mjs  Packages that renderer for playback
 scripts/presentation/build_resources.mjs  Reuses the deck's two closing QR vectors
@@ -37,14 +37,14 @@ public/animation.html                 Review entry point
 scripts/animation/build_topology.py   Source-checked Graphviz layout and offline embed
 scripts/animation/topology-renderer.js  Topology evidence/enrollment rendering
 public/animation/topology.js          Generated topology geometry and renderer
-scripts/animation/export_slides.mjs   Vector rehearsal frames and a draft in .artifacts/animation/
+scripts/animation/export_slides.mjs   Review frames in .artifacts/animation/rehearsal-frames/
 scripts/animation/generate_demo_voice.py  Installed skill invocation and model reuse
 scripts/animation/build_audio.py      Separate profile caches and natural timing
 scripts/animation/check_demo_watermarks.py  Both source and encoded voice checks
 scripts/animation/verify_media.py     Media, timing, profiles and reuse verification
 
 The generated timeline records measured speech duration plus authored pauses.
-The live rehearsal budget is 21 minutes 35 seconds, with two minutes for questions.
+The live rehearsal budget is 20 minutes 45 seconds, with 75 seconds of live flexibility and three minutes for recovery/questions.
 A shorter natural read is fine. If the read exceeds 22 minutes, edit the script;
 never stretch, accelerate or slow speech to hit a duration. The opening starts “Welcome everyone,” introduces both full names and uses a
 0.6-second visual lead-in with natural handoffs; no authored dramatic pauses.
@@ -53,7 +53,7 @@ Generated deliverables, inside public/animation/
 ------------------------------------------------
 opentelemetry-far-and-wide-tyler-voice.mp4  Two-profile H.264/AAC film with chapters
 opentelemetry-far-and-wide-silent.mp4       Silent full film
-clips/*-silent.mp4                        Twenty-one silent chapters
+clips/*-silent.mp4                        Nineteen silent chapters
 explainers/*-20s.mp4                      Three silent live explainers
 draft-narration.m4a                       Mixed two-speaker narration
 nikola-voice-preview.m4a                  Sample used for likeness assessment
@@ -146,25 +146,27 @@ and four Go OBI services remain clear. Supported new workloads inherit selection
 The namespace recording is public/demo-capture/instrument-namespace-edited.mp4.
 Its raw recording and native-speed wait-cut ledger are retained in the repo.
 The topology lighting is trace-derived illustration after the real rollout;
-the following native Grafana scene opens the fresh fleet trace and Catalog detail.
+the same fleet scene opens Cart’s Ruby-agent detail and Currency’s Go/OBI resource attributes.
 
 For a script/media iteration whose other chapters are unchanged, reuse existing
 chapter encodes with render_video.mjs --only ID1,ID2. The final movie, captions,
 chapter metadata and silent companion are rebuilt from the current timeline.
 Always rerun watermark/media checks after replacing the final movie.
 
-The authored presentation is slides.md plus slides/*.md. This exporter never
-overwrites those files. Native Vue components and layouts belong to the live
+The authored presentation is slides.md plus slides/*.md. The frame exporter
+never creates an alternate Slidev deck, source dropdowns, or a combined
+source-inspection/installation video. It never overwrites the authored slides
+or speaker notes. Native Vue components and layouts belong to the live
 Slidev deck; public/animation remains an optional narrated review.
 
 Customer story
 --------------
 The measured pricing fix and matched latency recheck precede the fleet-scale
 setup challenge. See docs/customer-resolution.md and presentation/data/resolution.json.
-The live plan is 21 minutes 35 seconds; the natural recorded read may be shorter.
+The live plan is 20 minutes 45 seconds; the natural recorded read may be shorter.
 Never substitute calculated or invented timings for actual captured requests.
 
-Timeout evidence and code edit
+Timeout evidence and configuration fix
 ------------------------------
 Run node scripts/presentation/build_timeout_evidence.mjs before exporting.
 The slides and animation enlarge native Grafana screenshots of the span

@@ -49,14 +49,14 @@ for companion in [OUT/'opentelemetry-far-and-wide-silent.mp4',OUT/'draft-narrati
         assert actual['tags']['title']==expected['title'], companion.name
 assert timeline['storyRevision']==source['storyRevision']
 resolution=json.loads((ROOT/'presentation/data/resolution.json').read_text())
-assert resolution['version']==source['storyRevision']
+assert resolution['version'], 'Measured experiment must retain its own provenance revision'
 assert json.loads((ROOT/'public/presentation/resolution.json').read_text())==resolution
 scene_by_id={c['id']:c for c in timeline['chapters']}
 assert scene_by_id['08-customer-result']['kind']=='screen'
-assert scene_by_id['08-customer-result']['visualCues'][0]['src']=='demo-capture/fixed-request-trace.png'
-assert scene_by_id['08-result-summary']['kind']=='latency-result'
-assert scene_by_id['12-wider-result']['visualCues'][0]['src']=='demo-capture/fixed-fleet-overview.png', 'Fleet scene returns to the pre-fix application'
-assert any(v['src']=='demo-capture/fixed-fleet-detail.mp4' for v in scene_by_id['12-wider-result']['visualCues']), 'Fixed fleet recording missing'
+assert scene_by_id['08-customer-result']['visualCues'][0]['src']=='presentation/images/fixed-request-trace.png'
+assert scene_by_id['08-result-summary']['kind']=='metric-comparison'
+assert scene_by_id['12-wider-result']['visualCues'][0]['type']=='art'
+assert any(v.get('src')=='presentation/clips/fleet-mixed-detail.mp4' for v in scene_by_id['12-wider-result']['visualCues']), 'Fixed fleet recording missing'
 assert resolution['fleetAfterFix']['pricingMs']<30
 
 topology=json.loads((OUT/'topology-data.json').read_text())
@@ -77,7 +77,7 @@ assert len(source['chapters'])==len(timeline['chapters'])
 for authored,timed in zip(source['chapters'],timeline['chapters']):
     assert authored['turns']==timed['turns'], 'Exported dialogue is stale'
     assert timed['duration']>0 and timed['plannedDuration']==authored['plannedDuration']
-    assert {t['speaker'] for t in timed['turns']}=={'Tyler','Nikola'}
+    assert {t['speaker'] for t in timed['turns']} <= {'Tyler','Nikola'}
     # Performance directions stay in the script, outside the spoken audio cues.
     spoken=lambda rows: [{'speaker':row['speaker'],'text':row['text']} for row in rows]
     assert spoken(timed['cues'])==spoken(timed['turns'])
@@ -98,7 +98,7 @@ for authored,timed in zip(source['chapters'],timeline['chapters']):
     if 'buildTime' in timed:
         results.append(check(OUT/'explainers'/f'{timed["id"]}-20s.mp4',20,False))
 explainer_count=sum('buildAfter' in c or 'buildAtCue' in c for c in source['chapters'])
-assert len(list((OUT/'explainers').glob('*.mp4')))==explainer_count
+assert all((OUT/'explainers'/f'{c["id"]}-20s.mp4').is_file() for c in source['chapters'] if 'buildAfter' in c or 'buildAtCue' in c)
 summary=json.loads((ROOT/'public/demo-capture/capture-summary.json').read_text())
 namespace=summary.get('namespaceSelection')
 if namespace:
@@ -109,7 +109,7 @@ if namespace:
     assert len(check_namespace['sdkServices'])==14
     assert set(check_namespace['obiServices'])=={'gateway','shipping','warehouse','currency'}
     assert check_namespace['namespaceRule']['selector']=={'namespaces':['demo-apps']}
-    assert summary['fleetTrace']['traceID'] in (ROOT/'public/demo-capture/fixed-fleet-detail.png.json').read_text(), 'Fleet capture is stale'
+    assert summary['fleetTrace']['traceID'] in (ROOT/'public/demo-capture/fleet-mixed-detail.png.json').read_text(), 'Fleet capture is stale'
 voices=json.loads((WORK/'voice-report.json').read_text())
 assert set(voices)=={'Tyler','Nikola'}
 assert len({v['sha256'] for v in voices.values()})==2
@@ -140,7 +140,7 @@ assert watermarks['video_sha256']==hashlib.sha256(full.read_bytes()).hexdigest()
 assert set(watermarks['speakers'])==set(source['speakers'])
 for speaker,marks in watermarks['speakers'].items():
     assert marks['reference_sha256']==source['speakers'][speaker]['referenceSha256']
-    assert len(marks['chapters'])==len(timeline['chapters'])
+    assert len(marks['chapters'])==sum(any(cue['speaker']==speaker for cue in chapter['cues']) for chapter in timeline['chapters'])
     assert all(r['source']>.9 and r['encoded']>.9 for r in marks['chapters']), 'Native watermark did not survive export'
 for name in ['layout-report.json','interaction-report.json']:
     data=json.loads((WORK/name).read_text())

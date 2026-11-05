@@ -4,9 +4,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "go"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -18,7 +54,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "redis"
+              "stringValue": "gateway"
             }
           }
         ]
@@ -28,411 +64,66 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "K66f+v2K5Wk=",
-              "parentSpanId": "EC/RoAMMXYY=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275318747847",
-              "endTimeUnixNano": "1793632275318966052",
-              "attributes": [],
-              "status": {}
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "bl680SUhZvQ=",
+              "parentSpanId": "iPupMZWOrz0=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836954402842564",
+              "endTimeUnixNano": "1793836954402860086",
+              "status": {},
+              "attributes": []
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "xqew2pXBh/w=",
-              "parentSpanId": "EC/RoAMMXYY=",
-              "name": "CLIENT",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "iPupMZWOrz0=",
+              "parentSpanId": "+Svhzh566Ks=",
+              "name": "GET /checkout",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275318751322",
-              "endTimeUnixNano": "1793632275318969527",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "JJu2dTptVzA=",
-              "parentSpanId": "EC/RoAMMXYY=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275318751727",
-              "endTimeUnixNano": "1793632275318969932",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "UXEhLE8QJxk=",
-              "parentSpanId": "EC/RoAMMXYY=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275318751741",
-              "endTimeUnixNano": "1793632275318969946",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "I/AW55oP/AY=",
-              "parentSpanId": "6TwBMvDfITk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275429493474",
-              "endTimeUnixNano": "1793632275429556438",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "ivNnaoFJKXs=",
-              "parentSpanId": "6TwBMvDfITk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275429496078",
-              "endTimeUnixNano": "1793632275429559042",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "MATVEcG1/cc=",
-              "parentSpanId": "6TwBMvDfITk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275429496171",
-              "endTimeUnixNano": "1793632275429559135",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "ZLkUSy29Qgo=",
-              "parentSpanId": "6TwBMvDfITk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275429496334",
-              "endTimeUnixNano": "1793632275429559298",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "SgK5yUo/GLY=",
-              "parentSpanId": "EC/RoAMMXYY=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275318750606",
-              "endTimeUnixNano": "1793632275318968811",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "n1VxPn4BgPQ=",
-              "parentSpanId": "I4SmO5mJt2M=",
-              "name": "incr",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275324264821",
-              "endTimeUnixNano": "1793632275324445685",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "FCylxZmubNY=",
-              "parentSpanId": "r43UVlMj8pw=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275421396153",
-              "endTimeUnixNano": "1793632275421453104",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "kgjJPXqEk0M=",
-              "parentSpanId": "120XUSA9Yls=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275421917063",
-              "endTimeUnixNano": "1793632275421952220",
+              "startTimeUnixNano": "1793836954402842564",
+              "endTimeUnixNano": "1793836956531866716",
               "attributes": [
                 {
-                  "key": "error.type",
+                  "key": "http.request.method",
                   "value": {
-                    "stringValue": "ERR"
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
                   }
                 }
               ],
-              "status": {
-                "code": "STATUS_CODE_ERROR"
-              }
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "oxv2IH+v/g8=",
-              "parentSpanId": "6OXiRtyZM7U=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275422185970",
-              "endTimeUnixNano": "1793632275422213097",
-              "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "VtCvt/eXT0g=",
-              "parentSpanId": "0vEHgtnZhaA=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275422362745",
-              "endTimeUnixNano": "1793632275422388586",
-              "attributes": [],
-              "status": {}
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "OT8u8Npinbg=",
+              "parentSpanId": "iPupMZWOrz0=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836954402860086",
+              "endTimeUnixNano": "1793836956531866716",
+              "status": {},
+              "attributes": []
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "xuULokSGEZU=",
-              "parentSpanId": "RJOtStlScvE=",
-              "name": "SET",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275422641218",
-              "endTimeUnixNano": "1793632275422669627",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "k2P6ITeplTA=",
-              "parentSpanId": "m9YO/Gzhclc=",
-              "name": "GET",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275422984174",
-              "endTimeUnixNano": "1793632275423010009",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "JunsStM+qTM=",
-              "parentSpanId": "6TwBMvDfITk=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275429496025",
-              "endTimeUnixNano": "1793632275429558989",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "T61Hj96PrTs=",
-              "parentSpanId": "VXipX6MVxN4=",
-              "name": "set",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275430466022",
-              "endTimeUnixNano": "1793632275430488035",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "POp/MSGgYyI=",
-              "parentSpanId": "vfRHnXkW/XE=",
-              "name": "get",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275430667172",
-              "endTimeUnixNano": "1793632275430691208",
-              "attributes": [],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "cart"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "E7Aqt8HeiOs=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "CLIENT",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "WM1G2Pny0Rw=",
+              "parentSpanId": "OT8u8Npinbg=",
+              "name": "GET /checkout",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275318493305",
-              "endTimeUnixNano": "1793632275320921301",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Un3r0nbuKkY=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275318494737",
-              "endTimeUnixNano": "1793632275320922733",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "MOgO/k2SosQ=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275318494911",
-              "endTimeUnixNano": "1793632275320922907",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "15SS28t9qF8=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275318495017",
-              "endTimeUnixNano": "1793632275320923013",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "EC/RoAMMXYY=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275318494409",
-              "endTimeUnixNano": "1793632275320922405",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "I4SmO5mJt2M=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "incr",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275323968549",
-              "endTimeUnixNano": "1793632275324679484",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "h7dcYpkHgUg=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275328959844",
-              "endTimeUnixNano": "1793632275435276785",
+              "startTimeUnixNano": "1793836954402899593",
+              "endTimeUnixNano": "1793836956531581063",
               "attributes": [
                 {
                   "key": "url.full",
                   "value": {
-                    "stringValue": "http://catalog/work"
+                    "stringValue": "http://checkout:8080/checkout"
                   }
                 },
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "/vaO+2xNJmU=",
-              "parentSpanId": "H7z0bmMW5PU=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275436502928",
-              "endTimeUnixNano": "1793632275443936445",
-              "attributes": [
-                {
-                  "key": "url.full",
-                  "value": {
-                    "stringValue": "http://tax/work"
-                  }
-                },
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "UD4BGtLYvQw=",
-              "parentSpanId": "IuFKTZ/TNeI=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275303376035",
-              "endTimeUnixNano": "1793632275304695769",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "H7z0bmMW5PU=",
-              "parentSpanId": "IuFKTZ/TNeI=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275304695769",
-              "endTimeUnixNano": "1793632275447003749",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "IuFKTZ/TNeI=",
-              "parentSpanId": "PsYlqXpVFYU=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275303376035",
-              "endTimeUnixNano": "1793632275447003749",
-              "attributes": [
                 {
                   "key": "http.request.method",
                   "value": {
@@ -456,277 +147,11 @@
       "resource": {
         "attributes": [
           {
-            "key": "service.namespace",
+            "key": "otel.scope.name",
             "value": {
-              "stringValue": "demo-apps"
+              "stringValue": "go.opentelemetry.io/obi"
             }
           },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "promotions"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "zwd81CNpuDU=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275429381021",
-              "endTimeUnixNano": "1793632275429628871",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "opKJTp1guLc=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275429382745",
-              "endTimeUnixNano": "1793632275429630595",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6ohsE/dbyIg=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275429382641",
-              "endTimeUnixNano": "1793632275429630491",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "yRQuTpVC74M=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275429382742",
-              "endTimeUnixNano": "1793632275429630592",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6TwBMvDfITk=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275429381991",
-              "endTimeUnixNano": "1793632275429629841",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "VXipX6MVxN4=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "set",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275430419278",
-              "endTimeUnixNano": "1793632275430528742",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "vfRHnXkW/XE=",
-              "parentSpanId": "puq6eKk7W/M=",
-              "name": "get",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275430591516",
-              "endTimeUnixNano": "1793632275430735202",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "5wB5YLKt2KE=",
-              "parentSpanId": "cMQRHtyot9s=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275425787418",
-              "endTimeUnixNano": "1793632275425922660",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "puq6eKk7W/M=",
-              "parentSpanId": "cMQRHtyot9s=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275425922660",
-              "endTimeUnixNano": "1793632275431502445",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "cMQRHtyot9s=",
-              "parentSpanId": "B3+0v+qEW6I=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275425787418",
-              "endTimeUnixNano": "1793632275431502445",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "catalog"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "RIHuXE32aaI=",
-              "parentSpanId": "+P2zneVQiRY=",
-              "name": "SELECT products",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275412917141",
-              "endTimeUnixNano": "1793632275415480358",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "uZMpUlJIRHg=",
-              "parentSpanId": "+P2zneVQiRY=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275417182027",
-              "endTimeUnixNano": "1793632275433228881",
-              "attributes": [
-                {
-                  "key": "url.full",
-                  "value": {
-                    "stringValue": "http://recommendations/work"
-                  }
-                },
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "a3rUCyNAUVo=",
-              "parentSpanId": "8P1HYjJPRzI=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275329266292",
-              "endTimeUnixNano": "1793632275330835060",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "+P2zneVQiRY=",
-              "parentSpanId": "8P1HYjJPRzI=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275330835060",
-              "endTimeUnixNano": "1793632275435108914",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "8P1HYjJPRzI=",
-              "parentSpanId": "h7dcYpkHgUg=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275329266292",
-              "endTimeUnixNano": "1793632275435108914",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
           {
             "key": "process.environment_variable.LEGACY_PRICING_URL",
             "value": {
@@ -737,6 +162,36 @@
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -758,99 +213,13 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "OfQ9acIdWNs=",
-              "parentSpanId": "Keo6OMJWk3g=",
-              "name": "CONNECT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632273265487566",
-              "endTimeUnixNano": "1793632275267328409",
-              "attributes": [
-                {
-                  "key": "error.type",
-                  "value": {
-                    "stringValue": "_OTHER"
-                  }
-                }
-              ],
-              "status": {
-                "code": "STATUS_CODE_ERROR"
-              }
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "0p/Cn3XfP2Q=",
-              "parentSpanId": "Keo6OMJWk3g=",
-              "name": "SELECT products",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275271010030",
-              "endTimeUnixNano": "1793632275272574583",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "CIfzhs+f2O4=",
-              "parentSpanId": "Keo6OMJWk3g=",
-              "name": "SELECT products",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275287238110",
-              "endTimeUnixNano": "1793632275287915536",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "jqT18Em65mM=",
-              "parentSpanId": "Keo6OMJWk3g=",
-              "name": "INSERT checkout_orders",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275292318104",
-              "endTimeUnixNano": "1793632275294371821",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "qwUlzpbD4uA=",
-              "parentSpanId": "Keo6OMJWk3g=",
-              "name": "PREPARED STATEMENT .S_1",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275296792791",
-              "endTimeUnixNano": "1793632275298954453",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "nnqL/sVEOOc=",
-              "parentSpanId": "4wJ17eUdUuw=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632273264311926",
-              "endTimeUnixNano": "1793632273264694464",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Keo6OMJWk3g=",
-              "parentSpanId": "4wJ17eUdUuw=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632273264694464",
-              "endTimeUnixNano": "1793632275525559877",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "4wJ17eUdUuw=",
-              "parentSpanId": "Che3sn64p0Q=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "T4G5dnKlWEM=",
+              "parentSpanId": "WM1G2Pny0Rw=",
               "name": "GET /checkout",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632273264311926",
-              "endTimeUnixNano": "1793632275525559877",
+              "startTimeUnixNano": "1793836954403390444",
+              "endTimeUnixNano": "1793836956531556194",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -868,13 +237,33 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "wZxeFeAdf2s=",
-              "parentSpanId": "Keo6OMJWk3g=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "zoU3acPfvtY=",
+              "parentSpanId": "T4G5dnKlWEM=",
+              "name": "CONNECT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836954404151000",
+              "endTimeUnixNano": "1793836956406162111",
+              "attributes": [
+                {
+                  "key": "error.type",
+                  "value": {
+                    "stringValue": "_OTHER"
+                  }
+                }
+              ],
+              "status": {
+                "code": "STATUS_CODE_ERROR"
+              }
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "9KTw/IeiPYg=",
+              "parentSpanId": "T4G5dnKlWEM=",
               "name": "GET /inventory",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275279977728",
-              "endTimeUnixNano": "1793632275284209109",
+              "startTimeUnixNano": "1793836956408199418",
+              "endTimeUnixNano": "1793836956408893284",
               "attributes": [
                 {
                   "key": "url.full",
@@ -898,13 +287,13 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "PsYlqXpVFYU=",
-              "parentSpanId": "Keo6OMJWk3g=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "NqHYihld0QA=",
+              "parentSpanId": "T4G5dnKlWEM=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275303223559",
-              "endTimeUnixNano": "1793632275447173042",
+              "startTimeUnixNano": "1793836956414729950",
+              "endTimeUnixNano": "1793836956467535218",
               "attributes": [
                 {
                   "key": "url.full",
@@ -928,13 +317,13 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "X4Exm6WW+Y0=",
-              "parentSpanId": "Keo6OMJWk3g=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "TGoy5lcDP7E=",
+              "parentSpanId": "T4G5dnKlWEM=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275448747276",
-              "endTimeUnixNano": "1793632275467788615",
+              "startTimeUnixNano": "1793836956468070332",
+              "endTimeUnixNano": "1793836956490483599",
               "attributes": [
                 {
                   "key": "url.full",
@@ -958,13 +347,13 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "2JSKIymNRvI=",
-              "parentSpanId": "Keo6OMJWk3g=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "Fi6YhmDUNIo=",
+              "parentSpanId": "T4G5dnKlWEM=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275469106273",
-              "endTimeUnixNano": "1793632275495710085",
+              "startTimeUnixNano": "1793836956491032643",
+              "endTimeUnixNano": "1793836956504545359",
               "attributes": [
                 {
                   "key": "url.full",
@@ -988,13 +377,13 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "vptXvzYV9x0=",
-              "parentSpanId": "Keo6OMJWk3g=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "oVH8mja0Tmg=",
+              "parentSpanId": "T4G5dnKlWEM=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275496897383",
-              "endTimeUnixNano": "1793632275524726782",
+              "startTimeUnixNano": "1793836956504911500",
+              "endTimeUnixNano": "1793836956530574667",
               "attributes": [
                 {
                   "key": "url.full",
@@ -1025,9 +414,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "nodejs"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -1039,7 +464,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "postgres"
+              "stringValue": "inventory"
             }
           }
         ]
@@ -1049,59 +474,50 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "AOJwTu2aX50=",
-              "parentSpanId": "0p/Cn3XfP2Q=",
-              "name": "SELECT products",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "iAe+jffgdpY=",
+              "parentSpanId": "p3LcyP0h3Gc=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956408244590",
+              "endTimeUnixNano": "1793836956408509892",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "p3LcyP0h3Gc=",
+              "parentSpanId": "9KTw/IeiPYg=",
+              "name": "GET /inventory",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275271278793",
-              "endTimeUnixNano": "1793632275272230774",
-              "attributes": [],
+              "startTimeUnixNano": "1793836956408244590",
+              "endTimeUnixNano": "1793836956408811272",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "wZvOLzM3afw=",
-              "parentSpanId": "CIfzhs+f2O4=",
-              "name": "SELECT products",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275287487235",
-              "endTimeUnixNano": "1793632275287672123",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "kCGtL9jG+ZU=",
-              "parentSpanId": "jqT18Em65mM=",
-              "name": "INSERT checkout_orders",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275292582713",
-              "endTimeUnixNano": "1793632275293999949",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "rhzKU9cPxEg=",
-              "parentSpanId": "qwUlzpbD4uA=",
-              "name": "PREPARED STATEMENT .S_1",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275297014860",
-              "endTimeUnixNano": "1793632275298563665",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6wFyN18pYFg=",
-              "parentSpanId": "uyLfIA7mvDY=",
-              "name": "SELECT checkout_orders",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275483133021",
-              "endTimeUnixNano": "1793632275483419894",
-              "attributes": [],
-              "status": {}
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "/CnPCTsNaQM=",
+              "parentSpanId": "p3LcyP0h3Gc=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956408509892",
+              "endTimeUnixNano": "1793836956408811272",
+              "status": {},
+              "attributes": []
             }
           ]
         }
@@ -1111,9 +527,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "ruby"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -1125,7 +577,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "notifications"
+              "stringValue": "cart"
             }
           }
         ]
@@ -1135,18 +587,130 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "x6j/eC7KBKs=",
-              "parentSpanId": "p0CN4o8vwRs=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "gXz6QHvjDG4=",
+              "parentSpanId": "7LbPLYkTSZ0=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956414796272",
+              "endTimeUnixNano": "1793836956415081133",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "7LbPLYkTSZ0=",
+              "parentSpanId": "NqHYihld0QA=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956414796272",
+              "endTimeUnixNano": "1793836956467420255",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "DxOTqfHzQuQ=",
+              "parentSpanId": "7LbPLYkTSZ0=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956415081133",
+              "endTimeUnixNano": "1793836956467420255",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "5bWakElRkkA=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418708138",
+              "endTimeUnixNano": "1793836956418915594",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "y5xOTYSlDQY=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418711031",
+              "endTimeUnixNano": "1793836956418918487",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "a3Rt18EkzaU=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418711069",
+              "endTimeUnixNano": "1793836956418918525",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "NJ91GdGQlYI=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "HELLO",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418711101",
+              "endTimeUnixNano": "1793836956418918557",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "aBIItH9mk6E=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418711114",
+              "endTimeUnixNano": "1793836956418918570",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "luzYleuP2sY=",
+              "parentSpanId": "DxOTqfHzQuQ=",
+              "name": "incr",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956418997730",
+              "endTimeUnixNano": "1793836956419119704",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "ijNF+ily6Xo=",
+              "parentSpanId": "DxOTqfHzQuQ=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275499187832",
-              "endTimeUnixNano": "1793632275520271572",
+              "startTimeUnixNano": "1793836956421317646",
+              "endTimeUnixNano": "1793836956462933898",
               "attributes": [
                 {
                   "key": "url.full",
                   "value": {
-                    "stringValue": "http://receipts/work"
+                    "stringValue": "http://catalog/work"
                   }
                 },
                 {
@@ -1165,141 +729,18 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "qHXLPol9lzg=",
-              "parentSpanId": "wC87p7r/G4U=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275496975961",
-              "endTimeUnixNano": "1793632275497483057",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "p0CN4o8vwRs=",
-              "parentSpanId": "wC87p7r/G4U=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275497483057",
-              "endTimeUnixNano": "1793632275524644886",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "wC87p7r/G4U=",
-              "parentSpanId": "vptXvzYV9x0=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275496975961",
-              "endTimeUnixNano": "1793632275524644886",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "customer-profile"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "SUb6IvgruGA=",
-              "parentSpanId": "keTiGDSHkfY=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275474990306",
-              "endTimeUnixNano": "1793632275476720074",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "T85PUIRPlg0=",
-              "parentSpanId": "keTiGDSHkfY=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275476720074",
-              "endTimeUnixNano": "1793632275490581959",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "keTiGDSHkfY=",
-              "parentSpanId": "OE297ShE+ZI=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275474990306",
-              "endTimeUnixNano": "1793632275490581959",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "1O53BNjrScs=",
-              "parentSpanId": "T85PUIRPlg0=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "o2w51xI0Rco=",
+              "parentSpanId": "DxOTqfHzQuQ=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275478050033",
-              "endTimeUnixNano": "1793632275485417948",
+              "startTimeUnixNano": "1793836956464105221",
+              "endTimeUnixNano": "1793836956466029760",
               "attributes": [
                 {
                   "key": "url.full",
                   "value": {
-                    "stringValue": "http://loyalty/work"
+                    "stringValue": "http://tax/work"
                   }
                 },
                 {
@@ -1325,9 +766,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -1339,7 +816,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "receipts"
+              "stringValue": "catalog"
             }
           }
         ]
@@ -1349,46 +826,13 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "H4Yyf5TPM3c=",
-              "parentSpanId": "HAEYhvPDwd8=",
-              "name": "SELECT checkout_orders",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275517827916",
-              "endTimeUnixNano": "1793632275519409659",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "aaxGXnk95iA=",
-              "parentSpanId": "eBZPpeV6FX0=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275499263470",
-              "endTimeUnixNano": "1793632275499840696",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "HAEYhvPDwd8=",
-              "parentSpanId": "eBZPpeV6FX0=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275499840696",
-              "endTimeUnixNano": "1793632275520218928",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "eBZPpeV6FX0=",
-              "parentSpanId": "x6j/eC7KBKs=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "Qq07cpmZpLM=",
+              "parentSpanId": "ijNF+ily6Xo=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275499263470",
-              "endTimeUnixNano": "1793632275520218928",
+              "startTimeUnixNano": "1793836956421401327",
+              "endTimeUnixNano": "1793836956461966630",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -1404,6 +848,69 @@
                 }
               ],
               "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "dJagQ1n2Je8=",
+              "parentSpanId": "Qq07cpmZpLM=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956421401327",
+              "endTimeUnixNano": "1793836956421731000",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "xHTXnzmZj34=",
+              "parentSpanId": "Qq07cpmZpLM=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956421731000",
+              "endTimeUnixNano": "1793836956461966630",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "bm10ZFrQ05I=",
+              "parentSpanId": "xHTXnzmZj34=",
+              "name": "SELECT products",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956437477699",
+              "endTimeUnixNano": "1793836956440274184",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "WqquhlW2I7s=",
+              "parentSpanId": "xHTXnzmZj34=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956442272151",
+              "endTimeUnixNano": "1793836956460130960",
+              "attributes": [
+                {
+                  "key": "url.full",
+                  "value": {
+                    "stringValue": "http://recommendations/work"
+                  }
+                },
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
             }
           ]
         }
@@ -1413,9 +920,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -1437,88 +980,81 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "r43UVlMj8pw=",
-              "parentSpanId": "WPrkWmYAEHk=",
-              "name": "HELLO",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275421336033",
-              "endTimeUnixNano": "1793632275421564331",
-              "attributes": [],
-              "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "120XUSA9Yls=",
-              "parentSpanId": "WPrkWmYAEHk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275421858315",
-              "endTimeUnixNano": "1793632275422001421",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "TKX9l0pe9Mk=",
+              "parentSpanId": "WqquhlW2I7s=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956442359722",
+              "endTimeUnixNano": "1793836956459903855",
               "attributes": [
                 {
-                  "key": "error.type",
+                  "key": "http.request.method",
                   "value": {
-                    "stringValue": "ERR"
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
                   }
                 }
               ],
-              "status": {
-                "code": "STATUS_CODE_ERROR"
-              }
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6OXiRtyZM7U=",
-              "parentSpanId": "WPrkWmYAEHk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275422129689",
-              "endTimeUnixNano": "1793632275422263161",
-              "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "0vEHgtnZhaA=",
-              "parentSpanId": "WPrkWmYAEHk=",
-              "name": "CLIENT",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275422311047",
-              "endTimeUnixNano": "1793632275422467139",
-              "attributes": [],
-              "status": {}
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "rjc+QS80lCA=",
+              "parentSpanId": "TKX9l0pe9Mk=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956442359722",
+              "endTimeUnixNano": "1793836956446030003",
+              "status": {},
+              "attributes": []
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "RJOtStlScvE=",
-              "parentSpanId": "WPrkWmYAEHk=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "zdsuOQrrwO8=",
+              "parentSpanId": "TKX9l0pe9Mk=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956446030003",
+              "endTimeUnixNano": "1793836956459903855",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "BFnNxDPvrhk=",
+              "parentSpanId": "zdsuOQrrwO8=",
               "name": "SET",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275422583840",
-              "endTimeUnixNano": "1793632275422749876",
+              "startTimeUnixNano": "1793836956446606875",
+              "endTimeUnixNano": "1793836956446818267",
               "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "m9YO/Gzhclc=",
-              "parentSpanId": "WPrkWmYAEHk=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "hT2tn8fv5LU=",
+              "parentSpanId": "zdsuOQrrwO8=",
               "name": "GET",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275422929701",
-              "endTimeUnixNano": "1793632275423086447",
+              "startTimeUnixNano": "1793836956446955698",
+              "endTimeUnixNano": "1793836956447185124",
               "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "B3+0v+qEW6I=",
-              "parentSpanId": "WPrkWmYAEHk=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "B2okj9ge4RY=",
+              "parentSpanId": "zdsuOQrrwO8=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275425691485",
-              "endTimeUnixNano": "1793632275431609751",
+              "startTimeUnixNano": "1793836956448753274",
+              "endTimeUnixNano": "1793836956458912415",
               "attributes": [
                 {
                   "key": "url.full",
@@ -1540,37 +1076,82 @@
                 }
               ],
               "status": {}
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "ruby"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "promotions"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "bS3wyqcnens=",
-              "parentSpanId": "USUtER/ukT0=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275417264109",
-              "endTimeUnixNano": "1793632275418690154",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "WPrkWmYAEHk=",
-              "parentSpanId": "USUtER/ukT0=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275418690154",
-              "endTimeUnixNano": "1793632275433070646",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "USUtER/ukT0=",
-              "parentSpanId": "uZMpUlJIRHg=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "K07Gx8cSzG8=",
+              "parentSpanId": "B2okj9ge4RY=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275417264109",
-              "endTimeUnixNano": "1793632275433070646",
+              "startTimeUnixNano": "1793836956448833334",
+              "endTimeUnixNano": "1793836956458842495",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -1586,306 +1167,104 @@
                 }
               ],
               "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "stock-planner"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
+            },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "T1gN+Zd0YUs=",
-              "parentSpanId": "6lerkFwWgNY=",
-              "name": "SELECT products",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "vmw806pSg8k=",
+              "parentSpanId": "K07Gx8cSzG8=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956448833334",
+              "endTimeUnixNano": "1793836956448995433",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "MawgvMVP0Sk=",
+              "parentSpanId": "K07Gx8cSzG8=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956448995433",
+              "endTimeUnixNano": "1793836956458842495",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "fpnz1AhK3jM=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "HELLO",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275464556669",
-              "endTimeUnixNano": "1793632275466228156",
+              "startTimeUnixNano": "1793836956457907476",
+              "endTimeUnixNano": "1793836956458085148",
               "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "bUhVoBDWdok=",
-              "parentSpanId": "QSZ7ZJz5R+U=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275450652409",
-              "endTimeUnixNano": "1793632275450915668",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6lerkFwWgNY=",
-              "parentSpanId": "QSZ7ZJz5R+U=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275450915668",
-              "endTimeUnixNano": "1793632275467024299",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "QSZ7ZJz5R+U=",
-              "parentSpanId": "+xM8SfkPNQE=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275450652409",
-              "endTimeUnixNano": "1793632275467024299",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "shipping"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "QK+Y2oZTDsQ=",
-              "parentSpanId": "n8ndp3cbBcY=",
-              "name": "GET /work",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "ET7fDXwwB/o=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "CLIENT",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275449326585",
-              "endTimeUnixNano": "1793632275467535187",
-              "attributes": [
-                {
-                  "key": "url.full",
-                  "value": {
-                    "stringValue": "http://warehouse:8080/work"
-                  }
-                },
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
+              "startTimeUnixNano": "1793836956457907493",
+              "endTimeUnixNano": "1793836956458085165",
+              "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "q6YdKiJrX4g=",
-              "parentSpanId": "NOQYUq/tBPY=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275449222774",
-              "endTimeUnixNano": "1793632275449250337",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "n8ndp3cbBcY=",
-              "parentSpanId": "NOQYUq/tBPY=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275449250337",
-              "endTimeUnixNano": "1793632275467761185",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "NOQYUq/tBPY=",
-              "parentSpanId": "X4Exm6WW+Y0=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275449222774",
-              "endTimeUnixNano": "1793632275467761185",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "gateway"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Che3sn64p0Q=",
-              "parentSpanId": "hBXtxBzLFWY=",
-              "name": "GET /checkout",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "LtGp5prUBbQ=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "CLIENT",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632273263242701",
-              "endTimeUnixNano": "1793632275525648949",
-              "attributes": [
-                {
-                  "key": "url.full",
-                  "value": {
-                    "stringValue": "http://checkout:8080/checkout"
-                  }
-                },
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
+              "startTimeUnixNano": "1793836956457907564",
+              "endTimeUnixNano": "1793836956458085236",
+              "attributes": [],
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Sk9f+xS683o=",
-              "parentSpanId": "Z5OoXFJgTKE=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632273263166756",
-              "endTimeUnixNano": "1793632273263187539",
-              "status": {},
-              "attributes": []
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "y9iMGeIzLKQ=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956457907635",
+              "endTimeUnixNano": "1793836956458085307",
+              "attributes": [],
+              "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "hBXtxBzLFWY=",
-              "parentSpanId": "Z5OoXFJgTKE=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632273263187539",
-              "endTimeUnixNano": "1793632275525966463",
-              "status": {},
-              "attributes": []
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "5upc702f1Xg=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "CLIENT",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956457907785",
+              "endTimeUnixNano": "1793836956458085457",
+              "attributes": [],
+              "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Z5OoXFJgTKE=",
-              "name": "GET /checkout",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632273263166756",
-              "endTimeUnixNano": "1793632275525966463",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "TK4Kt0sO9vg=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "set",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956458173361",
+              "endTimeUnixNano": "1793836956458315344",
+              "attributes": [],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "VKkaPgwO3RE=",
+              "parentSpanId": "MawgvMVP0Sk=",
+              "name": "get",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956458361209",
+              "endTimeUnixNano": "1793836956458493410",
+              "attributes": [],
               "status": {}
             }
           ]
@@ -1896,86 +1275,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
             }
           },
           {
-            "key": "k8s.namespace.name",
+            "key": "telemetry.distro.name",
             "value": {
-              "stringValue": "demo-apps"
+              "stringValue": "opentelemetry-ebpf-instrumentation"
             }
           },
           {
-            "key": "service.name",
+            "key": "telemetry.distro.version",
             "value": {
-              "stringValue": "currency"
+              "stringValue": "v1.0.0"
             }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "H3FGOlSzTy0=",
-              "parentSpanId": "GF0Azi5BIlY=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275438498271",
-              "endTimeUnixNano": "1793632275438524181",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "e6cmjzE0mPQ=",
-              "parentSpanId": "GF0Azi5BIlY=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275438524181",
-              "endTimeUnixNano": "1793632275438710103",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "GF0Azi5BIlY=",
-              "parentSpanId": "io1v+ozDfm0=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275438498271",
-              "endTimeUnixNano": "1793632275438710103",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
+          },
           {
-            "key": "service.namespace",
+            "key": "telemetry.sdk.language",
             "value": {
-              "stringValue": "demo-apps"
+              "stringValue": "dotnet"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -1997,35 +1335,13 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "15RYjYXcFD8=",
-              "parentSpanId": "VMtXrul5xuM=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275436588111",
-              "endTimeUnixNano": "1793632275436970575",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "FOqEz7wkuZA=",
-              "parentSpanId": "VMtXrul5xuM=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275436970575",
-              "endTimeUnixNano": "1793632275443842276",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "VMtXrul5xuM=",
-              "parentSpanId": "/vaO+2xNJmU=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "d01CnfkSiVg=",
+              "parentSpanId": "o2w51xI0Rco=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275436588111",
-              "endTimeUnixNano": "1793632275443842276",
+              "startTimeUnixNano": "1793836956464179868",
+              "endTimeUnixNano": "1793836956465812091",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -2043,12 +1359,34 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "io1v+ozDfm0=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "lfeuHHbB7o8=",
+              "parentSpanId": "d01CnfkSiVg=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956464179868",
+              "endTimeUnixNano": "1793836956464330963",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "jl5IiXn1rjE=",
+              "parentSpanId": "d01CnfkSiVg=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956464330963",
+              "endTimeUnixNano": "1793836956465812091",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "4uK+socX93Y=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275438311692",
-              "endTimeUnixNano": "1793632275439240484",
+              "startTimeUnixNano": "1793836956464993056",
+              "endTimeUnixNano": "1793836956465390390",
               "attributes": [
                 {
                   "key": "url.full",
@@ -2079,9 +1417,301 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "go"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "currency"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "QKQenXWlGmc=",
+              "parentSpanId": "4uK+socX93Y=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956465173114",
+              "endTimeUnixNano": "1793836956465368324",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "wfKeWxDIkoY=",
+              "parentSpanId": "QKQenXWlGmc=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956465173114",
+              "endTimeUnixNano": "1793836956465199189",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "/3zPF8pNLto=",
+              "parentSpanId": "QKQenXWlGmc=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956465199189",
+              "endTimeUnixNano": "1793836956465368324",
+              "status": {},
+              "attributes": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "go"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "shipping"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "anJ70wZlpuI=",
+              "parentSpanId": "TGoy5lcDP7E=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956468434109",
+              "endTimeUnixNano": "1793836956490482502",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "4kJ+NtomQYY=",
+              "parentSpanId": "anJ70wZlpuI=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956468434109",
+              "endTimeUnixNano": "1793836956468457991",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "2jqC2biEAmk=",
+              "parentSpanId": "anJ70wZlpuI=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956468457991",
+              "endTimeUnixNano": "1793836956490482502",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "zpv0GzVFQPc=",
+              "parentSpanId": "2jqC2biEAmk=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956468507971",
+              "endTimeUnixNano": "1793836956490234650",
+              "attributes": [
+                {
+                  "key": "url.full",
+                  "value": {
+                    "stringValue": "http://warehouse:8080/work"
+                  }
+                },
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "go"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -2103,13 +1733,59 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "+xM8SfkPNQE=",
-              "parentSpanId": "2vZD0h74e4I=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "dffVddr0UK0=",
+              "parentSpanId": "5xdajFRXMdw=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956468765642",
+              "endTimeUnixNano": "1793836956468788801",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "5xdajFRXMdw=",
+              "parentSpanId": "zpv0GzVFQPc=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956468765642",
+              "endTimeUnixNano": "1793836956490083795",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "s7KpGuqR24Y=",
+              "parentSpanId": "5xdajFRXMdw=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956468788801",
+              "endTimeUnixNano": "1793836956490083795",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "iZxXIYs1u5Q=",
+              "parentSpanId": "s7KpGuqR24Y=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275449703460",
-              "endTimeUnixNano": "1793632275467172421",
+              "startTimeUnixNano": "1793836956468835064",
+              "endTimeUnixNano": "1793836956489691718",
               "attributes": [
                 {
                   "key": "url.full",
@@ -2131,37 +1807,82 @@
                 }
               ],
               "status": {}
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "stock-planner"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "lJsAF+xJ7RA=",
-              "parentSpanId": "7B8XRFl3x8c=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275449652672",
-              "endTimeUnixNano": "1793632275449674314",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "2vZD0h74e4I=",
-              "parentSpanId": "7B8XRFl3x8c=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275449674314",
-              "endTimeUnixNano": "1793632275467476598",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "7B8XRFl3x8c=",
-              "parentSpanId": "QK+Y2oZTDsQ=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "HFkUzwbUdYM=",
+              "parentSpanId": "iZxXIYs1u5Q=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275449652672",
-              "endTimeUnixNano": "1793632275467476598",
+              "startTimeUnixNano": "1793836956469810242",
+              "endTimeUnixNano": "1793836956489580269",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -2177,72 +1898,39 @@
                 }
               ],
               "status": {}
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "resource": {
-        "attributes": [
-          {
-            "key": "service.namespace",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "k8s.namespace.name",
-            "value": {
-              "stringValue": "demo-apps"
-            }
-          },
-          {
-            "key": "service.name",
-            "value": {
-              "stringValue": "loyalty"
-            }
-          }
-        ]
-      },
-      "scopeSpans": [
-        {
-          "scope": {},
-          "spans": [
+            },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "uyLfIA7mvDY=",
-              "parentSpanId": "6pC8FyHhXQU=",
-              "name": "SELECT checkout_orders",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "hbaDsQLy7oQ=",
+              "parentSpanId": "HFkUzwbUdYM=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956469810242",
+              "endTimeUnixNano": "1793836956470063292",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "SccCRjOxqns=",
+              "parentSpanId": "HFkUzwbUdYM=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956470063292",
+              "endTimeUnixNano": "1793836956489580269",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "TltwrAPPDCA=",
+              "parentSpanId": "SccCRjOxqns=",
+              "name": "SELECT products",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275483029177",
-              "endTimeUnixNano": "1793632275483487804",
+              "startTimeUnixNano": "1793836956486761171",
+              "endTimeUnixNano": "1793836956488682801",
               "attributes": [],
               "status": {}
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "6pC8FyHhXQU=",
-              "parentSpanId": "1O53BNjrScs=",
-              "name": "GET /work",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275478465165",
-              "endTimeUnixNano": "1793632275484502705",
-              "attributes": [
-                {
-                  "key": "http.request.method",
-                  "value": {
-                    "stringValue": "GET"
-                  }
-                },
-                {
-                  "key": "http.response.status_code",
-                  "value": {
-                    "intValue": "200"
-                  }
-                }
-              ],
-              "status": {}
             }
           ]
         }
@@ -2252,9 +1940,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -2266,7 +1990,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "inventory"
+              "stringValue": "payments"
             }
           }
         ]
@@ -2276,36 +2000,66 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "eqQhOAUGMRo=",
-              "parentSpanId": "EtIcvdembAo=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "IOS/j4zj/1o=",
+              "parentSpanId": "ImkpVtlSBk8=",
               "name": "in queue",
               "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275280154925",
-              "endTimeUnixNano": "1793632275281556639",
+              "startTimeUnixNano": "1793836956491154511",
+              "endTimeUnixNano": "1793836956491692267",
               "status": {},
               "attributes": []
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "VmH0Tn6BgO8=",
-              "parentSpanId": "EtIcvdembAo=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "ImkpVtlSBk8=",
+              "parentSpanId": "Fi6YhmDUNIo=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956491154511",
+              "endTimeUnixNano": "1793836956504407290",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "i5dZck2b0go=",
+              "parentSpanId": "ImkpVtlSBk8=",
               "name": "processing",
               "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275281556639",
-              "endTimeUnixNano": "1793632275283872771",
+              "startTimeUnixNano": "1793836956491692267",
+              "endTimeUnixNano": "1793836956504407290",
               "status": {},
               "attributes": []
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "EtIcvdembAo=",
-              "parentSpanId": "wZxeFeAdf2s=",
-              "name": "GET /inventory",
-              "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275280154925",
-              "endTimeUnixNano": "1793632275283872771",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "9pEAcFnQw2I=",
+              "parentSpanId": "i5dZck2b0go=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956493003903",
+              "endTimeUnixNano": "1793836956502793966",
               "attributes": [
+                {
+                  "key": "url.full",
+                  "value": {
+                    "stringValue": "http://fraud/work"
+                  }
+                },
                 {
                   "key": "http.request.method",
                   "value": {
@@ -2329,9 +2083,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "java"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -2353,35 +2143,13 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "TOB3qMo6jmY=",
-              "parentSpanId": "aTPDHML5Zu4=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275471434896",
-              "endTimeUnixNano": "1793632275473153904",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Xr/BDfbs/LU=",
-              "parentSpanId": "aTPDHML5Zu4=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275473153904",
-              "endTimeUnixNano": "1793632275493174795",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "aTPDHML5Zu4=",
-              "parentSpanId": "3i76T5W4irc=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "qFnvY0gaLKg=",
+              "parentSpanId": "9pEAcFnQw2I=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275471434896",
-              "endTimeUnixNano": "1793632275493174795",
+              "startTimeUnixNano": "1793836956493360113",
+              "endTimeUnixNano": "1793836956502624475",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -2399,13 +2167,13 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "OE297ShE+ZI=",
-              "parentSpanId": "Xr/BDfbs/LU=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "ogxmCnZUeME=",
+              "parentSpanId": "qFnvY0gaLKg=",
               "name": "GET /work",
               "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275474902185",
-              "endTimeUnixNano": "1793632275490977961",
+              "startTimeUnixNano": "1793836956494399019",
+              "endTimeUnixNano": "1793836956500616508",
               "attributes": [
                 {
                   "key": "url.full",
@@ -2436,9 +2204,45 @@
       "resource": {
         "attributes": [
           {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
             "key": "service.namespace",
             "value": {
               "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "dotnet"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
             }
           },
           {
@@ -2450,7 +2254,7 @@
           {
             "key": "service.name",
             "value": {
-              "stringValue": "payments"
+              "stringValue": "customer-profile"
             }
           }
         ]
@@ -2460,20 +2264,14 @@
           "scope": {},
           "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "3i76T5W4irc=",
-              "parentSpanId": "1PTs6Fu5gCM=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "oMI2eOiQW0U=",
+              "parentSpanId": "ogxmCnZUeME=",
               "name": "GET /work",
-              "kind": "SPAN_KIND_CLIENT",
-              "startTimeUnixNano": "1793632275471350886",
-              "endTimeUnixNano": "1793632275493340670",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956494582264",
+              "endTimeUnixNano": "1793836956500458464",
               "attributes": [
-                {
-                  "key": "url.full",
-                  "value": {
-                    "stringValue": "http://fraud/work"
-                  }
-                },
                 {
                   "key": "http.request.method",
                   "value": {
@@ -2490,35 +2288,109 @@
               "status": {}
             },
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "Bt6DW89QYTs=",
-              "parentSpanId": "eHH2egTjVMw=",
-              "name": "in queue",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275469198938",
-              "endTimeUnixNano": "1793632275469830588",
-              "status": {},
-              "attributes": []
-            },
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "4t2AJ1PfhG4=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956495221227",
+              "endTimeUnixNano": "1793836956499997835",
+              "attributes": [
+                {
+                  "key": "url.full",
+                  "value": {
+                    "stringValue": "http://loyalty/work"
+                  }
+                },
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "ruby"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "loyalty"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
             {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "1PTs6Fu5gCM=",
-              "parentSpanId": "eHH2egTjVMw=",
-              "name": "processing",
-              "kind": "SPAN_KIND_INTERNAL",
-              "startTimeUnixNano": "1793632275469830588",
-              "endTimeUnixNano": "1793632275495546435",
-              "status": {},
-              "attributes": []
-            },
-            {
-              "traceId": "SK3irnI5mG8o8Z4RKuQRtA==",
-              "spanId": "eHH2egTjVMw=",
-              "parentSpanId": "2JSKIymNRvI=",
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "2OZ+DggrxWs=",
+              "parentSpanId": "4t2AJ1PfhG4=",
               "name": "GET /work",
               "kind": "SPAN_KIND_SERVER",
-              "startTimeUnixNano": "1793632275469198938",
-              "endTimeUnixNano": "1793632275495546435",
+              "startTimeUnixNano": "1793836956495375638",
+              "endTimeUnixNano": "1793836956499855821",
               "attributes": [
                 {
                   "key": "http.request.method",
@@ -2533,6 +2405,272 @@
                   }
                 }
               ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "dotnet"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "notifications"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "GBz3otx/QYQ=",
+              "parentSpanId": "oVH8mja0Tmg=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956505022410",
+              "endTimeUnixNano": "1793836956530427435",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "zYMcr5kKeXE=",
+              "parentSpanId": "GBz3otx/QYQ=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956505022410",
+              "endTimeUnixNano": "1793836956505245489",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "LydVan8sSf4=",
+              "parentSpanId": "GBz3otx/QYQ=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956505245489",
+              "endTimeUnixNano": "1793836956530427435",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "IcqqLXWkkzw=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956507066756",
+              "endTimeUnixNano": "1793836956529894789",
+              "attributes": [
+                {
+                  "key": "url.full",
+                  "value": {
+                    "stringValue": "http://receipts/work"
+                  }
+                },
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "otel.scope.name",
+            "value": {
+              "stringValue": "go.opentelemetry.io/obi"
+            }
+          },
+          {
+            "key": "service.namespace",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "telemetry.distro.name",
+            "value": {
+              "stringValue": "opentelemetry-ebpf-instrumentation"
+            }
+          },
+          {
+            "key": "telemetry.distro.version",
+            "value": {
+              "stringValue": "v1.0.0"
+            }
+          },
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "v1.47.0"
+            }
+          },
+          {
+            "key": "k8s.namespace.name",
+            "value": {
+              "stringValue": "demo-apps"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "receipts"
+            }
+          }
+        ]
+      },
+      "scopeSpans": [
+        {
+          "scope": {},
+          "spans": [
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "we3dQv9/hGo=",
+              "parentSpanId": "2S+gWC2IMBQ=",
+              "name": "in queue",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956507137608",
+              "endTimeUnixNano": "1793836956507275050",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "2S+gWC2IMBQ=",
+              "parentSpanId": "IcqqLXWkkzw=",
+              "name": "GET /work",
+              "kind": "SPAN_KIND_SERVER",
+              "startTimeUnixNano": "1793836956507137608",
+              "endTimeUnixNano": "1793836956529791894",
+              "attributes": [
+                {
+                  "key": "http.request.method",
+                  "value": {
+                    "stringValue": "GET"
+                  }
+                },
+                {
+                  "key": "http.response.status_code",
+                  "value": {
+                    "intValue": "200"
+                  }
+                }
+              ],
+              "status": {}
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "o/MjNRf9WtI=",
+              "parentSpanId": "2S+gWC2IMBQ=",
+              "name": "processing",
+              "kind": "SPAN_KIND_INTERNAL",
+              "startTimeUnixNano": "1793836956507275050",
+              "endTimeUnixNano": "1793836956529791894",
+              "status": {},
+              "attributes": []
+            },
+            {
+              "traceId": "VmdQvvByTKSDrZJYGItBEg==",
+              "spanId": "Z/STcEVAKBw=",
+              "parentSpanId": "o/MjNRf9WtI=",
+              "name": "SELECT checkout_orders",
+              "kind": "SPAN_KIND_CLIENT",
+              "startTimeUnixNano": "1793836956526708345",
+              "endTimeUnixNano": "1793836956528860065",
+              "attributes": [],
               "status": {}
             }
           ]

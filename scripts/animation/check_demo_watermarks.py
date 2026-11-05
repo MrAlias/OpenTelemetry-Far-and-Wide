@@ -24,7 +24,9 @@ for speaker,cast in talk['speakers'].items():
  paths={(j['chapter'],j['turn']):j['output'] for j in jobs}
  rows=[]
  for chapter in talk['chapters']:
-  index,cue=max(((i,c) for i,c in enumerate(chapter['cues']) if c['speaker']==speaker),key=lambda pair:pair[1]['end']-pair[1]['start'])
+  candidates=[(i,c) for i,c in enumerate(chapter['cues']) if c['speaker']==speaker]
+  if not candidates:continue
+  index,cue=max(candidates,key=lambda pair:pair[1]['end']-pair[1]['start'])
   row={'chapter':chapter['id'],'turn':index,'source':float(detector.get_watermark(audio(paths[(chapter['id'],index)]),24000,round=False)),'encoded':float(detector.get_watermark(audio(movie,chapter['start']+cue['start'],cue['end']-cue['start']),24000,round=False))}
   rows.append(row);print(json.dumps({'speaker':speaker,**row}),flush=True)
  report['speakers'][speaker]={'reference_sha256':cast['referenceSha256'],'chapters':rows}

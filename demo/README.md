@@ -1,491 +1,383 @@
-# Full demo guide: OBI first, Java detail next
+# Presenting OpenTelemetry Far and Wide
 
-Start with 18 uninstrumented services, PostgreSQL, and Redis. See their HTTP and
-database traffic through OBI, then use the Injector operator to reveal what
-happens inside Java checkout.
+The 25-minute session follows one customer order: find its two-second wait with
+OBI, use direct Java instrumentation to explain it, remove the stale deployment
+setting, and show the new waterfall. Then share language-agent setup across the
+namespace. The slide deck has 23 slides; the primary delivery budget is 20:45,
+with 1:15 for live-action variation and three minutes for recovery/questions.
 
-```text
-curl > gateway (Go) > checkout (Java) > inventory (Node.js)
-                         │
-                         ├─ PricingEngine.calculate(): about two seconds
-                         ├─ Hibernate > PostgreSQL: save the checkout order
-                         ├─ cart (Rails) > catalog (Java) > recommendations (Python) > promotions (Rails)
-                         │       └─ tax (.NET) > currency (Go)
-                         ├─ shipping (Go) > warehouse (Go) > stock-planner (Python)
-                         ├─ payments (Java) > fraud (Java) > customer-profile (.NET) > loyalty (Rails)
-                         └─ notifications (.NET) > receipts (Python)
+**Run from the repository root.** Commands below target a dedicated
+`kind-far-wide-*` cluster. The helper rejects other cluster contexts. Use the
+same context in all terminals. All working files stay in `.artifacts/`.
 
-PostgreSQL: checkout, catalog, stock-planner, loyalty, receipts
-Redis: cart, recommendations, promotions
+## Prepare before starting the clock
 
-OBI + injected Java agent > Collector > Tempo / Prometheus / Loki > Grafana
-```
-
-Run commands from the repository root. You need Docker, kind, kubectl, Make,
-Python 3, OpenSSL, and curl. Use a Linux Docker host with a kernel supported by
-[OBI](https://opentelemetry.io/docs/zero-code/obi/#compatibility), including BTF at
-`/sys/kernel/btf/vmlinux`. On Docker Desktop, it is the Docker VM's kernel that
-matters. Allow roughly 8 CPUs and 16 GiB of memory for the expanded demo and builds.
-
-The commands use your **default kubeconfig**. Keep two extra terminals available
-for port-forwarding the application and Grafana.
-
-## 1. Create the test cluster
+Create the local cluster using [the cluster configuration](k8s/kind.yaml), if it
+does not exist:
 
 ```bash
 kind create cluster --name far-wide-demo --config demo/k8s/kind.yaml
 kubectl config use-context kind-far-wide-demo
-kubectl get nodes
 ```
 
-The [cluster configuration](k8s/kind.yaml) uses Kubernetes 1.35 with image volumes
-enabled. Wait for the node to show `Ready` before continuing.
-
-## 2. Deploy the demo applications
-
-Build and load the images. The 15 commerce services share five small images,
-with three services per language; gateway, checkout, and inventory keep their
-own images. You only need Docker, not the language toolchains:
+Build and load **all** images, including the direct Java agent payload and
+controller. This can take several minutes. It is preparation, not live content:
 
 ```bash
-make -C demo images
-make -C demo load
+python3 demo/scripts/present.py prepare --build
+python3 demo/scripts/present.py reset
 ```
 
-Deploy all 18 applications, PostgreSQL, and Redis from one manifest, then wait
-for every Deployment to be ready:
+`prepare` pins the official OBI v1.0.0 image, loads the application, controller
+and payload images into this kind cluster, and records their IDs in
+`.artifacts/presentation-demo/prepared-images.json`. Subsequent preparations can
+omit `--build` when the local images match the source. There is no stage-time
+build, branch switch or image loading. The bundled controller/payload are the
+reproducible prototype behind the RIO workflow, using the
+`demo.opentelemetry.io` API. They are not a released RIO installation manifest or
+the upstream OpenTelemetry Operator. [RIO project](https://github.com/otelx/rio).
+
+If Nikola supplies a fixed OBI build, build or pull that image before preparation,
+then set `DEMO_OBI_IMAGE` to its exact tag/digest in every demo terminal and run
+`prepare` again. The helper loads that image, deploys it during `obi`, and records
+the actual running image with each selected request. It does not silently call a
+custom build the stock release.
+
+**Outstanding preflight:** the November 4 official v1.0.0 captures observe all
+18 applications, but some .NET server observations have no parent span before
+language-agent enrollment. Header-only and network propagation both preserved a
+parent in a small isolated .NET test; that does not resolve the full-topology
+case. Nikola’s local fixes were not available to pin. Do not claim every .NET
+edge is connected by this baseline. The Checkout investigation is captured, and
+the final 14-agent/four-OBI result has one connected application trace. Recheck
+all branches when the fixed build is supplied, before promising that stronger
+baseline. Keep this preparation issue out of the audience’s narration.
+
+`reset` removes agent enrollment and the controller, restores the original
+application Pod templates and stale endpoint setting, and removes OBI. It keeps
+the PostgreSQL volume and order data. Do this **before** the presentation; never
+reset halfway through the story. Wait for all 20 Pods in `demo-apps` and the
+observability stack to be ready:
 
 ```bash
-kubectl apply -f demo/k8s/applications.yaml
 kubectl rollout status deployment -n demo-apps --timeout=300s
+kubectl rollout status deployment/lgtm -n observability --timeout=300s
 ```
 
-There should be **20 application-namespace Pods**: 18 services, PostgreSQL, and
-Redis. Each request to gateway calls all 15 commerce services through the tree
-above. See the [service catalog](apps/README.md) for each service's role.
-
-In a **second terminal**, expose the gateway and leave this running:
+Keep these in separate, already-open terminals:
 
 ```bash
 kubectl port-forward -n demo-apps service/gateway 8080:8080
+kubectl port-forward -n observability deployment/lgtm 3000:3000 3200:3200
 ```
 
-Back in the main terminal, make a request:
+Open Grafana at **http://localhost:3000**, the slides at
+**http://localhost:3030**, and the presenter view at
+**http://localhost:3030/presenter/1**. Use a dedicated desktop with only the
+needed terminal, Grafana and presenter view. Set readable terminal/Grafana zoom
+and close spare windows. A root request is known as Checkout; the trace, not
+that search name, establishes which operation to investigate.
 
-```bash
-curl -fsS http://localhost:8080/checkout | python3 -m json.tool
-```
+If using other forwarded ports, set `DEMO_GATEWAY`, `DEMO_TEMPO` and
+`DEMO_GRAFANA` once before the run. `DEMO_CONTEXT` can pin the dedicated context.
+The same settings apply to every helper step. Do not change contexts on stage.
 
-The response contains `price: 42`, `inventory: {"available": true}`, and an
-increasing `orderId`. The `services` array contains the four branches and their
-nested responses, including product data, loyalty points, and Redis cart visits.
-
-Check the entire flow with two more checkouts:
+Before the audience arrives, run the complete sequence once, including a switch
+to a silent fallback. Then run `reset` again and leave port-forwards running.
+Check the initial request succeeds and waits about two seconds:
 
 ```bash
 make -C demo smoke
 ```
 
-The check verifies all 15 services, their call relationships, PostgreSQL results,
-and an increasing Redis counter. Payments and notifications are simulated;
-no real payment provider or email service is contacted.
+Stop image builds, narration/ASR generation and video export before this preflight.
+Competing work can starve the local cluster and interrupt port-forwards; after
+any stack restart, check readiness and recreate the forwards.
 
-These applications have no OpenTelemetry SDK dependencies. The Java service's
-pricing method deliberately takes about two seconds. Each request also loads
-the seeded product and saves an order through Hibernate, using a HikariCP
-connection pool and the PostgreSQL JDBC driver.
+No agent images, command discovery or source changes should be needed during the
+next timed run. The fault is `LEGACY_PRICING_URL`, not a sleep in application
+code. The same app image will run before and after its removal.
 
-You can check the saved orders directly:
+## Live run sheet
+
+The helper does the real `kubectl` work. `request` generates traffic, waits for
+export/SDK handoff, selects a **fresh** request from that stage, checks its
+expected instrumentation and updates one Grafana dashboard. It prints the
+request duration, trace ID and view URL. Refresh the same dashboard after each
+request; do not hunt among traces from earlier configurations.
+
+| By elapsed time | Slide / action | Command or view | Result to explain |
+|---|---|---|---|
+| 01:15 | 1–3: customer and application | Introductions, slow request, 18-service map | A successful order still makes the customer wait. |
+| 03:30 | 4–5: OBI | `python3 demo/scripts/present.py obi`, then `python3 demo/scripts/present.py request obi` | Open the printed dashboard; show the two-second failed CONNECT, then choose Checkout. |
+| 05:30 | 6–7: direct Java setup | `python3 demo/scripts/present.py java`, then `python3 demo/scripts/present.py request java` | Same image, newly configured method span and HTTP/database detail. |
+| 09:15 | 8–11: explain and fix | Open PricingEngine.calculate, the failed HTTP span, its exception event and resource attributes. Then run `python3 demo/scripts/present.py fix`, followed by `python3 demo/scripts/present.py request fixed`. | SocketTimeoutException / Connect timed out; matching legacy setting; fresh waterfall without the failed attempt, successful price lookup retained. |
+| 09:45 | 12: repeated result | Return to the captured metric comparison | Captured mean 2.21 s → 165 ms. Not the exact measurement of the latest live request. |
+| 11:45 | 13–14: scale and upstream Operator | Two grouped configuration examples | Namespace annotations exist already; image/runtime/container/startup facts still require owners. |
+| 12:45 | 15: Injector | In-process workflow and upstream project QR | Matching agents from a prepared bundle; Kubernetes lifecycle remains a controller's job. |
+| 14:15 | 16: RIO demo controller | `python3 demo/scripts/present.py controller` | Shared defaults prepared; no namespace enrolled yet. |
+| 15:45 | 17–18: namespace selection | Show the rule, then `python3 demo/scripts/present.py namespace` | One rule; controller performs the rolling restarts for 13 more services. |
+| 17:15 | 19: fleet result | `python3 demo/scripts/present.py request fleet` | Open Cart's Ruby scope/detail, then Currency's retained OBI observation. 14 language agents including Checkout; four Go services with OBI. |
+| 20:45 | 20–23: upkeep, adoption, hours and close | Return directly to slides | Shared update ownership, eligible language-agent adoption, hypothetical 247 hours over two years, customer callback. Leave QR codes up. |
+
+These are rehearsal targets, not measured automation runtimes. Request selection
+uses small warmup traffic and accepts a new request only after the expected
+stage has exported. The first SDK export can precede OBI's SDK detection; that
+transition request is not the steady-state example. Do not claim no overlap can
+occur at any instant. Detailed checks are preparation, not a trace-identity
+lecture for the audience.
+
+## Keep the proof visible
+
+- **Java stage:** the method span is explicitly configured with
+  `OTEL_INSTRUMENTATION_METHODS_INCLUDE`. HTTP and database detail come from the
+  agent. Installing instrumentation does not fix the application's timeout.
+- **Setting:** the demo's launcher deliberately exports only
+  `process.environment_variable.LEGACY_PRICING_URL`; the standard Java agent is
+  not claimed to discover arbitrary environment variables. Retirement of the
+  backend is known deployment context. The matching URL and timeout are data.
+- **Fix:** remove the setting and roll the same image. Show the **new waterfall
+  before the aggregate**. The failed attempt disappears; the product lookup and
+  working order path remain. Offer the owning team a configuration PR and the
+  evidence, without blame.
+- **Fleet:** show one Ruby agent example and one Go/OBI example in the same fresh
+  request. Do not repeat separate topology, full-waterfall and Catalog slides
+  after the live result succeeds. Useful detail is the payoff, not Pod count.
+- **Scope:** OBI excludes PostgreSQL/Redis server processes by Pod label. Their
+  application-side client spans remain. Datastores stay in the topology. This
+  avoids presenting unlinked server observations as part of a continuous SDK
+  request; it does not invent universal database context propagation.
+- **Adoption:** the curve is language-agent adoption among eligible workloads;
+  OBI has already provided broad visibility. “100%” is scoped to eligible
+  services, and new compatible workloads inherit the namespace rule.
+- **Numbers:** slide 12 and the closing use the same captured mean. The separate
+  matched-request medians remain evidence in `presentation/data/resolution.json`,
+  not an interchangeable statistic. The labor chart models setup and routine
+  monthly updates, not a full platform budget or measured telemetry-bill saving.
+
+## Failure and time recovery
+
+Preload the fallback views before the session. Commands and trace captures play
+at native speed; long readiness waits are explicitly cut. The clips have **no
+audio streams**, so either presenter can continue live narration.
+
+| Live step | Slidev fallback | What to point at |
+|---|---|---|
+| OBI installation | `/4?clicks=1` | Versioned deployment command and ready DaemonSet |
+| OBI trace | `/5` then click | Failed two-second connection |
+| Direct Java rollout | `/7` | Patch and ready Checkout |
+| Timeout / setting | `/8`, `/9` | Actual Grafana attributes and exception event |
+| Remove stale setting | `/10` | Configuration-only rollout |
+| Fixed request | `/11` | Failed attempt gone; successful work retained |
+| Controller installation | `/16` | Actual bundled demo-controller installation |
+| Namespace enrollment | `/18` | One namespace selection and managed restarts |
+| Mixed fleet result | `/19?clicks=1` | Ruby agent detail and Go/OBI in one request |
+
+If an error needs diagnosis, switch to the matching clip within about 15–20
+seconds instead of debugging publicly. Normal rollouts get their rehearsed
+allowance. Agree who switches the display before the session and practice the
+transition. Keep the clip and spoken line at the same stage of the story.
+
+If late, cut extra Operator cases, repeated success commentary and secondary
+fleet inspection. **Protect the post-fix waterfall and fleet payoff.** Do not
+speak faster. Close by 22:00 and leave the resource QR codes visible during the
+remaining recovery/questions time. The slot ends at 25:00.
+
+## Upgrades and instrumentation scope
+
+The shared payload is `spec.image` in the demo Instrumentation resource. A new
+qualified bundle reuses the same selected workloads and managed rollout:
 
 ```bash
-kubectl exec -n demo-apps deployment/postgres -- \
-  psql -U checkout -d checkout -c 'SELECT id, product_id, total FROM checkout_orders ORDER BY id DESC LIMIT 5;'
+kubectl patch demoinstr cluster --type=merge \
+  -p '{"spec":{"image":"your-registry/qualified-instrumentation:next"}}'
 ```
 
-The PostgreSQL resources in the [applications manifest](k8s/applications.yaml)
-create the schema, a sample product, local-demo credentials, and a 1 GiB
-persistent volume. Orders survive application and PostgreSQL Pod replacement.
-Checkout validates the existing schema at startup; it does not recreate it during
-instrumentation rollouts. Catalog, stock-planner, loyalty, and receipts read
-these same tables.
+That is the interface, **not** a runnable image we publish here. Build/test the
+replacement bundle for the supported runtime matrix, wait for its observed
+policy generation, and verify fresh observations before accepting the upgrade.
+Agent and application compatibility, staged rollout and rollback still need
+owners. The project is not promising that every future runtime or language
+rewrite will be compatible.
 
-Inspect the Redis cache after a checkout:
+Rules can skip selected workloads and the prepared configuration chooses signals.
+That controls instrumentation scope; this talk does not measure an ingestion or
+storage-bill reduction. Engineering effort savings and telemetry resource costs
+are different claims. The submitted abstract mentions upgrades and dynamic cost
+control; the primary live sequence demonstrates initial enrollment and shared
+ownership. Do not announce a live upgrade or telemetry-bill result that is not
+shown. Detailed release and scope experiments belong after the core rehearsal.
+
+## Independent setup and technical reference
+
+Requirements: Docker, kind, kubectl, Make, Python 3, OpenSSL and curl; a Linux
+Docker host with BTF and an [OBI-compatible kernel](https://opentelemetry.io/docs/zero-code/obi/#compatibility).
+The supplied kind configuration uses Kubernetes 1.35 and image volumes. Allow
+roughly 8 CPUs and 16 GiB for the applications and builds. On Docker Desktop,
+the VM's Linux kernel is the relevant kernel.
+
+### Application and observability layout
+
+The [service catalog](apps/README.md) lists the eighteen applications and their
+languages. Gateway calls Checkout and Inventory; Checkout reaches the cart,
+shipping, payments and notifications branches. PostgreSQL serves checkout,
+catalog, stock-planner, loyalty and receipts. Redis serves cart, recommendations
+and promotions. These shared stores are dependencies, not agent-eligible
+application services.
+
+`demo/k8s/applications.yaml` supplies the seeded product price, persistent order
+storage and disposable Redis cache. Payments and notifications are simulations;
+no payment provider or email service is contacted. Checkout's missing optional
+backend times out after two seconds, then its fallback queries the current
+product price. This is real network I/O, not an artificial sleep.
+
+`demo/observability/lgtm.yaml` runs the Collector, Tempo, Prometheus, Loki and
+Grafana. Its bundled OBI is disabled because the demo installs OBI separately.
+The in-cluster OTLP HTTP endpoint is
+`http://lgtm.observability.svc.cluster.local:4318`. Anonymous Grafana access is
+enabled for this local demonstration. Use a deployment port-forward for Tempo:
+the Service does not expose port 3200.
+
+### Commands behind the presentation helper
+
+The helper prints real mutating `kubectl` commands and fails on unsuccessful
+operations. It also checks the expected current policy generation and selects
+new request evidence. The following are the underlying deployment operations,
+in story order. Image builds and loading belong in `prepare`, before this list.
+
+**OBI:**
 
 ```bash
+kubectl apply -f demo/k8s/obi.yaml
+kubectl rollout status daemonset/obi -n obi-system --timeout=90s
+```
+
+The manifest pins `otel/ebpf-instrument:v1.0.0`. Discovery includes `demo-apps`
+and excludes Pod labels `app=postgres` and `app=redis`. Application-side SQL and
+Redis observations remain. No application restarts or namespace annotations are
+required for this layer. Header context propagation is configured; do not claim
+arbitrary non-HTTP database traffic carries SDK context into datastore-server
+spans. [OBI discovery and exclusions](https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/).
+
+**Direct Java agent, before the controller is installed:**
+
+```bash
+kubectl patch deployment/checkout -n demo-apps --type=strategic \
+  --patch-file demo/k8s/checkout-direct-agent.patch.yaml
+kubectl rollout status deployment/checkout -n demo-apps --timeout=90s
+```
+
+The init container copies the Java JAR from the prepared payload image. The
+patch supplies `JAVA_TOOL_OPTIONS`, service identity and exporter settings. It
+also configures `demo.checkout.PricingEngine[calculate]` explicitly with
+`OTEL_INSTRUMENTATION_METHODS_INCLUDE`. The agent's regular HTTP/JDBC/Hibernate
+instrumentation supplies the related client and persistence observations.
+Agent metrics/logs are disabled here; OBI supplies the broad HTTP metrics.
+This is direct startup configuration, not the later namespace controller.
+
+**Configuration-only application fix:**
+
+```bash
+kubectl patch deployment/checkout -n demo-apps --type=strategic \
+  --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
+kubectl rollout status deployment/checkout -n demo-apps --timeout=90s
+```
+
+Only `LEGACY_PRICING_URL` is removed. Preserve its removal in a real deployment's
+GitOps/configuration source too. The helper checks that no other Pod-template
+field changed. The application image, agent and exporter remain identical.
+
+**Bundled RIO prototype and prepared defaults:**
+
+```bash
+make -C components/otel-injector-operator install
+kubectl apply -f demo/k8s/fleet-instrumentation-base.yaml
+```
+
+The installer prepares the CRD, permissions, TLS and webhook. Set `DEMO_CONTEXT`
+if pinning a context; the installer honors it. The Injector is a shared library
+mounted into selected Pods; it is not a separate Kubernetes Deployment. The
+controller uses native image volumes when its capability probe succeeds,
+otherwise an init container copies the payload.
+
+The base configuration retains Checkout's direct setup and leaves the four Go
+services and two datastore processes outside language-agent enrollment. It
+prepares the shared endpoint, signals and exclusions without selecting the
+remaining application workloads yet.
+
+**Namespace selection:**
+
+```bash
+kubectl patch demoinstr cluster --type=json \
+  --patch-file demo/k8s/instrument-demo-namespace.patch.yaml
+```
+
+This adds one Inject rule for `demo-apps`. RIO performs the rolling restarts;
+there is no separate `rollout restart` command. `present.py namespace` waits for
+`status.phase=Ready` **and** `status.observedGeneration=metadata.generation`, and
+requires thirteen managed workloads. Waiting for only the first workload's
+phase can accept an incomplete or stale rollout. New compatible workloads
+inherit this policy. Application compatibility and exceptional startup behavior
+still need platform/application owners.
+
+### Useful data, without a trace-search scavenger hunt
+
+`present.py request STAGE` sends new complete requests, checks the known response
+shape, tries the supplied traceparent ID directly, and retains a bounded-window
+fallback for implementations that choose another trace identity. It waits for all eighteen application services to export the request and accepts the
+expected stage only: zero SDK services for `obi`; Checkout alone for `java` and
+`fixed`; fourteen SDK services and four Go/OBI services for `fleet`. It rejects
+transitional overlap, leftover datastore-server resources, and failed Checkout
+spans after the fix. Private captures and selected IDs stay in
+`.artifacts/presentation-demo/`.
+
+The public evidence keeps actual timings, span identities, useful attributes
+and provenance. Do these detailed checks in preparation; show the audience the
+request and useful observations instead of explaining verification machinery.
+
+For independent investigation, use Tempo TraceQL:
+
+```traceql
+{ resource.service.name = "checkout" }
+{ resource.service.name = "cart" && name = "GET /work" }
+```
+
+OBI's SQL query text and correlation depend on runtime/protocol support and
+whether prepared statements were established before attachment. Useful client
+spans are sufficient here; do not add custom Ruby runtime probes to manufacture
+universal server-side database correlation.
+
+The functional check traverses the full response and all commerce branches:
+
+```bash
+make -C demo smoke
+kubectl exec -n demo-apps deployment/postgres -- \
+  psql -U checkout -d checkout -c 'SELECT id, product_id, total FROM checkout_orders ORDER BY id DESC LIMIT 5;'
 kubectl exec -n demo-apps deployment/redis -- \
   redis-cli MGET cart:demo-shopper:visits recommendations:demo-shopper promotions:active
 ```
 
-Redis is a disposable cache: replacing its Pod resets these keys, and the next
-checkout recreates them. PostgreSQL remains the persistent order store.
-
-## 3. Deploy the observability stack
-
-```bash
-kubectl apply -f demo/observability/lgtm.yaml
-kubectl rollout status deployment/lgtm -n observability --timeout=300s
-```
-
-This runs `grafana/otel-lgtm`: an OpenTelemetry Collector, Tempo for traces,
-Prometheus for metrics, Loki for logs, and Grafana. Its bundled OBI is disabled
-because we deploy OBI separately in the next step.
-
-In a **third terminal**, expose Grafana and leave this running:
-
-```bash
-kubectl port-forward -n observability service/lgtm 3000:3000
-```
-
-Open **http://localhost:3000**. Anonymous access is enabled; if you sign in,
-the initial credentials are `admin` / `admin`.
-
-The Collector receives OTLP inside the cluster at
-`http://lgtm.observability.svc.cluster.local:4318`. Both instrumentation layers
-are already configured to use it.
-
-## 4. Deploy OBI and inspect the baseline
-
-```bash
-kubectl apply -f demo/k8s/obi.yaml
-kubectl rollout status daemonset/obi -n obi-system --timeout=180s
-kubectl logs -n obi-system daemonset/obi --tail=30
-```
-
-OBI runs as a privileged DaemonSet and discovers processes in `demo-apps`.
-No application restart or namespace annotation is required. Give discovery
-about 15 seconds, then generate traffic in your main terminal:
-
-```bash
-for request in $(seq 1 30); do
-  curl -fsS http://localhost:8080/checkout
-  sleep 1
-done
-```
-
-In Grafana, open **Explore**, select **Tempo**, choose **TraceQL**, set the time
-range to **Last 15 minutes**, and run:
-
-```traceql
-{ resource.service.name = "checkout" }
-```
-
-Open a recent trace. Look for HTTP spans involving `gateway`, `checkout`, and
-`inventory`, followed by the cart, shipping, payments, and notifications branches.
-Search by another service name, such as `recommendations` or `loyalty`, to explore
-that part of the flow. The checkout request takes roughly two seconds or more, but there is no
-`PricingEngine.calculate` span yet. The pricing method and Hibernate operations
-are not named in this baseline. Keep a trace open for comparison.
-
-OBI also captures PostgreSQL calls. Search for those separately:
-
-```traceql
-{ resource.service.name = "checkout" && span.db.system.name = "postgresql" }
-```
-
-Query text may be absent for statements prepared before OBI started; see
-[OBI's database support](https://opentelemetry.io/docs/zero-code/obi/configure/export-data/#instrumentation-compatibility).
-
-Switch Explore to **Prometheus**, choose the **Code** query editor, and run:
-
-```promql
-sum by (service_name) (
-  http_server_request_duration_seconds_count{service_namespace="demo-apps"}
-)
-```
-
-You should see HTTP request counts across the 18 application services. Allow a
-few seconds for export and refresh if the first query is empty. The new services'
-`/healthz` probes also contribute traffic; use `/work` spans to inspect commerce
-requests.
-
-For example, this Tempo query finds cart requests from the checkout flow:
-
-```traceql
-{ resource.service.name = "cart" && name = "GET /work" }
-```
-
-For the Redis side of the flow, search in Tempo for `cart`, `recommendations`, or
-`promotions` and inspect their database spans. For additional PostgreSQL traffic,
-search for `catalog`, `stock-planner`, `loyalty`, or `receipts`. OBI's available
-query text and trace correlation depend on protocol and runtime support.
-
-This baseline produces **traces and metrics**. Loki is available, but these apps
-do not yet produce OTLP logs, and the stack does not collect container stdout.
-
-## 5. Build and deploy the operator and Injector
-
-[RIO](https://github.com/otelx/rio) is the demo operator purpose-built for this talk; we want this capability to find an upstream home. The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
-
-Build the operator and the payload containing the Injector and language agents:
-
-```bash
-make -C components/otel-injector-operator image
-make -C components/otel-injector-images image
-```
-
-Load both images into kind, then install the operator:
-
-```bash
-kind load docker-image --name far-wide-demo \
-  otel-injector-operator:demo otel-injector-images:demo
-make -C components/otel-injector-operator install
-```
-
-The installer creates the CRD, permissions, TLS certificates, and admission
-webhook, and waits for the operator. The Injector payload will be mounted into
-selected application Pods; it has no separate Deployment.
-
-At this point, the apps still use OBI alone. We apply the instrumentation policy
-in the next step so the Java restart is a distinct part of the demo.
-
-## 6. Instrument all services with the RIO operator
-
-### Create the shared configuration and exclusions, like the OTEL exporter URL
-```sh
-kubectl apply -f demo/k8s/fleet-instrumentation-base.yaml
-```
-
-### Append the demo-apps namespace rule
-
-```sh
-kubectl patch demoinstr cluster \
-  --type=json \
-  --patch-file demo/k8s/instrument-demo-namespace.patch.yaml
-```
-
-### Wait for managed workload rollouts.
-kubectl wait --for=jsonpath='{.status.workloads[0].phase}'=Ready \
-  demoinstr/cluster --timeout=300s
-
-## 7. Restart Java with instrumentation and compare
-
-The [checkout policy](k8s/checkout-instrumentation.yaml) selects the namespace
-and workload in one cluster-wide `Instrumentation` resource:
-
-```yaml
-selector:
-  namespaces: [demo-apps]
-  workloads:
-    - kind: Deployment
-      name: checkout
-```
-
-It enables Java traces and asks the Java agent to create a span for
-`demo.checkout.PricingEngine[calculate]`. Metrics and logs are disabled for the
-Java agent in this walkthrough; OBI supplies the HTTP metrics.
-
-Hibernate and JDBC use the Java agent's default instrumentation. The policy
-retains the existing pricing-method selection and needs no additional options
-for the database extension.
-
-Apply the policy to start the restart:
-
-```bash
-kubectl apply -f demo/k8s/checkout-instrumentation.yaml
-kubectl wait --for=jsonpath='{.status.workloads[0].phase}'=Ready \
-  demoinstr/cluster --timeout=300s
-kubectl get pods -n demo-apps
-```
-
-**Applying the policy triggers the graceful rollout automatically.** The operator
-replaces the Java Pod, injects its replacement, and waits for workload health.
-The Deployment keeps the old Pod until the new one is ready. Gateway, inventory,
-and all 15 commerce services stay running. A separate `kubectl rollout restart`
-would cause an unnecessary second restart.
-
-The operator uses native image volumes when its capability check succeeds and
-otherwise copies the payload with an init container. Inspect the policy status
-and Java startup log:
-
-```bash
-kubectl get demoinstr cluster -o yaml
-kubectl logs -n demo-apps -l app=checkout --prefix --tail=30
-```
-
-Look for checkout's `phase: Ready` and the OpenTelemetry Java agent startup
-message. `Ready` confirms workload health; the following query checks that
-telemetry actually arrived.
-
-Generate another batch of requests:
-
-```bash
-for request in $(seq 1 30); do
-  curl -fsS http://localhost:8080/checkout
-  sleep 1
-done
-```
-
-Return to **Explore > Tempo** and run:
-
-```traceql
-{ resource.service.name = "checkout" && name = "PricingEngine.calculate" }
-```
-
-Open a recent result and expand checkout's spans. **`PricingEngine.calculate`
-takes about two seconds**, explaining the delay you saw with OBI. The application
-image and source have not changed; the policy added the language-level detail.
-
-In the same trace, expand the Hibernate operations and their JDBC query spans.
-Look for `Session.get demo.checkout.Product`,
-`Session.persist demo.checkout.CheckoutOrder`, and `Transaction.commit`.
-The `SELECT` and `INSERT` JDBC spans are nested beneath the Hibernate operations
-that issued them. These spans appear automatically, alongside the existing
-pricing-method span.
-
-You can also search specifically for the Hibernate transaction span:
-
-```traceql
-{ resource.service.name = "checkout" && name = "Transaction.commit" }
-```
-
-The comparison has two parts: the configured pricing-method span explains the
-two-second timeout, and the default Hibernate/JDBC spans expose the order-persistence
-operations. Connection-acquisition tracing is not enabled in this demo.
-
-OBI continues covering the other services. Its automatic SDK detection suppresses
-overlapping telemetry after it observes SDK exports; initial requests can contain
-overlap during that transition. Use a later trace from this batch for the demo.
-See [OBI's SDK detection behavior](https://opentelemetry.io/docs/zero-code/obi/configure/service-discovery/#exclude-otel-instrumented-services).
-
-## Choose a different namespace or more workloads
-
-Edit `demo/k8s/checkout-instrumentation.yaml` and reapply it. Namespace names go
-directly in `selector.namespaces`; no per-namespace labels are needed.
-
-- For Java checkout in another namespace, change `demo-apps` to that namespace
-  and update `service.namespace` in the rule's `OTEL_RESOURCE_ATTRIBUTES` value.
-- For all supported applications in `demo-apps`, first add the database `Skip`
-  rule shown below, then remove the `workloads` selector and checkout-specific
-  `env` block from the application rule.
-- For checkout Deployments in several namespaces, use
-  `namespaces: [demo-apps, payments]`. They share the rule's `service.namespace`
-  value in Grafana; use separate rules if you want distinct telemetry groups.
-
-For all application namespaces, replace the rules with exclusions followed by a
-wildcard rule:
-
-```yaml
-rules:
-  - name: skip-databases
-    selector:
-      namespaces: [demo-apps]
-      workloads:
-        - kind: Deployment
-          name: postgres
-        - kind: Deployment
-          name: redis
-    action: Skip
-  - name: skip-infrastructure
-    selector:
-      namespaces: [kube-system, kube-public, kube-node-lease, local-path-storage, observability, obi-system]
-    action: Skip
-  - name: all-applications
-    selector:
-      namespaces: ['*']
-    action: Inject
-```
-
-Rules use the first match. The operator always excludes its own namespace.
-Keep PostgreSQL and Redis excluded when broadening selection: they are database
-backends and their Deployments use `Recreate`. Go services remain covered by OBI;
-the Injector payload supplies agents for Java, .NET, Python, Ruby, and Node.js.
-Keep the Java-specific `env` settings on a checkout-specific rule if you retain
-them; do not give every service the name `checkout`.
-
-The policy's `signals` fields independently enable `traces`, `metrics`, and
-`logs`; actual coverage depends on the language agent and application libraries.
-Changing the policy automatically rolls affected workloads. OBI has its own
-namespace selection in `demo/k8s/obi.yaml`; changing the Injector policy does not
-reconfigure OBI.
-
-## Reset or remove the demo
-
-To return to the OBI-only baseline while keeping the cluster and Grafana data:
-
-```bash
-kubectl delete demoinstr cluster --timeout=300s
-```
-
-Keep the operator running until deletion finishes: its finalizer rolls checkout
-back to an uninstrumented Pod. Reapply the policy to repeat step 6.
-
-To remove the whole demo, stop both port-forward commands with **Ctrl+C**, then:
-
-```bash
-kind delete cluster --name far-wide-demo
-```
-
-This also deletes the telemetry, PostgreSQL orders, and Redis cache in the cluster.
-
-## If a step does not work
-
-| Symptom | Check |
-| --- | --- |
-| Application `ImagePullBackOff` | Run `make -C demo load` for this cluster. |
-| Checkout fails to start or returns 502 | Check `kubectl logs -n demo-apps deployment/checkout` and `kubectl rollout status deployment/postgres -n demo-apps`. PostgreSQL must be ready with its seeded schema. |
-| Checkout returns 502 after adding commerce services | Run `kubectl get pods -n demo-apps`, then inspect checkout's log and the named dependency's log. All 15 services and both databases must be ready. |
-| A commerce service is pending | Check node memory with `kubectl describe node`; allow roughly 16 GiB for the demo and builds. |
-| LGTM is pending | `kubectl describe pod -n observability -l app=demo-lgtm` and `kubectl get pvc -n observability`. It needs the default storage class and enough memory. |
-| OBI is running but Tempo is empty | Generate traffic, refresh the time range, and inspect `kubectl logs -n obi-system daemonset/obi`. Check the host kernel's BTF/eBPF support. A running Pod alone does not prove probes attached. |
-| Policy never reaches `Ready` | Inspect `kubectl get demoinstr cluster -o yaml` and `kubectl logs -n otel-injector-system deployment/otel-injector`. A failed candidate is rolled back; status records the reason. |
-| Java is ready but the method span is missing | Send new traffic and inspect checkout's log for agent/export errors. Check that `OTEL_INSTRUMENTATION_METHODS_INCLUDE` matches the policy. |
-| Hibernate spans are missing | Confirm you built checkout with `demo/apps/checkout/Dockerfile`, generate new requests, and inspect a recent trace after the Java rollout. The original proof image has no database access. |
-
-For more detail, see the [operator reference](../components/otel-injector-operator/README.md)
-and [observability stack guide](observability/README.md). The older
-[proof harness](proof/README.md) remains a separate experiment. This walkthrough
-shares its gateway, inventory, and pricing-method sources, and adds the
-[Hibernate checkout application](apps/checkout/) and the [polyglot commerce
-services](apps/README.md), with ordinary readiness probes and direct Services.
-
-
-## Presentation recording sequence
-
-The expanded presentation uses OBI first, then a direct Java-agent setup for
-Checkout, then operator enrollment for the remaining supported services. See
-[the recorded demo handoff](../docs/fleet-demo-handoff.md) for captured timings,
-prerequisites, source files and the live rehearsal sequence. The direct patch
-is `k8s/checkout-direct-agent.patch.yaml`; shared enrollment uses
-`k8s/fleet-instrumentation.yaml`. This is an alternative to the single-Checkout
-operator walkthrough above; begin from a clean, isolated demo installation.
-
-
-## Resolve the retired-backend timeout
-
-`applications.yaml` sets `LEGACY_PRICING_URL=http://192.0.2.42:8080/price` on
-Checkout. While that optional setting is present, pricing attempts the absent
-backend with a real two-second HTTP connection/read timeout, then falls back
-to PostgreSQL. An unset or blank setting goes straight to the same store.
-
-`apps/checkout/launch.sh` explicitly copies this one non-secret demo setting
-into the `process.environment_variable.LEGACY_PRICING_URL` resource attribute.
-The Java agent exports it; this is not automatic collection of the environment.
-Its value matches the failed HTTP span’s `url.full`.
-
-Remove the setting and roll the **same image**:
-
-```sh
-kubectl set env deployment/checkout -n demo-apps LEGACY_PRICING_URL-
-kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
-```
-
-The equivalent manifest patch is `k8s/checkout-pricing-fixed.patch.yaml`.
-Persist the removal in your GitOps source too. Show the actual new waterfall
-immediately: the successful price query remains and the failed call is gone.
-Then show the matched warmed comparison: 2.22 s → 185 ms median request duration,
-with unchanged image and instrumentation. This is a local seeded-failure result,
-not a production benchmark or an instrumentation speedup.
-
-Next enroll the namespace, retaining Checkout’s corrected configuration.
-Reset this disposable example without rebuilding:
-
-```sh
-kubectl set env deployment/checkout -n demo-apps \
-  LEGACY_PRICING_URL=http://192.0.2.42:8080/price
-kubectl rollout status deployment/checkout -n demo-apps --timeout=300s
-```
-
-Existing disposable database volumes may need `k8s/upgrade-product-price.sql`
-once; fresh databases seed the price column. See [the full protocol](../docs/customer-resolution.md).
-All assets and working files stay in this repository. Synthetic media stays local
-and ignored; only verified silent demo recordings may be versioned.
+PostgreSQL orders survive Pod replacement. Redis is a disposable cache. The
+next request recreates its keys after replacement. Older disposable volumes may
+need the price-column migration in `demo/k8s/upgrade-product-price.sql` once;
+fresh deployments seed it correctly. Loki is available, but this demo does not
+claim OTLP application logs or container-stdout collection.
+
+### Preparation troubleshooting
+
+| Symptom | Resolve before the timed rehearsal |
+|---|---|
+| Agent init container cannot pull/start | Run `prepare`; verify `otel-injector-images:demo` is loaded in the chosen kind cluster. |
+| Fresh request still has OBI on Checkout immediately after the Java rollout | Let the SDK export, then send/select another request. Do not interpret an old or first-transition trace as steady state. |
+| No trace yet, but requests succeed | Check Collector/Tempo and OBI readiness. Direct ID lookup avoids search-index delay; the helper retries within its limit. |
+| Request helper rejects a trace | Read its stage error; do not substitute a successful Pod rollout for useful telemetry. Check actual scopes and selected deployment state. |
+| Setting or failed call remains after the fix | Check Checkout's current environment, rollout and the fresh request stage. An older trace does not change retroactively. |
+| Policy says Ready, some services unchanged | Check observed generation and every managed workload, not only `.status.workloads[0]`. |
+| Ruby/SQL datastore-server span is unlinked | Verify OBI's PostgreSQL/Redis process exclusions. Keep client spans; do not hide an inconsistent default by avoiding a scroll. |
+| Unexpected trace overlap | Check the SDK export transition and the actual selected image/version. Verify the cause; do not assert a retry or bug diagnosis without evidence. |
+| Entrypoint drops injected variables or runtime is unsupported | Agree on a compatible startup/payload with the application owner. A namespace rule cannot repair arbitrary packaging constraints. |
+
+Once the core run works, repeat it without interruption and time the visible
+actions. Test one fallback switch. Preserve the two indispensable proofs:
+customer improvement in a fresh waterfall and useful language detail after the
+namespace rollout.
