@@ -120,6 +120,12 @@ request; do not hunt among traces from earlier configurations.
 | 17:15 | 19: fleet result | `python3 demo/scripts/present.py request fleet` | Open Cart's Ruby scope/detail, then Currency's retained OBI observation. 14 language agents including Checkout; four Go services with OBI. |
 | 20:45 | 20–23: upkeep, adoption, hours and close | Return directly to slides | Shared update ownership, eligible language-agent adoption, hypothetical 247 hours over two years, customer callback. Leave QR codes up. |
 
+Tyler resumes on every return to slides. The normal return points are slide 6
+after the OBI investigation, slide 12 after the fix and fresh trace, slide 17
+after controller installation, and slide 20 after the fleet result. Use the
+evidence slides as fallbacks; after showing the proof live, skip its replay and
+resume at the next explanation.
+
 These are rehearsal targets, not measured automation runtimes. Request selection
 uses small warmup traffic and accepts a new request only after the expected
 stage has exported. The first SDK export can precede OBI's SDK detection; that

@@ -63,7 +63,7 @@ Here's that order in Grafana. We can follow the service calls and database work 
 
 **Nikola:**
 
-Now look inside Checkout. Where does most of the customer's wait go?
+Inside Checkout, look at the failed connection.
 
 [click]
 

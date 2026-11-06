@@ -24,8 +24,10 @@ passage is highlighted as you advance, and the rest stays dimmed for context.
 does not add audience-facing content or change the transcript.
 Tyler opens each return from the live demo, including fallback entry points.
 The script map records those return points and any slide-specific speaker
-assignments; the notes audit checks that Tyler speaks first. These assignments
-apply to live speaker notes without relabeling existing recorded narration.
+assignments and transition wording; the notes audit checks that Tyler speaks
+first. Live notes connect the result just shown to the next question, without
+replaying the demo. These overrides apply to live speaker notes without
+rewriting or relabeling existing recorded narration.
 Run `npm run slides:notes` after changing dialogue, speaker assignments or click assignments. `npm run slides:audit`
 checks all 19 video chapters, all 23 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,

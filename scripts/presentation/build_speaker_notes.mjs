@@ -10,15 +10,17 @@ const files = new Map(), assigned = [], slides = []
 for (const [index, entry] of map.entries()) {
   const chapter = chapters.get(entry.chapter)
   assert(chapter, `Unknown chapter: ${entry.chapter}`)
-  const speakerOverrides = entry.speakerOverrides || {}
-  for (const [turn, speaker] of Object.entries(speakerOverrides)) {
-    assert(entry.turns.includes(Number(turn)), `Speaker override references an unmapped turn: ${entry.chapter}/${turn}`)
-    assert(['Tyler', 'Nikola'].includes(speaker), `Unknown note speaker: ${speaker}`)
+  const noteOverrides = entry.noteOverrides || {}
+  for (const [turn, override] of Object.entries(noteOverrides)) {
+    assert(entry.turns.includes(Number(turn)), `Note override references an unmapped turn: ${entry.chapter}/${turn}`)
+    assert(Object.keys(override).every(key => ['speaker', 'text'].includes(key)), 'Unknown note override field')
+    if (override.speaker !== undefined) assert(['Tyler', 'Nikola'].includes(override.speaker), `Unknown note speaker: ${override.speaker}`)
+    if (override.text !== undefined) assert(typeof override.text === 'string' && override.text.trim(), 'Note text must be nonempty')
   }
   const turns = entry.turns.map(turn => {
     assert(chapter.turns[turn], `Missing turn: ${entry.chapter}/${turn}`)
     assigned.push(`${entry.chapter}/${turn}`)
-    return {...chapter.turns[turn], speaker:speakerOverrides[turn] || chapter.turns[turn].speaker}
+    return {...chapter.turns[turn], ...noteOverrides[turn]}
   })
   if (entry.demoReturn) assert.equal(turns[0].speaker, 'Tyler',
     `Slide ${index + 1}: Tyler must resume when returning from the demo`)
@@ -57,7 +59,7 @@ for (const [file, entries] of files) {
       `${file}: every visual click must have a matching note marker`)
     slides.push({slide:row.slide, title, chapter:row.entry.chapter, turns:row.entry.turns,
       noteClicks:row.entry.noteClicks || [],
-      demoReturn:!!row.entry.demoReturn, firstSpeaker:row.entry.speakerOverrides?.[row.entry.turns[0]] || chapters.get(row.entry.chapter).turns[row.entry.turns[0]].speaker,
+      demoReturn:!!row.entry.demoReturn, firstSpeaker:row.entry.noteOverrides?.[row.entry.turns[0]]?.speaker || chapters.get(row.entry.chapter).turns[row.entry.turns[0]].speaker,
       components:[...body.matchAll(/<([A-Z][A-Za-z0-9]*)\b/g)].map(match => match[1]),
       visuals:[...body.matchAll(/(?:src|image|poster)="([^"]+)"/g)].map(match => match[1].split('/').at(-1))})
     return row.note
