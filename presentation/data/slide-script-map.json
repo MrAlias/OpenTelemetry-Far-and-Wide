@@ -53,7 +53,17 @@
         "at": 1,
         "turn": 2
       }
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "speaker": "Tyler"
+      },
+      "1": {
+        "speaker": "Nikola",
+        "text": "Inside Checkout, look at the failed connection."
+      }
+    }
   },
   {
     "file": "slides/03-language-detail.md",
@@ -61,7 +71,13 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "text": "OBI found the failed connection. To explain what Checkout is doing, we'll add the Java agent: load it at startup, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method."
+      }
+    }
   },
   {
     "file": "slides/03-language-detail.md",
@@ -78,7 +94,8 @@
       0,
       1,
       2
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -86,7 +103,8 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -103,7 +121,8 @@
       0,
       1,
       2
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -111,7 +130,16 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "text": "The new trace shows the failed call is gone. These captured Grafana windows show the repeated-request result: average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds."
+      },
+      "1": {
+        "text": "And we did it by changing configuration, not rebuilding Checkout."
+      }
+    }
   },
   {
     "file": "slides/04-namespace.md",
@@ -119,7 +147,18 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "speaker": "Tyler",
+        "text": "The hard part now is repeating the setup. We had access to Checkout and knew its runtime. What happens when the other thirteen services belong to different teams?"
+      },
+      "1": {
+        "speaker": "Nikola",
+        "text": "I'd rather not schedule thirteen versions of that meeting. The OpenTelemetry Injector lets us share the runtime setup. First, let's see what the established Operator workflow asks each team to supply."
+      }
+    }
   },
   {
     "file": "slides/04-namespace.md",
@@ -163,7 +202,14 @@
     "chapter": "11-enroll-services",
     "turns": [
       0
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "speaker": "Tyler",
+        "text": "Now the controller is installed and the shared defaults are ready. We just need to choose the application namespace: demo-apps. One rule, without listing thirteen services or assigning a language to each."
+      }
+    }
   },
   {
     "file": "slides/04-namespace.md",
@@ -186,7 +232,13 @@
         "at": 1,
         "turn": 1
       }
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "text": "Here's the result across the namespace: fourteen services with language agents, and four Go services still covered by OBI."
+      }
+    }
   },
   {
     "file": "slides/05-takeaways.md",
@@ -194,7 +246,13 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true,
+    "noteOverrides": {
+      "0": {
+        "text": "That's the setup shared across the namespace. Next month, there's a new agent release. The platform can update the shared bundle and use the same rollout path, instead of arranging another update with thirteen teams."
+      }
+    }
   },
   {
     "file": "slides/05-takeaways.md",

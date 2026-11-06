@@ -9,7 +9,7 @@ kicker: After day one
 <!--
 **Tyler:**
 
-An agent update next month shouldn't mean another setup project for thirteen teams. The platform can update the shared bundle and use the same rollout path. Eligible new services inherit the namespace policy.
+That's the setup shared across the namespace. Next month, there's a new agent release. The platform can update the shared bundle and use the same rollout path, instead of arranging another update with thirteen teams.
 
 **Nikola:**
 

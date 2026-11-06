@@ -19,7 +19,7 @@ OTEL_EXPORTER_OTLP_ENDPOINT: >-
 <!--
 **Tyler:**
 
-Here's the direct setup. Supply the Java agent, tell Java to load it, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method.
+OBI found the failed connection. To explain what Checkout is doing, we'll add the Java agent: load it at startup, set the service name and choose the exporter. We also configure a span around the pricing method. The agent supplies the HTTP and database detail; it doesn't invent a span for every method.
 
 **Nikola:**
 
@@ -137,9 +137,9 @@ kicker: The repeated-request result
 <!--
 **Tyler:**
 
-These captured Grafana windows show the average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds. They're a repeated-request comparison, alongside the fresh trace we just opened.
+The new trace shows the failed call is gone. These captured Grafana windows show the repeated-request result: average checkout dropping from about two-point-two seconds to a hundred and sixty-five milliseconds.
 
 **Nikola:**
 
-A customer gets their two seconds back. Good. Now what about the other teams?
+And we did it by changing configuration, not rebuilding Checkout.
 -->

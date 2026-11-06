@@ -57,13 +57,13 @@ clicks: 1
 <TraceEvidence image="connected-trace.png" :highlight="$clicks > 0" label="Actual OBI request waterfall; highlight the failed Checkout connection" />
 
 <!--
-**Nikola:**
+**Tyler:**
 
 Here's that order in Grafana. We can follow the service calls and database work without changing those applications.
 
-**Tyler:**
+**Nikola:**
 
-Now look inside Checkout. Where does most of the customer's wait go?
+Inside Checkout, look at the failed connection.
 
 [click]
 

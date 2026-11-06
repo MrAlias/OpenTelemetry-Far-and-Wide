@@ -7,13 +7,13 @@ kicker: Share the capability
 <ServiceTopology phase="one" />
 
 <!--
-**Nikola:**
-
-We arranged the Java setup for Checkout because we knew the service and had access. Thirteen other services can use language agents. Who's arranging those?
-
 **Tyler:**
 
-I'd rather not schedule thirteen versions of that meeting. We'll use the OpenTelemetry Injector. First, let's look at what the established Kubernetes Operator workflow still needs from the platform and application teams.
+The hard part now is repeating the setup. We had access to Checkout and knew its runtime. What happens when the other thirteen services belong to different teams?
+
+**Nikola:**
+
+I'd rather not schedule thirteen versions of that meeting. The OpenTelemetry Injector lets us share the runtime setup. First, let's see what the established Operator workflow asks each team to supply.
 -->
 
 ---
@@ -106,9 +106,9 @@ action: Inject
 </div>
 
 <!--
-**Nikola:**
+**Tyler:**
 
-Instrument demo-apps. That's the selection: one namespace. We haven't listed thirteen services or assigned a language to each one. The prepared bundle supplies the supported runtime choices.
+Now the controller is installed and the shared defaults are ready. We just need to choose the application namespace: demo-apps. One rule, without listing thirteen services or assigning a language to each.
 -->
 
 ---
@@ -141,7 +141,7 @@ mediaAt: 1
 <!--
 **Tyler:**
 
-Fourteen services now have language agents. The four Go services retain OBI. Let's open the result in a fresh order.
+Here's the result across the namespace: fourteen services with language agents, and four Go services still covered by OBI.
 
 [click]
 
