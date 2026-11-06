@@ -70,22 +70,23 @@ kicker: Make the next investigation easier
 <div class="closing-resources">
   <a href="https://github.com/MrAlias/OpenTelemetry-Far-and-Wide"><img src="/presentation/qr-demo-source.svg" alt="QR code for the demo and presentation source" /><span><strong>Demo + slides</strong></span></a>
   <a href="https://github.com/otelx/rio"><img src="/presentation/qr-rio.svg" alt="QR code for the RIO repository" /><span><strong>RIO</strong></span></a>
+  <a href="https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation"><img src="/presentation/qr-obi.svg" alt="QR code for the OpenTelemetry eBPF Instrumentation repository" /><span><strong>Give OBI a star</strong></span></a>
 </div>
 
 <!--
 **Tyler:**
 
-We started with a customer waiting for an order. OBI showed the failed connection. Java detail named the pricing operation. We found the old endpoint setting, removed it, and opened a new trace to see the wait disappear.
+OBI found the failed connection. Java detail explained it. We removed the old setting and the customer's wait.
 
 **Nikola:**
 
-Then one namespace choice added language detail across the supported fleet. The next team shouldn't have to repeat our setup before investigating. RIO demonstrates the shared workflow we'd like to bring upstream.
+One namespace then shared that detail across eligible services. RIO demonstrates the workflow we'd like to bring upstream.
 
 **Tyler:**
 
-OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you can install on a service or across a cluster, then use to find what's keeping a customer waiting—and do something about it.
+OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you install, then use to find what's keeping customers waiting.
 
 **Nikola:**
 
-Find the wait. Fix the cause. Make the next investigation easier. Thank you.
+Try the demo and RIO, and give OBI a star. Find the wait. Fix the cause. Make the next investigation easier. Thank you.
 -->

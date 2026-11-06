@@ -126,15 +126,16 @@ request; do not hunt among traces from earlier configurations.
 | 11:45 | 13–14: scale and upstream Operator | Two grouped configuration examples | Namespace annotations exist already; image/runtime/container/startup facts still require owners. |
 | 12:45 | 15: Injector | In-process workflow and upstream project QR | Matching agents from a prepared bundle; Kubernetes lifecycle remains a controller's job. |
 | 14:15 | 16: RIO demo controller | `python3 demo/scripts/present.py controller` | Shared defaults prepared; no namespace enrolled yet. |
-| 15:45 | 17–18: namespace selection | Show the rule, then `python3 demo/scripts/present.py namespace` | One rule; controller performs the rolling restarts for 13 more services. |
-| 17:15 | 19: fleet result | `python3 demo/scripts/present.py request fleet` | Open Cart's Ruby scope/detail, then Currency's retained OBI observation. 14 language agents including Checkout; four Go services with OBI. |
+| 15:45 | 17: namespace selection | Show the rule, then `python3 demo/scripts/present.py namespace` | One rule; controller performs the rolling restarts for 13 more services. |
+| 17:15 | 18: fleet result | `python3 demo/scripts/present.py request fleet` | Open Cart's Ruby scope/detail, then Currency's retained OBI observation. 14 language agents including Checkout; four Go services with OBI. |
 | 20:45 | 20–23: upkeep, adoption, hours and close | Return directly to slides | Shared update ownership, eligible language-agent adoption, hypothetical 247 hours over two years, customer callback. Leave QR codes up. |
 
 Tyler resumes on every return to slides. The normal return points are slide 6
 after the OBI investigation, slide 12 after the fix and fresh trace, slide 17
-after controller installation, and slide 20 after the fleet result. Use the
-evidence slides as fallbacks; after showing the proof live, skip its replay and
-resume at the next explanation.
+after controller installation, and slide 18 for the fleet overview after the
+live result. Slide 19 holds the recorded rollout as a fallback; skip it after a
+successful live rollout and continue to slide 20. Use the recorded fleet detail
+on slide 18 only when needed, rather than replaying proof already shown live.
 
 These are rehearsal targets, not measured automation runtimes. Request selection
 uses small warmup traffic and accepts a new request only after the expected
@@ -186,8 +187,8 @@ audio streams**, so either presenter can continue live narration.
 | Remove stale setting | `/10` | Configuration-only rollout |
 | Fixed request | `/11` | Failed attempt gone; successful work retained |
 | Controller installation | `/16` | Actual bundled demo-controller installation |
-| Namespace enrollment | `/18` | One namespace selection and managed restarts |
-| Mixed fleet result | `/19?clicks=1` | Ruby agent detail and Go/OBI in one request |
+| Namespace enrollment | `/19` | One namespace selection and managed restarts |
+| Mixed fleet result | `/18?clicks=1` | Ruby agent detail and Go/OBI in one request |
 
 If an error needs diagnosis, switch to the matching clip within about 15–20
 seconds instead of debugging publicly. Normal rollouts get their rehearsed

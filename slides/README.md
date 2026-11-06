@@ -17,7 +17,9 @@ upstream Operator examples and the coordination they require.
 Open `/presenter/1` on the running Slidev server. Each slide’s notes contain
 its full dialogue, tagged Tyler or Nikola, for reading while presenting.
 `../scripts/animation/talk.json` is the script source;
-`../presentation/data/slide-script-map.json` assigns every turn once, in order.
+`../presentation/data/slide-script-map.json` assigns every recorded turn once; live slide order may differ from the video.
+`extraTurns` adds the brief live introduction after the speaker names, without
+changing the existing recorded narration.
 The four click-build slides use native `[click]` markers: the matching
 passage is highlighted as you advance, and the rest stays dimmed for context.
 `noteClicks` in the script map places each marker before a chapter turn; it
@@ -28,6 +30,7 @@ assignments and transition wording; the notes audit checks that Tyler speaks
 first. Live notes connect the result just shown to the next question, without
 replaying the demo. These overrides apply to live speaker notes without
 rewriting or relabeling existing recorded narration.
+The closing notes are shortened to offset the opening and OBI star invitation.
 Run `npm run slides:notes` after changing dialogue, speaker assignments or click assignments. `npm run slides:audit`
 checks all 19 video chapters, all 23 slides, spoken-turn coverage and the
 material recorded views, including terminal setup, the configuration fix,
@@ -35,7 +38,7 @@ post-fix waterfall and one mixed fleet view with Ruby agent detail and Go/OBI.
 
 References remain in `../docs/presentation-research.md`; demo commands are in
 `../demo/README.md`. Slide 4 links the previous talk’s CNCF recording. Slides
-4, 5, 14 and 19 have purposeful click builds. Slide 14 groups the Operator
+4, 5, 14 and 18 have purposeful click builds. Slide 14 groups the Operator
 comparison into three states, each with matching highlighted dialogue.
 
 Slide 15 introduces the upstream Injector with a startup diagram and its project QR.
@@ -50,6 +53,11 @@ Slide 5 is a bookmark for the live Grafana investigation. Its captured waterfall
 and one highlight are the fallback; skip the topology replay and trace tutorial.
 Slide 6 inspects deployment configuration, then slide 7 installs the Java agent.
 The source-inspection recording is intentionally omitted.
+
+Slide 18 now carries the fleet overview and optional trace detail; slide 19
+holds the recorded namespace rollout. Its notes describe the rollout that
+already happened. After a successful live result, skip that clip and continue
+to maintenance on slide 20. The closing has demo, RIO and OBI project QR codes.
 
 Terminal recordings play manually using their native controls. They are muted,
 run at 1×, include WebM and MP4 sources, and pause automatically on slide leave. They provide rehearsal/fallback

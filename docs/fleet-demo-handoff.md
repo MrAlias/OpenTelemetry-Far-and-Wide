@@ -21,8 +21,9 @@ bundled RIO demo controller, then enroll `demo-apps` with one namespace rule.
 Open Cart’s Ruby-agent observations and Currency’s Go/OBI resource attributes in
 one fresh order. Fourteen language-agent services include direct Checkout;
 thirteen were enrolled by the controller. The four Go services retain OBI.
-After successful live proof, return directly to slide 20 instead of replaying
-separate fleet overview/detail slides.
+After successful live proof, return to the fleet overview on slide 18, then
+continue to maintenance on slide 20. Skip the recorded detail on slide 18 and
+the rollout fallback on slide 19 when the live demonstration succeeded.
 
 ## What the components do
 

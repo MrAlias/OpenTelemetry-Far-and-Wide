@@ -112,21 +112,6 @@ Now the controller is installed and the shared defaults are ready. We just need 
 -->
 
 ---
-kicker: Namespace selection
-evidence: true
----
-
-# Apply once. Let the controller roll it out.
-
-<DemoClip src="instrument-namespace-edited.mp4" poster="namespace-rule.png" label="Actual namespace enrollment and controller-managed rolling restarts" />
-
-<!--
-**Tyler:**
-
-Apply it. RIO performs the rolling restarts for the selected workloads. Checkout keeps its existing direct agent, and the four Go services keep OBI. Compatible new workloads in this namespace inherit the policy.
--->
-
----
 kicker: The fleet result
 clicks: 1
 mediaAt: 1
@@ -156,4 +141,19 @@ As the SDKs start exporting, OBI recognizes them and steps back from tracing tho
 **Nikola:**
 
 So the next team can start with its question. Useful detail is already there. That is the result of the namespace rollout.
+-->
+
+---
+kicker: Namespace selection
+evidence: true
+---
+
+# One policy. Controller-managed rollouts.
+
+<DemoClip src="instrument-namespace-edited.mp4" poster="namespace-rule.png" label="Actual namespace enrollment and controller-managed rolling restarts" />
+
+<!--
+**Tyler:**
+
+RIO handled the rolling restarts for the selected workloads. Checkout kept its direct agent, and the four Go services kept OBI. Compatible new workloads inherit the same namespace policy.
 -->

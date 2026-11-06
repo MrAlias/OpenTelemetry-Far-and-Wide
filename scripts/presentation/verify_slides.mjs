@@ -10,7 +10,10 @@ const resolution=JSON.parse(await readFile(path.join(root,'presentation/data/res
 const metricEvidence=JSON.parse(await readFile(path.join(root,'presentation/data/metric-comparison.json'),'utf8'));
 const talk=JSON.parse(await readFile(path.join(root,'scripts/animation/talk.json'),'utf8'));
 const scriptMap=JSON.parse(await readFile(path.join(root,'presentation/data/slide-script-map.json'),'utf8'));
-const namespaceNote=talk.chapters.find(c=>c.id==='11-enroll-services').turns[0].text;
+const namespaceEntry=scriptMap.find(e=>e.chapter==='11-enroll-services'&&e.turns.includes(0));
+const namespaceNote=namespaceEntry.noteOverrides?.[0]?.text||talk.chapters.find(c=>c.id==='11-enroll-services').turns[0].text;
+const fleetSlide=scriptMap.findIndex(e=>e.chapter==='12-wider-result')+1;
+const rolloutSlide=scriptMap.findIndex(e=>e.chapter==='11-enroll-services'&&e.turns.includes(1))+1;
 const operatorExample=JSON.parse(await readFile(path.join(root,'presentation/data/operator-complexity.json'),'utf8'));
 const origin=process.env.SLIDEV_URL||'http://localhost:3040';
 class CDP {
@@ -118,7 +121,7 @@ try{
     if(stores.languages!==18||stores.durations!==0)errors.push({slide:n,clicks,issue:'Map must preserve all languages and show request durations alongside them when observed',stores});
     if(JSON.stringify(stores.nodes)!==JSON.stringify(['postgres','redis'])||JSON.stringify(stores.edges)!==JSON.stringify(expected)||stores.labelOverflow.length)errors.push({slide:n,clicks,issue:'Shared stores must have their real client links and readable node labels',stores});
    }
-   if(n===19 && (clicks===0 ? result.agents!==14||result.services!==18||result.video : !result.video||result.services!==0))errors.push({slide:n,clicks,issue:'Fleet fallback must move from fourteen agents/four OBI services to the native mixed trace clip'});
+   if(n===fleetSlide && (clicks===0 ? result.agents!==14||result.services!==18||result.video : !result.video||result.services!==0))errors.push({slide:n,clicks,issue:'Fleet fallback must move from fourteen agents/four OBI services to the native mixed trace clip'});
    if(n===5&&result.highlight!==!!clicks)errors.push({slide:n,issue:'Local interval click did not update'});
    if(n===8||n===9){
     const captured=await evaluate(`(()=>{const f=document.querySelector('[data-slidev-no="${n}"] figure');return {images:f?.querySelectorAll('svg image').length,redrawn:!!f?.querySelector('dl,code,svg text'),trace:f?.dataset.traceId,span:f?.dataset.spanId}})()`);
@@ -172,6 +175,11 @@ try{
     const text=await evaluate(`document.querySelector('[data-slidev-no="${n}"] [data-customer-result]')?.textContent`);
     if(!text?.includes(metricEvidence.before.meanSeconds.toFixed(2))||!text?.includes(String(Math.round(metricEvidence.after.meanSeconds*1000)))||!text?.includes('ms'))errors.push({slide:n,issue:'Measured customer payoff or closing callback missing'});
    }
+   if(n===23){
+    const resources=await evaluate(`Array.from(document.querySelectorAll('[data-slidev-no="23"] .closing-resources a')).map(a=>a.href)`);
+    const wanted=['https://github.com/MrAlias/OpenTelemetry-Far-and-Wide','https://github.com/otelx/rio','https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation'];
+    if(JSON.stringify(resources)!==JSON.stringify(wanted))errors.push({slide:n,issue:'Closing must link the demo, RIO and OBI',resources});
+   }
    const png=await cdp.call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
    await writeFile(path.join(work,'renders',`${String(n).padStart(2,'0')}-${clicks}.png`),Buffer.from(png.data,'base64'));slides.push(result);
    console.log(`Checked slide ${n}, click ${clicks}: ${result.title}`);
@@ -179,19 +187,19 @@ try{
  }
  await writeFile(path.join(work,'render-report.json'),JSON.stringify({errors,slides},null,2)+'\n');
  const fallbackPlayback=[];
- for(const [slide,clicks] of [[4,1],[7,0],[10,0],[11,0],[16,0],[18,0],[19,1]]) {
+ for(const [slide,clicks] of [[4,1],[7,0],[10,0],[11,0],[16,0],[rolloutSlide,0],[fleetSlide,1]]) {
   await navigate(slide,clicks);
   const played=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="${slide}"] video');let error=null;try{await v.play();await new Promise(r=>setTimeout(r,650))}catch(e){error=e.message}const result={slide:${slide},src:v.currentSrc,time:v.currentTime,muted:v.muted,rate:v.playbackRate,error:v.error?.message||error};v.pause();return result})()`);
   fallbackPlayback.push(played);
   if(played.time<.3||played.error||!played.muted||played.rate!==1)errors.push({issue:'Fallback did not play at native speed',played});
  }
  await writeFile(path.join(work,'fallback-playback.json'),JSON.stringify(fallbackPlayback,null,2)+'\n');
- await navigate(18);
- const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="18"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
+ await navigate(rolloutSlide);
+ const video=await evaluate(`(async()=>{const v=document.querySelector('[data-slidev-no="${rolloutSlide}"] video');let failure=null;try{await v.play()}catch(e){failure=e.message};await new Promise(r=>setTimeout(r,1400));const f=await fetch(v.currentSrc);return {src:v.currentSrc,status:f.status,type:f.headers.get('content-type'),canPlay:v.canPlayType('video/mp4;codecs=\"avc1.64001f\"'),time:v.currentTime,error:v.error?.message||failure,muted:v.muted,rate:v.playbackRate};})()`);
  console.log('Video check '+JSON.stringify(video));
  if(video.time<.5||video.error||!video.muted||video.rate!==1)errors.push({video});
  // Use Slidev's real Next key, so the onSlideLeave lifecycle runs on the existing video element.
- await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="18"] video')`);
+ await evaluate(`window.leavingDemo=document.querySelector('[data-slidev-no="${rolloutSlide}"] video')`);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);
  await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39},sessionId);await wait(400);
  const paused=await evaluate('window.leavingDemo.paused');if(!paused)errors.push({issue:'Demo keeps playing after leaving slide'});
@@ -218,7 +226,7 @@ try{
     await cdp.call('Input.dispatchKeyEvent',{type:'keyUp',key,code:key,windowsVirtualKeyCode:code},sessionId);
    }
    await wait(250);
-   const expected=entry.turns.map(turn=>({text:chapter.turns[turn].text,
+   const expected=entry.turns.map(turn=>({text:entry.noteOverrides?.[turn]?.text||chapter.turns[turn].text,
     active:entry.noteClicks.filter(marker=>entry.turns.indexOf(marker.turn)<=entry.turns.indexOf(turn)).at(-1)?.at===clicks
       || (clicks===0&&!entry.noteClicks.some(marker=>entry.turns.indexOf(marker.turn)<=entry.turns.indexOf(turn)))}));
    const noteState=await evaluate(`(()=>{

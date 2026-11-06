@@ -5,6 +5,13 @@
     "turns": [
       0,
       1
+    ],
+    "extraTurns": [
+      {
+        "after": 1,
+        "speaker": "Tyler",
+        "text": "OpenTelemetry has grown beyond APIs and SDKs. Today we'll install it across a cluster and inside applications, fix a slow checkout, and share that visibility with other teams."
+      }
     ]
   },
   {
@@ -213,13 +220,6 @@
   },
   {
     "file": "slides/04-namespace.md",
-    "chapter": "11-enroll-services",
-    "turns": [
-      1
-    ]
-  },
-  {
-    "file": "slides/04-namespace.md",
     "chapter": "12-wider-result",
     "turns": [
       0,
@@ -237,6 +237,18 @@
     "noteOverrides": {
       "0": {
         "text": "Here's the result across the namespace: fourteen services with language agents, and four Go services still covered by OBI."
+      }
+    }
+  },
+  {
+    "file": "slides/04-namespace.md",
+    "chapter": "11-enroll-services",
+    "turns": [
+      1
+    ],
+    "noteOverrides": {
+      "1": {
+        "text": "RIO handled the rolling restarts for the selected workloads. Checkout kept its direct agent, and the four Go services kept OBI. Compatible new workloads inherit the same namespace policy."
       }
     }
   },
@@ -279,6 +291,20 @@
       1,
       2,
       3
-    ]
+    ],
+    "noteOverrides": {
+      "0": {
+        "text": "OBI found the failed connection. Java detail explained it. We removed the old setting and the customer's wait."
+      },
+      "1": {
+        "text": "One namespace then shared that detail across eligible services. RIO demonstrates the workflow we'd like to bring upstream."
+      },
+      "2": {
+        "text": "OpenTelemetry has grown beyond APIs and SDKs. It's instrumentation you install, then use to find what's keeping customers waiting."
+      },
+      "3": {
+        "text": "Try the demo and RIO, and give OBI a star. Find the wait. Fix the cause. Make the next investigation easier. Thank you."
+      }
+    }
   }
 ]

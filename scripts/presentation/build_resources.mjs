@@ -4,6 +4,7 @@ import {readFile, writeFile} from 'node:fs/promises'
 const resources = [
   {label:'Demo + slides', url:'https://github.com/MrAlias/OpenTelemetry-Far-and-Wide', file:'qr-demo-source.svg'},
   {label:'RIO', url:'https://github.com/otelx/rio', file:'qr-rio.svg'},
+  {label:'Give OBI a star', url:'https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation', file:'qr-obi.svg'},
 ]
 const injector = JSON.parse(await readFile(new URL('../../presentation/data/injector-intro.json', import.meta.url)))
 const injectorResource = {label:'Project + docs', url:injector.url, file:injector.qr, runtimes:injector.runtimes}

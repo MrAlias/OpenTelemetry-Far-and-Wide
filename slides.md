@@ -35,6 +35,10 @@ Welcome everyone. I'm Tyler Yahn.
 **Nikola:**
 
 And I'm Nikola Grcevski.
+
+**Tyler:**
+
+OpenTelemetry has grown beyond APIs and SDKs. Today we'll install it across a cluster and inside applications, fix a slow checkout, and share that visibility with other teams.
 -->
 
 ---

@@ -86,7 +86,7 @@
       const inner=chart.replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'');
       return '<g transform="translate(64 '+(scene.kind==='cost-timeline'?110:155)+')">'+inner+'</g>'+(scene.kind==='cost-timeline'?text(75,675,'18 services · monthly updates',25,C.muted):'');
     }
-    case 'close':return text(75,265,duration(window.METRIC_COMPARISON.before.meanSeconds*1000)+' → '+duration(window.METRIC_COMPARISON.after.meanSeconds*1000),76,C.green)+text(75,325,'Customer request · captured mean',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+window.CLOSING_RESOURCES.map((r,i)=>`<a href="${r.url}"><g transform="translate(${790+i*215} 235) scale(${195/r.size})">${r.markup}</g>`+text(887.5+i*215,470,r.label,24,C.ink,'text-anchor="middle"')+'</a>').join('')+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
+    case 'close':return text(75,265,duration(window.METRIC_COMPARISON.before.meanSeconds*1000)+' → '+duration(window.METRIC_COMPARISON.after.meanSeconds*1000),76,C.green)+text(75,325,'Customer request · captured mean',29,C.muted)+text(75,465,'One namespace',65,C.green)+text(75,520,'14 language agents · 4 services with OBI',29,C.muted)+window.CLOSING_RESOURCES.map((r,i)=>`<a href="${r.url}"><g transform="translate(${710+i*175} 235) scale(${155/r.size})">${r.markup}</g>`+text(787.5+i*175,435,r.label,21,C.ink,'text-anchor="middle"')+'</a>').join('')+text(75,630,'Find the wait. Fix the cause. Make the next investigation easier.',29,C.blue);
     default:throw new Error('Unknown artwork kind: '+scene.kind);
   }}
   window.renderArtwork=(scene,seconds,{final=false,reduceMotion=false}={})=>{
