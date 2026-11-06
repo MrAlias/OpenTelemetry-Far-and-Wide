@@ -7,11 +7,11 @@ kicker: Share the capability
 <ServiceTopology phase="one" />
 
 <!--
-**Nikola:**
+**Tyler:**
 
 We arranged the Java setup for Checkout because we knew the service and had access. Thirteen other services can use language agents. Who's arranging those?
 
-**Tyler:**
+**Nikola:**
 
 I'd rather not schedule thirteen versions of that meeting. We'll use the OpenTelemetry Injector. First, let's look at what the established Kubernetes Operator workflow still needs from the platform and application teams.
 -->
@@ -106,7 +106,7 @@ action: Inject
 </div>
 
 <!--
-**Nikola:**
+**Tyler:**
 
 Instrument demo-apps. That's the selection: one namespace. We haven't listed thirteen services or assigned a language to each one. The prepared bundle supplies the supported runtime choices.
 -->

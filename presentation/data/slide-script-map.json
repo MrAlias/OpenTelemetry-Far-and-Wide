@@ -53,7 +53,12 @@
         "at": 1,
         "turn": 2
       }
-    ]
+    ],
+    "demoReturn": true,
+    "speakerOverrides": {
+      "0": "Tyler",
+      "1": "Nikola"
+    }
   },
   {
     "file": "slides/03-language-detail.md",
@@ -61,7 +66,8 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -78,7 +84,8 @@
       0,
       1,
       2
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -86,7 +93,8 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -103,7 +111,8 @@
       0,
       1,
       2
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/03-language-detail.md",
@@ -111,7 +120,8 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/04-namespace.md",
@@ -119,7 +129,12 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true,
+    "speakerOverrides": {
+      "0": "Tyler",
+      "1": "Nikola"
+    }
   },
   {
     "file": "slides/04-namespace.md",
@@ -163,7 +178,11 @@
     "chapter": "11-enroll-services",
     "turns": [
       0
-    ]
+    ],
+    "demoReturn": true,
+    "speakerOverrides": {
+      "0": "Tyler"
+    }
   },
   {
     "file": "slides/04-namespace.md",
@@ -186,7 +205,8 @@
         "at": 1,
         "turn": 1
       }
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/05-takeaways.md",
@@ -194,7 +214,8 @@
     "turns": [
       0,
       1
-    ]
+    ],
+    "demoReturn": true
   },
   {
     "file": "slides/05-takeaways.md",
