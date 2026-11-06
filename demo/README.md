@@ -60,6 +60,16 @@ reset halfway through the story. Wait for all 20 Pods in `demo-apps` and the
 observability stack to be ready:
 
 ```bash
+make -C demo images
+make -C demo load
+```
+
+```bash
+kubectl apply -f demo/k8s/applications.yaml
+kubectl apply -f demo/observability/lgtm.yaml
+```
+
+```bash
 kubectl rollout status deployment -n demo-apps --timeout=300s
 kubectl rollout status deployment/lgtm -n observability --timeout=300s
 ```
@@ -372,21 +382,11 @@ instrumentation supplies the related client and persistence observations.
 Agent metrics/logs are disabled here; OBI supplies the broad HTTP metrics.
 This is direct startup configuration, not the later namespace controller.
 
-## 7. Build and deploy the operator and Injector
+## 7. Build and deploy the RIO operator
 
 [RIO](https://github.com/otelx/rio) is the demo operator purpose-built for this talk; we want this capability to find an upstream home. The following steps reproduce the presentation’s bundled demo snapshot and use its `demo.opentelemetry.io` API; RIO has its own API and release artifacts.
 
 Build the operator and the payload containing the Injector and language agents:
-
-```bash
-kubectl patch deployment/checkout -n demo-apps --type=strategic \
-  --patch-file demo/k8s/checkout-pricing-fixed.patch.yaml
-kubectl rollout status deployment/checkout -n demo-apps --timeout=90s
-```
-
-Only `LEGACY_PRICING_URL` is removed. Preserve its removal in a real deployment's
-GitOps/configuration source too. The helper checks that no other Pod-template
-field changed. The application image, agent and exporter remain identical.
 
 **Bundled RIO prototype and prepared defaults:**
 
