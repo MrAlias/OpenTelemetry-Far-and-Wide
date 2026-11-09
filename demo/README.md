@@ -100,6 +100,12 @@ Check the initial request succeeds and waits about two seconds:
 make -C demo smoke
 ```
 
+Or run the curl command directly:
+
+```bash
+time curl -fsS http://localhost:8080/checkout | python3 -m json.tool
+```
+
 Stop image builds, narration/ASR generation and video export before this preflight.
 Competing work can starve the local cluster and interrupt port-forwards; after
 any stack restart, check readiness and recreate the forwards.

@@ -112,23 +112,21 @@ Now the controller is installed and the shared defaults are ready. We just need 
 -->
 
 ---
-kicker: The fleet result
-clicks: 1
-mediaAt: 1
+kicker: Namespace selection
+evidence: true
 ---
 
-# Language detail. OBI alongside it.
+# One policy. Controller-managed rollouts.
 
-<ServiceTopology v-if="$clicks === 0" phase="complete" />
-<div v-if="$clicks === 0" class="coverage-key"><span class="agent-key">14 language agents</span><span class="obi-key">4 with OBI</span></div>
+<DemoClip src="instrument-namespace-edited.mp4" poster="namespace-rule.png" label="Actual namespace enrollment and controller-managed rolling restarts" />
+
+<div v-if="$clicks === 1" class="coverage-key"><span class="agent-key">14 language agents</span><span class="obi-key">4 with OBI</span></div>
 <DemoClip v-else src="fleet-mixed-detail.mp4" poster="fleet-mixed-detail.png" label="Actual namespace-enrolled request: Cart Ruby agent detail and Currency Go coverage from OBI" />
 
 <!--
 **Tyler:**
 
-Here's the result across the namespace: fourteen services with language agents, and four Go services still covered by OBI.
-
-[click]
+RIO handled the rolling restarts for the selected workloads. Checkout kept its direct agent, and the four Go services kept OBI. Compatible new workloads inherit the same namespace policy.
 
 **Nikola:**
 
@@ -141,19 +139,21 @@ As the SDKs start exporting, OBI recognizes them and steps back from tracing tho
 **Nikola:**
 
 So the next team can start with its question. Useful detail is already there. That is the result of the namespace rollout.
+
 -->
 
 ---
-kicker: Namespace selection
-evidence: true
+kicker: The fleet result
 ---
 
-# One policy. Controller-managed rollouts.
+# Language detail. OBI alongside it.
 
-<DemoClip src="instrument-namespace-edited.mp4" poster="namespace-rule.png" label="Actual namespace enrollment and controller-managed rolling restarts" />
+
+<ServiceTopology v-if="$clicks === 0" phase="complete" />
 
 <!--
 **Tyler:**
 
-RIO handled the rolling restarts for the selected workloads. Checkout kept its direct agent, and the four Go services kept OBI. Compatible new workloads inherit the same namespace policy.
+Here's the result across the namespace: fourteen services with language agents, and four Go services still covered by OBI.
+
 -->
